@@ -32,8 +32,10 @@ const ReleaseList = () => {
         <table className="ui single line selectable striped table">
             <thead>
             <tr>
-                <th>Type</th>
+                <th></th>
+                <th>Source</th>
                 <th>Title</th>
+                <th>Size</th>
                 <th>Published</th>
                 <th>Actions</th>
             </tr>

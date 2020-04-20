@@ -20,6 +20,10 @@ const renderResolution = (value: string) => {
     return ""
 };
 
+const renderVerified = (value: boolean) => {
+    return <Icon name={"certificate"} disabled={!value}/>
+}
+
 
 export type ReleaseProps = {
     id: string,
@@ -54,14 +58,16 @@ export type ReleaseProps = {
 
 export const Release: FunctionComponent<ReleaseProps> = (o) =>
     <tr key={o.id}>
+        <td className="collapsing">{renderVerified(o.verified)}</td>
         <td className="collapsing">
             <Item.Image>
-                {renderSwitch(o.type)}
+                {o.source} : {renderSwitch(o.type)}
             </Item.Image>
         </td>
         <td>{o.display} {renderResolution(o.resolution)} {o.groupauthor}</td>
-        <td>{o.published_at}</td>
-        <td></td>
+        <td className="collapsing">{o.size}</td>
+        <td className="collapsing">{o.published_at}</td>
+        <td className="collapsing"></td>
     </tr>
 
 /*

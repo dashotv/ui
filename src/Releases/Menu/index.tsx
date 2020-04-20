@@ -8,7 +8,7 @@ export type ReleaseMenuProps = {
 }
 
 export const ReleaseMenu: FunctionComponent<ReleaseMenuProps> = (o) =>
-    <Menu vertical={true}>
+    <Menu secondary={true}>
         <Menu.Item as={NavLink} exact to="/releases">
             Index
         </Menu.Item>
