@@ -14,28 +14,28 @@ function App() {
         <Router>
             <div className="App">
                 <header className="App-header">
-                    <Container>
-                        <div className="ui top fixed menu">
+                    <div className="ui top fixed menu">
+                        <Container>
                             <Link className="item" to="/">
                                 <img src={logo} alt={"logo"}/>
                             </Link>
-                            <NavLink className="item" exact to="/">Home</NavLink>
-                            <NavLink className="item" to="/media">Media</NavLink>
-                            <NavLink className="item" to="/releases">Releases</NavLink>
-                        </div>
-                    </Container>
+                            <NavLink className="item" exact to="/">
+                                <i className="home icon"/> Home
+                            </NavLink>
+                            <NavLink className="item" to="/media">
+                                <i className="tv icon"/> Media
+                            </NavLink>
+                            <NavLink className="item" to="/releases">
+                                <i className="arrow alternate circle down icon"/> Releases
+                            </NavLink>
+                        </Container>
+                    </div>
                 </header>
                 <Switch>
                     <Container>
-                        <Route exact path="/">
-                            <Home/>
-                        </Route>
-                        <Route path="/media">
-                            <Media/>
-                        </Route>
-                        <Route path="/releases">
-                            <Releases/>
-                        </Route>
+                        <Route exact path="/" component={Home}/>
+                        <Route path="/media" component={Media}/>
+                        <Route path="/releases" component={Releases}/>
                     </Container>
                 </Switch>
             </div>

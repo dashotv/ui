@@ -2,18 +2,18 @@ import React, {FunctionComponent} from 'react';
 import './index.css';
 import {Icon, Item, Label} from "semantic-ui-react";
 
-const renderSwitch = (value:string) => {
-    switch(value) {
+const renderSwitch = (value: string) => {
+    switch (value) {
         case 'tv':
-            return <Icon name='tv' size='large'/>;
+            return <Icon name='tv' size='small'/>;
         case 'movies':
-            return <Icon name='video camera' size='large'/>;
+            return <Icon name='video camera' size='small'/>;
         default:
-            return <Icon name='question circle' size='large' />;
+            return <Icon name='question circle' size='small'/>;
     }
 };
 
-const renderResolution = (value:string) => {
+const renderResolution = (value: string) => {
     if (value) {
         return <Label>{value}</Label>
     }
@@ -53,6 +53,18 @@ export type ReleaseProps = {
 }
 
 export const Release: FunctionComponent<ReleaseProps> = (o) =>
+    <tr>
+        <td className="collapsing">
+            <Item.Image>
+                {renderSwitch(o.type)}
+            </Item.Image>
+        </td>
+        <td>{o.display} {renderResolution(o.resolution)} {o.groupauthor}</td>
+        <td>{o.published_at}</td>
+        <td></td>
+    </tr>
+
+/*
     <Item>
         <Item.Image>
             {renderSwitch(o.type)}
@@ -64,3 +76,4 @@ export const Release: FunctionComponent<ReleaseProps> = (o) =>
             <Item.Meta>{o.published_at}</Item.Meta>
         </Item.Content>
     </Item>
+ */
