@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react'
 
 type ToggleProps = {
     icon: string,
-    default: boolean,
+    value: boolean,
 }
 
 type ToggleState = {
@@ -11,8 +11,8 @@ type ToggleState = {
 }
 
 class Toggle extends Component<ToggleProps, ToggleState> {
-    static defaultProps = { icon: "", default: false };
-    state = { active: this.props.default};
+    static defaultProps = { icon: "", value: false };
+    state = { active: this.props.value};
     handleClick = () =>
         this.setState((prevState) => ({ active: !prevState.active }));
 
