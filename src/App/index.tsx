@@ -7,31 +7,36 @@ import Home from "../Home"
 import Media from "../Media"
 import Releases from "../Releases"
 import logo from "./logo-small.png";
+import {Container} from "semantic-ui-react";
 
 function App() {
     return (
         <Router>
             <div className="App">
                 <header className="App-header">
-                    <div className="ui top fixed menu">
-                        <Link className="item" to="/">
-                            <img src={logo} alt={"logo"}/>
-                        </Link>
-                        <NavLink className="item" exact to="/">Home</NavLink>
-                        <NavLink className="item" to="/media">Media</NavLink>
-                        <NavLink className="item" to="/releases">Releases</NavLink>
-                    </div>
+                    <Container>
+                        <div className="ui top fixed menu">
+                            <Link className="item" to="/">
+                                <img src={logo} alt={"logo"}/>
+                            </Link>
+                            <NavLink className="item" exact to="/">Home</NavLink>
+                            <NavLink className="item" to="/media">Media</NavLink>
+                            <NavLink className="item" to="/releases">Releases</NavLink>
+                        </div>
+                    </Container>
                 </header>
                 <Switch>
-                    <Route exact path="/">
-                        <Home/>
-                    </Route>
-                    <Route path="/media">
-                        <Media/>
-                    </Route>
-                    <Route path="/releases">
-                        <Releases/>
-                    </Route>
+                    <Container>
+                        <Route exact path="/">
+                            <Home/>
+                        </Route>
+                        <Route path="/media">
+                            <Media/>
+                        </Route>
+                        <Route path="/releases">
+                            <Releases/>
+                        </Route>
+                    </Container>
                 </Switch>
             </div>
         </Router>
