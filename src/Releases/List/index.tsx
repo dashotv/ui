@@ -1,14 +1,20 @@
 import React from 'react';
 import {useAsync} from "react-async"
+import * as Scry from "../../Services/Scry"
 
 import './index.css';
 import {Release, ReleaseProps} from '../Release'
 
-const fetchReleases = async () => {
-    const response = await fetch(`/api/scry/releases/`);
-    console.log(response);
-    return response.json()
+const fetchReleases = () => {
+    const options = {
+    };
+    return Scry.Releases(options)
 };
+
+const fetchReleasesOld = async () => {
+    const response = await fetch(`/api/scry/releases/`);
+    return response.json()
+}
 
 const ReleaseList = () => {
     const {data, error, isLoading} = useAsync({promiseFn: fetchReleases});
@@ -34,7 +40,7 @@ const ReleaseList = () => {
             </thead>
             <tbody>
             {data['Releases'].map((value: ReleaseProps) => {
-                return <Release
+                return <Release key={value.id}
                     id={value.id}
                     name={value.name}
                     year={value.year}

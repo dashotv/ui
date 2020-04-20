@@ -53,7 +53,7 @@ export type ReleaseProps = {
 }
 
 export const Release: FunctionComponent<ReleaseProps> = (o) =>
-    <tr>
+    <tr key={o.id}>
         <td className="collapsing">
             <Item.Image>
                 {renderSwitch(o.type)}
