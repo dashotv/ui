@@ -2,7 +2,7 @@ import React, {FunctionComponent, useEffect, useState} from 'react';
 import Toggle from '../../Components/Toggle'
 import {release} from './index'
 import {ReleasesTable} from "./components/table"
-import * as Scry from '../../Services/Scry'
+import * as Scry from '../../services/scry'
 
 type ReleaseSearchProps = {
     // title?: string,

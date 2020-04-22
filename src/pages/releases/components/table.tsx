@@ -1,12 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import * as Scry from "../../../Services/Scry"
 
 import {Release, ReleaseProps} from './release'
-
-// const fetchReleases = () => {
-//     const options = {};
-//     return Scry.Releases(options)
-// };
 
 type ReleaseListProps = {
     releases: ReleaseProps[],

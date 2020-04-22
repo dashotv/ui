@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ReleasesTable} from "./components/table"
 import {ReleaseProps} from "./components/release"
-import * as Scry from "../../Services/Scry"
+import * as Scry from "../../services/scry"
 
 export const ReleasesList = () => {
     const [releases, setReleases] = useState<ReleaseProps[]>([]);
