@@ -1,13 +1,12 @@
-import React, {FunctionComponent} from 'react';
-import './index.css';
+import React, {FunctionComponent} from "react";
 import {Menu} from "semantic-ui-react";
 import {NavLink} from "react-router-dom";
 
-export type ReleaseMenuProps = {
+export type releasesMenuProps = {
 
 }
 
-export const ReleaseMenu: FunctionComponent<ReleaseMenuProps> = (o) =>
+export const ReleasesMenu: FunctionComponent<releasesMenuProps> = () =>
     <Menu secondary={true}>
         <Menu.Item as={NavLink} exact to="/releases">
             Index

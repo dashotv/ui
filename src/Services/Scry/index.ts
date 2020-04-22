@@ -2,16 +2,16 @@ import React from 'react';
 import {useAsync} from "react-async"
 import {stringify} from 'qs';
 
-export type ReleaseSearch = {
+export type ScryReleaseOptions = {
     source?: string,
     type?: string,
     name?: string,
-    year?: bigint,
+    year?: number,
     author?: string,
     group?: string,
-    season?: bigint,
-    episode?: bigint,
-    resolution?: bigint,
+    season?: number,
+    episode?: number,
+    resolution?: number,
     verified?: boolean,
     uncensored?: boolean,
     bluray?: boolean,
@@ -25,7 +25,7 @@ export type MediaSearch = {
     title: string,
 }
 
-export const Releases = async (options: ReleaseSearch) => {
+export const Releases = async (options: ScryReleaseOptions) => {
     const response = await fetch(`/api/scry/releases/?` + stringify(options));
     return response.json()
 };

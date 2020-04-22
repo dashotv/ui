@@ -5,7 +5,7 @@ import './index.css';
 
 import Home from "../Home"
 import Media from "../Media"
-import Releases from "../Releases"
+import {ReleasesIndex} from "../pages/releases/index"
 import logo from "./logo-small.png";
 import {Container} from "semantic-ui-react";
 
@@ -35,7 +35,7 @@ function App() {
                     <Container>
                         <Route exact path="/" component={Home}/>
                         <Route path="/media" component={Media}/>
-                        <Route path="/releases" component={Releases}/>
+                        <Route path="/releases" component={ReleasesIndex}/>
                     </Container>
                 </Switch>
             </div>
