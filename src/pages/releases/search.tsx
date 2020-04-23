@@ -3,24 +3,9 @@ import Toggle from '../../Components/Toggle'
 import {release} from './index'
 import {ReleasesTable} from "./components/table"
 import * as Scry from '../../services/scry'
+import {init} from "react-async";
 
-type ReleaseSearchProps = {
-    // title?: string,
-    // year?: string,
-    // season?: number,
-    // episode?: number,
-    // group?: string,
-    // author?: string,
-    // resolutions?: number[],
-    // sources?: string[],
-    // types?: string[],
-    // exact?: boolean,
-    // verified?: boolean,
-    // bd?: boolean,
-    // uncensored?: boolean,
-}
-
-type ReleasesSearchState = {
+type formData = {
     title?: string,
     year?: number,
     season?: number,
@@ -41,17 +26,20 @@ type ReleasesSearchState = {
     submitSuccess?: boolean;
 }
 
+const initial: formData = {
+    verified: true,
+    exact: true,
+    bd: false,
+    uncensored: false,
+    resolutions: [2160, 1080, 720],
+    types: ["tv", "anime", "movies"],
+    sources: ["yify"]
+}
+
 export const ReleasesSearch: FunctionComponent = () => {
     const [releases, setReleases] = useState<release[]>([]);
-    const [form, setForm] = useState<ReleasesSearchState>({
-        verified: true,
-        exact: true,
-        bd: false,
-        uncensored: false,
-        resolutions: [2160, 1080, 720],
-        types: ["tv", "anime", "movies"],
-        sources: ["yify"]
-    })
+    // const [verified, setVerified] = useState<boolean>(true);
+    const [form, setForm] = useState<formData>(initial)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -60,8 +48,16 @@ export const ReleasesSearch: FunctionComponent = () => {
         getReleases();
     }
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const {name, value} = e.target
+        console.log(e.target)
+        setForm({...form, [name]: value})
+    }
+
     const getReleases = () => {
-        Scry.Releases(optionsFromForm()).then((res) => {
+        const options = optionsFromForm();
+        console.log(options);
+        Scry.Releases(options).then((res) => {
             console.log(res)
             setReleases(res.Releases)
         });
@@ -96,59 +92,59 @@ export const ReleasesSearch: FunctionComponent = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="fields">
                         <div className="field">
-                            <input placeholder="title" type="text" value={form.title}/>
+                            <input placeholder="title" name="title" type="text" value={form.title} onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <input placeholder="year" type="text" value={form.year}/>
+                            <input placeholder="year" name="year" type="text" value={form.year} onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <input placeholder="season" type="text" value={form.season}/>
+                            <input placeholder="season" name="season" type="number" value={form.season} onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <input placeholder="episode" type="text" value={form.episode}/>
+                            <input placeholder="episode" name="episode" type="number" value={form.episode} onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <input placeholder="group" type="text" value={form.group}/>
+                            <input placeholder="group" name="group" type="text" value={form.group} onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <input placeholder="author" type="text" value={form.author}/>
+                            <input placeholder="author" name="author" type="text" value={form.author} onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <select name="resolution" className="ui search dropdown" value={form.resolution}>
+                            <select name="resolution" className="ui search dropdown" value={form.resolution} onBlur={handleInputChange}>
                                 <option value="">resolution</option>
                                 {
                                     form.resolutions.map((r) => {
-                                        return <option value={r}>{r}</option>
+                                        return <option key={r} value={r}>{r}</option>
                                     })
                                 }
                             </select>
                         </div>
                         <div className="field">
-                            <select name="source" className="ui search dropdown" value={form.source}>
+                            <select name="source" className="ui search dropdown" value={form.source} onBlur={handleInputChange}>
                                 <option value="">source</option>
                                 {
                                     form.sources.map((r) => {
-                                        return <option value={r}>{r}</option>
+                                        return <option key={r} value={r}>{r}</option>
                                     })
                                 }
                             </select>
                         </div>
                         <div className="field">
-                            <select name="type" className="ui search dropdown" value={form.type}>
+                            <select name="type" className="ui search dropdown" value={form.type} onBlur={handleInputChange}>
                                 <option value="">type</option>
                                 {
                                     form.types.map((r) => {
-                                        return <option value={r}>{r}</option>
+                                        return <option key={r} value={r}>{r}</option>
                                     })
                                 }
                             </select>
                         </div>
                         <div className="field">
                             <div className="ui basic icon buttons">
-                                <Toggle icon="target" value={form.exact}/>
-                                <Toggle icon="certificate" value={form.verified}/>
-                                <Toggle icon="disk" value={form.bd}/>
-                                <Toggle icon="beer" value={form.uncensored}/>
+                                <Toggle icon="target" name="exact" value={form.exact} onChange={handleInputChange}/>
+                                <Toggle icon="certificate" name="verified" value={form.verified} onChange={handleInputChange}/>
+                                <Toggle icon="disk" name="bd" value={form.bd} onChange={handleInputChange}/>
+                                <Toggle icon="beer" name="uncensored" value={form.uncensored} onChange={handleInputChange}/>
                             </div>
                         </div>
 
@@ -172,57 +168,3 @@ export const ReleasesSearch: FunctionComponent = () => {
         </div>
     )
 }
-// class ReleaseSearch extends Component<ReleaseSearchProps, ReleaseSearchState> {
-//     constructor(props: ReleaseSearchProps) {
-//         super(props);
-//
-//         form = {
-//             releases: [],
-//             verified: true,
-//             exact: true,
-//             bd: false,
-//             uncensored: false,
-//             resolutions: [2160, 1080, 720],
-//             types: ["tv", "anime", "movies"],
-//             sources: ["yify"]
-//         };
-//     }
-//
-//     handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-//         e.preventDefault();
-//         console.log("submit");
-//         this.fetchReleases().then(data => {
-//             console.log(data);
-//             this.setState((current)=>({...current, releases: data.Releases}))
-//         })
-//     }
-//
-//     fetchReleases() {
-//         return Scry.Releases(this.optionsFromState())
-//     }
-//
-//     optionsFromState(): Scry.ScryReleaseOptions {
-//         const options: Scry.ScryReleaseOptions = {
-//             source: form.source,
-//             type: form.type,
-//             name: form.title,
-//             year: form.year,
-//             author: form.author,
-//             group: form.group,
-//             season: form.season,
-//             episode: form.episode,
-//             resolution: form.resolution,
-//             verified: form.verified,
-//             uncensored: form.uncensored,
-//             bluray: form.bd,
-//             exact: form.exact,
-//         }
-//         return options
-//     }
-//
-//
-//     static defaultProps = {};
-//
-//     render() {
-//     }
-// };
