@@ -116,7 +116,7 @@ export const ReleasesSearch: FunctionComponent = () => {
                         </div>
                         <div className="field">
                             <select name="resolution" className="ui search dropdown" value={form.resolution}
-                                    onBlur={handleInputChange}>
+                                    onChange={handleInputChange}>
                                 <option value="">resolution</option>
                                 {
                                     form.resolutions.map((r) => {
@@ -127,7 +127,7 @@ export const ReleasesSearch: FunctionComponent = () => {
                         </div>
                         <div className="field">
                             <select name="source" className="ui search dropdown" value={form.source}
-                                    onBlur={handleInputChange}>
+                                    onChange={handleInputChange}>
                                 <option value="">source</option>
                                 {
                                     form.sources.map((r) => {
@@ -138,7 +138,7 @@ export const ReleasesSearch: FunctionComponent = () => {
                         </div>
                         <div className="field">
                             <select name="type" className="ui search dropdown" value={form.type}
-                                    onBlur={handleInputChange}>
+                                    onChange={handleInputChange}>
                                 <option value="">type</option>
                                 {
                                     form.types.map((r) => {
