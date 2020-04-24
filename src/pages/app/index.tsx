@@ -3,9 +3,9 @@ import {BrowserRouter as Router, Link, NavLink, Route, Switch} from "react-route
 
 import './index.css';
 
-import Home from "../Home"
-import Media from "../Media"
-import {ReleasesIndex} from "../pages/releases/index"
+import {HomeIndex} from "../home"
+import {MediaIndex} from "../media"
+import {ReleasesIndex} from "../releases"
 import logo from "./logo-small.png";
 import {Container} from "semantic-ui-react";
 
@@ -31,13 +31,13 @@ function App() {
                         </Container>
                     </div>
                 </header>
-                <Switch>
-                    <Container>
-                        <Route exact path="/" component={Home}/>
-                        <Route path="/media" component={Media}/>
+                <Container>
+                    <Switch>
+                        <Route exact path="/" component={HomeIndex}/>
+                        <Route path="/media" component={MediaIndex}/>
                         <Route path="/releases" component={ReleasesIndex}/>
-                    </Container>
-                </Switch>
+                    </Switch>
+                </Container>
             </div>
         </Router>
     );

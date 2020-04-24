@@ -1,12 +1,10 @@
 import React from 'react';
 import './index.css';
 
-function Home() {
+export function MediaIndex() {
     return (
         <div className="Media">
             You are media.
         </div>
     );
 }
-
-export default Home;

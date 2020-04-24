@@ -1,12 +1,10 @@
 import React from 'react';
 import './index.css';
 
-function Home() {
+export function HomeIndex() {
     return (
         <div className="Home">
             You are home.
         </div>
     );
 }
-
-export default Home;

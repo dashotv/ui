@@ -1,5 +1,3 @@
-import React from 'react';
-import {useAsync} from "react-async"
 import {stringify} from 'qs';
 
 export type ScryReleaseOptions = {

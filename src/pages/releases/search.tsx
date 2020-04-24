@@ -1,9 +1,8 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import Toggle from '../../Components/Toggle'
+import Toggle from '../../components/toggle'
 import {release} from './index'
 import {ReleasesTable} from "./components/table"
 import * as Scry from '../../services/scry'
-import {init} from "react-async";
 
 type formData = {
     title?: string,
@@ -44,13 +43,13 @@ export const ReleasesSearch: FunctionComponent = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log("submit");
-        console.log(form)
+        console.log(form);
         getReleases();
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name, value} = e.target
-        console.log(e.target)
+        console.log(name + " = " + value)
         setForm({...form, [name]: value})
     }
 
@@ -92,25 +91,32 @@ export const ReleasesSearch: FunctionComponent = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="fields">
                         <div className="field">
-                            <input placeholder="title" name="title" type="text" value={form.title} onChange={handleInputChange}/>
+                            <input placeholder="title" name="title" type="text" value={form.title}
+                                   onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <input placeholder="year" name="year" type="text" value={form.year} onChange={handleInputChange}/>
+                            <input placeholder="year" name="year" type="text" value={form.year}
+                                   onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <input placeholder="season" name="season" type="number" value={form.season} onChange={handleInputChange}/>
+                            <input placeholder="season" name="season" type="number" value={form.season}
+                                   onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <input placeholder="episode" name="episode" type="number" value={form.episode} onChange={handleInputChange}/>
+                            <input placeholder="episode" name="episode" type="number" value={form.episode}
+                                   onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <input placeholder="group" name="group" type="text" value={form.group} onChange={handleInputChange}/>
+                            <input placeholder="group" name="group" type="text" value={form.group}
+                                   onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <input placeholder="author" name="author" type="text" value={form.author} onChange={handleInputChange}/>
+                            <input placeholder="author" name="author" type="text" value={form.author}
+                                   onChange={handleInputChange}/>
                         </div>
                         <div className="field">
-                            <select name="resolution" className="ui search dropdown" value={form.resolution} onBlur={handleInputChange}>
+                            <select name="resolution" className="ui search dropdown" value={form.resolution}
+                                    onBlur={handleInputChange}>
                                 <option value="">resolution</option>
                                 {
                                     form.resolutions.map((r) => {
@@ -120,7 +126,8 @@ export const ReleasesSearch: FunctionComponent = () => {
                             </select>
                         </div>
                         <div className="field">
-                            <select name="source" className="ui search dropdown" value={form.source} onBlur={handleInputChange}>
+                            <select name="source" className="ui search dropdown" value={form.source}
+                                    onBlur={handleInputChange}>
                                 <option value="">source</option>
                                 {
                                     form.sources.map((r) => {
@@ -130,7 +137,8 @@ export const ReleasesSearch: FunctionComponent = () => {
                             </select>
                         </div>
                         <div className="field">
-                            <select name="type" className="ui search dropdown" value={form.type} onBlur={handleInputChange}>
+                            <select name="type" className="ui search dropdown" value={form.type}
+                                    onBlur={handleInputChange}>
                                 <option value="">type</option>
                                 {
                                     form.types.map((r) => {
@@ -142,9 +150,11 @@ export const ReleasesSearch: FunctionComponent = () => {
                         <div className="field">
                             <div className="ui basic icon buttons">
                                 <Toggle icon="target" name="exact" value={form.exact} onChange={handleInputChange}/>
-                                <Toggle icon="certificate" name="verified" value={form.verified} onChange={handleInputChange}/>
+                                <Toggle icon="certificate" name="verified" value={form.verified}
+                                        onChange={handleInputChange}/>
                                 <Toggle icon="disk" name="bd" value={form.bd} onChange={handleInputChange}/>
-                                <Toggle icon="beer" name="uncensored" value={form.uncensored} onChange={handleInputChange}/>
+                                <Toggle icon="beer" name="uncensored" value={form.uncensored}
+                                        onChange={handleInputChange}/>
                             </div>
                         </div>
 
