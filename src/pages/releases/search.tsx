@@ -57,8 +57,6 @@ export const ReleasesSearch: FunctionComponent = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("submit");
-        console.log(form);
         getReleases();
     }
 
