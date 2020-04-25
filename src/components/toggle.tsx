@@ -12,7 +12,7 @@ type ToggleState = {
     active: boolean,
 }
 
-class Toggle extends Component<ToggleProps, ToggleState> {
+export class Toggle extends Component<ToggleProps, ToggleState> {
     static defaultProps = { icon: "", value: false, onChange: null };
     state = { active: this.props.value};
     handleClick = (e: any) => {
@@ -35,5 +35,3 @@ class Toggle extends Component<ToggleProps, ToggleState> {
         )
     }
 }
-
-export default Toggle

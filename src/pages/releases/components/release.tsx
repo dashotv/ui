@@ -1,5 +1,5 @@
 import React, {FunctionComponent} from 'react';
-import {Icon, Label} from "semantic-ui-react";
+import {Button, Icon, Label, Table} from "semantic-ui-react";
 
 // const renderSwitch = (value: string | undefined) => {
 //     switch (value) {
@@ -21,20 +21,20 @@ const renderResolution = (value: string | undefined) => {
     return ""
 };
 
-const renderVerified = (value: boolean | undefined) => {
-    return <Icon name={"certificate"} disabled={!value}/>
+const renderIcon = (icon: any, value: boolean | undefined) => {
+    return <Icon name={icon} disabled={!value}/>
 }
 
 export type ReleaseProps = {
     id?: string,
     name?: string,
-    year?: bigint,
+    year?: number,
     display?: string,
     raw?: string,
     title?: string,
     description?: string,
-    season?: bigint,
-    episode?: bigint,
+    season?: number,
+    episode?: number,
     volume?: string,
     size?: string,
     encoding?: string,
@@ -57,17 +57,31 @@ export type ReleaseProps = {
 }
 
 export const Release: FunctionComponent<ReleaseProps> = (release) =>
-    <tr key={release.id}>
-        <td className="collapsing">{renderVerified(release.verified)}</td>
-        <td className="collapsing">
-            <Label horizontal basic color={"blue"} size={"tiny"}>{release.source}</Label>
-            <Label horizontal basic size={"tiny"}>{release.type}</Label>
-        </td>
-        <td>{release.display} {renderResolution(release.resolution)} {release.groupauthor}</td>
-        <td className="collapsing">{release.size}</td>
-        <td className="collapsing">{release.published_at}</td>
-        <td className="collapsing"></td>
-    </tr>
+    <Table.Row key={release.id}>
+        <Table.Cell className="collapsing">
+            {renderIcon("certificate", release.verified)}
+            {renderIcon("disk", release.bluray)}
+            {renderIcon("beer", release.uncensored)}
+            <Label horizontal basic color={"blue"} size={"mini"} title={release.source}>{release.source?.charAt(0)}</Label>
+            <Label horizontal basic size={"mini"} title={release.type}>{release.type?.charAt(0)}</Label>
+        </Table.Cell>
+        {/*<Table.Cell collapsing>*/}
+            {/*<Label horizontal basic color={"blue"} size={"tiny"}>{release.source}</Label>*/}
+            {/*<Label horizontal basic size={"tiny"}>{release.type}</Label>*/}
+            {/*{release.source}:{release.type}*/}
+        {/*</Table.Cell>*/}
+        <Table.Cell>{release.display} {renderResolution(release.resolution)} {release.groupauthor}</Table.Cell>
+        <Table.Cell collapsing>{release.size}</Table.Cell>
+        <Table.Cell collapsing>{release.published_at}</Table.Cell>
+        <Table.Cell collapsing>
+            <Button.Group size={"mini"}>
+                <Button icon={"undo"}/>
+                <Button icon={"search"}/>
+                <Button icon={"download"}/>
+                <Button icon={"times circle"}/>
+            </Button.Group>
+        </Table.Cell>
+    </Table.Row>
 
 /*
     <Item>
