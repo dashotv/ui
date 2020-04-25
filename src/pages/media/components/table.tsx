@@ -8,7 +8,7 @@ type MediaListProps = {
 
 export const MediaTable: FunctionComponent<MediaListProps> = ({media}: MediaListProps) => {
     return (
-        <Card.Group  itemsPerRow={4}>
+        <Card.Group stackable>
             {(media || []).map((value: MediaProps) => {
                 return <Media
                             key={value.id}
