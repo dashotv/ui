@@ -22,7 +22,7 @@ export type release = {
 
 export const ReleasesIndex = () => {
     return (
-        <div className="Releases">
+        <div>
             <div className="ui grid">
                 <div className="row">
                     <ReleasesMenu/>

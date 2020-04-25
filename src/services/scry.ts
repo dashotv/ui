@@ -17,10 +17,10 @@ export type ScryReleaseOptions = {
 }
 
 export type MediaSearch = {
-    type: string,
-    name: string,
-    display: string,
-    title: string,
+    type?: string,
+    name?: string,
+    display?: string,
+    title?: string,
 }
 
 export const Releases = async (options: ScryReleaseOptions) => {
@@ -29,6 +29,6 @@ export const Releases = async (options: ScryReleaseOptions) => {
 };
 
 export const Media = async (options: MediaSearch) => {
-    const response = await fetch("/api/scry/media?" + stringify(options))
+    const response = await fetch("/api/scry/media/?" + stringify(options))
     return response.json()
 };

@@ -3,7 +3,7 @@ module.exports = function(app) {
     app.use(
         '/api/scry/*',
         createProxyMiddleware({
-            target: 'http://localhost:10080',
+            target: 'http://192.168.42.46:10080',
             changeOrigin: true,
             pathRewrite: {
                 '^/api/scry': '/',
