@@ -91,7 +91,7 @@ export const ReleasesSearch: FunctionComponent = () => {
         const options: Scry.ScryReleaseOptions = {
             source: form.source,
             type: form.type,
-            name: form.title,
+            text: form.title,
             year: form.year,
             author: form.author,
             group: form.group,
@@ -144,11 +144,11 @@ export const ReleasesSearch: FunctionComponent = () => {
                         </Form.Field>
                         <Form.Field>
                             <Button.Group>
-                                <Toggle icon="target" name="exact" value={form.exact} onChange={handleInputChange}/>
-                                <Toggle icon="certificate" name="verified" value={form.verified}
+                                <Toggle icon="target" name="exact" value={form.exact} title={"exact"} onChange={handleInputChange}/>
+                                <Toggle icon="certificate" name="verified" value={form.verified} title={"verified"}
                                         onChange={handleInputChange}/>
-                                <Toggle icon="disk" name="bd" value={form.bd} onChange={handleInputChange}/>
-                                <Toggle icon="beer" name="uncensored" value={form.uncensored}
+                                <Toggle icon="disk" name="bd" value={form.bd} title={"bluray"} onChange={handleInputChange}/>
+                                <Toggle icon="beer" name="uncensored" value={form.uncensored} title={"uncensored"}
                                         onChange={handleInputChange}/>
                             </Button.Group>
                         </Form.Field>

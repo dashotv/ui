@@ -3,7 +3,7 @@ import {stringify} from 'qs';
 export type ScryReleaseOptions = {
     source?: string,
     type?: string,
-    name?: string,
+    text?: string,
     year?: number,
     author?: string,
     group?: string,

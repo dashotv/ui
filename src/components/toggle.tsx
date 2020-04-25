@@ -3,6 +3,7 @@ import { Button } from 'semantic-ui-react'
 
 type ToggleProps = {
     name: string,
+    title?: string,
     icon: string,
     value: boolean,
     onChange?: (e: any) => void,
@@ -29,7 +30,7 @@ export class Toggle extends Component<ToggleProps, ToggleState> {
         const { icon } = this.props;
 
         return (
-            <Button className="ui button" toggle active={active} icon={true} onClick={this.handleClick}>
+            <Button className="ui button" toggle active={active} title={this.props.title} icon={true} onClick={this.handleClick}>
                 <i className={"icon " + icon }/>
             </Button>
         )

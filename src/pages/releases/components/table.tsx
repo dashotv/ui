@@ -28,7 +28,7 @@ export const ReleasesTable: FunctionComponent<ReleaseListProps> = ({releases}: R
                 </Table.Row>
             </Table.Header>
             <Table.Body>
-                {releases.map((value: ReleaseProps) => {
+                {(releases||[]).map((value: ReleaseProps) => {
                     return <Release key={value.id}
                                     id={value.id}
                                     name={value.name}
