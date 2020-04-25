@@ -32,3 +32,10 @@ export const Media = async (options: MediaSearch) => {
     const response = await fetch("/api/scry/media/?" + stringify(options))
     return response.json()
 };
+
+export const Upcoming = async () => {
+    const options = {
+        type: "episode",
+    }
+    return Media(options)
+}
