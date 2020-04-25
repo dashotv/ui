@@ -62,7 +62,6 @@ export const ReleasesSearch: FunctionComponent = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name, value} = e.target
-        console.log(name + " = " + value)
         setForm({...form, [name]: value})
     }
 
