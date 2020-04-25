@@ -74,9 +74,7 @@ export const ReleasesSearch: FunctionComponent = () => {
 
     const getReleases = () => {
         const options = optionsFromForm();
-        console.log(options);
         Scry.Releases(options).then((res) => {
-            console.log(res)
             setReleases(res.Releases)
         });
     }
@@ -105,7 +103,7 @@ export const ReleasesSearch: FunctionComponent = () => {
     }
 
     return (
-        <div className={"fluid"}>
+        <div>
             <div>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group>
