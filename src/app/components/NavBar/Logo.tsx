@@ -1,12 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
+import Image from './assets/logo-small.png';
 
 export function Logo() {
   return (
-    <Wrapper>
-      <Title>React Boilerplate</Title>
-      <Description>Create React App Template</Description>
-    </Wrapper>
+      <Wrapper>
+        <img alt="logo small" src={Image}/>
+        <Title>dashotv</Title>
+      </Wrapper>
   );
 }
 
@@ -22,8 +23,8 @@ const Title = styled.div`
   margin-right: 1rem;
 `;
 
-const Description = styled.div`
-  font-size: 0.875rem;
-  color: ${p => p.theme.textSecondary};
-  font-weight: normal;
-`;
+// const Description = styled.div`
+//   font-size: 0.875rem;
+//   color: ${p => p.theme.textSecondary};
+//   font-weight: normal;
+// `;
