@@ -1,10 +1,3 @@
-/**
- * index.tsx
- *
- * This is the entry file for the application, only setup and boilerplate
- * code.
- */
-
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 
@@ -17,14 +10,12 @@ import FontFaceObserver from 'fontfaceobserver';
 import 'sanitize.css/sanitize.css';
 
 import { App } from 'app';
-
 import { HelmetProvider } from 'react-helmet-async';
-
 import { configureAppStore } from 'store/configureStore';
-
-import { ThemeProvider } from 'styles/theme/ThemeProvider';
-
-import reportWebVitals from 'reportWebVitals';
+// import reportWebVitals from 'reportWebVitals';
+// import { ThemeProvider } from 'styles/theme/ThemeProvider';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 // Initialize languages
 import './locales/i18n';
@@ -38,19 +29,28 @@ openSansObserver.load().then(() => {
   document.body.classList.add('fontLoaded');
 });
 
-const store = configureAppStore();
+// const store = configureAppStore();
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 ReactDOMClient.createRoot(MOUNT_NODE!).render(
-  <Provider store={store}>
-    <ThemeProvider>
+  // <Provider store={store}>
+  <ThemeProvider theme={darkTheme}>
+    <div>
+      <CssBaseline />
       <HelmetProvider>
         <React.StrictMode>
           <App />
         </React.StrictMode>
       </HelmetProvider>
-    </ThemeProvider>
-  </Provider>,
+    </div>
+  </ThemeProvider>
+  // </Provider>,
 );
 
 // Hot reloadable translation json files
@@ -63,4 +63,4 @@ if (module.hot) {
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// reportWebVitals();
