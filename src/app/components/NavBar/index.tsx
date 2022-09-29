@@ -12,9 +12,13 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import Logo from './assets/logo-small.png'
+import Logo from './assets/logo-small.png';
+import Search from './Search';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = [
+  {name: "Media", page: "/media"},
+  {name: "Releases", page: "/releases"}
+]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const NavBar = () => {
@@ -91,9 +95,11 @@ const NavBar = () => {
                     display: { xs: 'block', md: 'none' },
                   }}
               >
-                {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
+                {pages.map(({name, page}) => (
+                    <MenuItem key={name} onClick={handleCloseNavMenu} href={page}>
+                      <Typography textAlign="center">
+                        {name}
+                      </Typography>
                     </MenuItem>
                 ))}
               </Menu>
@@ -118,15 +124,20 @@ const NavBar = () => {
               DASHOTV
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
+              {pages.map(({name, page}) => (
                   <Button
-                      key={page}
+                      key={name}
                       onClick={handleCloseNavMenu}
+                      href={page}
                       sx={{ my: 2, color: 'white', display: 'block' }}
                   >
-                    {page}
+                    {name}
                   </Button>
               ))}
+            </Box>
+
+            <Box sx={{ flexGrow: 0, mr: 3 }}>
+              <Search />
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>

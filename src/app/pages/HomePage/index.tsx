@@ -4,6 +4,11 @@ import {Helmet} from 'react-helmet-async';
 import {Masthead} from './Masthead';
 import {Features} from './Features';
 import {PageWrapper} from 'app/components/PageWrapper';
+import Container from '@mui/material/Container';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
+
 import {useEffect, useState} from "react";
 
 export function HomePage() {
@@ -36,23 +41,29 @@ export function HomePage() {
               content="A React Boilerplate application homepage"
           />
         </Helmet>
-        <PageWrapper>
-          <div>
+        <Container>
+          <ImageList rowHeight={215} cols={8}>
             {loading && <div>loading...</div>}
             {error && (
                 <div>{`There is a problem fetching the post data - ${error}`}</div>
             )}
-            <ul>
-              {data && data.map(({ id, title, search, season_number, episode_number, release_date }) => (
-                      <li key={id}>
-                        <h3>{search} {season_number}x{episode_number} {title} {release_date}</h3>
-                      </li>
+              {data && data.map(({ id, title, search, season_number, episode_number, release_date, cover }) => (
+                    <ImageListItem key={id}>
+                      <img
+                          src={`${cover}?w=135&h=200`}
+                          alt="cover"
+                          loading="lazy"
+                      />
+                      <ImageListItemBar
+                          title={search}
+                          subtitle={`${season_number}x${episode_number} ${title}`}
+                      />
+                    </ImageListItem>
                   ))}
-            </ul>
-          </div>
+          </ImageList>
           {/*<Masthead/>*/}
           {/*<Features/>*/}
-        </PageWrapper>
+        </Container>
       </>
   );
 }
