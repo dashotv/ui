@@ -3,6 +3,14 @@ import styled, { keyframes } from 'styled-components/macro';
 
 interface Props extends SvgProps {}
 
+export const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const LoadingIndicator = (props: Props) => (
   <Svg viewBox="-24 -24 48 48" small={props.small}>
     <Circle cx="0" cy="0" r="20" fill="none" strokeWidth="4"></Circle>
