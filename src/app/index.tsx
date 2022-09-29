@@ -8,32 +8,32 @@
 
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route, Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
 import { GlobalStyle } from '../styles/global-styles';
 
 import { HomePage } from './pages/HomePage';
-import { NotFoundPage } from './pages/NotFoundPage/Loadable';
-import { useTranslation } from 'react-i18next';
-import NavBar from "./components/NavBar";
+import { MediaPage } from './pages/MediaPage';
+import { ReleasesPage } from './pages/ReleasesPage';
+import { NotFoundPage } from './pages/NotFoundPage';
+import NavBar from './components/NavBar';
 
 export function App() {
-  // const { i18n } = useTranslation();
   return (
-    <BrowserRouter>
-      <Helmet
-        titleTemplate="%s - DashoTV"
-        defaultTitle="DashoTV"
-      >
+    <Router history={createBrowserHistory()}>
+      <Helmet titleTemplate="%s - DashoTV" defaultTitle="DashoTV">
         <meta name="description" content="A React Boilerplate application" />
       </Helmet>
-      <NavBar />
 
+      <NavBar />
       <Switch>
         <Route exact path={process.env.PUBLIC_URL + '/'} component={HomePage} />
+        <Route path="/media" component={MediaPage} />
+        <Route path="/releases" component={ReleasesPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
-    </BrowserRouter>
+    </Router>
   );
 }
