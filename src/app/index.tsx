@@ -20,7 +20,7 @@ import { GlobalStyle } from '../styles/global-styles';
 
 export function App() {
   return (
-    <Router>
+    <>
       <Helmet titleTemplate="%s - DashoTV" defaultTitle="DashoTV">
         <meta name="description" content="A React Boilerplate application" />
       </Helmet>
@@ -33,6 +33,6 @@ export function App() {
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
-    </Router>
+    </>
   );
 }

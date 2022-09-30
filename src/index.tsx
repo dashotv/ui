@@ -3,7 +3,7 @@ import 'react-app-polyfill/stable';
 
 import * as React from 'react';
 import * as ReactDOMClient from 'react-dom/client';
-import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import FontFaceObserver from 'fontfaceobserver';
 
 // Use consistent styling
@@ -11,9 +11,6 @@ import 'sanitize.css/sanitize.css';
 
 import { App } from 'app';
 import { HelmetProvider } from 'react-helmet-async';
-import { configureAppStore } from 'store/configureStore';
-// import reportWebVitals from 'reportWebVitals';
-// import { ThemeProvider } from 'styles/theme/ThemeProvider';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -41,14 +38,14 @@ const darkTheme = createTheme({
 ReactDOMClient.createRoot(MOUNT_NODE!).render(
   // <Provider store={store}>
   <ThemeProvider theme={darkTheme}>
-    <div>
+    <Router>
       <CssBaseline />
       <HelmetProvider>
         <React.StrictMode>
           <App />
         </React.StrictMode>
       </HelmetProvider>
-    </div>
+    </Router>
   </ThemeProvider>,
   // </Provider>,
 );
