@@ -10,10 +10,6 @@ export default function Media(props) {
   }
   return (
     <ImageList cols={5}>
-      {props.loading && <div>loading...</div>}
-      {props.error && (
-        <div>{`There is a problem fetching the post data - ${props.error}`}</div>
-      )}
       {props.data.map(({ id, title, series_id, display, cover }) => (
         <Link key={id} to={`/media/series/${series_id}`}>
           <ImageListItem>

@@ -2,30 +2,44 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
+import Pagination from '@mui/material/Pagination';
+import Grid from '@mui/material/Grid';
 import {
   LoadingIndicator,
   LoadingWrapper,
 } from '../../components/LoadingIndicator';
 import Media from '../../components/Media';
+import Typography from '@mui/material/Typography';
+
+const pagesize = 25;
 
 export function AllSeries() {
   const [data, setData] = useState([]);
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getData = async () => {
+    try {
+      const response = await axios.get(`/api/tower/series/?page=${page}`);
+      console.log(response.data);
+      setData(response.data.results);
+      setCount(response.data.count);
+    } catch (err) {
+      // @ts-ignore
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+    getData();
+  };
+
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get('/api/tower/series/');
-        console.log(response.data);
-        setData(response.data);
-      } catch (err) {
-        // @ts-ignore
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
     getData();
   }, []);
 
@@ -38,6 +52,19 @@ export function AllSeries() {
           content="A React Boilerplate application homepage"
         />
       </Helmet>
+      <Container sx={{ m: 2 }}>
+        <Grid container>
+          <Grid item xs={6}>
+            <Typography variant="h5">All Series</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Pagination
+              count={Math.ceil(count / pagesize)}
+              onChange={handleChange}
+            />
+          </Grid>
+        </Grid>
+      </Container>
       <Container>
         {loading && (
           <LoadingWrapper>
