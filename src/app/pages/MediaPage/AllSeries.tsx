@@ -36,12 +36,11 @@ export function AllSeries() {
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    getData();
   };
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [page]);
 
   return (
     <>
