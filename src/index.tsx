@@ -41,9 +41,9 @@ ReactDOMClient.createRoot(MOUNT_NODE!).render(
     <Router>
       <CssBaseline />
       <HelmetProvider>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
+        {/*<React.StrictMode>*/}
+        <App />
+        {/*</React.StrictMode>*/}
       </HelmetProvider>
     </Router>
   </ThemeProvider>,

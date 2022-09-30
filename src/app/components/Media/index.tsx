@@ -11,7 +11,7 @@ export default function Media(props) {
   return (
     <ImageList cols={5}>
       {props.data.map(({ id, title, series_id, display, cover }) => (
-        <Link key={id} to={`/media/series/${series_id}`}>
+        <Link key={id} to={`/media/series/${series_id || id}`}>
           <ImageListItem>
             <img
               src={`${cover}?w=135&h=200`}
