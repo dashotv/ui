@@ -1,15 +1,9 @@
 import * as React from 'react';
-import {styled, alpha} from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchContainer = styled('div')(({theme}) => ({
+const SearchContainer = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -24,7 +18,7 @@ const SearchContainer = styled('div')(({theme}) => ({
   },
 }));
 
-const SearchIconWrapper = styled('div')(({theme}) => ({
+const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
   position: 'absolute',
@@ -34,7 +28,7 @@ const SearchIconWrapper = styled('div')(({theme}) => ({
   justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({theme}) => ({
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
@@ -55,12 +49,12 @@ export default function Search() {
   return (
     <SearchContainer>
       <SearchIconWrapper>
-        <SearchIcon/>
+        <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-          placeholder="Search…"
-          inputProps={{'aria-label': 'search'}}
+        placeholder="Search…"
+        inputProps={{ 'aria-label': 'search' }}
       />
     </SearchContainer>
-  )
+  );
 }

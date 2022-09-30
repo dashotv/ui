@@ -8,10 +8,7 @@
 
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Switch, Route, Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-
-import { GlobalStyle } from '../styles/global-styles';
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 
 import { HomePage } from './pages/HomePage';
 import { MediaPage } from './pages/MediaPage';
@@ -19,9 +16,11 @@ import { ReleasesPage } from './pages/ReleasesPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import NavBar from './components/NavBar';
 
+import { GlobalStyle } from '../styles/global-styles';
+
 export function App() {
   return (
-    <Router history={createBrowserHistory()}>
+    <Router>
       <Helmet titleTemplate="%s - DashoTV" defaultTitle="DashoTV">
         <meta name="description" content="A React Boilerplate application" />
       </Helmet>

@@ -49,7 +49,7 @@ ReactDOMClient.createRoot(MOUNT_NODE!).render(
         </React.StrictMode>
       </HelmetProvider>
     </div>
-  </ThemeProvider>
+  </ThemeProvider>,
   // </Provider>,
 );
 
