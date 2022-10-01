@@ -1,15 +1,14 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
+
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import Media from '../../components/Media';
-import { Link } from 'react-router-dom';
 import {
   LoadingIndicator,
   LoadingWrapper,
 } from '../../components/LoadingIndicator';
-
-import { useEffect, useState } from 'react';
 
 export function HomePage() {
   const [data, setData] = useState([]);
@@ -41,7 +40,7 @@ export function HomePage() {
           content="A React Boilerplate application homepage"
         />
       </Helmet>
-      <Container>
+      <Container maxWidth="xl">
         {loading && (
           <LoadingWrapper>
             <LoadingIndicator />

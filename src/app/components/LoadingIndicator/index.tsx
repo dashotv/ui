@@ -55,4 +55,5 @@ const Circle = styled.circle`
   animation: ${dash} ${speed}s ease-in-out infinite;
   stroke: ${p => p.theme.primary};
   stroke-linecap: round;
+  color: white;
 `;
