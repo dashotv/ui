@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -9,12 +10,15 @@ import './styles.css';
 export default function Media(props) {
   return (
     <div>
-      {props.data.map(({ id, title, series_id, display, cover }) => (
-        <Medium key={id} id={series_id || id} title={title} display={display}>
-          <Background image={cover} />
-          <Footer primary={title} secondary={display} />
-        </Medium>
-      ))}
+      {props.data.map(
+        ({ id, title, series_id, display, cover, release_date }) => (
+          <Medium key={id} id={series_id || id} title={title} display={display}>
+            <Background image={cover} />
+            <Header text={release_date} />
+            <Footer primary={title} secondary={display} />
+          </Medium>
+        ),
+      )}
     </div>
   );
 }
@@ -24,6 +28,27 @@ function Footer(props) {
     <div className="footer">
       <div className="primary">{props.primary}</div>
       <div className="secondary">{props.secondary}</div>
+    </div>
+  );
+}
+
+function Header(props) {
+  const [date, setDate] = useState<string | null>(null);
+  function pad(num: number) {
+    return num.toString().padStart(2, '0');
+  }
+  useEffect(() => {
+    const inc = new Date(props.text);
+    const d = [
+      inc.getFullYear(),
+      pad(inc.getMonth() + 1),
+      pad(inc.getDate()),
+    ].join('-');
+    setDate(d);
+  }, []);
+  return (
+    <div className="header">
+      <div className="primary">{date}</div>
     </div>
   );
 }
