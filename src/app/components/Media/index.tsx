@@ -12,8 +12,18 @@ export default function Media(props) {
       {props.data.map(({ id, title, series_id, display, cover }) => (
         <Medium key={id} id={series_id || id} title={title} display={display}>
           <Background image={cover} />
+          <Footer primary={title} secondary={display} />
         </Medium>
       ))}
+    </div>
+  );
+}
+
+function Footer(props) {
+  return (
+    <div className="footer">
+      <div className="primary">{props.primary}</div>
+      <div className="secondary">{props.secondary}</div>
     </div>
   );
 }

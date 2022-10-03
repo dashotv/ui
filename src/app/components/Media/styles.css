@@ -1,15 +1,47 @@
 .medium {
     height: 295px;
     width: 200px;
-    margin: 0.5rem;
+    margin: 0.3rem;
     float: left;
     /*border: 1px solid white;*/
 }
 .medium .background {
     height: 295px;
     width: 200px;
+    z-index: 100;
 }
 .medium .background img {
     height: 295px;
     width: 200px;
+}
+.medium .footer {
+    position: relative;
+    bottom: 50px;
+    left: 0px;
+    height: 50px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.medium .footer .primary {
+    font-weight: bold;
+}
+.medium .footer .secondary {
+    font-weight: normal;
+    font-size: .8rem;
+}
+.medium a:link {
+    text-decoration: none;
+}
+.medium a:hover {
+    text-decoration: none;
+}
+.medium a:visited {
+    text-decoration: none;
+}
+.medium a:active {
+    text-decoration: none;
 }
