@@ -1,6 +1,7 @@
+import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import * as React from 'react';
+import Moment from 'react-moment';
 import './styles.css';
 
 export function MediumSmall(props) {
@@ -25,24 +26,11 @@ function Footer(props) {
 }
 
 function Header(props) {
-  const [date, setDate] = useState<string | null>(null);
-  function pad(num: number) {
-    return num.toString().padStart(2, '0');
-  }
-
-  useEffect(() => {
-    const inc = new Date(props.text);
-    const d = [
-      inc.getFullYear(),
-      pad(inc.getMonth() + 1),
-      pad(inc.getDate() + 1),
-    ].join('-');
-    setDate(d);
-  }, [date]);
-
   return (
     <div className="header">
-      <div className="primary">{date}</div>
+      <div className="primary">
+        <Moment format="MM/DD">{props.text}</Moment>
+      </div>
     </div>
   );
 }
