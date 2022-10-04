@@ -5,30 +5,42 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import Media from '../../components/Media';
+import Downloads from '../../components/Downloads';
 import {
   LoadingIndicator,
   LoadingWrapper,
 } from '../../components/LoadingIndicator';
 
 export function HomePage() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [upcoming, setUpcoming] = useState([]);
+  const [downloads, setDownloads] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getData = async () => {
+    const getUpcoming = async () => {
       try {
         const response = await axios.get('/api/tower/upcoming/');
         console.log(response.data);
-        setData(response.data);
+        setUpcoming(response.data);
       } catch (err) {
         // @ts-ignore
         setError(err.message);
-      } finally {
-        setLoading(false);
       }
     };
-    getData();
+
+    const getDownloads = async () => {
+      try {
+        const response = await axios.get('/api/tower/downloads/');
+        console.log(response.data);
+        setDownloads(response.data);
+      } catch (err) {
+        // @ts-ignore
+        setError(err.message);
+      }
+    };
+
+    getUpcoming();
+    getDownloads();
   }, []);
 
   return (
@@ -41,15 +53,16 @@ export function HomePage() {
         />
       </Helmet>
       <Container maxWidth="xl">
-        {loading && (
-          <LoadingWrapper>
-            <LoadingIndicator />
-          </LoadingWrapper>
-        )}
+        {/*{loading && (*/}
+        {/*  <LoadingWrapper>*/}
+        {/*    <LoadingIndicator />*/}
+        {/*  </LoadingWrapper>*/}
+        {/*)}*/}
         {error && (
           <div>{`There is a problem fetching the post data - ${error}`}</div>
         )}
-        {data && <Media data={data} />}
+        {downloads && <Downloads data={downloads} />}
+        {upcoming && <Media data={upcoming} />}
       </Container>
     </>
   );
