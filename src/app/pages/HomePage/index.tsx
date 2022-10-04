@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
-import Media from '../../components/Media';
 import Downloads from '../../components/Downloads';
+import Media from '../../components/Media';
 import {
   LoadingIndicator,
   LoadingWrapper,
@@ -61,8 +61,8 @@ export function HomePage() {
         {error && (
           <div>{`There is a problem fetching the post data - ${error}`}</div>
         )}
-        {downloads && <Downloads data={downloads} />}
-        {upcoming && <Media data={upcoming} />}
+        <Downloads data={downloads} />
+        <Media data={upcoming} />
       </Container>
     </>
   );

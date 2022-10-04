@@ -2,6 +2,8 @@ import { SearchParams } from './search_params';
 import { Path } from './path';
 
 export interface Medium {
+  id?: string;
+  series_id?: string;
   type?: string;
   kind?: string;
   source?: string;

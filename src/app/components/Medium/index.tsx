@@ -35,7 +35,7 @@ function Header(props) {
     const d = [
       inc.getFullYear(),
       pad(inc.getMonth() + 1),
-      pad(inc.getDate()),
+      pad(inc.getDate() + 1),
     ].join('-');
     setDate(d);
   }, [date]);
