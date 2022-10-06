@@ -4,9 +4,6 @@ import { MediumSmall } from '../Medium';
 import { useEffect } from 'react';
 
 export default function Downloads(props) {
-  useEffect(() => {
-    console.log(props);
-  }, [props.data]);
   return (
     <div>
       {props.data.map(({ id, medium }) => (

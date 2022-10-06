@@ -8,14 +8,12 @@ import { Movie } from './Movie';
 
 export function MediaPage() {
   return (
-    <Container>
-      <Switch>
-        <Route exact path="/media" component={AllSeries} />
-        <Route exact path="/media/series/:id" component={Series} />
-        <Route exact path="/media/movies" component={AllMovies} />
-        <Route exact path="/media/movies/:id" component={Movie} />
-      </Switch>
-    </Container>
+    <Switch>
+      <Route exact path="/media" component={AllSeries} />
+      <Route exact path="/media/series/:id" component={Series} />
+      <Route exact path="/media/movies" component={AllMovies} />
+      <Route exact path="/media/movies/:id" component={Movie} />
+    </Switch>
   );
 }
 

@@ -1,19 +1,154 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Moment from 'react-moment';
+
+import { Button, IconButton, ButtonGroup } from '@mui/material';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import ReplayIcon from '@mui/icons-material/Replay';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import BuildIcon from '@mui/icons-material/Build';
+import StarIcon from '@mui/icons-material/Star';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import './styles.css';
+import axios from 'axios';
+
+const tags = [
+  {
+    name: 'Release',
+    value: '2022-10-11',
+  },
+  {
+    name: 'Source',
+    value: 'TVDB',
+  },
+  {
+    name: 'Source ID',
+    value: '1238435',
+  },
+];
 
 export function MediumSmall(props) {
   return (
-    <div className="medium">
+    <div className="medium small">
       <Link to={`/media/series/${props.id}`}>
-        <Background image={props.background} />
+        <Cover image={props.background} />
         <Header text={props.release} />
         <Footer primary={props.primary} secondary={props.secondary} />
       </Link>
     </div>
   );
+}
+
+export function MediumLarge(props) {
+  function clickSeason(ev) {
+    const id = ev.currentTarget.id;
+    console.log(`clickSeason: ${id}`);
+    props.changeSeason(id);
+  }
+
+  return (
+    <div className="medium large">
+      <Background image={props.data.background} />
+      <div className="overlay" />
+      <div className="menu">
+        <Cover image={props.data.cover} />
+      </div>
+      <div className="main">
+        <div className="titlebar">
+          <div className="title">
+            <span>{props.data.title}</span>
+          </div>
+          <div className="buttons">
+            <ButtonGroup>
+              <IconButton size="small">
+                <CloudDownloadIcon />
+              </IconButton>
+              <IconButton size="small">
+                <VisibilityOffIcon />
+              </IconButton>
+              <IconButton size="small">
+                <ReplayIcon />
+              </IconButton>
+              <IconButton size="small">
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton size="small">
+                <BuildIcon />
+              </IconButton>
+              <IconButton size="small">
+                <StarIcon />
+              </IconButton>
+              <IconButton size="small" color="error">
+                <DeleteIcon />
+              </IconButton>
+            </ButtonGroup>
+          </div>
+        </div>
+        <div className="seasons">
+          <ButtonGroup>
+            {props.seasons.map(s => (
+              <Button key={s} id={s} onClick={clickSeason}>
+                {s}
+              </Button>
+            ))}
+          </ButtonGroup>
+        </div>
+        <div className="episodes">
+          <TableContainer component={Paper}>
+            <Table
+              sx={{ minWidth: 650 }}
+              size="small"
+              aria-label="a dense table"
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell>Ep</TableCell>
+                  <TableCell>Title</TableCell>
+                  <TableCell align="right">Release</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {props.episodes.map(row => (
+                  <TableRow
+                    key={row.episode_number}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.episode_number}
+                    </TableCell>
+                    <TableCell>{row.title}</TableCell>
+                    <TableCell align="right">{row.release_date}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Title(props) {
+  return (
+    <div className="title">
+      <h4 className="primary">{props.text}</h4>
+    </div>
+  );
+}
+
+function Description(props) {
+  return <div className="description">{props.children}</div>;
 }
 
 function Footer(props) {
@@ -35,13 +170,27 @@ function Header(props) {
   );
 }
 
-function Background(props) {
+function BackImage(props) {
   function setDefaultSrc(ev) {
     ev.target.src = '/blank.png';
   }
+  const style = {
+    'background-image': `url(${props.image})`,
+  };
   return (
-    <div className="background">
-      <img alt="cover" src={props.image} onError={setDefaultSrc} />
+    <div
+      className={props.class}
+      style={{ backgroundImage: `url(${props.image})` }}
+    >
+      {/*<img alt={props.class} src={props.image} onError={setDefaultSrc} />*/}
     </div>
   );
+}
+
+function Background(props) {
+  return <BackImage class="background" image={props.image} />;
+}
+
+function Cover(props) {
+  return <BackImage class="cover" image={props.image} />;
 }

@@ -1,16 +1,21 @@
 .medium {
+
+}
+.medium.small {
     height: 295px;
     width: 200px;
     margin: 0.3rem;
     float: left;
     /*border: 1px solid white;*/
 }
-.medium .background {
+.medium .cover {
     height: 295px;
     width: 200px;
     z-index: 100;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
-.medium .background img {
+.medium .cover img {
     height: 295px;
     width: 200px;
 }
@@ -61,4 +66,87 @@
 }
 .medium a:active {
     text-decoration: none;
+}
+
+.medium.large {
+    margin-top: 5px;
+    min-height: 400px;
+    position: relative;
+}
+.medium.large .menu {
+    position: absolute;
+    top: 0;
+    left: 5px;
+    bottom: 0;
+    right: 155px;
+    width: 155px;
+    padding: 2px;
+    /*border: 2px solid white;*/
+}
+.medium.large .main {
+    margin-left: 165px;
+    width: auto;
+    padding: 2px;
+    /*border: 2px solid gray;*/
+    float: left;
+}
+
+.medium.large .titlebar {
+
+}
+/*.medium.large .titlebar:after {*/
+/*    content: "";*/
+/*    clear: both;*/
+/*    display: table;*/
+/*}*/
+.medium.large .title {
+    font-size: x-large;
+    font-weight: bolder;
+}
+.medium.large .buttons {
+}
+.medium.large .cover {
+    height: 220px;
+    width: 150px;
+    z-index: 100;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+/*.medium.large .cover img {*/
+/*    height: 220px;*/
+/*    width: 150px;*/
+/*}*/
+.medium.large .background {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    height: 500px;
+    width: auto;
+    /*border: 1px solid gray;*/
+    background-position: 25% 50%;
+    background-size: cover;
+    z-index: -2;
+}
+.medium.large .menu .background {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.medium.large .overlay {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    height: 500px;
+    width: auto;
+    /*background-color: rgba(0,0,0,0.75);*/
+    background:
+            /*linear-gradient(to right, rgba(18,18,18,1), rgba(18,18,18,0.75)),*/
+            linear-gradient(to top, rgba(18,18,18,1), rgba(18,18,18,0.75));
+    /*background: radial-gradient(ellipse farthest-side at center, transparent, #121212);*/
+    z-index: -1;
 }

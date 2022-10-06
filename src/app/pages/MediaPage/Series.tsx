@@ -7,12 +7,16 @@ import {
   LoadingWrapper,
 } from '../../components/LoadingIndicator';
 import { Medium } from '../../../types/medium';
+import { MediumLarge } from '../../components/Medium';
 import { Helmet } from 'react-helmet-async';
 
 export function Series() {
   const [data, setData] = useState<Medium | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [seasons, setSeasons] = useState([]);
+  const [currentSeason, setCurrentSeason] = useState(1);
+  const [episodes, setEpisodes] = useState([]);
 
   // @ts-ignore
   let { id } = useParams();
@@ -30,9 +34,50 @@ export function Series() {
     }
   };
 
+  const getSeasons = async () => {
+    console.log('getSeasons');
+    try {
+      const response = await axios.get(`/api/tower/series/${id}/seasons`);
+      console.log(response.data);
+      setSeasons(response.data);
+    } catch (err) {
+      console.log(err);
+      // @ts-ignore
+      setError(err.message);
+      // } finally {
+      //   setLoading(false);
+    }
+  };
+
+  function changeSeason(season) {
+    console.log(`changeSeason: ${season}`);
+    setCurrentSeason(season);
+  }
+
+  const getSeason = async season => {
+    try {
+      const response = await axios.get(
+        `/api/tower/series/${id}/seasons/${season}`,
+      );
+      console.log(response.data);
+      setEpisodes(response.data);
+    } catch (err) {
+      console.log(err);
+      // @ts-ignore
+      setError(err.message);
+      // } finally {
+      //   setLoading(false);
+    }
+  };
+
   useEffect(() => {
     getData();
+    getSeasons();
   }, []);
+
+  useEffect(() => {
+    getSeason(currentSeason);
+  }, [currentSeason]);
 
   return (
     <>
@@ -44,15 +89,24 @@ export function Series() {
         />
       </Helmet>
       <Container maxWidth="xl">
-        {loading && (
-          <LoadingWrapper>
-            <LoadingIndicator />
-          </LoadingWrapper>
+        {/*{loading && (*/}
+        {/*  <LoadingWrapper>*/}
+        {/*    <LoadingIndicator />*/}
+        {/*  </LoadingWrapper>*/}
+        {/*)}*/}
+        {/*{error && (*/}
+        {/*  <div>{`There is a problem fetching the post data - ${error}`}</div>*/}
+        {/*)}*/}
+        {data && (
+          <MediumLarge
+            id={data.id}
+            data={data}
+            seasons={seasons}
+            episodes={episodes}
+            currentSeason={currentSeason}
+            changeSeason={changeSeason}
+          />
         )}
-        {error && (
-          <div>{`There is a problem fetching the post data - ${error}`}</div>
-        )}
-        {data && <div>{data.title}</div>}
       </Container>
     </>
   );
