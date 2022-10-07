@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
 import { Button, IconButton, ButtonGroup } from '@mui/material';
@@ -10,7 +9,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ReplayIcon from '@mui/icons-material/Replay';
@@ -23,26 +21,14 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 import { Medium } from '../../../types/medium';
 
 import './styles.css';
-import axios from 'axios';
-
-const tags = [
-  {
-    name: 'Release',
-    value: '2022-10-11',
-  },
-  {
-    name: 'Source',
-    value: 'TVDB',
-  },
-  {
-    name: 'Source ID',
-    value: '1238435',
-  },
-];
 
 export function MediumSmall(props) {
   return (
@@ -56,16 +42,17 @@ export function MediumSmall(props) {
   );
 }
 
-interface MediumLargeProps {
-  data?: Medium;
-}
-
 export function MediumLarge(props) {
+  const [value, setValue] = React.useState(0);
   function clickSeason(ev) {
     const id = ev.currentTarget.id;
     console.log(`clickSeason: ${id}`);
     props.changeSeason(id);
   }
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
 
   return (
     <div className="medium large">
@@ -111,76 +98,146 @@ export function MediumLarge(props) {
             </ButtonGroup>
           </div>
         </div>
-        <div className="seasons">
-          <ButtonGroup>
-            {props.seasons.map(s => (
-              <Button key={s} id={s} onClick={clickSeason}>
-                {s}
-              </Button>
-            ))}
-          </ButtonGroup>
-        </div>
-        <div className="episodes">
-          <TableContainer component="div">
-            <Table
-              sx={{ minWidth: 650, width: '100%' }}
-              // size="small"
-              aria-label="a dense table"
+        <Box sx={{ width: '100%' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
             >
-              <TableHead>
-                <TableRow>
-                  <TableCell>Ep</TableCell>
-                  <TableCell>Title</TableCell>
-                  <TableCell align="right">Release</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {props.episodes.map(row => (
-                  <TableRow
-                    key={row.episode_number}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.episode_number}
-                    </TableCell>
-                    <TableCell>{row.title}</TableCell>
-                    <TableCell align="right">
-                      <Moment format="YYYY-MM-DD">{row.release_date}</Moment>
-                    </TableCell>
-                    <TableCell align="right">
-                      <IconButton size="small">
-                        <CloudCircleIcon color="primary" />
-                      </IconButton>
-                      <IconButton size="small">
-                        <NextPlanIcon
-                          color={props.data.skipped ? 'primary' : 'action'}
-                        />
-                      </IconButton>
-                      <IconButton size="small">
-                        <ArrowDropDownCircleIcon
-                          color={props.data.downloaded ? 'primary' : 'action'}
-                        />
-                      </IconButton>
-                      <IconButton size="small">
-                        <CheckCircleIcon
-                          color={
-                            props.data.completed === true ? 'primary' : 'action'
-                          }
-                        />
-                      </IconButton>
-                      <IconButton size="small">
-                        <VisibilityIcon
-                          color={props.data.watched ? 'warning' : 'action'}
-                        />
-                      </IconButton>
+              <Tab label="Episodes" id="simple-tabs-0" />
+              <Tab label="Details" id="simple-tabs-1" />
+              <Tab label="Files" id="simple-tabs-2" />
+              <Tab label="Downloads" id="simple-tabs-3" />
+            </Tabs>
+          </Box>
+        </Box>
+        <TabPanel index={0} value={value}>
+          <div className="seasons">
+            <ButtonGroup>
+              {props.seasons.map(s => (
+                <Button key={s} id={s} onClick={clickSeason}>
+                  {s}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </div>
+          <div className="episodes">
+            <TableContainer component="div">
+              <Table
+                sx={{ minWidth: 650 }}
+                size="small"
+                aria-label="a dense table"
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>#</TableCell>
+                    <TableCell>Title</TableCell>
+                    <TableCell align="right">Release</TableCell>
+                    <TableCell align="right">Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {props.episodes.map(row => (
+                    <TableRow
+                      key={row.episode_number}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.episode_number}
+                      </TableCell>
+                      <TableCell>{row.title}</TableCell>
+                      <TableCell align="right">
+                        <Moment format="YYYY-MM-DD">{row.release_date}</Moment>
+                      </TableCell>
+                      <TableCell align="right">
+                        <IconButton size="small">
+                          <CloudCircleIcon color="primary" />
+                        </IconButton>
+                        <IconButton size="small">
+                          <NextPlanIcon
+                            color={row.skipped ? 'secondary' : 'action'}
+                          />
+                        </IconButton>
+                        <IconButton size="small">
+                          <ArrowDropDownCircleIcon
+                            color={row.downloaded ? 'secondary' : 'action'}
+                          />
+                        </IconButton>
+                        <IconButton size="small">
+                          <CheckCircleIcon
+                            color={
+                              row.completed === true ? 'secondary' : 'action'
+                            }
+                          />
+                        </IconButton>
+                        <IconButton size="small">
+                          <VisibilityIcon
+                            color={row.watched ? 'secondary' : 'action'}
+                          />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        </TabPanel>
+        <TabPanel index={1} value={value}>
+          <div className="details">
+            <TableContainer component="div">
+              <Table
+                sx={{ minWidth: 650 }}
+                size="small"
+                aria-label="a dense table"
+              >
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Display</TableCell>
+                    <TableCell>{props.data.display}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Search</TableCell>
+                    <TableCell>{props.data.search}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Directory</TableCell>
+                    <TableCell>{props.data.directory}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Title</TableCell>
+                    <TableCell>{props.data.title}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Description</TableCell>
+                    <TableCell>{props.data.description}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Release</TableCell>
+                    <TableCell>
+                      <Moment format="YYYY-MM-DD">
+                        {props.data.release_date}
+                      </Moment>
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
+                  <TableRow>
+                    <TableCell>Source</TableCell>
+                    <TableCell>
+                      {props.data.source} {props.data.source_id}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Updated</TableCell>
+                    <TableCell>
+                      <Moment fromNow>{props.data.updated_at}</Moment>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        </TabPanel>
       </div>
     </div>
   );
@@ -218,9 +275,6 @@ function Header(props) {
 }
 
 function BackImage(props) {
-  function setDefaultSrc(ev) {
-    ev.target.src = '/blank.png';
-  }
   const style = {
     'background-image': `url(${props.image})`,
   };
@@ -240,4 +294,30 @@ function Background(props) {
 
 function Cover(props) {
   return <BackImage class="cover" image={props.image} />;
+}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }} component="div">
+          {children}
+        </Box>
+      )}
+    </div>
+  );
 }
