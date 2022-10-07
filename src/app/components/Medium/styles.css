@@ -76,16 +76,13 @@
 .medium.large .menu {
     position: absolute;
     top: 0;
-    left: 5px;
+    left: 0;
     bottom: 0;
-    right: 155px;
-    width: 155px;
-    padding: 2px;
     /*border: 2px solid white;*/
 }
 .medium.large .main {
-    margin-left: 165px;
-    width: auto;
+    margin-left: 240px;
+    width: 1000px; /* TODO: figure out break points */
     padding: 2px;
     /*border: 2px solid gray;*/
     float: left;
@@ -100,17 +97,10 @@
 /*    display: table;*/
 /*}*/
 .medium.large .title {
-    font-size: x-large;
+    font-size: xx-large;
     font-weight: bolder;
 }
 .medium.large .buttons {
-}
-.medium.large .cover {
-    height: 220px;
-    width: 150px;
-    z-index: 100;
-    background-size: contain;
-    background-repeat: no-repeat;
 }
 /*.medium.large .cover img {*/
 /*    height: 220px;*/
@@ -146,7 +136,35 @@
     /*background-color: rgba(0,0,0,0.75);*/
     background:
             /*linear-gradient(to right, rgba(18,18,18,1), rgba(18,18,18,0.75)),*/
-            linear-gradient(to top, rgba(18,18,18,1), rgba(18,18,18,0.75));
+            linear-gradient(to top, rgba(18,18,18,1), rgba(18,18,18,0.50));
     /*background: radial-gradient(ellipse farthest-side at center, transparent, #121212);*/
     z-index: -1;
+}
+
+.medium.large .episodes table {
+    width: 100%;
+}
+
+.medium.large .cover-sm {
+    height: 295px;
+    width: 200px;
+    /*z-index: 100;*/
+    /*background-size: contain;*/
+    /*background-repeat: no-repeat;*/
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.medium.large .menu .cover-sm img {
+    width: 200px;
+}
+
+.medium.large .menu .background-sm {
+    width: 200px;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.medium.large .menu .background-sm img {
+    width: 200px;
 }

@@ -18,6 +18,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import BuildIcon from '@mui/icons-material/Build';
 import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import NextPlanIcon from '@mui/icons-material/NextPlan';
+import CloudCircleIcon from '@mui/icons-material/CloudCircle';
+
+import { Medium } from '../../../types/medium';
 
 import './styles.css';
 import axios from 'axios';
@@ -49,6 +56,10 @@ export function MediumSmall(props) {
   );
 }
 
+interface MediumLargeProps {
+  data?: Medium;
+}
+
 export function MediumLarge(props) {
   function clickSeason(ev) {
     const id = ev.currentTarget.id;
@@ -58,10 +69,16 @@ export function MediumLarge(props) {
 
   return (
     <div className="medium large">
-      <Background image={props.data.background} />
-      <div className="overlay" />
+      {/*<Background image={props.data.background} />*/}
+      {/*<div className="overlay" />*/}
       <div className="menu">
-        <Cover image={props.data.cover} />
+        {/*<Cover image={props.data.cover} />*/}
+        <div className="cover-sm">
+          <img alt="cover" src={props.data.cover} />
+        </div>
+        <div className="background-sm">
+          <img alt="background" src={props.data.background} />
+        </div>
       </div>
       <div className="main">
         <div className="titlebar">
@@ -104,10 +121,10 @@ export function MediumLarge(props) {
           </ButtonGroup>
         </div>
         <div className="episodes">
-          <TableContainer component={Paper}>
+          <TableContainer component="div">
             <Table
-              sx={{ minWidth: 650 }}
-              size="small"
+              sx={{ minWidth: 650, width: '100%' }}
+              // size="small"
               aria-label="a dense table"
             >
               <TableHead>
@@ -115,6 +132,7 @@ export function MediumLarge(props) {
                   <TableCell>Ep</TableCell>
                   <TableCell>Title</TableCell>
                   <TableCell align="right">Release</TableCell>
+                  <TableCell>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -127,7 +145,36 @@ export function MediumLarge(props) {
                       {row.episode_number}
                     </TableCell>
                     <TableCell>{row.title}</TableCell>
-                    <TableCell align="right">{row.release_date}</TableCell>
+                    <TableCell align="right">
+                      <Moment format="YYYY-MM-DD">{row.release_date}</Moment>
+                    </TableCell>
+                    <TableCell align="right">
+                      <IconButton size="small">
+                        <CloudCircleIcon color="primary" />
+                      </IconButton>
+                      <IconButton size="small">
+                        <NextPlanIcon
+                          color={props.data.skipped ? 'primary' : 'action'}
+                        />
+                      </IconButton>
+                      <IconButton size="small">
+                        <ArrowDropDownCircleIcon
+                          color={props.data.downloaded ? 'primary' : 'action'}
+                        />
+                      </IconButton>
+                      <IconButton size="small">
+                        <CheckCircleIcon
+                          color={
+                            props.data.completed === true ? 'primary' : 'action'
+                          }
+                        />
+                      </IconButton>
+                      <IconButton size="small">
+                        <VisibilityIcon
+                          color={props.data.watched ? 'warning' : 'action'}
+                        />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
