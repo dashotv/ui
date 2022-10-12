@@ -51,7 +51,7 @@ export function AllSeries() {
           content="A React Boilerplate application homepage"
         />
       </Helmet>
-      <Container sx={{ m: 2 }}>
+      <Container sx={{ padding: 2 }} maxWidth="xl">
         <Grid container>
           <Grid item xs={6}>
             <Typography variant="h5">All Series</Typography>
@@ -64,7 +64,7 @@ export function AllSeries() {
           </Grid>
         </Grid>
       </Container>
-      <Container>
+      <Container maxWidth="xl" sx={{ overflow: 'auto' }}>
         {loading && (
           <LoadingWrapper>
             <LoadingIndicator />
