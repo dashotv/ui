@@ -44,9 +44,11 @@ export function MediumSmall(props) {
 
 export function MediumLarge(props) {
   const [value, setValue] = React.useState(0);
+  const [season, setSeason] = React.useState(1);
   function clickSeason(ev) {
     const id = ev.currentTarget.id;
     console.log(`clickSeason: ${id}`);
+    setSeason(id);
     props.changeSeason(id);
   }
 
@@ -58,16 +60,23 @@ export function MediumLarge(props) {
     <div className="medium large">
       {/*<Background image={props.data.background} />*/}
       {/*<div className="overlay" />*/}
-      <div className="menu">
-        {/*<Cover image={props.data.cover} />*/}
-        <div className="cover-sm">
-          <img alt="cover" src={props.data.cover} />
-        </div>
-        <div className="background-sm">
-          <img alt="background" src={props.data.background} />
-        </div>
-      </div>
+      {/*<div className="menu">*/}
+      {/*  <ImageSmall class="cover-sm" alt="cover" src={props.data.cover} />*/}
+      {/*  <ImageSmall*/}
+      {/*    class="background-sm"*/}
+      {/*    alt="background"*/}
+      {/*    src={props.data.background}*/}
+      {/*  />*/}
+      {/*</div>*/}
       <div className="main">
+        <div className="menu">
+          <ImageSmall class="cover-sm" alt="cover" src={props.data.cover} />
+          <ImageSmall
+            class="background-sm"
+            alt="background"
+            src={props.data.background}
+          />
+        </div>
         <div className="titlebar">
           <div className="title">
             <span>{props.data.title}</span>
@@ -98,7 +107,7 @@ export function MediumLarge(props) {
             </ButtonGroup>
           </div>
         </div>
-        <Box sx={{ width: '100%' }}>
+        <Box maxWidth="xl">
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
               value={value}
@@ -116,7 +125,12 @@ export function MediumLarge(props) {
           <div className="seasons">
             <ButtonGroup>
               {props.seasons.map(s => (
-                <Button key={s} id={s} onClick={clickSeason}>
+                <Button
+                  variant={season == s ? 'contained' : 'outlined'}
+                  key={s}
+                  id={s}
+                  onClick={clickSeason}
+                >
                   {s}
                 </Button>
               ))}
@@ -126,7 +140,7 @@ export function MediumLarge(props) {
             <TableContainer component="div">
               <Table
                 sx={{ minWidth: 650 }}
-                size="small"
+                // size="small"
                 aria-label="a dense table"
               >
                 <TableHead>
@@ -274,6 +288,18 @@ function Header(props) {
   );
 }
 
+function ImageSmall(props) {
+  function setDefaultSrc(ev) {
+    ev.target.onerror = null;
+    ev.target.src = '/blank.png';
+  }
+  return (
+    <div className={props.class}>
+      <img alt={props.alt} src={props.src} onError={setDefaultSrc} />
+    </div>
+  );
+}
+
 function BackImage(props) {
   const style = {
     'background-image': `url(${props.image})`,
@@ -314,7 +340,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }} component="div">
+        <Box sx={{ p: 1 }} component="div">
           {children}
         </Box>
       )}

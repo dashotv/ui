@@ -76,12 +76,11 @@
 .medium.large .menu {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     bottom: 0;
     /*border: 2px solid white;*/
 }
 .medium.large .main {
-    margin-left: 240px;
     width: 1000px; /* TODO: figure out break points */
     padding: 2px;
     /*border: 2px solid gray;*/
@@ -155,16 +154,16 @@
     margin-top: 10px;
 }
 
-.medium.large .menu .cover-sm img {
+.medium.large .cover-sm img {
     width: 200px;
 }
 
-.medium.large .menu .background-sm {
+.medium.large .background-sm {
     width: 200px;
     padding: 5px;
     margin-top: 10px;
 }
 
-.medium.large .menu .background-sm img {
+.medium.large .background-sm img {
     width: 200px;
 }
