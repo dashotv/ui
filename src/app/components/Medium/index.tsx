@@ -280,17 +280,25 @@ function Footer(props) {
 }
 
 function Header(props) {
+  const calendarStrings = {
+    lastDay: '[Yesterday]',
+    sameDay: '[Today]',
+    nextDay: '[Tomorrow]',
+    lastWeek: '[last] dddd',
+    nextWeek: 'dddd',
+    sameElse: 'L',
+  };
+  console.log('header text=' + props.text);
   return (
     <div className="header">
       <div className="primary">
-        <Moment format="MM/DD">{props.text}</Moment>
+        <Moment calendar={calendarStrings}>{props.text}</Moment>
       </div>
     </div>
   );
 }
 
 function Icons(props) {
-  console.log('active: ' + props.active);
   return (
     <div className="icons">
       {props.active && <StarIcon />}

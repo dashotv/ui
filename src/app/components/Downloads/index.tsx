@@ -9,7 +9,7 @@ export default function Downloads(props) {
       {props.data.map(({ id, medium }) => (
         <MediumSmall
           key={id}
-          id={medium.id}
+          id={medium.series_id || medium.id}
           background={medium.cover}
           primary={medium.title}
           secondary={medium.display}
