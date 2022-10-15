@@ -36,6 +36,7 @@ export function MediumSmall(props) {
       <Link to={`/media/series/${props.id}`}>
         <Cover image={props.background} />
         <Header text={props.release} />
+        <Icons active={props.active} download={props.download} />
         <Footer primary={props.primary} secondary={props.secondary} />
       </Link>
     </div>
@@ -284,6 +285,16 @@ function Header(props) {
       <div className="primary">
         <Moment format="MM/DD">{props.text}</Moment>
       </div>
+    </div>
+  );
+}
+
+function Icons(props) {
+  console.log('active: ' + props.active);
+  return (
+    <div className="icons">
+      {props.active && <StarIcon />}
+      {props.download && <CloudCircleIcon />}
     </div>
   );
 }

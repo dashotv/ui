@@ -1,5 +1,5 @@
 .medium {
-
+    position: relative;
 }
 .medium.small {
     height: 295px;
@@ -20,9 +20,9 @@
     width: 200px;
 }
 .medium .footer {
-    position: relative;
-    bottom: 85px;
-    left: 0px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     height: 50px;
     width: 100%;
     background: rgba(0, 0, 0, 0.50);
@@ -41,8 +41,9 @@
     font-size: .8rem;
 }
 .medium .header {
-    position: relative;
-    bottom: 295px;
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 35px;
     width: 100%;
     background: rgba(0, 0, 0, 0.50);
@@ -54,6 +55,15 @@
 }
 .medium .header .primary {
     font-weight: bold;
+}
+.medium .icons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 35px;
+    z-index: 115;
+    color: white;
+    padding: 2px;
 }
 .medium a:link {
     text-decoration: none;

@@ -14,6 +14,7 @@ export default function Downloads(props) {
           primary={medium.title}
           secondary={medium.display}
           release={medium.release_date}
+          download={true}
         />
       ))}
     </div>
