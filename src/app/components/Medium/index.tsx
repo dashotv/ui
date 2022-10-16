@@ -288,7 +288,6 @@ function Header(props) {
     nextWeek: 'dddd',
     sameElse: 'L',
   };
-  console.log('header text=' + props.text);
   return (
     <div className="header">
       <div className="primary">
