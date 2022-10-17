@@ -54,6 +54,10 @@ export function Series() {
     setCurrentSeason(season);
   }
 
+  function changeSetting(id, type, value) {
+    console.log(`changeSetting: ${id} ${type} ${value}`);
+  }
+
   const getSeason = async season => {
     try {
       const response = await axios.get(
@@ -105,6 +109,7 @@ export function Series() {
             episodes={episodes}
             currentSeason={currentSeason}
             changeSeason={changeSeason}
+            changeSetting={changeSetting}
           />
         )}
       </Container>

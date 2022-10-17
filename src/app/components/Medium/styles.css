@@ -65,6 +65,31 @@
     color: white;
     padding: 2px;
 }
+.medium .hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+}
+.medium .hover .text {
+    position: absolute;
+    color: white;
+    overflow: hidden;
+    margin-top: 35px;
+    margin-bottom: 50px;
+    padding: 5px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+.medium .hover:hover .text {
+    display: block;
+}
 .medium a:link {
     text-decoration: none;
 }
@@ -86,12 +111,17 @@
 .medium.large .menu {
     position: absolute;
     top: 0;
-    right: 0;
+    right: -200px;
     bottom: 0;
     /*border: 2px solid white;*/
 }
 .medium.large .main {
-    width: 1000px; /* TODO: figure out break points */
+    /*width: 1000px; !* TODO: figure out break points *!*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-right: 200px;
     padding: 2px;
     /*border: 2px solid gray;*/
     float: left;

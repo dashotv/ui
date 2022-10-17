@@ -11,7 +11,16 @@ export default function Media(props) {
   return (
     <div>
       {props.data.map(
-        ({ id, series_id, title, display, cover, release_date, active }) => (
+        ({
+          id,
+          series_id,
+          title,
+          display,
+          description,
+          cover,
+          release_date,
+          active,
+        }) => (
           <MediumSmall
             key={id}
             id={series_id || id}
@@ -20,6 +29,7 @@ export default function Media(props) {
             secondary={display}
             release={release_date}
             active={active}
+            description={description}
           />
         ),
       )}
