@@ -49,13 +49,29 @@ export function Series() {
     }
   };
 
+  const changeSetting = async (type, id, setting, value) => {
+    console.log(`changeSetting: ${type}/${id} ${setting}=${value}`);
+
+    try {
+      const response = await axios.put(`/api/tower/${type}/${id}`, {
+        setting: setting,
+        value: value,
+      });
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   function changeSeason(season) {
     console.log(`changeSeason: ${season}`);
     setCurrentSeason(season);
   }
-
-  function changeSetting(id, type, value) {
-    console.log(`changeSetting: ${id} ${type} ${value}`);
+  function changeEpisodeSetting(id, setting, value) {
+    changeSetting('episodes', id, setting, value);
+  }
+  function changeSeriesSetting(id, setting, value) {
+    changeSetting('series', id, setting, value);
   }
 
   const getSeason = async season => {
@@ -109,7 +125,8 @@ export function Series() {
             episodes={episodes}
             currentSeason={currentSeason}
             changeSeason={changeSeason}
-            changeSetting={changeSetting}
+            changeEpisode={changeEpisodeSetting}
+            changeSeries={changeSeriesSetting}
           />
         )}
       </Container>

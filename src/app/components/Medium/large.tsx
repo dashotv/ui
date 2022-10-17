@@ -47,7 +47,13 @@ export function MediumLarge(props) {
           <div className="title">
             <span>{props.data.title}</span>
           </div>
-          <Buttons />
+          <Buttons
+            id={props.data.id}
+            favorite={props.data.favorite}
+            broken={props.data.broken}
+            active={props.data.active}
+            changeSeries={props.changeSeries}
+          />
         </div>
         <Box maxWidth="xl">
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -67,7 +73,7 @@ export function MediumLarge(props) {
           <Seasons seasons={props.seasons} changeSeason={props.changeSeason} />
           <Episodes
             episodes={props.episodes}
-            changeSetting={props.changeSetting}
+            changeEpisode={props.changeEpisode}
           />
         </TabPanel>
         <TabPanel index={1} value={value}>
@@ -91,14 +97,32 @@ function Buttons(props) {
         <IconButton size="small">
           <ReplayIcon />
         </IconButton>
-        <IconButton size="small">
-          <FavoriteIcon />
+        <IconButton
+          size="small"
+          onClick={ev => {
+            props.changeSeries(props.id, 'favorite', !props.active);
+            props.favorite = !props.favorite;
+          }}
+        >
+          <FavoriteIcon color={props.favorite ? 'secondary' : 'action'} />
         </IconButton>
-        <IconButton size="small">
-          <BuildIcon />
+        <IconButton
+          size="small"
+          onClick={ev => {
+            props.changeSeries(props.id, 'broken', !props.active);
+            props.broken = !props.broken;
+          }}
+        >
+          <BuildIcon color={props.broken ? 'secondary' : 'action'} />
         </IconButton>
-        <IconButton size="small">
-          <StarIcon />
+        <IconButton
+          size="small"
+          onClick={ev => {
+            props.changeSeries(props.id, 'active', !props.active);
+            props.active = !props.active;
+          }}
+        >
+          <StarIcon color={props.active ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton size="small" color="error">
           <DeleteIcon />
@@ -171,7 +195,8 @@ function Episodes(props) {
                   <IconButton
                     size="small"
                     onClick={ev => {
-                      props.changeSetting(row.id, 'skipped', !row.skipped);
+                      props.changeEpisode(row.id, 'skipped', !row.skipped);
+                      row.skipped = !row.skipped;
                     }}
                   >
                     <NextPlanIcon
@@ -181,11 +206,12 @@ function Episodes(props) {
                   <IconButton
                     size="small"
                     onClick={ev => {
-                      props.changeSetting(
+                      props.changeEpisode(
                         row.id,
                         'downloaded',
                         !row.downloaded,
                       );
+                      row.downloaded = !row.downloaded;
                     }}
                   >
                     <ArrowDropDownCircleIcon
@@ -195,7 +221,8 @@ function Episodes(props) {
                   <IconButton
                     size="small"
                     onClick={ev => {
-                      props.changeSetting(row.id, 'completed', !row.completed);
+                      props.changeEpisode(row.id, 'completed', !row.completed);
+                      row.completed = !row.completed;
                     }}
                   >
                     <CheckCircleIcon
@@ -205,7 +232,8 @@ function Episodes(props) {
                   <IconButton
                     size="small"
                     onClick={ev => {
-                      props.changeSetting(row.id, 'watched', !row.watched);
+                      props.changeEpisode(row.id, 'watched', !row.watched);
+                      row.watched = !row.watched;
                     }}
                   >
                     <VisibilityIcon
