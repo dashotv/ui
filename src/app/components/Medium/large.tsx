@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { Button, ButtonGroup, IconButton } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -161,93 +162,100 @@ function Seasons(props) {
 function Episodes(props) {
   return (
     <div className="episodes">
-      <TableContainer component="div">
-        <table
-          // size="small"
-          aria-label="a dense table"
-        >
-          <thead>
-            <tr>
-              <td className="number">#</td>
-              <td>Title</td>
-              <td className="date" align="right">
-                Release
-              </td>
-              <td className="actions" align="right">
-                Actions
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            {props.episodes.map(row => (
-              <tr
-                key={row.episode_number}
-                // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <th scope="row">{row.episode_number}</th>
-                <td>{row.title}</td>
-                <td align="right">
-                  <Moment format="YYYY-MM-DD">{row.release_date}</Moment>
-                </td>
-                <td align="right">
-                  <IconButton size="small">
-                    <CloudCircleIcon color="primary" />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    onClick={ev => {
-                      props.changeEpisode(row.id, 'skipped', !row.skipped);
-                      row.skipped = !row.skipped;
-                    }}
-                  >
-                    <NextPlanIcon
-                      color={row.skipped ? 'secondary' : 'action'}
-                    />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    onClick={ev => {
-                      props.changeEpisode(
-                        row.id,
-                        'downloaded',
-                        !row.downloaded,
-                      );
-                      row.downloaded = !row.downloaded;
-                    }}
-                  >
-                    <ArrowDropDownCircleIcon
-                      color={row.downloaded ? 'secondary' : 'action'}
-                    />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    onClick={ev => {
-                      props.changeEpisode(row.id, 'completed', !row.completed);
-                      row.completed = !row.completed;
-                    }}
-                  >
-                    <CheckCircleIcon
-                      color={row.completed === true ? 'secondary' : 'action'}
-                    />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    onClick={ev => {
-                      props.changeEpisode(row.id, 'watched', !row.watched);
-                      row.watched = !row.watched;
-                    }}
-                  >
-                    <VisibilityIcon
-                      color={row.watched ? 'secondary' : 'action'}
-                    />
-                  </IconButton>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </TableContainer>
+      <table
+        // size="small"
+        aria-label="a dense table"
+      >
+        <thead>
+          <tr>
+            <td className="number">#</td>
+            <td>Title</td>
+            <td className="date" align="right">
+              Release
+            </td>
+            <td className="actions" align="right">
+              Actions
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          {props.episodes.map(row => (
+            <EpisodeRow
+              id={row.id}
+              number={row.episode_number}
+              title={row.title}
+              release={row.release_date}
+              skipped={row.skipped}
+              downloaded={row.downloaded}
+              completed={row.completed}
+              watched={row.watched}
+              changeEpisode={props.changeEpisode}
+            />
+          ))}
+        </tbody>
+      </table>
     </div>
+  );
+}
+
+function EpisodeRow(props) {
+  const [skipped, setSkipped] = useState(props.skipped);
+  const [watched, setWatched] = useState(props.watched);
+  const [completed, setCompleted] = useState(props.completed);
+  const [downloaded, setDownloaded] = useState(props.downloaded);
+  return (
+    <tr key={props.id}>
+      <th scope="row">{props.number}</th>
+      <td>{props.title}</td>
+      <td align="right">
+        <Moment format="YYYY-MM-DD">{props.release_date}</Moment>
+      </td>
+      <td align="right">
+        <IconButton size="small">
+          <CloudCircleIcon color="primary" />
+        </IconButton>
+        <IconButton
+          size="small"
+          onClick={ev => {
+            props.changeEpisode(props.id, 'skipped', !skipped);
+            setSkipped(!skipped);
+          }}
+        >
+          <NextPlanIcon color={skipped ? 'secondary' : 'action'} />
+        </IconButton>
+        <IconButton
+          size="small"
+          onClick={ev => {
+            props.changeEpisode(props.id, 'downloaded', !downloaded);
+            setDownloaded(!downloaded);
+          }}
+        >
+          <ArrowDropDownCircleIcon
+            color={downloaded ? 'secondary' : 'action'}
+          />
+        </IconButton>
+        <IconButton
+          size="small"
+          onClick={ev => {
+            props.changeEpisode(props.id, 'completed', !completed);
+            setCompleted(!completed);
+          }}
+        >
+          <CheckCircleIcon
+            color={completed === true ? 'secondary' : 'action'}
+          />
+        </IconButton>
+        <IconButton
+          size="small"
+          onClick={ev => {
+            props.changeEpisode(props.id, 'watched', !watched);
+            setWatched(!watched);
+          }}
+        >
+          <VisibilityIcon color={watched === true ? 'secondary' : 'action'} />
+        </IconButton>
+      </td>
+    </tr>
   );
 }
 
