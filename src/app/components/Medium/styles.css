@@ -207,3 +207,27 @@
 .medium.large .background-sm img {
     width: 200px;
 }
+.episodes table td, .episodes table th {
+    padding: 2px;
+}
+.episodes table thead td {
+    font-weight: bold;
+}
+
+.episodes table thead td.number {
+    width: 50px;
+    font-weight: bold;
+    font-size: large;
+    text-align: center;
+}
+
+.episodes table th.date {
+    width: 150px;
+}
+
+.episodes table th.actions {
+    width: 250px;
+}
+.episodes table tr:nth-child(even) {
+    background-color: #222222;
+}

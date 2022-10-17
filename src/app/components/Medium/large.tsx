@@ -162,33 +162,34 @@ function Episodes(props) {
   return (
     <div className="episodes">
       <TableContainer component="div">
-        <Table
-          sx={{ minWidth: 650 }}
+        <table
           // size="small"
           aria-label="a dense table"
         >
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell align="right">Release</TableCell>
-              <TableCell align="right">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+          <thead>
+            <tr>
+              <td className="number">#</td>
+              <td>Title</td>
+              <td className="date" align="right">
+                Release
+              </td>
+              <td className="actions" align="right">
+                Actions
+              </td>
+            </tr>
+          </thead>
+          <tbody>
             {props.episodes.map(row => (
-              <TableRow
+              <tr
                 key={row.episode_number}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  {row.episode_number}
-                </TableCell>
-                <TableCell>{row.title}</TableCell>
-                <TableCell align="right">
+                <th scope="row">{row.episode_number}</th>
+                <td>{row.title}</td>
+                <td align="right">
                   <Moment format="YYYY-MM-DD">{row.release_date}</Moment>
-                </TableCell>
-                <TableCell align="right">
+                </td>
+                <td align="right">
                   <IconButton size="small">
                     <CloudCircleIcon color="primary" />
                   </IconButton>
@@ -240,11 +241,11 @@ function Episodes(props) {
                       color={row.watched ? 'secondary' : 'action'}
                     />
                   </IconButton>
-                </TableCell>
-              </TableRow>
+                </td>
+              </tr>
             ))}
-          </TableBody>
-        </Table>
+          </tbody>
+        </table>
       </TableContainer>
     </div>
   );
