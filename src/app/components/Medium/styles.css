@@ -3,21 +3,21 @@
 }
 .medium.small {
     height: 295px;
-    width: 200px;
+    width: 195px;
     margin: 0.3rem;
     float: left;
     /*border: 1px solid white;*/
 }
 .medium .cover {
     height: 295px;
-    width: 200px;
+    width: 195px;
     z-index: 100;
     background-size: contain;
     background-repeat: no-repeat;
 }
 .medium .cover img {
     height: 295px;
-    width: 200px;
+    width: 195px;
 }
 .medium .footer {
     position: absolute;

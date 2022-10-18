@@ -51,7 +51,7 @@ export function AllSeries() {
           content="A React Boilerplate application homepage"
         />
       </Helmet>
-      <Container sx={{ padding: 2 }} maxWidth="xl">
+      <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container>
           <Grid item xs={6}>
             <Typography variant="h5">All Series</Typography>
