@@ -80,6 +80,9 @@ export function MediumLarge(props) {
 }
 
 function Buttons(props) {
+  const [active, setActive] = useState(props.active);
+  const [favorite, setFavorite] = useState(props.favorite);
+  const [broken, setBroken] = useState(props.broken);
   return (
     <div className="buttons">
       <ButtonGroup>
@@ -95,29 +98,29 @@ function Buttons(props) {
         <IconButton
           size="small"
           onClick={ev => {
-            props.changeSeries(props.id, 'favorite', !props.active);
-            props.favorite = !props.favorite;
+            props.changeSeries(props.id, 'favorite', !favorite);
+            setFavorite(!favorite);
           }}
         >
-          <FavoriteIcon color={props.favorite ? 'secondary' : 'action'} />
+          <FavoriteIcon color={favorite ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton
           size="small"
           onClick={ev => {
-            props.changeSeries(props.id, 'broken', !props.active);
-            props.broken = !props.broken;
+            props.changeSeries(props.id, 'broken', !broken);
+            setBroken(!broken);
           }}
         >
-          <BuildIcon color={props.broken ? 'secondary' : 'action'} />
+          <BuildIcon color={broken ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton
           size="small"
           onClick={ev => {
-            props.changeSeries(props.id, 'active', !props.active);
-            props.active = !props.active;
+            props.changeSeries(props.id, 'active', !active);
+            setActive(!active);
           }}
         >
-          <StarIcon color={props.active ? 'secondary' : 'action'} />
+          <StarIcon color={active ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton size="small" color="error">
           <DeleteIcon />
@@ -175,6 +178,7 @@ function Episodes(props) {
         <tbody>
           {props.episodes.map(row => (
             <EpisodeRow
+              key={row.id}
               id={row.id}
               number={row.episode_number}
               title={row.title}
@@ -198,7 +202,7 @@ function EpisodeRow(props) {
   const [completed, setCompleted] = useState(props.completed);
   const [downloaded, setDownloaded] = useState(props.downloaded);
   return (
-    <tr key={props.id}>
+    <tr>
       <th scope="row">{props.number}</th>
       <td>{props.title}</td>
       <td align="right">
