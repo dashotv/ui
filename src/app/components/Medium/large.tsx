@@ -11,12 +11,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import TableBody from '@mui/material/TableBody';
 import Moment from 'react-moment';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
@@ -262,50 +256,48 @@ function EpisodeRow(props) {
 function Details(props) {
   return (
     <div className="details">
-      <TableContainer component="div">
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-          <TableBody>
-            <TableRow>
-              <TableCell>Display</TableCell>
-              <TableCell>{props.data.display}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Search</TableCell>
-              <TableCell>{props.data.search}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Directory</TableCell>
-              <TableCell>{props.data.directory}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>{props.data.title}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Description</TableCell>
-              <TableCell>{props.data.description}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Release</TableCell>
-              <TableCell>
-                <Moment format="YYYY-MM-DD">{props.data.release_date}</Moment>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Source</TableCell>
-              <TableCell>
-                {props.data.source} {props.data.source_id}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Updated</TableCell>
-              <TableCell>
-                <Moment fromNow>{props.data.updated_at}</Moment>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <table aria-label="a dense table">
+        <tbody>
+          <tr>
+            <th>Display</th>
+            <td>{props.data.display}</td>
+          </tr>
+          <tr>
+            <th>Search</th>
+            <td>{props.data.search}</td>
+          </tr>
+          <tr>
+            <th>Directory</th>
+            <td>{props.data.directory}</td>
+          </tr>
+          <tr>
+            <th>Title</th>
+            <td>{props.data.title}</td>
+          </tr>
+          <tr>
+            <th>Description</th>
+            <td>{props.data.description}</td>
+          </tr>
+          <tr>
+            <th>Release</th>
+            <td>
+              <Moment format="YYYY-MM-DD">{props.data.release_date}</Moment>
+            </td>
+          </tr>
+          <tr>
+            <th>Source</th>
+            <td>
+              {props.data.source} {props.data.source_id}
+            </td>
+          </tr>
+          <tr>
+            <th>Updated</th>
+            <td>
+              <Moment fromNow>{props.data.updated_at}</Moment>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }

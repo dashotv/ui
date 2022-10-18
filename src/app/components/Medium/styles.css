@@ -231,3 +231,12 @@
 .episodes table tr:nth-child(even) {
     background-color: #222222;
 }
+
+.details table th {
+    text-align: left;
+    width: 200px;
+    vertical-align: top;
+}
+.details table tr:nth-child(odd) {
+    background-color: #222222;
+}
