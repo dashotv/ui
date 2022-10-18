@@ -1,0 +1,143 @@
+.medium.large {
+  margin-top: 5px;
+  min-height: 400px;
+  position: relative;
+
+  .menu {
+    position: absolute;
+    top: 0;
+    right: -200px;
+    bottom: 0;
+    /*border: 2px solid white;*/
+    .background {
+      position: absolute;
+      top: 0px;
+      left: 0;
+      right: 0;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .main {
+    /*width: 1000px; !* TODO: figure out break points *!*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-right: 200px;
+    padding: 2px;
+    /*border: 2px solid gray;*/
+    float: left;
+  }
+
+  .titlebar {
+  }
+
+  .title {
+    font-size: xx-large;
+    font-weight: bolder;
+  }
+
+  .buttons {
+  }
+
+  .background {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    height: 500px;
+    width: auto;
+    /*border: 1px solid gray;*/
+    background-position: 25% 50%;
+    background-size: cover;
+    z-index: -2;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    height: 500px;
+    width: auto;
+    /*background-color: rgba(0,0,0,0.75);*/
+    background: /*linear-gradient(to right, rgba(18,18,18,1), rgba(18,18,18,0.75)),*/ linear-gradient(
+      to top,
+      rgba(18, 18, 18, 1),
+      rgba(18, 18, 18, 0.5)
+    );
+    /*background: radial-gradient(ellipse farthest-side at center, transparent, #121212);*/
+    z-index: -1;
+  }
+
+  .episodes table {
+    width: 100%;
+  }
+
+  .cover-sm {
+    height: 295px;
+    width: 200px;
+    /*z-index: 100;*/
+    /*background-size: contain;*/
+    /*background-repeat: no-repeat;*/
+    padding: 5px;
+    margin-top: 10px;
+
+    img {
+      width: 200px;
+    }
+  }
+
+  .background-sm {
+    width: 200px;
+    padding: 5px;
+    margin-top: 10px;
+
+    img {
+      width: 200px;
+    }
+  }
+}
+
+.episodes table {
+  td,
+  th {
+    padding: 2px;
+  }
+
+  thead td {
+    font-weight: bold;
+  }
+
+  thead td.number {
+    width: 50px;
+    font-weight: bold;
+    font-size: large;
+    text-align: center;
+  }
+
+  td.date {
+    width: 125px;
+  }
+
+  th.actions,
+  td.actions {
+    width: 250px;
+  }
+  tr:nth-child(even) {
+    background-color: #222222;
+  }
+}
+
+.details table {
+  th {
+    text-align: left;
+    width: 200px;
+    vertical-align: top;
+  }
+  tr:nth-child(odd) {
+    background-color: #222222;
+  }
+}

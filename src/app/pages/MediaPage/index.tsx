@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Container from '@mui/material/Container';
 import { AllMovies } from './AllMovies';
 import { AllSeries } from './AllSeries';
 import { Series } from './Series';

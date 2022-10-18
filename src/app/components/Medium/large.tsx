@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Button, ButtonGroup, IconButton } from '@mui/material';
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Moment from 'react-moment';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ReplayIcon from '@mui/icons-material/Replay';
@@ -8,10 +12,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import BuildIcon from '@mui/icons-material/Build';
 import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Moment from 'react-moment';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
@@ -19,6 +19,8 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import { TabPanel } from '../TabPanel';
+
+import './large.scss';
 
 export function MediumLarge(props) {
   const [value, setValue] = React.useState(0);
@@ -143,7 +145,7 @@ function Seasons(props) {
       <ButtonGroup>
         {props.seasons.map(s => (
           <Button
-            variant={season == s ? 'contained' : 'outlined'}
+            variant={season === s ? 'contained' : 'outlined'}
             key={s}
             id={s}
             onClick={clickSeason}

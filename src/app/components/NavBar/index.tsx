@@ -124,7 +124,7 @@ const NavBar = () => {
                 textDecoration: 'none',
               }}
             >
-              DASHOTV
+              BLARG
             </Typography>
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>

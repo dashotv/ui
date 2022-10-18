@@ -1,0 +1,104 @@
+.medium {
+  position: relative;
+}
+.medium.small {
+  a:link {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  a:visited {
+    text-decoration: none;
+  }
+  a:active {
+    text-decoration: none;
+  }
+  height: 287px;
+  width: 195px;
+  margin: 0.3rem;
+  float: left;
+  /*border: 1px solid white;*/
+  .cover {
+    height: 287px;
+    width: 195px;
+    z-index: 100;
+    background-size: contain;
+    background-repeat: no-repeat;
+    img {
+      height: 287px;
+      width: 195px;
+    }
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    z-index: 105;
+    .primary {
+      font-weight: bold;
+    }
+    .secondary {
+      font-weight: normal;
+      font-size: 0.8rem;
+    }
+  }
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 35px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    z-index: 110;
+    .primary {
+      font-weight: bold;
+    }
+  }
+  .icons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 35px;
+    z-index: 115;
+    color: white;
+    padding: 2px;
+  }
+  .hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    .text {
+      position: absolute;
+      color: white;
+      overflow: hidden;
+      margin-top: 35px;
+      margin-bottom: 50px;
+      padding: 5px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+    }
+  }
+  .hover:hover .text {
+    display: block;
+  }
+}

@@ -11,7 +11,7 @@ import {
 import Media from '../../components/Media';
 import Typography from '@mui/material/Typography';
 
-const pagesize = 25;
+const pagesize = 42;
 
 export function AllSeries() {
   const [data, setData] = useState([]);
@@ -20,25 +20,24 @@ export function AllSeries() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const getData = async () => {
-    try {
-      const response = await axios.get(`/api/tower/series/?page=${page}`);
-      console.log(response.data);
-      setData(response.data.results);
-      setCount(response.data.count);
-    } catch (err) {
-      // @ts-ignore
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
   useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(`/api/tower/series/?page=${page}`);
+        console.log(response.data);
+        setData(response.data.results);
+        setCount(response.data.count);
+      } catch (err) {
+        // @ts-ignore
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
     getData();
   }, [page]);
 
