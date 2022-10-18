@@ -2,7 +2,6 @@
   margin-top: 5px;
   min-height: 400px;
   position: relative;
-
   .menu {
     position: absolute;
     top: 0;
@@ -34,11 +33,11 @@
   .titlebar {
   }
 
-  .title {
+  .title span {
     font-size: xx-large;
     font-weight: bolder;
+    margin-right: 10px;
   }
-
   .buttons {
   }
 
@@ -101,12 +100,19 @@
   }
 }
 
+.seasons {
+  padding-bottom: 8px;
+}
+
 .episodes table {
   td,
   th {
     padding: 2px;
   }
 
+  thead tr {
+    background-color: #222222;
+  }
   thead td {
     font-weight: bold;
   }
@@ -124,7 +130,7 @@
 
   th.actions,
   td.actions {
-    width: 250px;
+    width: 225px;
   }
   tr:nth-child(even) {
     background-color: #222222;

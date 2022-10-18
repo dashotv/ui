@@ -36,7 +36,7 @@ function Header(props) {
     nextDay: '[Tomorrow]',
     lastWeek: '[last] dddd',
     nextWeek: 'dddd',
-    sameElse: 'L',
+    sameElse: 'YYYY-MM-DD',
   };
 
   /* had to add day to deal with UTC time, not sure why tz prop doesn't work */

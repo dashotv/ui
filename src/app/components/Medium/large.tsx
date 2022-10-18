@@ -43,6 +43,9 @@ export function MediumLarge(props) {
         <div className="titlebar">
           <div className="title">
             <span>{props.data.title}</span>
+            <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
+              {props.data.release_date}
+            </Moment>
           </div>
           <Buttons
             id={props.data.id}
