@@ -1,17 +1,122 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import SearchBar from 'material-ui-search-bar';
+import Avatar from '@mui/material/Avatar';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import TheatersIcon from '@mui/icons-material/Theaters';
+import TvIcon from '@mui/icons-material/Tv';
+import axios from 'axios';
+
+import './Search.css';
+
+interface Medium {
+  id: string;
+  link: string;
+  name: string;
+  type: string;
+  release_date: string;
+}
 
 export default function Search(props) {
+  const [search, setSearch] = useState<null | String>(null);
+  const [results, setResults] = useState<Medium[]>([]);
   const [text, setText] = useState('');
+  const [open, setOpen] = React.useState(false);
+  const [selectedValue, setSelectedValue] = React.useState('');
+  const routerHistory = useHistory();
+
+  const handleSearch = value => {
+    setSearch(value);
+  };
+
+  const onClose = (value: string) => {
+    setOpen(false);
+    console.log('value: ', value);
+    setSelectedValue(value);
+    routerHistory.push('/media/' + value);
+  };
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  const handleListItemClick = (value: string) => {
+    onClose(value);
+  };
+
+  useEffect(() => {
+    const getResults = async () => {
+      try {
+        if (search === null) {
+          return;
+        }
+        const response = await axios.get(
+          `/api/scry/media/?name=*${search}*&limit=10&type=series movie`,
+        );
+        console.log(response.data);
+        setResults(response.data.Media);
+        setOpen(true);
+      } catch (err) {
+        // @ts-ignore
+        // setError(err.message);
+        console.log(err.message);
+      }
+    };
+    getResults();
+  }, [search]);
+
   return (
-    <SearchBar
-      value={text}
-      onChange={newValue => setText(newValue)}
-      onRequestSearch={() => props.search(text)}
-    />
+    <>
+      <SearchBar
+        value={text}
+        onChange={newValue => setText(newValue)}
+        onRequestSearch={() => handleSearch(text)}
+      />
+
+      <Dialog onClose={handleClose} open={open}>
+        <DialogTitle>Results</DialogTitle>
+        <List className="searchResults" sx={{ pt: 0 }}>
+          {results &&
+            results.map(({ id, link, name, type, release_date }) => (
+              <ListItem
+                button
+                onClick={() => handleListItemClick(link)}
+                key={id}
+              >
+                <ListItemAvatar>
+                  <Avatar>
+                    {type == 'series' && <TvIcon />}
+                    {type == 'movie' && <TheatersIcon />}
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={name} secondary={release_date} />
+              </ListItem>
+            ))}
+        </List>
+      </Dialog>
+    </>
   );
 }
+
+// function ResultsDialog(props) {
+//   console.log('dialog: ', props);
+//   const handleClose = () => {
+//     props.onClose(props.selectedValue);
+//   };
+//
+//   const handleListItemClick = (value: string) => {
+//     props.onClose(value);
+//   };
+//
+//   return (
+//   );
+// }
 
 // const SearchContainer = styled('div')(({ theme }) => ({
 //   position: 'relative',
