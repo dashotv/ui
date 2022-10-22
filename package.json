@@ -94,7 +94,10 @@
     "generate": "plop --plopfile internals/generators/plopfile.ts",
     "cleanAndSetup": "ts-node ./internals/scripts/clean.ts",
     "prettify": "prettier --write",
-    "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js"
+    "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js",
+    "docker:build": "docker build -t dashotv/ui:v0.1.1 .",
+    "docker:run": "docker run -it --rm --name ui -p 3000:80 dashotv/ui:v0.1.1",
+    "docker:exec": "docker exec -it ui sh"
   },
   "eslintConfig": {
     "extends": "react-app"
