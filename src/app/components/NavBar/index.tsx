@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Logo from './assets/logo-small.png';
 import Search from './Search';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const pages = [
   { name: 'Media', page: '/media' },
@@ -22,12 +24,10 @@ const pages = [
 const settings = ['Account', 'Logout'];
 
 const NavBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null,
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null,
-  );
+  const [search, setSearch] = useState<null | String>(null);
+  const [results, setResults] = useState<null | String>(null);
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -43,6 +43,30 @@ const NavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleSearch = value => {
+    setSearch(value);
+  };
+
+  useEffect(() => {
+    const getResults = async () => {
+      try {
+        if (search === null) {
+          return;
+        }
+        const response = await axios.get(
+          `/api/scry/media/?name=*${search}*&type=series movie`,
+        );
+        console.log(response.data);
+        setResults(response.data.media);
+      } catch (err) {
+        // @ts-ignore
+        // setError(err.message);
+        console.log(err.message);
+      }
+    };
+    getResults();
+  }, [search]);
 
   return (
     <AppBar position="static">
@@ -141,7 +165,7 @@ const NavBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0, mr: 3, display: { xs: 'none', md: 'flex' } }}>
-            <Search />
+            <Search search={handleSearch} />
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
