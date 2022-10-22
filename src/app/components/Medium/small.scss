@@ -83,13 +83,15 @@
     right: 0;
     bottom: 0;
     z-index: 200;
+    font-size: medium;
     .text {
       position: absolute;
       color: white;
       overflow: hidden;
-      margin-top: 35px;
-      margin-bottom: 50px;
-      padding: 5px;
+      padding-top: 35px;
+      padding-bottom: 50px;
+      padding-left: 5px;
+      padding-right: 5px;
       top: 0;
       left: 0;
       right: 0;
