@@ -91,8 +91,8 @@ export default function Search(props) {
               >
                 <ListItemAvatar>
                   <Avatar>
-                    {type == 'series' && <TvIcon />}
-                    {type == 'movie' && <TheatersIcon />}
+                    {type === 'series' && <TvIcon />}
+                    {type === 'movie' && <TheatersIcon />}
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={name} secondary={release_date} />
