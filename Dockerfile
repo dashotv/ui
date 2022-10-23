@@ -9,7 +9,7 @@ RUN yarn build
 
 FROM nginx:alpine
 
-COPY ./etc/nginx.conf /etc/nginx/nginx.conf
-COPY ./etc/default.conf /etc/nginx/conf.d/default.conf
+#COPY ./etc/nginx.conf /etc/nginx/nginx.conf
+#COPY ./etc/default.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=builder /app/build /usr/share/nginx/html
