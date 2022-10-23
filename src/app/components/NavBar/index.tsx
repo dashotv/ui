@@ -17,6 +17,8 @@ import Search from './Search';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import './Navbar.scss';
+
 const pages = [
   { name: 'Series', page: '/series' },
   { name: 'Movies', page: '/movies' },
@@ -123,15 +125,18 @@ const NavBar = () => {
                 textDecoration: 'none',
               }}
             >
-              BLARG
+              DASHOTV
             </Typography>
           </Link>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box
+            className="menu"
+            sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
+          >
             {pages.map(({ name, page }) => (
               <Link key={name} to={page}>
                 <Button
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  sx={{ my: 2, display: 'block' }}
                 >
                   {name}
                 </Button>
