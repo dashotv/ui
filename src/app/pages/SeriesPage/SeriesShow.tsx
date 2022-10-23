@@ -2,52 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Container from '@mui/material/Container';
-import {
-  LoadingIndicator,
-  LoadingWrapper,
-} from '../../components/LoadingIndicator';
 import { Medium } from '../../../types/medium';
-import { MediumLarge } from '../../components/Medium';
+import MediumLarge from '../../components/MediumLarge';
 import { Helmet } from 'react-helmet-async';
 
 export function SeriesShow() {
   const [data, setData] = useState<Medium | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [seasons, setSeasons] = useState([]);
   const [currentSeason, setCurrentSeason] = useState(1);
   const [episodes, setEpisodes] = useState([]);
 
   // @ts-ignore
   let { id } = useParams();
-
-  const getData = async () => {
-    try {
-      const response = await axios.get(`/api/tower/series/${id}`);
-      console.log(response.data);
-      setData(response.data);
-    } catch (err) {
-      // @ts-ignore
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getSeasons = async () => {
-    console.log('getSeasons');
-    try {
-      const response = await axios.get(`/api/tower/series/${id}/seasons`);
-      console.log(response.data);
-      setSeasons(response.data);
-    } catch (err) {
-      console.log(err);
-      // @ts-ignore
-      setError(err.message);
-      // } finally {
-      //   setLoading(false);
-    }
-  };
 
   const changeSetting = async (type, id, setting, value) => {
     console.log(`changeSetting: ${type}/${id} ${setting}=${value}`);
@@ -59,7 +25,7 @@ export function SeriesShow() {
       });
       console.log(response.data);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -74,30 +40,45 @@ export function SeriesShow() {
     changeSetting('series', id, setting, value);
   }
 
-  const getSeason = async season => {
-    try {
-      const response = await axios.get(
-        `/api/tower/series/${id}/seasons/${season}`,
-      );
-      console.log(response.data);
-      setEpisodes(response.data);
-    } catch (err) {
-      console.log(err);
-      // @ts-ignore
-      setError(err.message);
-      // } finally {
-      //   setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(`/api/tower/series/${id}`);
+        console.log(response.data);
+        setData(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getSeasons = async () => {
+      console.log('getSeasons');
+      try {
+        const response = await axios.get(`/api/tower/series/${id}/seasons`);
+        console.log(response.data);
+        setSeasons(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     getData();
     getSeasons();
-  }, []);
+  });
 
   useEffect(() => {
+    const getSeason = async season => {
+      try {
+        const response = await axios.get(
+          `/api/tower/series/${id}/seasons/${season}`,
+        );
+        console.log(response.data);
+        setEpisodes(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     getSeason(currentSeason);
-  }, [currentSeason]);
+  }, [currentSeason, id]);
 
   return (
     <>

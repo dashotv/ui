@@ -1,7 +1,5 @@
 import * as React from 'react';
-import Media from '../Media';
-import { MediumSmall } from '../Medium';
-import { useEffect } from 'react';
+import MediumSmall from '../MediumSmall';
 
 export default function Downloads(props) {
   function type(t) {

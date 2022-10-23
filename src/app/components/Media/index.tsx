@@ -1,11 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import styled from 'styled-components/macro';
-import { MediumSmall } from '../Medium';
+import MediumSmall from '../MediumSmall';
 
 export default function Media(props) {
   return (

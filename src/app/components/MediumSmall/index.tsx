@@ -6,7 +6,7 @@ import StarIcon from '@mui/icons-material/Star';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import './small.scss';
 
-export function MediumSmall(props) {
+export default function MediumSmall(props) {
   return (
     <div className="medium small">
       <Link to={`/${props.type}/${props.id}`}>

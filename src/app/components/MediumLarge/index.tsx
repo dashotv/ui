@@ -22,7 +22,7 @@ import { TabPanel } from '../TabPanel';
 
 import './large.scss';
 
-export function MediumLarge(props) {
+export default function MediumLarge(props) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
