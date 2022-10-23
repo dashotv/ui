@@ -9,7 +9,7 @@ import './small.scss';
 export function MediumSmall(props) {
   return (
     <div className="medium small">
-      <Link to={`/media/series/${props.id}`}>
+      <Link to={`/${props.type}/${props.id}`}>
         <Hover text={props.description} />
         <Cover image={props.background} />
         <Header text={props.release} />

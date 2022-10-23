@@ -1,5 +1,5 @@
 import React from 'react';
 
-export function Movie() {
+export function MoviesShow() {
   return <div>Movie</div>;
 }

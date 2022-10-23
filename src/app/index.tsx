@@ -11,7 +11,8 @@ import { Helmet } from 'react-helmet-async';
 import { Switch, Route } from 'react-router-dom';
 
 import { HomePage } from './pages/HomePage';
-import { MediaPage } from './pages/MediaPage';
+import { SeriesPage } from './pages/SeriesPage';
+import { MoviesPage } from './pages/MoviesPage';
 import { ReleasesPage } from './pages/ReleasesPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import NavBar from './components/NavBar';
@@ -28,7 +29,8 @@ export function App() {
       <NavBar />
       <Switch>
         <Route exact path={process.env.PUBLIC_URL + '/'} component={HomePage} />
-        <Route path="/media" component={MediaPage} />
+        <Route path="/series" component={SeriesPage} />
+        <Route path="/movies" component={MoviesPage} />
         <Route path="/releases" component={ReleasesPage} />
         <Route component={NotFoundPage} />
       </Switch>

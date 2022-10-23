@@ -23,6 +23,7 @@ export default function Media(props) {
         }) => (
           <MediumSmall
             key={id}
+            type={props.type}
             id={series_id || id}
             background={cover}
             primary={title}

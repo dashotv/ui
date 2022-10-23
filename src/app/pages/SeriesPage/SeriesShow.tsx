@@ -10,7 +10,7 @@ import { Medium } from '../../../types/medium';
 import { MediumLarge } from '../../components/Medium';
 import { Helmet } from 'react-helmet-async';
 
-export function Series() {
+export function SeriesShow() {
   const [data, setData] = useState<Medium | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 
 const pagesize = 42;
 
-export function AllSeries() {
+export function SeriesIndex() {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
@@ -55,12 +55,7 @@ export function AllSeries() {
       <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container>
           <Grid item xs={6}>
-            <Link to="/media">
-              <Button variant="outlined">Series</Button>
-            </Link>
-            <Link to="/media/movies">
-              <Button>Movies</Button>
-            </Link>
+            <Typography variant="h4">Series</Typography>
           </Grid>
           <Grid item xs={6}>
             <Pagination
@@ -79,7 +74,7 @@ export function AllSeries() {
         {error && (
           <div>{`There is a problem fetching the post data - ${error}`}</div>
         )}
-        {data && <Media data={data} />}
+        {data && <Media data={data} type="series" />}
       </Container>
     </>
   );

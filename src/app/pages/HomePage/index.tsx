@@ -62,7 +62,7 @@ export function HomePage() {
           <div>{`There is a problem fetching the post data - ${error}`}</div>
         )}
         <Downloads data={downloads} />
-        <Media data={upcoming} />
+        <Media data={upcoming} type="series" />
       </Container>
     </>
   );

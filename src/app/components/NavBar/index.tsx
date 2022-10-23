@@ -18,7 +18,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const pages = [
-  { name: 'Media', page: '/media' },
+  { name: 'Series', page: '/series' },
+  { name: 'Movies', page: '/movies' },
   { name: 'Releases', page: '/releases' },
 ];
 const settings = ['Account', 'Logout'];

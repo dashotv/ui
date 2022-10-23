@@ -5,8 +5,9 @@ import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
+import Typography from '@mui/material/Typography';
 
-export function AllMovies() {
+export function MoviesIndex() {
   return (
     <>
       <Helmet>
@@ -19,12 +20,7 @@ export function AllMovies() {
       <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container>
           <Grid item xs={6}>
-            <Link to="/media">
-              <Button>Series</Button>
-            </Link>
-            <Link to="/media/movies">
-              <Button variant="outlined">Movies</Button>
-            </Link>
+            <Typography variant="h4">Movies</Typography>
           </Grid>
           <Grid item xs={6}></Grid>
         </Grid>
