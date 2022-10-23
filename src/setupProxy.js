@@ -17,4 +17,12 @@ module.exports = function (app) {
       changeOrigin: true,
     }),
   );
+  app.use(
+    '/media-images',
+    createProxyMiddleware({
+      target: 'http://seer.dasho.net/',
+      // pathRewrite: { '^/api/scry': '' },
+      changeOrigin: true,
+    }),
+  );
 };
