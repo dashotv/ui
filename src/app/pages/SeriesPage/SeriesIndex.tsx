@@ -29,6 +29,7 @@ export function SeriesIndex() {
   useEffect(() => {
     const getData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`/api/tower/series/?page=${page}`);
         console.log(response.data);
         setData(response.data.results);
@@ -72,7 +73,7 @@ export function SeriesIndex() {
           </LoadingWrapper>
         )}
         {error && (
-          <div>{`There is a problem fetching the post data - ${error}`}</div>
+          <div>{`There is a problem fetching the data - ${error}`}</div>
         )}
         {data && <Media data={data} type="series" />}
       </Container>
