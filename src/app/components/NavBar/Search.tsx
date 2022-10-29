@@ -39,7 +39,7 @@ export default function Search(props) {
     setOpen(false);
     console.log('value: ', value);
     setSelectedValue(value);
-    routerHistory.push('/media/' + value);
+    routerHistory.push('/' + value);
   };
 
   const handleClose = () => {
