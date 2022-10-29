@@ -1,3 +1,10 @@
+// for mobile
+//$height: 242px;
+//$width: 165px;
+
+$height: 286px;
+$width: 195px;
+
 .medium {
   position: relative;
 }
@@ -14,14 +21,14 @@
   a:active {
     text-decoration: none;
   }
-  height: 287px;
-  width: 195px;
+  height: $height;
+  width: $width;
   margin: 0.3rem;
   float: left;
   /*border: 1px solid white;*/
   .cover {
-    height: 287px;
-    width: 195px;
+    height: $height;
+    width: $width;
     z-index: 100;
     background-size: contain;
     background-repeat: no-repeat;
