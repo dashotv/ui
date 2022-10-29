@@ -66,7 +66,11 @@ export default function MediumLarge(props) {
           </Box>
         </Box>
         <TabPanel index={episodesIndex} value={value}>
-          <Seasons seasons={props.seasons} changeSeason={props.changeSeason} />
+          <Seasons
+            current={props.currentSeason}
+            seasons={props.seasons}
+            changeSeason={props.changeSeason}
+          />
           <Episodes
             episodes={props.episodes}
             changeEpisode={props.changeEpisode}

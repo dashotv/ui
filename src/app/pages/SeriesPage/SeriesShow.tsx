@@ -67,8 +67,22 @@ export function SeriesShow() {
         console.error(err);
       }
     };
+
+    const getCurrentSeason = async () => {
+      console.log('getSeasons');
+      try {
+        const response = await axios.get(
+          `/api/tower/series/${id}/currentseason`,
+        );
+        console.log(response.data);
+        setCurrentSeason(response.data.current);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     getData();
     getSeasons();
+    getCurrentSeason();
   }, [id]);
 
   useEffect(() => {
@@ -110,8 +124,8 @@ export function SeriesShow() {
             tupe="series"
             data={data}
             seasons={seasons}
-            episodes={episodes}
             currentSeason={currentSeason}
+            episodes={episodes}
             changeSeason={changeSeason}
             changeEpisode={changeEpisodeSetting}
             change={changeSeriesSetting}
