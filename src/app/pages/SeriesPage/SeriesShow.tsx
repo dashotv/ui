@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import Container from '@mui/material/Container';
-import { Medium } from '../../../types/medium';
-import MediumLarge from '../../components/MediumLarge';
 import { Helmet } from 'react-helmet-async';
+import Container from '@mui/material/Container';
+import MediumLarge from '../../components/MediumLarge';
 import {
   LoadingIndicator,
   LoadingWrapper,
 } from '../../components/LoadingIndicator';
+import { Medium } from '../../../types/medium';
 
 export function SeriesShow() {
   const [data, setData] = useState<Medium | null>(null);
+  const [paths, setPaths] = useState<Medium | null>(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [seasons, setSeasons] = useState([]);
@@ -22,8 +23,6 @@ export function SeriesShow() {
   let { id } = useParams();
 
   const changeSetting = async (type, id, setting, value) => {
-    console.log(`changeSetting: ${type}/${id} ${setting}=${value}`);
-
     try {
       const response = await axios.put(`/api/tower/${type}/${id}`, {
         setting: setting,
@@ -31,6 +30,8 @@ export function SeriesShow() {
       });
       console.log(response.data);
     } catch (err) {
+      // @ts-ignore
+      setError(err);
       console.error(err);
     }
   };
@@ -48,11 +49,28 @@ export function SeriesShow() {
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(`/api/tower/series/${id}`);
         console.log(response.data);
         setData(response.data);
       } catch (err) {
+        // @ts-ignore
+        setError(err);
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const getPaths = async () => {
+      try {
+        const response = await axios.get(`/api/tower/series/${id}/paths`);
+        console.log(response.data);
+        setPaths(response.data);
+      } catch (err) {
+        // @ts-ignore
+        setError(err);
         console.error(err);
       }
     };
@@ -64,6 +82,8 @@ export function SeriesShow() {
         console.log(response.data);
         setSeasons(response.data);
       } catch (err) {
+        // @ts-ignore
+        setError(err);
         console.error(err);
       }
     };
@@ -77,10 +97,13 @@ export function SeriesShow() {
         console.log(response.data);
         setCurrentSeason(response.data.current);
       } catch (err) {
+        // @ts-ignore
+        setError(err);
         console.error(err);
       }
     };
     getData();
+    getPaths();
     getSeasons();
     getCurrentSeason();
   }, [id]);
@@ -123,6 +146,7 @@ export function SeriesShow() {
             id={data.id}
             tupe="series"
             data={data}
+            paths={paths}
             seasons={seasons}
             currentSeason={currentSeason}
             episodes={episodes}

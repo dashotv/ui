@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Medium } from '../../../types/medium';
+import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import MediumMovie from '../../components/MediumLarge/MediumMovie';
 import {
   LoadingIndicator,
   LoadingWrapper,
 } from '../../components/LoadingIndicator';
+import { Medium } from '../../../types/medium';
+import { Path } from '../../../types/path';
 
 export function MoviesShow() {
   const [data, setData] = useState<Medium | null>(null);
+  const [paths, setPaths] = useState<Path[] | null>(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -52,7 +54,22 @@ export function MoviesShow() {
       }
     };
 
+    const getPaths = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`/api/tower/movies/${id}/paths`);
+        console.log(response.data);
+        setPaths(response.data);
+      } catch (err) {
+        // @ts-ignore
+        setError(err);
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
     getData();
+    getPaths();
   }, [id]);
 
   return (
@@ -78,6 +95,7 @@ export function MoviesShow() {
             id={data.id}
             type="movies"
             data={data}
+            paths={paths}
             change={changeMovieSetting}
           />
         )}

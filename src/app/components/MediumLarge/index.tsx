@@ -11,6 +11,7 @@ import Seasons from './Seasons';
 import Episodes from './Episodes';
 import Details from './Details';
 import ImageSmall from './ImageSmall';
+import Files from './Files';
 
 import './large.scss';
 
@@ -77,7 +78,7 @@ export default function MediumLarge(props) {
           />
         </TabPanel>
         <TabPanel index={filesIndex} value={value}>
-          <div>files</div>
+          <Files paths={props.paths} />
         </TabPanel>
         <TabPanel index={downloadsIndex} value={value}>
           <div>downloads</div>

@@ -7,18 +7,17 @@ import Moment from 'react-moment';
 
 import TabPanel from '../TabPanel';
 import Buttons from './Buttons';
-import Seasons from './Seasons';
-import Episodes from './Episodes';
 import Details from './Details';
+import Files from './Files';
 import ImageSmall from './ImageSmall';
 
 import './large.scss';
 
 export default function MediumLarge(props) {
   const [value, setValue] = useState(0);
-  const [filesIndex, setFilesIndex] = useState(0);
-  const [downloadsIndex, setDownloadsIndex] = useState(1);
-  const [detailsIndex, setDetailsIndex] = useState(2);
+  const [filesIndex] = useState(0);
+  const [downloadsIndex] = useState(1);
+  const [detailsIndex] = useState(2);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -64,7 +63,7 @@ export default function MediumLarge(props) {
           </Box>
         </Box>
         <TabPanel index={filesIndex} value={value}>
-          <div>files</div>
+          <Files paths={props.paths} />
         </TabPanel>
         <TabPanel index={downloadsIndex} value={value}>
           <div>downloads</div>
