@@ -55,7 +55,7 @@ function FilesRow(props) {
         {props.local}.{props.extension}
       </td>
       <td align="right">
-        <Moment format="YYYY-MM-DD">{props.updated}</Moment>
+        <Moment fromNow>{props.updated}</Moment>
       </td>
 
       <td align="right">
