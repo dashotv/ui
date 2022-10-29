@@ -14,9 +14,6 @@ export function MoviesShow() {
   const [data, setData] = useState<Medium | null>(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
-  // const [seasons, setSeasons] = useState([]);
-  // const [currentSeason, setCurrentSeason] = useState(1);
-  // const [episodes, setEpisodes] = useState([]);
 
   // @ts-ignore
   let { id } = useParams();
@@ -35,13 +32,6 @@ export function MoviesShow() {
     }
   };
 
-  // function changeSeason(season) {
-  //   console.log(`changeSeason: ${season}`);
-  //   setCurrentSeason(season);
-  // }
-  // function changeEpisodeSetting(id, setting, value) {
-  //   changeSetting('episodes', id, setting, value);
-  // }
   function changeMovieSetting(id, setting, value) {
     changeSetting('movies', id, setting, value);
   }
@@ -62,38 +52,8 @@ export function MoviesShow() {
       }
     };
 
-    // const getSeasons = async () => {
-    //   console.log('getSeasons');
-    //   try {
-    //     const response = await axios.get(`/api/tower/series/${id}/seasons`);
-    //     console.log(response.data);
-    //     setSeasons(response.data);
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-    // };
-    // const wait = async () => {
-    //   setLoading(true);
-    //   await Promise.all([getData()]);
-    //   setLoading(false);
-    // };
     getData();
   }, [id]);
-
-  // useEffect(() => {
-  //   const getSeason = async season => {
-  //     try {
-  //       const response = await axios.get(
-  //         `/api/tower/series/${id}/seasons/${season}`,
-  //       );
-  //       console.log(response.data);
-  //       setEpisodes(response.data);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-  //   getSeason(currentSeason);
-  // }, [currentSeason, id]);
 
   return (
     <>
