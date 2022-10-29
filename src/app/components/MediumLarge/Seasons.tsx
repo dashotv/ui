@@ -3,12 +3,14 @@ import { Button, ButtonGroup } from '@mui/material';
 
 export default function Seasons(props) {
   const [season, setSeason] = React.useState(props.current);
-  console.log('season=', season);
+
   function clickSeason(ev) {
     const id = ev.currentTarget.id;
     console.log(`clickSeason: ${id}`);
+    // if (season != id) {
     setSeason(id);
     props.changeSeason(id);
+    // }
   }
   return (
     <div className="seasons">

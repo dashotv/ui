@@ -52,7 +52,7 @@ export function SeriesShow() {
       setLoading(true);
       try {
         const response = await axios.get(`/api/tower/series/${id}`);
-        console.log(response.data);
+        console.log('getData:', response.data);
         setData(response.data);
       } catch (err) {
         // @ts-ignore
@@ -76,10 +76,9 @@ export function SeriesShow() {
     };
 
     const getSeasons = async () => {
-      console.log('getSeasons');
       try {
         const response = await axios.get(`/api/tower/series/${id}/seasons`);
-        console.log(response.data);
+        console.log('getSeasons:', response.data);
         setSeasons(response.data);
       } catch (err) {
         // @ts-ignore
@@ -89,12 +88,11 @@ export function SeriesShow() {
     };
 
     const getCurrentSeason = async () => {
-      console.log('getSeasons');
       try {
         const response = await axios.get(
           `/api/tower/series/${id}/currentseason`,
         );
-        console.log(response.data);
+        console.log('getCurrentSeason:', response.data);
         setCurrentSeason(response.data.current);
       } catch (err) {
         // @ts-ignore
