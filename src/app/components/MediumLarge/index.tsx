@@ -17,10 +17,10 @@ import './large.scss';
 
 export default function MediumLarge(props) {
   const [value, setValue] = useState(0);
-  const [episodesIndex, setEpisodesIndex] = useState(0);
-  const [filesIndex, setFilesIndex] = useState(1);
-  const [downloadsIndex, setDownloadsIndex] = useState(2);
-  const [detailsIndex, setDetailsIndex] = useState(3);
+  const [episodesIndex] = useState(0);
+  const [filesIndex] = useState(1);
+  const [downloadsIndex] = useState(2);
+  const [detailsIndex] = useState(3);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
