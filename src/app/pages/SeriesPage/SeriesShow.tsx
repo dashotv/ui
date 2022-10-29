@@ -5,9 +5,15 @@ import Container from '@mui/material/Container';
 import { Medium } from '../../../types/medium';
 import MediumLarge from '../../components/MediumLarge';
 import { Helmet } from 'react-helmet-async';
+import {
+  LoadingIndicator,
+  LoadingWrapper,
+} from '../../components/LoadingIndicator';
 
 export function SeriesShow() {
   const [data, setData] = useState<Medium | null>(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const [seasons, setSeasons] = useState([]);
   const [currentSeason, setCurrentSeason] = useState(1);
   const [episodes, setEpisodes] = useState([]);
@@ -63,7 +69,7 @@ export function SeriesShow() {
     };
     getData();
     getSeasons();
-  });
+  }, [id]);
 
   useEffect(() => {
     const getSeason = async season => {
@@ -90,24 +96,25 @@ export function SeriesShow() {
         />
       </Helmet>
       <Container maxWidth="xl">
-        {/*{loading && (*/}
-        {/*  <LoadingWrapper>*/}
-        {/*    <LoadingIndicator />*/}
-        {/*  </LoadingWrapper>*/}
-        {/*)}*/}
-        {/*{error && (*/}
-        {/*  <div>{`There is a problem fetching the post data - ${error}`}</div>*/}
-        {/*)}*/}
+        {loading && (
+          <LoadingWrapper>
+            <LoadingIndicator />
+          </LoadingWrapper>
+        )}
+        {error && (
+          <div>{`There is a problem fetching the post data - ${error}`}</div>
+        )}
         {data && (
           <MediumLarge
             id={data.id}
+            tupe="series"
             data={data}
             seasons={seasons}
             episodes={episodes}
             currentSeason={currentSeason}
             changeSeason={changeSeason}
             changeEpisode={changeEpisodeSetting}
-            changeSeries={changeSeriesSetting}
+            change={changeSeriesSetting}
           />
         )}
       </Container>

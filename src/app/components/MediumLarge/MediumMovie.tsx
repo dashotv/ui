@@ -16,10 +16,9 @@ import './large.scss';
 
 export default function MediumLarge(props) {
   const [value, setValue] = useState(0);
-  const [episodesIndex, setEpisodesIndex] = useState(0);
-  const [filesIndex, setFilesIndex] = useState(1);
-  const [downloadsIndex, setDownloadsIndex] = useState(2);
-  const [detailsIndex, setDetailsIndex] = useState(3);
+  const [filesIndex, setFilesIndex] = useState(0);
+  const [downloadsIndex, setDownloadsIndex] = useState(1);
+  const [detailsIndex, setDetailsIndex] = useState(2);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -58,20 +57,12 @@ export default function MediumLarge(props) {
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab label="Episodes" id={`simple-tabs-${episodesIndex}`} />
               <Tab label="Files" id={`simple-tabs-${filesIndex}`} />
               <Tab label="Downloads" id={`simple-tabs-${downloadsIndex}`} />
               <Tab label="Details" id={`simple-tabs-${detailsIndex}`} />
             </Tabs>
           </Box>
         </Box>
-        <TabPanel index={episodesIndex} value={value}>
-          <Seasons seasons={props.seasons} changeSeason={props.changeSeason} />
-          <Episodes
-            episodes={props.episodes}
-            changeEpisode={props.changeEpisode}
-          />
-        </TabPanel>
         <TabPanel index={filesIndex} value={value}>
           <div>files</div>
         </TabPanel>
