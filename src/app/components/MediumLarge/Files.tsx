@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ClosedCaptionIcon from '@mui/icons-material/ClosedCaption';
 
 export default function Files(props) {
   return (
@@ -50,6 +51,7 @@ function FilesRow(props) {
       <th scope="row">
         {props.extension === 'jpg' && <ImageIcon />}
         {props.type === 'video' && <MovieIcon />}
+        {props.type === 'subtitle' && <ClosedCaptionIcon />}
       </th>
       <td>
         {props.local}.{props.extension}
