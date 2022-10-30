@@ -28,7 +28,7 @@ export function App() {
 
       <NavBar />
       <Switch>
-        <Route exact path={process.env.PUBLIC_URL + '/'} component={HomePage} />
+        <Route path={process.env.PUBLIC_URL + '/'} component={HomePage} />
         <Route path="/series" component={SeriesPage} />
         <Route path="/movies" component={MoviesPage} />
         <Route path="/releases" component={ReleasesPage} />

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import SubNav from '../../components/SubNav';
 import { UpcomingPage } from './UpcomingPage';
+import { RecentPage } from './RecentPage';
 
 export function HomePage() {
   const items = [
@@ -12,12 +13,8 @@ export function HomePage() {
     <>
       <SubNav items={items} />
       <Switch>
-        <Route
-          exact
-          path={process.env.PUBLIC_URL + '/'}
-          component={UpcomingPage}
-        />
-        {/*<Route exact path="/recent" component={RecentPage}/>*/}
+        <Route exact path="/" component={UpcomingPage} />
+        <Route exact path="/recent" component={RecentPage} />
       </Switch>
     </>
   );
