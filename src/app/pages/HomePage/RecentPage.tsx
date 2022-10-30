@@ -8,7 +8,6 @@ import {
   LoadingWrapper,
 } from '../../components/LoadingIndicator';
 import Downloads from '../../components/Downloads';
-import Media from '../../components/Media';
 
 export function RecentPage() {
   const [recent, setRecent] = useState([]);
