@@ -4,12 +4,18 @@ import MediumSmall from '../MediumSmall';
 export default function Downloads(props) {
   function type(t) {
     switch (t) {
-      case 'Episode':
-        return 'series';
-      case 'Series':
-        return 'series';
       case 'Movie':
         return 'movies';
+      default:
+        return 'series';
+    }
+  }
+  function getID(medium) {
+    switch (medium.type) {
+      case 'Episode':
+        return medium.series_id;
+      default:
+        return medium.id;
     }
   }
   return (
@@ -18,7 +24,7 @@ export default function Downloads(props) {
         <MediumSmall
           key={id}
           type={type(medium.type)}
-          id={medium.series_id || medium.id}
+          id={getID(medium)}
           background={medium.cover}
           primary={medium.title}
           secondary={medium.display}
