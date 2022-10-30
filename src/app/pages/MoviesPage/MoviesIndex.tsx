@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';

@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import {
   LoadingIndicator,
@@ -11,7 +10,6 @@ import {
 } from '../../components/LoadingIndicator';
 import Media from '../../components/Media';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
 
 const pagesize = 42;
 

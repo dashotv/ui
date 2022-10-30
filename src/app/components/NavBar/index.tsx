@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,7 +15,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Logo from './assets/logo-small.png';
 import Search from './Search';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 import './Navbar.scss';
 
