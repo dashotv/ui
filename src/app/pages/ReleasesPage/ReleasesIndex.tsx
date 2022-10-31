@@ -28,28 +28,74 @@ import {
 import './releases.scss';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Pagination from '@mui/material/Pagination';
 
+const pagesize = 25;
+const formDefaults = {
+  text: '',
+  year: '',
+  season: '',
+  episode: '',
+  group: '',
+  author: '',
+  resolution: '',
+  source: '',
+  type: '',
+  exact: false,
+  verified: false,
+};
 export default function ReleasesIndex() {
   const [releases, setReleases] = useState([]);
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(1);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState(formDefaults);
+
+  const getReleases = async () => {
+    setLoading(true);
+    try {
+      const start = (page - 1) * pagesize;
+      const qs = queryString(form);
+      const response = await axios.get(
+        `/api/scry/releases/?start=${start}&limit=${pagesize}&${qs}`,
+      );
+      console.log(response.data);
+      setReleases(response.data.Releases);
+      setCount(response.data.Total);
+    } catch (err) {
+      // @ts-ignore
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const getReleases = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get('/api/scry/releases/');
-        console.log(response.data);
-        setReleases(response.data.Releases);
-      } catch (err) {
-        // @ts-ignore
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
     getReleases();
-  }, []);
+  }, [form, page]);
+
+  const search = data => {
+    setForm(data);
+  };
+
+  const queryString = form => {
+    const str = [];
+    for (const p in form)
+      if (form.hasOwnProperty(p)) {
+        // @ts-ignore
+        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(form[p]));
+      }
+    const qs = str.join('&');
+    console.log('queryString=', qs);
+    return qs;
+  };
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    console.log('setPage=', value);
+    setPage(value);
+  };
 
   return (
     <>
@@ -60,8 +106,21 @@ export default function ReleasesIndex() {
           content="A React Boilerplate application homepage"
         />
       </Helmet>
+      <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
+        <Grid container>
+          <Grid item xs={6}>
+            <Typography variant="h4">Releases</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Pagination
+              count={Math.ceil(count / pagesize)}
+              onChange={handleChange}
+            />
+          </Grid>
+        </Grid>
+      </Container>
       <Container maxWidth="xl">
-        <Search />
+        <Search form={form} search={search} />
         {loading && (
           <LoadingWrapper>
             <LoadingIndicator />
@@ -76,12 +135,22 @@ export default function ReleasesIndex() {
   );
 }
 
+interface SearchForm {
+  text: string;
+  year: string;
+  season: string;
+  episode: string;
+  group: string;
+  author: string;
+  resolution: string;
+  source: string;
+  type: string;
+  exact: boolean;
+  verified: boolean;
+}
+
 function Search(props) {
-  const defaults = {
-    name: 'fuck',
-    year: '2022',
-  };
-  const [data, setData] = useState(defaults);
+  const [data, setData] = useState<SearchForm>(props.form);
 
   const resolutions = [
     { label: '', value: '' },
@@ -113,6 +182,19 @@ function Search(props) {
     { label: 'showrss', value: 'showrss' },
     { label: 'yify', value: 'yify' },
   ];
+  const handleChange = ev => {
+    setData({ ...data, [ev.target.name]: ev.target.value });
+  };
+  const handleChangeCheckbox = ev => {
+    setData({ ...data, [ev.target.name]: ev.target.checked });
+  };
+  const handleSubmit = ev => {
+    console.log('form:', data);
+    props.search(data);
+  };
+  const handleReset = ev => {
+    setData(formDefaults);
+  };
   return (
     <>
       <Box
@@ -125,60 +207,81 @@ function Search(props) {
       >
         <TextField
           sx={{ m: 1 }}
-          id="name"
+          id="text"
+          name="text"
           label="Name"
           variant="standard"
           margin="none"
           size="small"
+          value={data.text}
+          onChange={handleChange}
         />
         <TextField
           sx={{ m: 1, width: '50px' }}
           id="year"
+          name="year"
           label="Year"
           variant="standard"
           margin="none"
           size="small"
+          value={data.year}
+          onChange={handleChange}
         />
         <TextField
           sx={{ m: 1, width: '75px' }}
           id="season"
+          name="season"
           label="Season"
           variant="standard"
           margin="none"
           size="small"
+          value={data.season}
+          onChange={handleChange}
         />
         <TextField
           sx={{ m: 1, width: '75px' }}
           id="episode"
+          name="episode"
           label="Episode"
           variant="standard"
           margin="none"
           size="small"
+          value={data.episode}
+          onChange={handleChange}
         />
         <TextField
           sx={{ m: 1, width: '75px' }}
           id="group"
+          name="group"
           label="Group"
           variant="standard"
           margin="none"
           size="small"
+          value={data.group}
+          onChange={handleChange}
         />
         <TextField
           sx={{ m: 1, width: '75px' }}
           id="author"
+          name="author"
           label="Author"
           variant="standard"
           margin="none"
           size="small"
+          value={data.author}
+          onChange={handleChange}
         />
         <TextField
           sx={{ m: 1, width: '75px' }}
           id="resolution"
+          name="resolution"
           select
           label="Res"
           variant="standard"
           margin="none"
           size="small"
+          value={data.resolution}
+          onChange={handleChange}
         >
           {resolutions.map(option => (
             <MenuItem key={option.value} value={option.value}>
@@ -189,11 +292,14 @@ function Search(props) {
         <TextField
           sx={{ m: 1, width: '75px' }}
           id="source"
+          name="source"
           select
           label="Source"
           variant="standard"
           margin="none"
           size="small"
+          value={data.source}
+          onChange={handleChange}
         >
           {sources.map(option => (
             <MenuItem key={option.value} value={option.value}>
@@ -204,11 +310,14 @@ function Search(props) {
         <TextField
           sx={{ m: 1, width: '75px' }}
           id="type"
+          name="type"
           select
           label="Type"
           variant="standard"
           margin="none"
           size="small"
+          value={data.type}
+          onChange={handleChange}
         >
           {types.map(option => (
             <MenuItem key={option.value} value={option.value}>
@@ -218,16 +327,24 @@ function Search(props) {
         </TextField>
         <Checkbox
           sx={{ mt: 2 }}
+          name="exact"
           icon={<CircleOutlinedIcon />}
           checkedIcon={<CircleIcon />}
+          checked={data.exact}
+          onChange={handleChangeCheckbox}
         />
         <Checkbox
           sx={{ mt: 2 }}
+          name="verified"
           icon={<CheckCircleOutlineIcon />}
           checkedIcon={<CheckCircleIcon />}
+          checked={data.verified}
+          onChange={handleChangeCheckbox}
         />
-        <Button sx={{ mt: 2 }}>Go</Button>
-        <Button sx={{ mt: 2 }} onClick={ev => setData(defaults)}>
+        <Button sx={{ mt: 2 }} onClick={handleSubmit}>
+          Go
+        </Button>
+        <Button sx={{ mt: 2 }} onClick={handleReset}>
           Reset
         </Button>
       </Box>
@@ -243,7 +360,7 @@ function Releases(props) {
           <tr>
             <td className="number"></td>
             <td className="number"></td>
-            <td></td>
+            <td className="date">Type</td>
             <td>Title</td>
             <td className="actions" align="right">
               Published
@@ -323,7 +440,9 @@ function ReleaseRow(props) {
         )}
       </td>
       <td>
-        {props.source}:{props.type}
+        <Typography variant="caption">
+          {props.source}:{props.type}
+        </Typography>
       </td>
       <td>
         <span title={props.raw}>
