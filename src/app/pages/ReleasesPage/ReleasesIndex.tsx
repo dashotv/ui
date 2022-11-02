@@ -30,6 +30,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
+import SubNav from '../../components/SubNav';
 
 const pagesize = 25;
 const formDefaults = {
@@ -53,26 +54,25 @@ export default function ReleasesIndex() {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(formDefaults);
 
-  const getReleases = async () => {
-    setLoading(true);
-    try {
-      const start = (page - 1) * pagesize;
-      const qs = queryString(form);
-      const response = await axios.get(
-        `/api/scry/releases/?start=${start}&limit=${pagesize}&${qs}`,
-      );
-      console.log(response.data);
-      setReleases(response.data.Releases);
-      setCount(response.data.Total);
-    } catch (err) {
-      // @ts-ignore
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const getReleases = async () => {
+      setLoading(true);
+      try {
+        const start = (page - 1) * pagesize;
+        const qs = queryString(form);
+        const response = await axios.get(
+          `/api/scry/releases/?start=${start}&limit=${pagesize}&${qs}`,
+        );
+        console.log(response.data);
+        setReleases(response.data.Releases);
+        setCount(response.data.Total);
+      } catch (err) {
+        // @ts-ignore
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
     getReleases();
   }, [form, page]);
 
@@ -96,23 +96,31 @@ export default function ReleasesIndex() {
     console.log('setPage=', value);
     setPage(value);
   };
+  const items = [
+    { name: 'Releases', path: '/releases' },
+    { name: 'Feeds', path: '/releases/feeds' },
+  ];
 
   return (
     <>
       <Helmet>
-        <title>Home - Recent</title>
+        <title>Releases - Search</title>
         <meta
           name="description"
           content="A React Boilerplate application homepage"
         />
       </Helmet>
-      <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
+
+      <Container sx={{ padding: 1 }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container>
-          <Grid item xs={6}>
-            <Typography variant="h4">Releases</Typography>
+          <Grid item xs={9}>
+            <Search form={form} search={search} />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <Pagination
+              sx={{ mt: 3 }}
+              siblingCount={0}
+              boundaryCount={1}
               count={Math.ceil(count / pagesize)}
               onChange={handleChange}
             />
@@ -120,7 +128,6 @@ export default function ReleasesIndex() {
         </Grid>
       </Container>
       <Container maxWidth="xl">
-        <Search form={form} search={search} />
         {loading && (
           <LoadingWrapper>
             <LoadingIndicator />
@@ -206,7 +213,7 @@ function Search(props) {
         autoComplete="off"
       >
         <TextField
-          sx={{ m: 1 }}
+          sx={{ m: 1, width: '75px' }}
           id="text"
           name="text"
           label="Name"
@@ -228,7 +235,7 @@ function Search(props) {
           onChange={handleChange}
         />
         <TextField
-          sx={{ m: 1, width: '75px' }}
+          sx={{ m: 1, width: '50px' }}
           id="season"
           name="season"
           label="Season"
@@ -239,7 +246,7 @@ function Search(props) {
           onChange={handleChange}
         />
         <TextField
-          sx={{ m: 1, width: '75px' }}
+          sx={{ m: 1, width: '50px' }}
           id="episode"
           name="episode"
           label="Episode"
@@ -250,7 +257,7 @@ function Search(props) {
           onChange={handleChange}
         />
         <TextField
-          sx={{ m: 1, width: '75px' }}
+          sx={{ m: 1, width: '50px' }}
           id="group"
           name="group"
           label="Group"
@@ -261,7 +268,7 @@ function Search(props) {
           onChange={handleChange}
         />
         <TextField
-          sx={{ m: 1, width: '75px' }}
+          sx={{ m: 1, width: '50px' }}
           id="author"
           name="author"
           label="Author"
