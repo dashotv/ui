@@ -39,7 +39,10 @@ const darkTheme = createTheme({
 ReactDOMClient.createRoot(MOUNT_NODE!).render(
   // <Provider store={store}>
   <ThemeProvider theme={darkTheme}>
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider
+      maxSnack={3}
+      anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+    >
       <Router>
         <CssBaseline />
         <HelmetProvider>
