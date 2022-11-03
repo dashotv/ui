@@ -24,7 +24,7 @@ export function App() {
   return (
     <>
       <Helmet titleTemplate="%s - DashoTV" defaultTitle="DashoTV">
-        <meta name="description" content="A React Boilerplate application" />
+        <meta name="description" content="DashoTV media server" />
       </Helmet>
 
       <NavBar />
