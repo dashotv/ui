@@ -47,6 +47,7 @@
     "moment": "2.29.4",
     "moment-timezone": "0.5.38",
     "node-plop": "0.26.2",
+    "notistack": "2.0.8",
     "plop": "2.7.4",
     "prettier": "2.5.1",
     "react": "18.1.0",

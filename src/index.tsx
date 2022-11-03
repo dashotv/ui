@@ -12,6 +12,7 @@ import 'sanitize.css/sanitize.css';
 import { App } from 'app';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { SnackbarProvider } from 'notistack';
 import CssBaseline from '@mui/material/CssBaseline';
 
 // Initialize languages
@@ -38,14 +39,16 @@ const darkTheme = createTheme({
 ReactDOMClient.createRoot(MOUNT_NODE!).render(
   // <Provider store={store}>
   <ThemeProvider theme={darkTheme}>
-    <Router>
-      <CssBaseline />
-      <HelmetProvider>
-        {/*<React.StrictMode>*/}
-        <App />
-        {/*</React.StrictMode>*/}
-      </HelmetProvider>
-    </Router>
+    <SnackbarProvider maxSnack={3}>
+      <Router>
+        <CssBaseline />
+        <HelmetProvider>
+          {/*<React.StrictMode>*/}
+          <App />
+          {/*</React.StrictMode>*/}
+        </HelmetProvider>
+      </Router>
+    </SnackbarProvider>
   </ThemeProvider>,
   // </Provider>,
 );

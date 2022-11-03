@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
+import { useSnackbar } from 'notistack';
 import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
 import Grid from '@mui/material/Grid';
@@ -16,6 +17,7 @@ export function SeriesIndex() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
