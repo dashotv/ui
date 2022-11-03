@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useSnackbar } from 'notistack';
 import axios from 'axios';
 import Moment from 'react-moment';
 import Container from '@mui/material/Container';
@@ -46,9 +47,9 @@ export default function ReleasesIndex() {
   const [releases, setReleases] = useState([]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(formDefaults);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const getReleases = () => {
@@ -64,11 +65,12 @@ export default function ReleasesIndex() {
           setLoading(false);
         })
         .catch(err => {
-          setError(err.message);
+          enqueueSnackbar('error getting data', { variant: 'error' });
+          console.error(err);
         });
     };
     getReleases();
-  }, [form, page]);
+  }, [form, page, enqueueSnackbar]);
 
   const search = data => {
     setForm(data);
@@ -119,9 +121,6 @@ export default function ReleasesIndex() {
       </Container>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        {error && (
-          <div>{`There is a problem fetching the post data - ${error}`}</div>
-        )}
         <Releases data={releases} />
       </Container>
     </>

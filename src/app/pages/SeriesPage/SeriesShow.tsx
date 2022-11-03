@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import MediumLarge from '../../components/MediumLarge';
@@ -10,11 +11,11 @@ import { Medium } from '../../../types/medium';
 export function SeriesShow() {
   const [data, setData] = useState<Medium | null>(null);
   const [paths, setPaths] = useState<Medium | null>(null);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [seasons, setSeasons] = useState([]);
   const [currentSeason, setCurrentSeason] = useState(1);
   const [episodes, setEpisodes] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
   // @ts-ignore
   let { id } = useParams();
@@ -29,7 +30,7 @@ export function SeriesShow() {
         console.log(response.data);
       })
       .catch(err => {
-        setError(err);
+        enqueueSnackbar('error getting data', { variant: 'error' });
         console.error(err);
       });
   };
@@ -56,7 +57,7 @@ export function SeriesShow() {
           setLoading(false);
         })
         .catch(err => {
-          setError(err);
+          enqueueSnackbar('error getting data', { variant: 'error' });
           console.error(err);
         });
     };
@@ -69,7 +70,7 @@ export function SeriesShow() {
           setPaths(response.data);
         })
         .catch(err => {
-          setError(err);
+          enqueueSnackbar('error getting data', { variant: 'error' });
           console.error(err);
         });
     };
@@ -82,7 +83,7 @@ export function SeriesShow() {
           setSeasons(response.data);
         })
         .catch(err => {
-          setError(err);
+          enqueueSnackbar('error getting data', { variant: 'error' });
           console.error(err);
         });
     };
@@ -95,7 +96,7 @@ export function SeriesShow() {
           setCurrentSeason(response.data.current);
         })
         .catch(err => {
-          setError(err);
+          enqueueSnackbar('error getting data', { variant: 'error' });
           console.error(err);
         });
     };
@@ -103,7 +104,7 @@ export function SeriesShow() {
     getPaths();
     getSeasons();
     getCurrentSeason();
-  }, [id]);
+  }, [id, enqueueSnackbar]);
 
   useEffect(() => {
     const getSeason = season => {
@@ -131,9 +132,6 @@ export function SeriesShow() {
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        {error && (
-          <div>{`There is a problem fetching the post data - ${error}`}</div>
-        )}
         {data && (
           <MediumLarge
             id={data.id}

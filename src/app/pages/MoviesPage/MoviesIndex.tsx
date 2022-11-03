@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useSnackbar } from 'notistack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
@@ -15,7 +16,7 @@ export function MoviesIndex() {
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -33,11 +34,12 @@ export function MoviesIndex() {
           setLoading(false);
         })
         .catch(err => {
-          setError(err.message);
+          enqueueSnackbar('error getting data', { variant: 'error' });
+          console.error(err);
         });
     };
     getData();
-  }, [page]);
+  }, [page, enqueueSnackbar]);
 
   return (
     <>
@@ -63,9 +65,6 @@ export function MoviesIndex() {
       </Container>
       <Container maxWidth="xl" sx={{ overflow: 'auto' }}>
         {loading && <LoadingIndicator />}
-        {error && (
-          <div>{`There is a problem fetching the data - ${error}`}</div>
-        )}
         {data && <Media data={data} type="movies" />}
       </Container>
     </>

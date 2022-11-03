@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useSnackbar } from 'notistack';
 import Container from '@mui/material/Container';
 import LoadingIndicator from '../../components/Loading';
 import { useEffect, useState } from 'react';
@@ -16,8 +17,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export default function ReleasesFeeds(props) {
   const [feeds, setFeeds] = useState([]);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const getFeeds = () => {
@@ -30,11 +31,12 @@ export default function ReleasesFeeds(props) {
           setLoading(false);
         })
         .catch(err => {
-          setError(err.message);
+          enqueueSnackbar('error getting data', { variant: 'error' });
+          console.error(err);
         });
     };
     getFeeds();
-  }, []);
+  }, [enqueueSnackbar]);
 
   return (
     <>
@@ -47,9 +49,6 @@ export default function ReleasesFeeds(props) {
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        {error && (
-          <div>{`There is a problem fetching the post data - ${error}`}</div>
-        )}
         <Feeds data={feeds} />
       </Container>
     </>

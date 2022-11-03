@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
 import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import LoadingIndicator from '../../components/Loading';
@@ -10,8 +11,8 @@ import * as React from 'react';
 export function UpcomingPage() {
   const [upcoming, setUpcoming] = useState([]);
   const [downloads, setDownloads] = useState([]);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const getUpcoming = () => {
@@ -24,7 +25,8 @@ export function UpcomingPage() {
           setLoading(false);
         })
         .catch(err => {
-          setError(err.message);
+          enqueueSnackbar('error getting data', { variant: 'error' });
+          console.error(err);
         });
     };
 
@@ -36,13 +38,14 @@ export function UpcomingPage() {
           setDownloads(response.data);
         })
         .catch(err => {
-          setError(err.message);
+          enqueueSnackbar('error getting data', { variant: 'error' });
+          console.error(err);
         });
     };
 
     getUpcoming();
     getDownloads();
-  }, []);
+  }, [enqueueSnackbar]);
 
   return (
     <>
@@ -55,9 +58,6 @@ export function UpcomingPage() {
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        {error && (
-          <div>{`There is a problem fetching the post data - ${error}`}</div>
-        )}
         <Downloads data={downloads} />
         <Media data={upcoming} type="series" />
       </Container>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import axios from 'axios';
 import Container from '@mui/material/Container';
 import MediumMovie from '../../components/MediumLarge/MediumMovie';
@@ -11,8 +12,8 @@ import { Path } from '../../../types/path';
 export function MoviesShow() {
   const [data, setData] = useState<Medium | null>(null);
   const [paths, setPaths] = useState<Path[] | null>(null);
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   // @ts-ignore
   let { id } = useParams();
@@ -29,6 +30,7 @@ export function MoviesShow() {
         console.log(response.data);
       })
       .catch(err => {
+        enqueueSnackbar('error getting data', { variant: 'error' });
         console.error(err);
       });
   };
@@ -48,7 +50,7 @@ export function MoviesShow() {
           setLoading(false);
         })
         .catch(err => {
-          setError(err);
+          enqueueSnackbar('error getting data', { variant: 'error' });
           console.error(err);
         });
     };
@@ -63,13 +65,13 @@ export function MoviesShow() {
           setLoading(false);
         })
         .catch(err => {
-          setError(err);
+          enqueueSnackbar('error getting data', { variant: 'error' });
           console.error(err);
         });
     };
     getData();
     getPaths();
-  }, [id]);
+  }, [id, enqueueSnackbar]);
 
   return (
     <>
@@ -82,9 +84,6 @@ export function MoviesShow() {
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        {error && (
-          <div>{`There is a problem fetching the post data - ${error}`}</div>
-        )}
         {data && (
           <MediumMovie
             id={data.id}
