@@ -4,10 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import MediumLarge from '../../components/MediumLarge';
-import {
-  LoadingIndicator,
-  LoadingWrapper,
-} from '../../components/LoadingIndicator';
+import LoadingIndicator from '../../components/Loading';
 import { Medium } from '../../../types/medium';
 
 export function SeriesShow() {
@@ -131,11 +128,7 @@ export function SeriesShow() {
         />
       </Helmet>
       <Container maxWidth="xl">
-        {loading && (
-          <LoadingWrapper>
-            <LoadingIndicator />
-          </LoadingWrapper>
-        )}
+        {loading && <LoadingIndicator />}
         {error && (
           <div>{`There is a problem fetching the post data - ${error}`}</div>
         )}

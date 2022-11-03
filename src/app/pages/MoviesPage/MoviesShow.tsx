@@ -4,10 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Container from '@mui/material/Container';
 import MediumMovie from '../../components/MediumLarge/MediumMovie';
-import {
-  LoadingIndicator,
-  LoadingWrapper,
-} from '../../components/LoadingIndicator';
+import LoadingIndicator from '../../components/Loading';
 import { Medium } from '../../../types/medium';
 import { Path } from '../../../types/path';
 
@@ -82,11 +79,7 @@ export function MoviesShow() {
         />
       </Helmet>
       <Container maxWidth="xl">
-        {loading && (
-          <LoadingWrapper>
-            <LoadingIndicator />
-          </LoadingWrapper>
-        )}
+        {loading && <LoadingIndicator />}
         {error && (
           <div>{`There is a problem fetching the post data - ${error}`}</div>
         )}

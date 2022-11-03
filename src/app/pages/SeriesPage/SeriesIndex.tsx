@@ -4,10 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
 import Grid from '@mui/material/Grid';
-import {
-  LoadingIndicator,
-  LoadingWrapper,
-} from '../../components/LoadingIndicator';
+import LoadingIndicator from '../../components/Loading';
 import Media from '../../components/Media';
 import Typography from '@mui/material/Typography';
 
@@ -33,7 +30,7 @@ export function SeriesIndex() {
           console.log(response.data);
           setData(response.data.results);
           setCount(response.data.count);
-          // setLoading(false);
+          setLoading(false);
         })
         .catch(err => {
           setError(err.message);
@@ -65,11 +62,7 @@ export function SeriesIndex() {
         </Grid>
       </Container>
       <Container maxWidth="xl" sx={{ overflow: 'auto' }}>
-        {loading && (
-          <LoadingWrapper>
-            <LoadingIndicator />
-          </LoadingWrapper>
-        )}
+        {loading && <LoadingIndicator />}
         {error && (
           <div>{`There is a problem fetching the data - ${error}`}</div>
         )}

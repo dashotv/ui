@@ -20,10 +20,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import WavesIcon from '@mui/icons-material/Waves';
 import FourKIcon from '@mui/icons-material/FourK';
 import TwoKIcon from '@mui/icons-material/TwoK';
-import {
-  LoadingIndicator,
-  LoadingWrapper,
-} from '../../components/LoadingIndicator';
+import LoadingIndicator from '../../components/Loading';
 
 import './releases.scss';
 import Box from '@mui/material/Box';
@@ -126,11 +123,7 @@ export default function ReleasesIndex() {
         </Grid>
       </Container>
       <Container maxWidth="xl">
-        {loading && (
-          <LoadingWrapper>
-            <LoadingIndicator />
-          </LoadingWrapper>
-        )}
+        {loading && <LoadingIndicator />}
         {error && (
           <div>{`There is a problem fetching the post data - ${error}`}</div>
         )}

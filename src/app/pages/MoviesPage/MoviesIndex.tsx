@@ -5,10 +5,7 @@ import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import {
-  LoadingIndicator,
-  LoadingWrapper,
-} from '../../components/LoadingIndicator';
+import LoadingIndicator from '../../components/Loading';
 import Media from '../../components/Media';
 
 const pagesize = 42;
@@ -65,11 +62,7 @@ export function MoviesIndex() {
         </Grid>
       </Container>
       <Container maxWidth="xl" sx={{ overflow: 'auto' }}>
-        {loading && (
-          <LoadingWrapper>
-            <LoadingIndicator />
-          </LoadingWrapper>
-        )}
+        {loading && <LoadingIndicator />}
         {error && (
           <div>{`There is a problem fetching the data - ${error}`}</div>
         )}
