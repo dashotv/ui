@@ -12,6 +12,7 @@ export default function Episodes(props) {
   return (
     <div className="episodes">
       <table
+        className="vertical-table"
         // size="small"
         aria-label="a dense table"
       >

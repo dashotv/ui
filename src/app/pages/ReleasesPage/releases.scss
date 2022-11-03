@@ -2,37 +2,3 @@ span.spacer {
   margin-right: 5px;
   margin-left: 5px;
 }
-.releases table,
-.feeds table {
-  width: 100%;
-  td,
-  th {
-    padding: 2px;
-  }
-
-  thead tr {
-    background-color: #222222;
-  }
-  thead td {
-    font-weight: bold;
-  }
-
-  thead td.number {
-    width: 50px;
-    font-weight: bold;
-    font-size: large;
-    text-align: center;
-  }
-
-  td.date {
-    width: 125px;
-  }
-
-  th.actions,
-  td.actions {
-    width: 225px;
-  }
-  tr:nth-child(even) {
-    background-color: #222222;
-  }
-}

@@ -12,6 +12,7 @@ export default function Files(props) {
   return (
     <div className="files">
       <table
+        className="vertical-table"
         // size="small"
         aria-label="a dense table"
       >

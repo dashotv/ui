@@ -4,7 +4,7 @@ import * as React from 'react';
 export default function Details(props) {
   return (
     <div className="details">
-      <table aria-label="a dense table">
+      <table className="horizontal-table" aria-label="a dense table">
         <tbody>
           <tr>
             <th>Display</th>

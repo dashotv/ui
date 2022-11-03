@@ -18,6 +18,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import NavBar from './components/NavBar';
 
 import { GlobalStyle } from '../styles/global-styles';
+import './index.scss';
 
 export function App() {
   return (

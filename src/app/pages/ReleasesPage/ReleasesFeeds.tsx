@@ -72,7 +72,7 @@ export default function ReleasesFeeds(props) {
 function Feeds(props) {
   return (
     <div className="feeds">
-      <table>
+      <table className="vertical-table">
         <thead>
           <tr>
             <td className="number"></td>

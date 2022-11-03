@@ -362,7 +362,7 @@ function Search(props) {
 function Releases(props) {
   return (
     <div className="releases">
-      <table>
+      <table className="vertical-table">
         <thead>
           <tr>
             <td className="number"></td>
