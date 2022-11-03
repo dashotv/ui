@@ -55,23 +55,21 @@ export default function ReleasesIndex() {
   const [form, setForm] = useState(formDefaults);
 
   useEffect(() => {
-    const getReleases = async () => {
+    const getReleases = () => {
       setLoading(true);
-      try {
-        const start = (page - 1) * pagesize;
-        const qs = queryString(form);
-        const response = await axios.get(
-          `/api/scry/releases/?start=${start}&limit=${pagesize}&${qs}`,
-        );
-        console.log(response.data);
-        setReleases(response.data.Releases);
-        setCount(response.data.Total);
-      } catch (err) {
-        // @ts-ignore
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
+      const start = (page - 1) * pagesize;
+      const qs = queryString(form);
+      axios
+        .get(`/api/scry/releases/?start=${start}&limit=${pagesize}&${qs}`)
+        .then(response => {
+          console.log(response.data);
+          setReleases(response.data.Releases);
+          setCount(response.data.Total);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError(err.message);
+        });
     };
     getReleases();
   }, [form, page]);
