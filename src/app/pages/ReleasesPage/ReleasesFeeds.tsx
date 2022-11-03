@@ -9,13 +9,9 @@ import {
 } from '../../components/LoadingIndicator';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import FourKIcon from '@mui/icons-material/FourK';
-import TwoKIcon from '@mui/icons-material/TwoK';
 import Typography from '@mui/material/Typography';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import ArticleIcon from '@mui/icons-material/Article';
-import WavesIcon from '@mui/icons-material/Waves';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import IconButton from '@mui/material/IconButton';
@@ -29,18 +25,18 @@ export default function ReleasesFeeds(props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getFeeds = async () => {
+    const getFeeds = () => {
       setLoading(true);
-      try {
-        const response = await axios.get('/api/tower/feeds/');
-        console.log(response.data);
-        setFeeds(response.data);
-      } catch (err) {
-        // @ts-ignore
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
+      axios
+        .get('/api/tower/feeds/')
+        .then(response => {
+          console.log(response.data);
+          setFeeds(response.data);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError(err.message);
+        });
     };
     getFeeds();
   }, []);
@@ -76,8 +72,8 @@ function Feeds(props) {
         <thead>
           <tr>
             <td className="number"></td>
-            <td>Name</td>
             <td className="date">Source</td>
+            <td>Name</td>
             <td className="actions" align="right">
               Processed
             </td>
@@ -94,8 +90,10 @@ function Feeds(props) {
                 id={row.id}
                 active={row.active}
                 name={row.name}
+                url={row.url}
                 source={row.source}
                 type={row.type}
+                processed={row.processed}
               />
             ))}
         </tbody>
@@ -115,12 +113,14 @@ function FeedsRow(props) {
         )}
       </td>
       <td>
-        <Link to={`feeds/${props.id}`}>{props.name}</Link>
-      </td>
-      <td>
         <Typography variant="caption">
           {props.source}:{props.type}
         </Typography>
+      </td>
+      <td>
+        <span title={props.url}>
+          <Link to={`feeds/${props.id}`}>{props.name}</Link>
+        </span>
       </td>
       <td align="right">
         <Moment fromNow>{props.processed}</Moment>
