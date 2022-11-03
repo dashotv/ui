@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ReleasesIndex from './ReleasesIndex';
 import { Route, Switch } from 'react-router-dom';
 import SubNav from '../../components/SubNav';

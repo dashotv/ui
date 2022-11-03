@@ -27,7 +27,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
-import SubNav from '../../components/SubNav';
 
 const pagesize = 25;
 const formDefaults = {
@@ -91,10 +90,6 @@ export default function ReleasesIndex() {
     console.log('setPage=', value);
     setPage(value);
   };
-  const items = [
-    { name: 'Releases', path: '/releases' },
-    { name: 'Feeds', path: '/releases/feeds' },
-  ];
 
   return (
     <>

@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Pagination from '@mui/material/Pagination';
 import LoadingIndicator from '../../components/Loading';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
