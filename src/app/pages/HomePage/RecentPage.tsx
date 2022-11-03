@@ -21,21 +21,19 @@ export function RecentPage() {
   };
 
   useEffect(() => {
-    const getRecent = async () => {
+    const getRecent = () => {
       setLoading(true);
-      try {
-        const response = await axios.get(
-          `/api/tower/downloads/recent?page=${page}`,
-        );
-        console.log(response.data);
-        setCount(response.data.count);
-        setRecent(response.data.results);
-      } catch (err) {
-        // @ts-ignore
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
+      axios
+        .get(`/api/tower/downloads/recent?page=${page}`)
+        .then(response => {
+          console.log(response.data);
+          setCount(response.data.count);
+          setRecent(response.data.results);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError(err.message);
+        });
     };
     getRecent();
   }, [page]);

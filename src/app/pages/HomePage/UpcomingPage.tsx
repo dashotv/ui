@@ -14,29 +14,30 @@ export function UpcomingPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getUpcoming = async () => {
+    const getUpcoming = () => {
       setLoading(true);
-      try {
-        const response = await axios.get('/api/tower/upcoming/');
-        console.log(response.data);
-        setUpcoming(response.data);
-      } catch (err) {
-        // @ts-ignore
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
+      axios
+        .get('/api/tower/upcoming/')
+        .then(response => {
+          console.log(response.data);
+          setUpcoming(response.data);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError(err.message);
+        });
     };
 
-    const getDownloads = async () => {
-      try {
-        const response = await axios.get('/api/tower/downloads/');
-        console.log(response.data);
-        setDownloads(response.data);
-      } catch (err) {
-        // @ts-ignore
-        setError(err.message);
-      }
+    const getDownloads = () => {
+      axios
+        .get('/api/tower/downloads/')
+        .then(response => {
+          console.log(response.data);
+          setDownloads(response.data);
+        })
+        .catch(err => {
+          setError(err.message);
+        });
     };
 
     getUpcoming();

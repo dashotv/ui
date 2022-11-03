@@ -19,18 +19,19 @@ export function SeriesShow() {
   // @ts-ignore
   let { id } = useParams();
 
-  const changeSetting = async (type, id, setting, value) => {
-    try {
-      const response = await axios.put(`/api/tower/${type}/${id}`, {
+  const changeSetting = (type, id, setting, value) => {
+    axios
+      .put(`/api/tower/${type}/${id}`, {
         setting: setting,
         value: value,
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        setError(err);
+        console.error(err);
       });
-      console.log(response.data);
-    } catch (err) {
-      // @ts-ignore
-      setError(err);
-      console.error(err);
-    }
   };
 
   function changeSeason(season) {
@@ -45,57 +46,58 @@ export function SeriesShow() {
   }
 
   useEffect(() => {
-    const getData = async () => {
+    const getData = () => {
       setLoading(true);
-      try {
-        const response = await axios.get(`/api/tower/series/${id}`);
-        console.log('getData:', response.data);
-        setData(response.data);
-      } catch (err) {
-        // @ts-ignore
-        setError(err);
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
+      axios
+        .get(`/api/tower/series/${id}`)
+        .then(response => {
+          console.log('getData:', response.data);
+          setData(response.data);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError(err);
+          console.error(err);
+        });
     };
 
-    const getPaths = async () => {
-      try {
-        const response = await axios.get(`/api/tower/series/${id}/paths`);
-        console.log(response.data);
-        setPaths(response.data);
-      } catch (err) {
-        // @ts-ignore
-        setError(err);
-        console.error(err);
-      }
+    const getPaths = () => {
+      axios
+        .get(`/api/tower/series/${id}/paths`)
+        .then(response => {
+          console.log(response.data);
+          setPaths(response.data);
+        })
+        .catch(err => {
+          setError(err);
+          console.error(err);
+        });
     };
 
-    const getSeasons = async () => {
-      try {
-        const response = await axios.get(`/api/tower/series/${id}/seasons`);
-        console.log('getSeasons:', response.data);
-        setSeasons(response.data);
-      } catch (err) {
-        // @ts-ignore
-        setError(err);
-        console.error(err);
-      }
+    const getSeasons = () => {
+      axios
+        .get(`/api/tower/series/${id}/seasons`)
+        .then(response => {
+          console.log('getSeasons:', response.data);
+          setSeasons(response.data);
+        })
+        .catch(err => {
+          setError(err);
+          console.error(err);
+        });
     };
 
-    const getCurrentSeason = async () => {
-      try {
-        const response = await axios.get(
-          `/api/tower/series/${id}/currentseason`,
-        );
-        console.log('getCurrentSeason:', response.data);
-        setCurrentSeason(response.data.current);
-      } catch (err) {
-        // @ts-ignore
-        setError(err);
-        console.error(err);
-      }
+    const getCurrentSeason = () => {
+      axios
+        .get(`/api/tower/series/${id}/currentseason`)
+        .then(response => {
+          console.log('getCurrentSeason:', response.data);
+          setCurrentSeason(response.data.current);
+        })
+        .catch(err => {
+          setError(err);
+          console.error(err);
+        });
     };
     getData();
     getPaths();
@@ -104,16 +106,16 @@ export function SeriesShow() {
   }, [id]);
 
   useEffect(() => {
-    const getSeason = async season => {
-      try {
-        const response = await axios.get(
-          `/api/tower/series/${id}/seasons/${season}`,
-        );
-        console.log(response.data);
-        setEpisodes(response.data);
-      } catch (err) {
-        console.error(err);
-      }
+    const getSeason = season => {
+      axios
+        .get(`/api/tower/series/${id}/seasons/${season}`)
+        .then(response => {
+          console.log(response.data);
+          setEpisodes(response.data);
+        })
+        .catch(err => {
+          console.error(err);
+        });
     };
     getSeason(currentSeason);
   }, [currentSeason, id]);

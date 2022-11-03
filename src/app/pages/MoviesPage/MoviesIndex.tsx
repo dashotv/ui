@@ -22,19 +22,19 @@ export function MoviesIndex() {
   };
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`/api/tower/movies/?page=${page}`);
-        console.log(response.data);
-        setData(response.data.results);
-        setCount(response.data.count);
-      } catch (err) {
-        // @ts-ignore
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
+    const getData = () => {
+      setLoading(true);
+      axios
+        .get(`/api/tower/movies/?page=${page}`)
+        .then(response => {
+          console.log(response.data);
+          setData(response.data.results);
+          setCount(response.data.count);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError(err.message);
+        });
     };
     getData();
   }, [page]);

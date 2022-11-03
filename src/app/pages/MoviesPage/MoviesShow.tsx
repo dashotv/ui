@@ -17,18 +17,20 @@ export function MoviesShow() {
   // @ts-ignore
   let { id } = useParams();
 
-  const changeSetting = async (type, id, setting, value) => {
+  const changeSetting = (type, id, setting, value) => {
     console.log(`changeSetting: ${type}/${id} ${setting}=${value}`);
 
-    try {
-      const response = await axios.put(`/api/tower/${type}/${id}`, {
+    axios
+      .put(`/api/tower/${type}/${id}`, {
         setting: setting,
         value: value,
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.error(err);
       });
-      console.log(response.data);
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   function changeMovieSetting(id, setting, value) {
@@ -36,34 +38,34 @@ export function MoviesShow() {
   }
 
   useEffect(() => {
-    const getData = async () => {
+    const getData = () => {
       setLoading(true);
-      try {
-        const response = await axios.get(`/api/tower/movies/${id}`);
-        console.log(response.data);
-        setData(response.data);
-      } catch (err) {
-        // @ts-ignore
-        setError(err);
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
+      axios
+        .get(`/api/tower/movies/${id}`)
+        .then(response => {
+          console.log(response.data);
+          setData(response.data);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError(err);
+          console.error(err);
+        });
     };
 
-    const getPaths = async () => {
+    const getPaths = () => {
       setLoading(true);
-      try {
-        const response = await axios.get(`/api/tower/movies/${id}/paths`);
-        console.log(response.data);
-        setPaths(response.data);
-      } catch (err) {
-        // @ts-ignore
-        setError(err);
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
+      axios
+        .get(`/api/tower/movies/${id}/paths`)
+        .then(response => {
+          console.log(response.data);
+          setPaths(response.data);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError(err);
+          console.error(err);
+        });
     };
     getData();
     getPaths();
