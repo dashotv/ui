@@ -35,7 +35,8 @@ export function SeriesIndex() {
           setLoading(false);
         })
         .catch(err => {
-          setError(err.message);
+          enqueueSnackbar('error getting data', { variant: 'error' });
+          console.error(err);
         });
     };
     getData();
