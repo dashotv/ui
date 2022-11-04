@@ -437,11 +437,11 @@ function ReleaseRow(props) {
         </Typography>
       </td>
       <td>
-        <span title={props.raw}>
-          <Link to={`releases/${props.id}`}>{props.display}</Link>
-          {resolution(props.resolution)}
-          {group()}
-        </span>
+        <Link to={`releases/${props.id}`} title={props.raw}>
+          {props.display}
+        </Link>
+        {resolution(props.resolution)}
+        {group()}
       </td>
       <td align="right">
         <Moment fromNow>{props.published}</Moment>
