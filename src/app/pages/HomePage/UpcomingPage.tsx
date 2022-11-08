@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import * as React from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { connect, JSONCodec } from 'nats.ws';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { Helmet } from 'react-helmet-async';
@@ -6,13 +8,46 @@ import Container from '@mui/material/Container';
 import LoadingIndicator from '../../components/Loading';
 import Downloads from '../../components/Downloads';
 import Media from '../../components/Media';
-import * as React from 'react';
 
 export function UpcomingPage() {
   const [upcoming, setUpcoming] = useState([]);
   const [downloads, setDownloads] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [url] = useState('ws://10.0.4.61:9222/');
+  const [jc] = useState(JSONCodec());
   const { enqueueSnackbar } = useSnackbar();
+
+  const handleTorrents = (err, msg) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    const o = jc.decode(msg.data);
+    console.log('torrents:', o);
+  };
+
+  const handleNzbs = (err, msg) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    const o = jc.decode(msg.data);
+    console.log('nzbs:', o);
+  };
+
+  // useEffect(() => {
+  //   connect({ servers: url })
+  //     .then(nc => {
+  //       console.log('nats: connected');
+  //       nc.subscribe('flame.qbittorrents', { callback: handleTorrents });
+  //       nc.subscribe('flame.nzbs', { callback: handleNzbs });
+  //     })
+  //     .catch(err => {
+  //       console.error(err);
+  //     });
+  // }, [url]);
 
   useEffect(() => {
     const getUpcoming = () => {
