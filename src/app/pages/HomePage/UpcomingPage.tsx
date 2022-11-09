@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { useEffect, useState, useContext } from 'react';
-import { connect, JSONCodec } from 'nats.ws';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
+import { useNats } from '../../components/Nats/usenats';
 import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import LoadingIndicator from '../../components/Loading';
 import Downloads from '../../components/Downloads';
 import Media from '../../components/Media';
+import { Subscription } from 'nats.ws';
 
 interface TorrentsResponse {
   DownloadRate: bigint;
@@ -29,44 +30,46 @@ export function UpcomingPage() {
   const [upcoming, setUpcoming] = useState([]);
   const [downloads, setDownloads] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [url] = useState('ws://10.0.4.61:9222/');
-  const [jc] = useState(JSONCodec());
   const { enqueueSnackbar } = useSnackbar();
+  const { ws, jc } = useNats();
 
-  // const handleTorrents = (err, msg) => {
-  //   if (err) {
-  //     console.error(err);
-  //     return;
-  //   }
-  //
-  //   const data = jc.decode(msg.data) as TorrentsResponse;
-  //   // console.log('torrents:', o);
-  //   if (!data.Torrents) {
-  //     return;
-  //   }
-  // };
-  //
-  // const handleNzbs = (err, msg) => {
-  //   if (err) {
-  //     console.error(err);
-  //     return;
-  //   }
-  //
-  //   const o = jc.decode(msg.data);
-  //   // console.log('nzbs:', o);
-  // };
-  //
-  // useEffect(() => {
-  //   connect({ servers: url })
-  //     .then(nc => {
-  //       console.log('nats: connected');
-  //       nc.subscribe('flame.qbittorrents', { callback: handleTorrents });
-  //       nc.subscribe('flame.nzbs', { callback: handleNzbs });
-  //     })
-  //     .catch(err => {
-  //       console.error(err);
-  //     });
-  // }, [url]);
+  const handleTorrents = useCallback((err, msg) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    const data = jc.decode(msg.data) as TorrentsResponse;
+    console.log('torrents:', data);
+    // if (!data.Torrents) {
+    //   return;
+    // }
+  }, []);
+
+  const handleNzbs = useCallback((err, msg) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    const data = jc.decode(msg.data);
+    console.log('nzbs:', data);
+  }, []);
+
+  useEffect(() => {
+    let sub1: Subscription | null = null;
+    let sub2: Subscription | null = null;
+
+    ws.then(nc => {
+      sub1 = nc.subscribe('flame.qbittorrents', { callback: handleTorrents });
+      sub2 = nc.subscribe('flame.nzbs', { callback: handleNzbs });
+    });
+
+    return () => {
+      sub1?.unsubscribe();
+      sub2?.unsubscribe();
+    };
+  }, [ws, handleNzbs, handleTorrents]);
 
   useEffect(() => {
     const getUpcoming = () => {

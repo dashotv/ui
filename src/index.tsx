@@ -13,6 +13,7 @@ import { App } from 'app';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { SnackbarProvider } from 'notistack';
+import { NatsProvider } from 'app/components/Nats/context';
 import CssBaseline from '@mui/material/CssBaseline';
 
 // Initialize languages
@@ -43,14 +44,16 @@ ReactDOMClient.createRoot(MOUNT_NODE!).render(
       maxSnack={3}
       anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
     >
-      <Router>
-        <CssBaseline />
-        <HelmetProvider>
-          {/*<React.StrictMode>*/}
-          <App />
-          {/*</React.StrictMode>*/}
-        </HelmetProvider>
-      </Router>
+      <NatsProvider>
+        <Router>
+          <CssBaseline />
+          <HelmetProvider>
+            {/*<React.StrictMode>*/}
+            <App />
+            {/*</React.StrictMode>*/}
+          </HelmetProvider>
+        </Router>
+      </NatsProvider>
     </SnackbarProvider>
   </ThemeProvider>,
   // </Provider>,
