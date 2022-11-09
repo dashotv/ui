@@ -9,6 +9,22 @@ import LoadingIndicator from '../../components/Loading';
 import Downloads from '../../components/Downloads';
 import Media from '../../components/Media';
 
+interface TorrentsResponse {
+  DownloadRate: bigint;
+  UploadRate: bigint;
+  Timestamp: Date;
+  rid: bigint;
+  Torrents: Torrent[];
+}
+
+interface Torrent {
+  Hash: string;
+  Progress: string;
+  Queue: bigint;
+  Name: string;
+  Finish: bigint;
+}
+
 export function UpcomingPage() {
   const [upcoming, setUpcoming] = useState([]);
   const [downloads, setDownloads] = useState([]);
@@ -17,26 +33,29 @@ export function UpcomingPage() {
   const [jc] = useState(JSONCodec());
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleTorrents = (err, msg) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    const o = jc.decode(msg.data);
-    console.log('torrents:', o);
-  };
-
-  const handleNzbs = (err, msg) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    const o = jc.decode(msg.data);
-    console.log('nzbs:', o);
-  };
-
+  // const handleTorrents = (err, msg) => {
+  //   if (err) {
+  //     console.error(err);
+  //     return;
+  //   }
+  //
+  //   const data = jc.decode(msg.data) as TorrentsResponse;
+  //   // console.log('torrents:', o);
+  //   if (!data.Torrents) {
+  //     return;
+  //   }
+  // };
+  //
+  // const handleNzbs = (err, msg) => {
+  //   if (err) {
+  //     console.error(err);
+  //     return;
+  //   }
+  //
+  //   const o = jc.decode(msg.data);
+  //   // console.log('nzbs:', o);
+  // };
+  //
   // useEffect(() => {
   //   connect({ servers: url })
   //     .then(nc => {
