@@ -9,22 +9,7 @@ import LoadingIndicator from '../../components/Loading';
 import Downloads from '../../components/Downloads';
 import Media from '../../components/Media';
 import { Subscription } from 'nats.ws';
-
-interface TorrentsResponse {
-  DownloadRate: bigint;
-  UploadRate: bigint;
-  Timestamp: Date;
-  rid: bigint;
-  Torrents: Torrent[];
-}
-
-interface Torrent {
-  Hash: string;
-  Progress: string;
-  Queue: bigint;
-  Name: string;
-  Finish: bigint;
-}
+import { TorrentsResponse } from '../../../types/torrents';
 
 export function UpcomingPage() {
   const [upcoming, setUpcoming] = useState([]);
@@ -60,10 +45,10 @@ export function UpcomingPage() {
     let sub1: Subscription | null = null;
     let sub2: Subscription | null = null;
 
-    ws.then(nc => {
-      sub1 = nc.subscribe('flame.qbittorrents', { callback: handleTorrents });
-      sub2 = nc.subscribe('flame.nzbs', { callback: handleNzbs });
-    });
+    // ws.then(nc => {
+    //   sub1 = nc.subscribe('flame.qbittorrents', { callback: handleTorrents });
+    //   sub2 = nc.subscribe('flame.nzbs', { callback: handleNzbs });
+    // });
 
     return () => {
       sub1?.unsubscribe();
