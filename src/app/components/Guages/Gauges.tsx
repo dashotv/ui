@@ -23,6 +23,7 @@ export function Gauges(props) {
       }
 
       const data = jc.decode(msg.data) as TorrentsResponse;
+      console.log('handleTorrents:', data);
       setTorrents((data.DownloadRate / 1000).toFixed(3));
     },
     [jc],
@@ -36,6 +37,7 @@ export function Gauges(props) {
       }
 
       const data = jc.decode(msg.data) as NzbResponse;
+      console.log('handleNzbs:', data);
       setNzbs((data.Status.DownloadRate / 1000).toFixed(3));
       setDiskFree((data.Status.FreeDiskSpaceMB / 1000).toFixed(3));
     },
