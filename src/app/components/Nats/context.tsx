@@ -1,7 +1,10 @@
 import { useEffect, useState, createContext, ReactChild } from 'react';
 import { connect, JSONCodec, NatsConnection } from 'nats.ws';
 
-const url = 'ws://10.0.4.61:9222/';
+const url =
+  process.env.NODE_ENV !== 'production'
+    ? 'ws://localhost:9222/'
+    : 'wss://10.0.4.61:9222/';
 const ws = connect({ servers: url });
 const jc = JSONCodec();
 
