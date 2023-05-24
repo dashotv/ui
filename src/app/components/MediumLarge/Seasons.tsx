@@ -2,22 +2,19 @@ import * as React from 'react';
 import { Button, ButtonGroup } from '@mui/material';
 
 export default function Seasons(props) {
-  const [season, setSeason] = React.useState(props.current);
-
   function clickSeason(ev) {
     const id = ev.currentTarget.id;
     console.log(`clickSeason: ${id}`);
-    // if (season != id) {
-    setSeason(id);
-    props.changeSeason(id);
-    // }
+    if (props.current != id) {
+      props.changeSeason(id);
+    }
   }
   return (
     <div className="seasons">
       <ButtonGroup>
         {props.seasons.map(s => (
           <Button
-            variant={season === s ? 'contained' : 'outlined'}
+            variant={props.current == s ? 'contained' : 'outlined'}
             key={s}
             id={s}
             onClick={clickSeason}

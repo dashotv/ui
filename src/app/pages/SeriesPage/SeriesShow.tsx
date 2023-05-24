@@ -66,7 +66,7 @@ export function SeriesShow() {
       axios
         .get(`/api/tower/series/${id}/paths`)
         .then(response => {
-          console.log(response.data);
+          console.log('paths:', response.data);
           setPaths(response.data);
         })
         .catch(err => {
@@ -87,7 +87,6 @@ export function SeriesShow() {
           console.error(err);
         });
     };
-
     const getCurrentSeason = () => {
       axios
         .get(`/api/tower/series/${id}/currentseason`)
@@ -111,7 +110,7 @@ export function SeriesShow() {
       axios
         .get(`/api/tower/series/${id}/seasons/${season}`)
         .then(response => {
-          console.log(response.data);
+          console.log('season:', currentSeason, ':', response.data);
           setEpisodes(response.data);
         })
         .catch(err => {
