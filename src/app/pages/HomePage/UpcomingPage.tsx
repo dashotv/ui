@@ -9,12 +9,14 @@ import LoadingIndicator from '../../components/Loading';
 import Downloads from '../../components/Downloads';
 import Media from '../../components/Media';
 import { Subscription } from 'nats.ws';
-import { TorrentsResponse } from '../../../types/torrents';
+import { Torrent, TorrentsResponse } from '../../../types/torrents';
 import { NzbResponse } from '../../../types/Nzb';
 
 export function UpcomingPage() {
   const [upcoming, setUpcoming] = useState([]);
   const [downloads, setDownloads] = useState([]);
+  const [torrents, setTorrents] = useState<Map<string, Torrent> | null>(null);
+  const [nzbs, setNzbs] = useState<NzbResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const { ws, jc } = useNats();
@@ -28,6 +30,13 @@ export function UpcomingPage() {
 
       const data = jc.decode(msg.data) as TorrentsResponse;
       // console.log('torrents:', data);
+      const index = new Map<string, Torrent>();
+      if (data.Torrents.length > 0) {
+        for (const t of data.Torrents) {
+          index.set(t.Hash, t);
+        }
+      }
+      setTorrents(index);
       // if (!data.Torrents) {
       //   return;
       // }
@@ -135,7 +144,7 @@ export function UpcomingPage() {
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        <Downloads data={downloads} />
+        <Downloads data={downloads} torrents={torrents} nzbs={nzbs} />
         <Media data={upcoming} type="series" />
       </Container>
     </>

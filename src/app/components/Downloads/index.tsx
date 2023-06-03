@@ -18,9 +18,20 @@ export default function Downloads(props) {
         return medium.id;
     }
   }
+  function progress(thash) {
+    if (props.torrents == null) {
+      return;
+    }
+    const torrent = props.torrents.get(thash);
+    if (torrent) {
+      // console.log('hash:', thash, ' progress:', torrent.Progress);
+      return torrent.Progress;
+    }
+    return 0;
+  }
   return (
     <div>
-      {props.data.map(({ id, medium }) => (
+      {props.data.map(({ id, thash, medium }) => (
         <MediumSmall
           key={id}
           type={type(medium.type)}
@@ -29,6 +40,7 @@ export default function Downloads(props) {
           primary={medium.title}
           secondary={medium.display}
           release={medium.release_date}
+          progress={progress(thash)}
           download={true}
         />
       ))}

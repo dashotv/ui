@@ -14,6 +14,7 @@ export default function MediumSmall(props) {
         <Cover image={props.background} />
         <Header text={props.release} />
         <Icons active={props.active} download={props.download} />
+        <Bar progress={props.progress} />
         <Footer primary={props.primary} secondary={props.secondary} />
       </Link>
     </div>
@@ -77,6 +78,15 @@ function Hover(props) {
   return (
     <div className="hover">
       <div className="text">{props.text}</div>
+    </div>
+  );
+}
+
+function Bar(props) {
+  return (
+    <div className="bar-container">
+      <div className="bar" style={{ width: props.progress + '%' }} />
+      <div className="bar-background" />
     </div>
   );
 }
