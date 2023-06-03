@@ -17,6 +17,7 @@ export interface Release {
   infohash?: string;
   checksum?: string;
   tags?: string[];
+  resolution?: number;
   created_at?: string;
   published?: string;
   updated_at?: string;
