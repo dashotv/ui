@@ -14,10 +14,10 @@ export interface Release {
   size?: string;
   view?: string;
   download?: string;
-  hash?: string;
+  infohash?: string;
   checksum?: string;
   tags?: string[];
   created_at?: string;
-  published_at?: string;
+  published?: string;
   updated_at?: string;
 }

@@ -68,11 +68,11 @@ export default function ReleasesShow(props) {
           </tr>
           <tr>
             <th>Verified</th>
-            <td>{data.verified}</td>
+            <td>{data.verified ? 'TRUE' : 'FALSE'}</td>
           </tr>
           <tr>
             <th>NZB</th>
-            <td>{data.nzb}</td>
+            <td>{data.nzb ? 'TRUE' : 'FALSE'}</td>
           </tr>
           <tr>
             <th>Title</th>
@@ -99,7 +99,7 @@ export default function ReleasesShow(props) {
           </tr>
           <tr>
             <th>Hash</th>
-            <td>{data.hash}</td>
+            <td>{data.infohash}</td>
           </tr>
           <tr>
             <th>Checksum</th>
@@ -115,7 +115,7 @@ export default function ReleasesShow(props) {
           </tr>
           <tr>
             <th>Published</th>
-            <td>{data.published_at}</td>
+            <td>{data.published}</td>
           </tr>
         </table>
       )}
