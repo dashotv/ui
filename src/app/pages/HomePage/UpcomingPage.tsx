@@ -49,7 +49,7 @@ export function UpcomingPage() {
       }
 
       const data = jc.decode(msg.data) as NzbResponse;
-      console.log('nzbs:', data);
+      // console.log('nzbs:', data);
       const index = new Map<number, Nzb>();
       if (data.Result.length > 0) {
         for (const t of data.Result) {
