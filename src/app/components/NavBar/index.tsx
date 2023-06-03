@@ -14,11 +14,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from './assets/logo-small.png';
 import Search from './Search';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import './Navbar.scss';
 
 const pages = [
+  { name: 'Home', page: '/' },
   { name: 'Series', page: '/series' },
   { name: 'Movies', page: '/movies' },
   { name: 'Releases', page: '/releases' },
@@ -28,6 +29,11 @@ const settings = ['Account', 'Logout'];
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const location = useLocation();
+
+  const matchPath = p => {
+    return p === location.pathname;
+  };
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -101,7 +107,10 @@ const NavBar = () => {
             >
               {pages.map(({ name, page }) => (
                 <Link key={name} to={page}>
-                  <MenuItem onClick={handleCloseNavMenu}>
+                  <MenuItem
+                    onClick={handleCloseNavMenu}
+                    selected={matchPath(page)}
+                  >
                     <Typography textAlign="center">{name}</Typography>
                   </MenuItem>
                 </Link>
@@ -136,6 +145,7 @@ const NavBar = () => {
                 <Button
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, display: 'block' }}
+                  variant={matchPath(page) ? 'outlined' : 'text'}
                 >
                   {name}
                 </Button>
