@@ -10,6 +10,7 @@ export default function Downloads(props) {
         return 'series';
     }
   }
+
   function getID(medium) {
     switch (medium.type) {
       case 'Episode':
@@ -18,15 +19,22 @@ export default function Downloads(props) {
         return medium.id;
     }
   }
+
   function progress(thash) {
-    if (props.torrents == null) {
-      return;
+    if (props.torrents != null) {
+      const torrent = props.torrents.get(thash);
+      if (torrent) {
+        return torrent.Progress;
+      }
     }
-    const torrent = props.torrents.get(thash);
-    if (torrent) {
-      // console.log('hash:', thash, ' progress:', torrent.Progress);
-      return torrent.Progress;
+
+    if (props.nzbs != null) {
+      const nzb = props.nzbs.get(thash);
+      if (nzb) {
+        return 100 - (nzb.RemainingSizeMB / nzb.FileSizeMB) * 100;
+      }
     }
+
     return 0;
   }
   return (

@@ -10,13 +10,13 @@ import Downloads from '../../components/Downloads';
 import Media from '../../components/Media';
 import { Subscription } from 'nats.ws';
 import { Torrent, TorrentsResponse } from '../../../types/torrents';
-import { NzbResponse } from '../../../types/Nzb';
+import { Nzb, NzbResponse } from '../../../types/Nzb';
 
 export function UpcomingPage() {
   const [upcoming, setUpcoming] = useState([]);
   const [downloads, setDownloads] = useState([]);
   const [torrents, setTorrents] = useState<Map<string, Torrent> | null>(null);
-  const [nzbs, setNzbs] = useState<NzbResponse | null>(null);
+  const [nzbs, setNzbs] = useState<Map<number, Nzb> | null>(null);
   const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const { ws, jc } = useNats();
@@ -37,9 +37,6 @@ export function UpcomingPage() {
         }
       }
       setTorrents(index);
-      // if (!data.Torrents) {
-      //   return;
-      // }
     },
     [jc],
   );
@@ -52,7 +49,14 @@ export function UpcomingPage() {
       }
 
       const data = jc.decode(msg.data) as NzbResponse;
-      // console.log('nzbs:', data);
+      console.log('nzbs:', data);
+      const index = new Map<number, Nzb>();
+      if (data.Result.length > 0) {
+        for (const t of data.Result) {
+          index.set(t.nzbid, t);
+        }
+      }
+      setNzbs(index);
     },
     [jc],
   );
