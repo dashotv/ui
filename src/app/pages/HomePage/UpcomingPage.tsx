@@ -10,6 +10,7 @@ import Downloads from '../../components/Downloads';
 import Media from '../../components/Media';
 import { Subscription } from 'nats.ws';
 import { TorrentsResponse } from '../../../types/torrents';
+import { NzbResponse } from '../../../types/Nzb';
 
 export function UpcomingPage() {
   const [upcoming, setUpcoming] = useState([]);
@@ -18,37 +19,71 @@ export function UpcomingPage() {
   const { enqueueSnackbar } = useSnackbar();
   const { ws, jc } = useNats();
 
-  const handleTorrents = useCallback((err, msg) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+  const handleTorrents = useCallback(
+    (err, msg) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
 
-    const data = jc.decode(msg.data) as TorrentsResponse;
-    console.log('torrents:', data);
-    // if (!data.Torrents) {
-    //   return;
-    // }
-  }, []);
+      const data = jc.decode(msg.data) as TorrentsResponse;
+      // console.log('torrents:', data);
+      // if (!data.Torrents) {
+      //   return;
+      // }
+    },
+    [jc],
+  );
 
-  const handleNzbs = useCallback((err, msg) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+  const handleNzbs = useCallback(
+    (err, msg) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
 
-    const data = jc.decode(msg.data);
-    console.log('nzbs:', data);
-  }, []);
+      const data = jc.decode(msg.data) as NzbResponse;
+      // console.log('nzbs:', data);
+    },
+    [jc],
+  );
+
+  const handleEpisodes = useCallback(
+    (err, msg) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      const data = jc.decode(msg.data);
+      console.log('episodes:', data);
+    },
+    [jc],
+  );
+
+  const handleDownloads = useCallback(
+    (err, msg) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      const data = jc.decode(msg.data);
+      console.log('downloads:', data);
+    },
+    [jc],
+  );
 
   useEffect(() => {
     let sub1: Subscription | null = null;
     let sub2: Subscription | null = null;
+    let sub3: Subscription | null = null;
+    let sub4: Subscription | null = null;
 
-    // ws.then(nc => {
-    //   sub1 = nc.subscribe('flame.qbittorrents', { callback: handleTorrents });
-    //   sub2 = nc.subscribe('flame.nzbs', { callback: handleNzbs });
-    // });
+    ws.then(nc => {
+      sub1 = nc.subscribe('flame.qbittorrents', { callback: handleTorrents });
+      sub2 = nc.subscribe('flame.nzbs', { callback: handleNzbs });
+      sub3 = nc.subscribe('seer.episodes', { callback: handleEpisodes });
+      sub4 = nc.subscribe('seer.downloads', { callback: handleDownloads });
+    });
 
     return () => {
       sub1?.unsubscribe();
