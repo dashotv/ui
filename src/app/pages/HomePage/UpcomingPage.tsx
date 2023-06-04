@@ -13,6 +13,7 @@ import { Torrent, TorrentsResponse } from '../../../types/torrents';
 import { Nzb, NzbResponse } from '../../../types/Nzb';
 import { Download, DownloadEvent } from '../../../types/download';
 import { Medium, MediumEvent } from '../../../types/medium';
+import { Notice } from '../../../types/Notice';
 
 export function UpcomingPage() {
   const [upcoming, setUpcoming] = useState<Medium[]>([]);
@@ -70,7 +71,7 @@ export function UpcomingPage() {
         return;
       }
       const data = jc.decode(msg.data) as MediumEvent;
-      if (data.episode.downloaded == true) {
+      if (data.episode.downloaded === true) {
         // if an episode is marked as downloaded (a download was created)
         // remove from the upcoming list
         setUpcoming(prevState => {
@@ -92,7 +93,7 @@ export function UpcomingPage() {
       }
       const data = jc.decode(msg.data) as DownloadEvent;
 
-      if (data.event == 'destroyed' || data.download.status == 'done') {
+      if (data.event === 'destroyed' || data.download.status === 'done') {
         // if a download was destroyed or completed, remove from list
         setDownloads(prevState =>
           prevState.filter(item => item.id !== data.id),
@@ -101,7 +102,7 @@ export function UpcomingPage() {
         // otherwise, update the download that was changed
         setDownloads(prevState => {
           return prevState.map(item => {
-            if (item.id == data.id) {
+            if (item.id === data.id) {
               item.status = data.download.status;
               item.thash = data.download.thash;
               item.url = data.download.url;
@@ -115,24 +116,52 @@ export function UpcomingPage() {
     [jc],
   );
 
+  const handleNotices = useCallback(
+    (err, msg) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+
+      const data = jc.decode(msg.data) as Notice;
+      console.log('notice', data);
+      const variant =
+        data.level === 'warn' || data.level === 'error' ? 'error' : 'info';
+      enqueueSnackbar(data.message, { variant: variant });
+    },
+    [jc, enqueueSnackbar],
+  );
+
   useEffect(() => {
     let sub1: Subscription | null = null;
     let sub2: Subscription | null = null;
     let sub3: Subscription | null = null;
     let sub4: Subscription | null = null;
+    let sub5: Subscription | null = null;
 
     ws.then(nc => {
       sub1 = nc.subscribe('flame.qbittorrents', { callback: handleTorrents });
       sub2 = nc.subscribe('flame.nzbs', { callback: handleNzbs });
       sub3 = nc.subscribe('seer.episodes', { callback: handleEpisodes });
       sub4 = nc.subscribe('seer.downloads', { callback: handleDownloads });
+      sub5 = nc.subscribe('seer.notices', { callback: handleNotices });
     });
 
     return () => {
       sub1?.unsubscribe();
       sub2?.unsubscribe();
+      sub3?.unsubscribe();
+      sub4?.unsubscribe();
+      sub5?.unsubscribe();
     };
-  }, [ws, handleNzbs, handleTorrents]);
+  }, [
+    ws,
+    handleNzbs,
+    handleTorrents,
+    handleNotices,
+    handleDownloads,
+    handleEpisodes,
+  ]);
 
   useEffect(() => {
     const getUpcoming = () => {
@@ -140,7 +169,7 @@ export function UpcomingPage() {
       axios
         .get('/api/tower/upcoming/')
         .then(response => {
-          console.log(response.data);
+          // console.log(response.data);
           setUpcoming(response.data);
           setLoading(false);
         })
@@ -154,7 +183,7 @@ export function UpcomingPage() {
       axios
         .get('/api/tower/downloads/')
         .then(response => {
-          console.log(response.data);
+          // console.log(response.data);
           setDownloads(response.data);
         })
         .catch(err => {
