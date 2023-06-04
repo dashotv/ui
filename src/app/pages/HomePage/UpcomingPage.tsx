@@ -125,9 +125,7 @@ export function UpcomingPage() {
 
       const data = jc.decode(msg.data) as Notice;
       console.log('notice', data);
-      const variant =
-        data.level === 'warn' || data.level === 'error' ? 'error' : 'info';
-      enqueueSnackbar(data.message, { variant: variant });
+      enqueueSnackbar(data.message, { variant: data.level });
     },
     [jc, enqueueSnackbar],
   );
