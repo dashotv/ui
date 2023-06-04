@@ -11,10 +11,12 @@ import Media from '../../components/Media';
 import { Subscription } from 'nats.ws';
 import { Torrent, TorrentsResponse } from '../../../types/torrents';
 import { Nzb, NzbResponse } from '../../../types/Nzb';
+import { Download, DownloadEvent } from '../../../types/download';
+import { Medium, MediumEvent } from '../../../types/medium';
 
 export function UpcomingPage() {
-  const [upcoming, setUpcoming] = useState([]);
-  const [downloads, setDownloads] = useState([]);
+  const [upcoming, setUpcoming] = useState<Medium[]>([]);
+  const [downloads, setDownloads] = useState<Download[]>([]);
   const [torrents, setTorrents] = useState<Map<string, Torrent> | null>(null);
   const [nzbs, setNzbs] = useState<Map<number, Nzb> | null>(null);
   const [loading, setLoading] = useState(false);
@@ -67,8 +69,17 @@ export function UpcomingPage() {
         console.error(err);
         return;
       }
-      const data = jc.decode(msg.data);
-      console.log('episodes:', data);
+      const data = jc.decode(msg.data) as MediumEvent;
+      if (data.episode.downloaded == true) {
+        // if an episode is marked as downloaded (a download was created)
+        // remove from the upcoming list
+        setUpcoming(prevState => {
+          return prevState.filter(item => {
+            console.log('item:', item.id, 'data:', data.id);
+            return item.id !== data.id;
+          });
+        });
+      }
     },
     [jc],
   );
@@ -79,8 +90,27 @@ export function UpcomingPage() {
         console.error(err);
         return;
       }
-      const data = jc.decode(msg.data);
-      console.log('downloads:', data);
+      const data = jc.decode(msg.data) as DownloadEvent;
+
+      if (data.event == 'destroyed' || data.download.status == 'done') {
+        // if a download was destroyed or completed, remove from list
+        setDownloads(prevState =>
+          prevState.filter(item => item.id !== data.id),
+        );
+      } else {
+        // otherwise, update the download that was changed
+        setDownloads(prevState => {
+          return prevState.map(item => {
+            if (item.id == data.id) {
+              item.status = data.download.status;
+              item.thash = data.download.thash;
+              item.url = data.download.url;
+              item.releaseId = data.download.releaseId;
+            }
+            return item;
+          });
+        });
+      }
     },
     [jc],
   );

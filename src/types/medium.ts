@@ -27,3 +27,9 @@ export interface Medium {
   cover?: string;
   background?: string;
 }
+
+export interface MediumEvent {
+  event: string;
+  id: string;
+  episode: Medium;
+}

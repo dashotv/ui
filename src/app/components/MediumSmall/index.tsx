@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import 'moment-timezone'; // for tz prop on react-moment
 import StarIcon from '@mui/icons-material/Star';
-import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import './small.scss';
 
 export default function MediumSmall(props) {
@@ -13,7 +12,11 @@ export default function MediumSmall(props) {
         <Hover text={props.description} />
         <Cover image={props.background} />
         <Header text={props.release} />
-        <Icons active={props.active} download={props.download} />
+        <Icons
+          active={props.active}
+          download={props.download}
+          downloadIcon={props.downloadIcon}
+        />
         <Bar progress={props.progress} />
         <Footer primary={props.primary} secondary={props.secondary} />
       </Link>
@@ -56,7 +59,7 @@ function Icons(props) {
   return (
     <div className="icons">
       {props.active && <StarIcon />}
-      {props.download && <CloudCircleIcon />}
+      {props.download && props.downloadIcon}
     </div>
   );
 }
