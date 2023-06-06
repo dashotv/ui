@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Banner } from './Banner';
-import { MediumTabs } from './MediaTabs';
+import { MediumTabs } from './MediumTabs';
 import Seasons from './Seasons';
 import Episodes from './Episodes';
 import Files from './Files';

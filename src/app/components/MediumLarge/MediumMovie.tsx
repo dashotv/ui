@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MediumTabs } from './MediaTabs';
+import { MediumTabs } from './MediumTabs';
 import Details from './Details';
 import Files from './Files';
 import { Banner } from './Banner';
