@@ -1,10 +1,14 @@
 import * as React from 'react';
 import FolderIcon from '@mui/icons-material/Folder';
+import Typography from '@mui/material/Typography';
 
 export function DiskGauge(props) {
   return (
     <div>
-      <FolderIcon /> {props.free} GB
+      <Typography variant="overline">
+        <FolderIcon />
+        {props.free} GB
+      </Typography>
     </div>
   );
 }
