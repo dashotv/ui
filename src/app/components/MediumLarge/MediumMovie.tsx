@@ -13,7 +13,7 @@ import ImageSmall from './ImageSmall';
 
 import './large.scss';
 
-export default function MediumLarge(props) {
+export default function MediumMovie(props) {
   const [value, setValue] = useState(0);
   const [filesIndex] = useState(0);
   const [downloadsIndex] = useState(1);
