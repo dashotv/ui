@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { MediumTabs } from './MediaTabs';
 import Details from './Details';
 import Files from './Files';

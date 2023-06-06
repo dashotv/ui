@@ -5,7 +5,6 @@ import Seasons from './Seasons';
 import Episodes from './Episodes';
 import Files from './Files';
 import Details from './Details';
-import { useState } from 'react';
 import './large.scss';
 import './banner.scss';
 
