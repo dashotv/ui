@@ -3,13 +3,11 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Moment from 'react-moment';
 
 import TabPanel from '../TabPanel';
-import Buttons from './Buttons';
 import Details from './Details';
 import Files from './Files';
-import ImageSmall from './ImageSmall';
+import { Banner } from '../Banner';
 
 import './large.scss';
 
@@ -25,30 +23,18 @@ export default function MediumMovie(props) {
 
   return (
     <div className="medium large">
+      <Banner
+        cover={props.data.cover}
+        background={props.data.background}
+        title={props.data.title}
+        release_date={props.data.release_date}
+        id={props.data.id}
+        favorite={props.data.favorite}
+        broken={props.data.broken}
+        active={props.data.active}
+        change={props.change}
+      />
       <div className="main">
-        <div className="menu">
-          <ImageSmall class="cover-sm" alt="cover" src={props.data.cover} />
-          <ImageSmall
-            class="background-sm"
-            alt="background"
-            src={props.data.background}
-          />
-        </div>
-        <div className="titlebar">
-          <div className="title">
-            <span>{props.data.title}</span>
-            <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
-              {props.data.release_date}
-            </Moment>
-          </div>
-          <Buttons
-            id={props.data.id}
-            favorite={props.data.favorite}
-            broken={props.data.broken}
-            active={props.data.active}
-            change={props.change}
-          />
-        </div>
         <Box maxWidth="xl">
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs

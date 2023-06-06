@@ -1,19 +1,15 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { Banner } from '../Banner';
+import './large.scss';
 import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Moment from 'react-moment';
-
+import Tabs from '@mui/material/Tabs';
 import TabPanel from '../TabPanel';
-import Buttons from './Buttons';
 import Seasons from './Seasons';
 import Episodes from './Episodes';
-import Details from './Details';
-import ImageSmall from './ImageSmall';
 import Files from './Files';
-
-import './large.scss';
+import Details from './Details';
+import { useState } from 'react';
 
 export default function MediumLarge(props) {
   const [value, setValue] = useState(0);
@@ -21,37 +17,24 @@ export default function MediumLarge(props) {
   const [filesIndex] = useState(1);
   const [downloadsIndex] = useState(2);
   const [detailsIndex] = useState(3);
-
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
   return (
     <div className="medium large">
-      <div className="main">
-        <div className="menu">
-          <ImageSmall class="cover-sm" alt="cover" src={props.data.cover} />
-          <ImageSmall
-            class="background-sm"
-            alt="background"
-            src={props.data.background}
-          />
-        </div>
-        <div className="titlebar">
-          <div className="title">
-            <span>{props.data.title}</span>
-            <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
-              {props.data.release_date}
-            </Moment>
-          </div>
-          <Buttons
-            id={props.data.id}
-            favorite={props.data.favorite}
-            broken={props.data.broken}
-            active={props.data.active}
-            change={props.change}
-          />
-        </div>
+      <Banner
+        cover={props.data.cover}
+        background={props.data.background}
+        title={props.data.title}
+        release_date={props.data.release_date}
+        id={props.data.id}
+        favorite={props.data.favorite}
+        broken={props.data.broken}
+        active={props.data.active}
+        change={props.change}
+      />
+
+      <div className="tabs">
         <Box maxWidth="xl">
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
