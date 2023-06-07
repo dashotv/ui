@@ -12,11 +12,12 @@ import { Switch, Route } from 'react-router-dom';
 
 import { HomePage } from './pages/HomePage';
 import { SeriesPage } from './pages/SeriesPage';
+import FeedsPage from './pages/FeedsPage';
 import { MoviesPage } from './pages/MoviesPage';
 import { ReleasesPage } from './pages/ReleasesPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import NavBar from './components/NavBar';
 
+import NavBar from './components/NavBar';
 import { GlobalStyle } from '../styles/global-styles';
 import './index.scss';
 
@@ -32,6 +33,7 @@ export function App() {
         <Route path="/series" component={SeriesPage} />
         <Route path="/movies" component={MoviesPage} />
         <Route path="/releases" component={ReleasesPage} />
+        <Route path="/feeds" component={FeedsPage} />
         <Route path={process.env.PUBLIC_URL + '/'} component={HomePage} />
         <Route component={NotFoundPage} />
       </Switch>

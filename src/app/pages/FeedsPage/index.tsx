@@ -1,10 +1,10 @@
-import React from 'react';
-import ReleasesIndex from './ReleasesIndex';
 import { Route, Switch } from 'react-router-dom';
+import FeedsIndex from './FeedsIndex';
+import FeedsShow from './FeedsShow';
+import React from 'react';
 import SubNav from '../../components/SubNav';
-import ReleasesShow from './ReleasesShow';
 
-export function ReleasesPage() {
+export default function FeedsPage() {
   const items = [
     { name: 'Releases', path: '/releases' },
     { name: 'Feeds', path: '/feeds' },
@@ -13,8 +13,8 @@ export function ReleasesPage() {
     <>
       <SubNav items={items} />
       <Switch>
-        <Route exact path="/releases" component={ReleasesIndex} />
-        <Route exact path="/releases/:id" component={ReleasesShow} />
+        <Route exact path="/feeds" component={FeedsIndex} />
+        <Route exact path="/feeds/:id" component={FeedsShow} />
       </Switch>
     </>
   );
