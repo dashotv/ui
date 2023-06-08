@@ -68,7 +68,7 @@ function Icons(props) {
 }
 
 function Unwatched(props) {
-  if (props.count === undefined) {
+  if (props.count === undefined || props.count === 0) {
     return <></>;
   }
   return (
