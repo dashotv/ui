@@ -16,6 +16,7 @@ import FeedsPage from './pages/FeedsPage';
 import { MoviesPage } from './pages/MoviesPage';
 import { ReleasesPage } from './pages/ReleasesPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { RecentPage } from './pages/HomePage/RecentPage';
 
 import NavBar from './components/NavBar';
 import { GlobalStyle } from '../styles/global-styles';
@@ -34,7 +35,8 @@ export function App() {
         <Route path="/movies" component={MoviesPage} />
         <Route path="/releases" component={ReleasesPage} />
         <Route path="/feeds" component={FeedsPage} />
-        <Route path={process.env.PUBLIC_URL + '/'} component={HomePage} />
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/recent" component={RecentPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
