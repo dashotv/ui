@@ -5,7 +5,7 @@ export default function Seasons(props) {
   function clickSeason(ev) {
     const id = ev.currentTarget.id;
     console.log(`clickSeason: ${id}`);
-    if (props.current != id) {
+    if (props.current !== id) {
       props.changeSeason(id);
     }
   }
@@ -14,7 +14,7 @@ export default function Seasons(props) {
       <ButtonGroup>
         {props.seasons.map(s => (
           <Button
-            variant={props.current == s ? 'contained' : 'outlined'}
+            variant={props.current === s ? 'contained' : 'outlined'}
             key={s}
             id={s}
             onClick={clickSeason}

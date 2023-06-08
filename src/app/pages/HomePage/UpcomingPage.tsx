@@ -15,7 +15,7 @@ import { Download, DownloadEvent } from '../../../types/download';
 import { Medium, MediumEvent } from '../../../types/medium';
 import { Notice } from '../../../types/Notice';
 
-export function UpcomingPage() {
+export default function UpcomingPage() {
   const [upcoming, setUpcoming] = useState<Medium[]>([]);
   const [downloads, setDownloads] = useState<Download[]>([]);
   const [torrents, setTorrents] = useState<Map<string, Torrent> | null>(null);

@@ -10,7 +10,7 @@ import Downloads from '../../components/Downloads';
 
 const pagesize = 42;
 
-export function RecentPage() {
+export default function RecentPage() {
   const [recent, setRecent] = useState([]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);

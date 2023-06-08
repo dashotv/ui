@@ -8,7 +8,7 @@ import MediumLarge from '../../components/MediumLarge';
 import LoadingIndicator from '../../components/Loading';
 import { Medium } from '../../../types/medium';
 
-export function SeriesShow() {
+export default function SeriesShow() {
   const [data, setData] = useState<Medium | null>(null);
   const [paths, setPaths] = useState<Medium | null>(null);
   const [loading, setLoading] = useState<boolean>(false);

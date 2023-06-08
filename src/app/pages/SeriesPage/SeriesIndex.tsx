@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 
 const pagesize = 42;
 
-export function SeriesIndex() {
+export default function SeriesIndex() {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SearchBar from 'material-ui-search-bar';
 import Avatar from '@mui/material/Avatar';
 import Dialog from '@mui/material/Dialog';
@@ -29,7 +29,7 @@ export default function Search(props) {
   const [text, setText] = useState('');
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState('');
-  const routerHistory = useHistory();
+  const navigate = useNavigate();
 
   const handleSearch = value => {
     setSearch(value);
@@ -39,7 +39,7 @@ export default function Search(props) {
     setOpen(false);
     console.log('value: ', value);
     setSelectedValue(value);
-    routerHistory.push('/' + value);
+    navigate('/' + value);
   };
 
   const handleClose = () => {

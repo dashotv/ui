@@ -1,5 +1,5 @@
-import { useEffect, useState, createContext, ReactChild } from 'react';
-import { connect, JSONCodec, NatsConnection } from 'nats.ws';
+import { createContext, ReactChild } from 'react';
+import { connect, JSONCodec } from 'nats.ws';
 
 const url =
   process.env.NODE_ENV !== 'production'

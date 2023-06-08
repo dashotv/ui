@@ -33,7 +33,7 @@ export default function FeedsShow() {
         });
     };
     getFeed();
-  }, [enqueueSnackbar]);
+  }, [id, enqueueSnackbar]);
 
   return (
     <>

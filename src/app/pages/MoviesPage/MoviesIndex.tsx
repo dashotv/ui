@@ -11,7 +11,7 @@ import Media from '../../components/Media';
 
 const pagesize = 42;
 
-export function MoviesIndex() {
+export default function MoviesIndex() {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);

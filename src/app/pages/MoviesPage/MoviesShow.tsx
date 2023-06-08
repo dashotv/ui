@@ -9,7 +9,7 @@ import LoadingIndicator from '../../components/Loading';
 import { Medium } from '../../../types/medium';
 import { Path } from '../../../types/path';
 
-export function MoviesShow() {
+export default function MoviesShow() {
   const [data, setData] = useState<Medium | null>(null);
   const [paths, setPaths] = useState<Path[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
