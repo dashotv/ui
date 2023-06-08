@@ -19,7 +19,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './Navbar.scss';
 
 const pages = [
-  { name: 'Home', page: '/' },
+  { name: 'Home', page: '/', exact: true },
   { name: 'Series', page: '/series' },
   { name: 'Movies', page: '/movies' },
   { name: 'Releases', page: '/releases' },
@@ -31,8 +31,11 @@ const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const location = useLocation();
 
-  const matchPath = p => {
-    return p === location.pathname;
+  const matchPath = (path, exact) => {
+    if (exact) {
+      return path === location.pathname;
+    }
+    return location.pathname.startsWith(path);
   };
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -105,11 +108,11 @@ const NavBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map(({ name, page }) => (
+              {pages.map(({ name, page, exact }) => (
                 <Link key={name} to={page}>
                   <MenuItem
                     onClick={handleCloseNavMenu}
-                    selected={matchPath(page)}
+                    selected={matchPath(page, exact)}
                   >
                     <Typography textAlign="center">{name}</Typography>
                   </MenuItem>
@@ -140,12 +143,12 @@ const NavBar = () => {
             className="menu"
             sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
           >
-            {pages.map(({ name, page }) => (
+            {pages.map(({ name, page, exact }) => (
               <Link key={name} to={page}>
                 <Button
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, display: 'block' }}
-                  variant={matchPath(page) ? 'outlined' : 'text'}
+                  variant={matchPath(page, exact) ? 'outlined' : 'text'}
                 >
                   {name}
                 </Button>
