@@ -21,14 +21,14 @@ export function MediumTabs(props) {
             aria-label="basic tabs example"
           >
             {Object.keys(props.data).map((k, i) => {
-              return <Tab label={k} id={`simple-tabs-${i}`} />;
+              return <Tab key={i} label={k} id={`simple-tabs-${i}`} />;
             })}
           </Tabs>
         </Box>
       </Box>
       {Object.keys(props.data).map((k, i) => {
         return (
-          <TabPanel index={i} value={value}>
+          <TabPanel key={i} index={i} value={value}>
             {props.data[k]}
           </TabPanel>
         );

@@ -15,6 +15,7 @@ export default function SeriesShow() {
   const [seasons, setSeasons] = useState([]);
   const [currentSeason, setCurrentSeason] = useState(1);
   const [episodes, setEpisodes] = useState([]);
+  const [watches, setWatches] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
 
   // @ts-ignore
@@ -99,10 +100,23 @@ export default function SeriesShow() {
           console.error(err);
         });
     };
+    const getWatches = () => {
+      axios
+        .get(`/api/tower/series/${id}/watches`)
+        .then(response => {
+          console.log('getWatches:', response.data);
+          setWatches(response.data);
+        })
+        .catch(err => {
+          enqueueSnackbar('error getting data', { variant: 'error' });
+          console.error(err);
+        });
+    };
     getData();
     getPaths();
     getSeasons();
     getCurrentSeason();
+    getWatches();
   }, [id, enqueueSnackbar]);
 
   useEffect(() => {
@@ -143,6 +157,7 @@ export default function SeriesShow() {
             changeSeason={changeSeason}
             changeEpisode={changeEpisodeSetting}
             change={changeSeriesSetting}
+            watches={watches}
           />
         )}
       </Container>

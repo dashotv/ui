@@ -5,6 +5,7 @@ import Seasons from './Seasons';
 import Episodes from './Episodes';
 import Files from './Files';
 import Details from './Details';
+import Watches from './Watches';
 import './large.scss';
 import './banner.scss';
 
@@ -25,6 +26,7 @@ export default function MediumLarge(props) {
     ),
     Files: <Files paths={props.paths} />,
     Downloads: <div>downloads</div>,
+    Watches: <Watches data={props.watches} />,
     Details: <Details data={props.data} />,
   };
 
