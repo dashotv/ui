@@ -437,7 +437,7 @@ function ReleaseRow(props) {
         </Typography>
       </td>
       <td>
-        <Link to={`releases/${props.id}`} title={props.raw}>
+        <Link to={props.id} title={props.raw}>
           {props.display}
         </Link>
         {resolution(props.resolution)}

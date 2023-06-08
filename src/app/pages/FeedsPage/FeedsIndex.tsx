@@ -109,7 +109,7 @@ function FeedsRow(props) {
       </td>
       <td>
         <span title={props.url}>
-          <Link to={`feeds/${props.id}`}>{props.name}</Link>
+          <Link to={props.id}>{props.name}</Link>
         </span>
       </td>
       <td align="right">
