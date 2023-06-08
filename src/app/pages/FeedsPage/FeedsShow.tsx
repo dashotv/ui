@@ -46,7 +46,7 @@ export default function FeedsShow() {
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        <FeedShow data={data} />
+        {data && <FeedShow data={data} />}
       </Container>
     </>
   );
@@ -56,34 +56,32 @@ function FeedShow(props) {
   return (
     <div className="details">
       <table className="horizontal-table" aria-label="a dense table">
-        {props.data && (
-          <tbody>
-            <tr>
-              <th>Name</th>
-              <td>{props.data.name}</td>
-            </tr>
-            <tr>
-              <th>Active</th>
-              <td>{props.data.active ? 'TRUE' : 'FALSE'}</td>
-            </tr>
-            <tr>
-              <th>Source:Type</th>
-              <td>
-                {props.data.source}:{props.data.type}
-              </td>
-            </tr>
-            <tr>
-              <th>URL</th>
-              <td>{props.data.url}</td>
-            </tr>
-            <tr>
-              <th>Processed</th>
-              <td>
-                <Moment fromNow>{props.data.processed}</Moment>
-              </td>
-            </tr>
-          </tbody>
-        )}
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <td>{props.data.name}</td>
+          </tr>
+          <tr>
+            <th>Active</th>
+            <td>{props.data.active ? 'TRUE' : 'FALSE'}</td>
+          </tr>
+          <tr>
+            <th>Source:Type</th>
+            <td>
+              {props.data.source}:{props.data.type}
+            </td>
+          </tr>
+          <tr>
+            <th>URL</th>
+            <td>{props.data.url}</td>
+          </tr>
+          <tr>
+            <th>Processed</th>
+            <td>
+              <Moment fromNow>{props.data.processed}</Moment>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   );
