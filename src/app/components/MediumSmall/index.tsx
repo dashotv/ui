@@ -4,6 +4,7 @@ import Moment from 'react-moment';
 import 'moment-timezone'; // for tz prop on react-moment
 import StarIcon from '@mui/icons-material/Star';
 import './small.scss';
+import Chip from '@mui/material/Chip';
 
 export default function MediumSmall(props) {
   return (
@@ -16,6 +17,7 @@ export default function MediumSmall(props) {
           active={props.active}
           download={props.download}
           downloadIcon={props.downloadIcon}
+          unwatched={props.unwatched}
         />
         <Bar progress={props.progress} />
         <Footer primary={props.primary} secondary={props.secondary} />
@@ -58,9 +60,23 @@ function Header(props) {
 function Icons(props) {
   return (
     <div className="icons">
+      <Unwatched count={props.unwatched} />
       {props.active && <StarIcon />}
       {props.download && props.downloadIcon}
     </div>
+  );
+}
+
+function Unwatched(props) {
+  if (props.count === undefined) {
+    return <></>;
+  }
+  return (
+    <Chip
+      label={props.count > 9 ? '9+' : props.count}
+      variant="filled"
+      size="small"
+    />
   );
 }
 

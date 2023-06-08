@@ -85,6 +85,7 @@ export default function Downloads(props) {
           progress={progress(thash)}
           download={true}
           downloadIcon={icon(status)}
+          unwatched={medium.unwatched}
         />
       ))}
     </div>

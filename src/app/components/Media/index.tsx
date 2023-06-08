@@ -14,6 +14,7 @@ export default function Media(props) {
           cover,
           release_date,
           active,
+          unwatched,
         }) => (
           <MediumSmall
             key={id}
@@ -25,6 +26,7 @@ export default function Media(props) {
             release={release_date}
             active={active}
             description={description}
+            unwatched={unwatched}
           />
         ),
       )}

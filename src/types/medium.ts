@@ -22,6 +22,7 @@ export interface Medium {
   skipped?: boolean;
   watched?: boolean;
   broken?: boolean;
+  unwatched?: number;
   release_date?: Date;
   paths?: Path[];
   cover?: string;
