@@ -9,17 +9,20 @@ import './SubNav.scss';
 export default function SubNav(props) {
   const location = useLocation();
 
-  const matchPath = p => {
-    return p === location.pathname;
+  const matchPath = (path, exact) => {
+    if (exact) {
+      return path === location.pathname;
+    }
+    return location.pathname.startsWith(path);
   };
 
   return (
     <Container maxWidth="xl">
       <div className="subnav">
         {props.items &&
-          props.items.map(({ name, path }) => (
+          props.items.map(({ name, path, exact }) => (
             <Link key={name} to={path}>
-              <Button variant={matchPath(path) ? 'outlined' : 'text'}>
+              <Button variant={matchPath(path, exact) ? 'outlined' : 'text'}>
                 <Typography textAlign="center">{name}</Typography>
               </Button>
             </Link>
