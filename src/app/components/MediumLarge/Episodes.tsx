@@ -59,7 +59,9 @@ function EpisodeRow(props) {
       <th scope="row">{props.number}</th>
       <td>{props.title}</td>
       <td align="right">
-        <Moment format="YYYY-MM-DD">{props.release}</Moment>
+        <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
+          {props.release}
+        </Moment>
       </td>
       <td align="right">
         <IconButton size="small">

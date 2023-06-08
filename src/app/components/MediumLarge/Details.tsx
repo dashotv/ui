@@ -29,7 +29,9 @@ export default function Details(props) {
           <tr>
             <th>Release</th>
             <td>
-              <Moment format="YYYY-MM-DD">{props.data.release_date}</Moment>
+              <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
+                {props.data.release_date}
+              </Moment>
             </td>
           </tr>
           <tr>
