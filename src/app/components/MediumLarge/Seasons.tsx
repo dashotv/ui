@@ -3,7 +3,7 @@ import { Button, ButtonGroup } from '@mui/material';
 
 export default function Seasons(props) {
   function clickSeason(ev) {
-    const id = ev.currentTarget.id;
+    const id = Number(ev.currentTarget.id);
     console.log(`clickSeason: ${id}`);
     if (props.current !== id) {
       props.changeSeason(id);
