@@ -61,7 +61,7 @@ function Icons(props) {
   return (
     <div className="icons">
       <Unwatched count={props.unwatched} />
-      {props.active && <StarIcon />}
+      {props.active && <StarIcon fontSize="small" />}
       {props.download && props.downloadIcon}
     </div>
   );

@@ -50,23 +50,23 @@ export default function Downloads(props) {
   function icon(status) {
     switch (status) {
       case 'searching':
-        return <SearchIcon />;
+        return <SearchIcon fontSize="small" />;
       case 'loading':
-        return <YoutubeSearchedForIcon />;
+        return <YoutubeSearchedForIcon fontSize="small" />;
       case 'managing':
-        return <ManageSearchIcon />;
+        return <ManageSearchIcon fontSize="small" />;
       case 'reviewing':
-        return <ErrorIcon />;
+        return <ErrorIcon fontSize="small" />;
       case 'downloading':
-        return <CloudDownloadIcon />;
+        return <CloudDownloadIcon fontSize="small" />;
       case 'done':
-        return <DownloadDoneIcon />;
+        return <DownloadDoneIcon fontSize="small" />;
       case 'paused':
-        return <PauseCircleIcon />;
+        return <PauseCircleIcon fontSize="small" />;
       case 'deleted':
-        return <RemoveCircleIcon />;
+        return <RemoveCircleIcon fontSize="small" />;
       case 'held':
-        return <PendingIcon />;
+        return <PendingIcon fontSize="small" />;
     }
   }
 

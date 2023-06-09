@@ -5,38 +5,37 @@
   position: relative;
 
   .titlebar {
-    margin-right: 250px;
     .title span {
       font-size: xx-large;
       font-weight: bolder;
       margin-right: 10px;
     }
   }
-  .images {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-
-    .cover-sm {
-      height: 100px;
-      position: absolute;
-      right: 180px;
-      top: 0px;
-
-      img {
-        height: 100px;
-      }
-    }
-
-    .background-sm {
-      height: 100px;
-      position: absolute;
-      right: 0px;
-      top: 0px;
-
-      img {
-        height: 100px;
-      }
-    }
-  }
+  //.images {
+  //  position: absolute;
+  //  top: 0px;
+  //  right: 0px;
+  //
+  //  .cover-sm {
+  //    height: 100px;
+  //    position: absolute;
+  //    right: 180px;
+  //    top: 0px;
+  //
+  //    img {
+  //      height: 100px;
+  //    }
+  //  }
+  //
+  //  .background-sm {
+  //    height: 100px;
+  //    position: absolute;
+  //    right: 0px;
+  //    top: 0px;
+  //
+  //    img {
+  //      height: 100px;
+  //    }
+  //  }
+  //}
 }

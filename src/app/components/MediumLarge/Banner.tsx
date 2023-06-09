@@ -22,14 +22,6 @@ export function Banner(props) {
           change={props.change}
         />
       </div>
-      <div className="images">
-        <ImageSmall class="cover-sm" alt="cover" src={props.cover} />
-        <ImageSmall
-          class="background-sm"
-          alt="background"
-          src={props.background}
-        />
-      </div>
     </div>
   );
 }
