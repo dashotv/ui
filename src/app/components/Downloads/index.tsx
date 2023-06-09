@@ -38,7 +38,7 @@ export default function Downloads(props) {
     }
 
     if (props.nzbs != null) {
-      const nzb = props.nzbs.get(thash);
+      const nzb = props.nzbs.get(Number(thash));
       if (nzb) {
         return 100.0 - (nzb.RemainingSizeMB / nzb.FileSizeMB) * 100;
       }
