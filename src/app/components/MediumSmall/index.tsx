@@ -12,14 +12,14 @@ export default function MediumSmall(props) {
       <Link to={`/${props.type}/${props.id}`}>
         <Hover text={props.description} />
         <Cover image={props.background} />
-        <Header text={props.release} eta={props.eta} />
+        <Header text={props.release} />
         <Icons
           active={props.active}
           download={props.download}
           downloadIcon={props.downloadIcon}
           unwatched={props.unwatched}
         />
-        <Bar progress={props.progress} />
+        <Bar progress={props.progress} eta={props.eta} queue={props.queue} />
         <Footer primary={props.primary} secondary={props.secondary} />
       </Link>
     </div>
@@ -44,22 +44,23 @@ function Header(props) {
     nextWeek: 'dddd',
     sameElse: 'YYYY-MM-DD',
   };
-
   /* had to add day to deal with UTC time, not sure why tz prop doesn't work */
   return (
     <div className="header">
       <div className="primary">
-        {props.queue ? <Chip label={props.queue} /> : ''}
-        {props.eta != null ? (
-          <Moment fromNow>{props.eta}</Moment>
-        ) : (
-          <Moment calendar={calendarStrings} add={{ days: 1 }}>
-            {props.text}
-          </Moment>
-        )}
+        <Moment calendar={calendarStrings} add={{ days: 1 }}>
+          {props.text}
+        </Moment>
       </div>
     </div>
   );
+}
+
+function Queue(props) {
+  if (props.queue) {
+    return <Chip label={props.queue} size="small" variant="filled" />;
+  }
+  return null;
 }
 
 function Icons(props) {
@@ -107,10 +108,17 @@ function Hover(props) {
 }
 
 function Bar(props) {
-  return (
-    <div className="bar-container">
-      <div className="bar" style={{ width: props.progress + '%' }} />
-      <div className="bar-background" />
-    </div>
-  );
+  if (props.progress > 0) {
+    return (
+      <div className="bar-container">
+        <div className="eta">
+          <Queue queue={props.queue} />
+          <Moment fromNow>{props.eta}</Moment>
+        </div>
+        <div className="bar" style={{ width: props.progress + '%' }} />
+        <div className="bar-background" />
+      </div>
+    );
+  }
+  return null;
 }
