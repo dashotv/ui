@@ -1,5 +1,6 @@
 import Moment from 'react-moment';
 import * as React from 'react';
+import ImageSmall from './ImageSmall';
 
 export default function Details(props) {
   return (
@@ -44,6 +45,19 @@ export default function Details(props) {
             <th>Updated</th>
             <td>
               <Moment fromNow>{props.data.updated_at}</Moment>
+            </td>
+          </tr>
+          <tr>
+            <th>Images</th>
+            <td>
+              <div className="images">
+                <ImageSmall class="cover-sm" alt="cover" src={props.cover} />
+                <ImageSmall
+                  class="background-sm"
+                  alt="background"
+                  src={props.background}
+                />
+              </div>
             </td>
           </tr>
         </tbody>

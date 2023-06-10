@@ -27,14 +27,18 @@ export default function MediumLarge(props) {
     Files: <Files paths={props.paths} />,
     Downloads: <div>downloads</div>,
     Watches: <Watches data={props.watches} />,
-    Details: <Details data={props.data} />,
+    Details: (
+      <Details
+        data={props.data}
+        cover={props.data.cover}
+        background={props.data.background}
+      />
+    ),
   };
 
   return (
     <div className="medium large">
       <Banner
-        cover={props.data.cover}
-        background={props.data.background}
         title={props.data.title}
         release_date={props.data.release_date}
         id={props.data.id}

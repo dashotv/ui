@@ -7,6 +7,39 @@
 
   .buttons {
   }
+  .details {
+    .images {
+      //position: absolute;
+      //top: 0px;
+      //right: 0px;
+
+      .cover-sm {
+        height: 100px;
+        //position: absolute;
+        //right: 180px;
+        //top: 0px;
+        float: left;
+        padding: 5px;
+
+        img {
+          height: 100px;
+        }
+      }
+
+      .background-sm {
+        height: 100px;
+        //position: absolute;
+        //right: 0px;
+        //top: 0px;
+        float: left;
+        padding: 5px;
+
+        img {
+          height: 100px;
+        }
+      }
+    }
+  }
 }
 
 .seasons {
