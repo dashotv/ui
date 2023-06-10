@@ -15,7 +15,7 @@ export default function SeriesShow() {
   const [paths, setPaths] = useState<Medium | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [seasons, setSeasons] = useState([]);
-  const [currentSeason, setCurrentSeason] = useState(1);
+  const [currentSeason, setCurrentSeason] = useState(-1);
   const [episodes, setEpisodes] = useState([]);
   const [watches, setWatches] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
@@ -83,7 +83,9 @@ export default function SeriesShow() {
           console.error(err);
         });
     };
-    getSeason(currentSeason);
+    if (currentSeason >= 0) {
+      getSeason(currentSeason);
+    }
   }, [currentSeason, id]);
 
   return (
