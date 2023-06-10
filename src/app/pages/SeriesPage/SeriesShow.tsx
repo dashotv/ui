@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
+
 import Container from '@mui/material/Container';
-import MediumLarge from '../../components/MediumLarge';
-import LoadingIndicator from '../../components/Loading';
+
 import { Medium } from '../../../types/medium';
+import LoadingIndicator from '../../components/Loading';
+import MediumLarge from '../../components/MediumLarge';
 
 export default function SeriesShow() {
   const [data, setData] = useState<Medium | null>(null);
@@ -55,6 +57,10 @@ export default function SeriesShow() {
         .then(response => {
           console.log('getData:', response.data);
           setData(response.data);
+          setSeasons(response.data.seasons);
+          setCurrentSeason(response.data.currentSeason);
+          setPaths(response.data.paths);
+          setWatches(response.data.watches);
           setLoading(false);
         })
         .catch(err => {
@@ -62,61 +68,7 @@ export default function SeriesShow() {
           console.error(err);
         });
     };
-
-    const getPaths = () => {
-      axios
-        .get(`/api/tower/series/${id}/paths`)
-        .then(response => {
-          console.log('paths:', response.data);
-          setPaths(response.data);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    };
-
-    const getSeasons = () => {
-      axios
-        .get(`/api/tower/series/${id}/seasons`)
-        .then(response => {
-          console.log('getSeasons:', response.data);
-          setSeasons(response.data);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    };
-    const getCurrentSeason = () => {
-      axios
-        .get(`/api/tower/series/${id}/currentseason`)
-        .then(response => {
-          console.log('getCurrentSeason:', response.data);
-          setCurrentSeason(response.data.current);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    };
-    const getWatches = () => {
-      axios
-        .get(`/api/tower/series/${id}/watches`)
-        .then(response => {
-          console.log('getWatches:', response.data);
-          setWatches(response.data);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    };
     getData();
-    getPaths();
-    getSeasons();
-    getCurrentSeason();
-    getWatches();
   }, [id, enqueueSnackbar]);
 
   useEffect(() => {
