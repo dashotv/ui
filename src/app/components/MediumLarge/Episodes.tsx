@@ -83,9 +83,7 @@ function EpisodeRow(props) {
             setDownloaded(!downloaded);
           }}
         >
-          <ArrowDropDownCircleIcon
-            color={downloaded ? 'secondary' : 'action'}
-          />
+          <ArrowDropDownCircleIcon color={downloaded ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton
           size="small"
@@ -94,9 +92,7 @@ function EpisodeRow(props) {
             setCompleted(!completed);
           }}
         >
-          <CheckCircleIcon
-            color={completed === true ? 'secondary' : 'action'}
-          />
+          <CheckCircleIcon color={completed === true ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton
           size="small"

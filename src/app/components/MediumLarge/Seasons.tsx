@@ -13,12 +13,7 @@ export default function Seasons(props) {
     <div className="seasons">
       <ButtonGroup>
         {props.seasons.map(s => (
-          <Button
-            variant={props.current === s ? 'contained' : 'outlined'}
-            key={s}
-            id={s}
-            onClick={clickSeason}
-          >
+          <Button variant={props.current === s ? 'contained' : 'outlined'} key={s} id={s} onClick={clickSeason}>
             {s}
           </Button>
         ))}

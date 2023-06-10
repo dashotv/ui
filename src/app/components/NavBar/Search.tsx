@@ -56,9 +56,7 @@ export default function Search(props) {
         if (search === null) {
           return;
         }
-        const response = await axios.get(
-          `/api/scry/media/?name=*${search}*&limit=10&type=series movie`,
-        );
+        const response = await axios.get(`/api/scry/media/?name=*${search}*&limit=10&type=series movie`);
         console.log(response.data);
         setResults(response.data.Media);
         setOpen(true);
@@ -73,22 +71,14 @@ export default function Search(props) {
 
   return (
     <>
-      <SearchBar
-        value={text}
-        onChange={newValue => setText(newValue)}
-        onRequestSearch={() => handleSearch(text)}
-      />
+      <SearchBar value={text} onChange={newValue => setText(newValue)} onRequestSearch={() => handleSearch(text)} />
 
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle>Results</DialogTitle>
         <List className="searchResults" sx={{ pt: 0 }}>
           {results &&
             results.map(({ id, link, name, type, release_date }) => (
-              <ListItem
-                button
-                onClick={() => handleListItemClick(link)}
-                key={id}
-              >
+              <ListItem button onClick={() => handleListItemClick(link)} key={id}>
                 <ListItemAvatar>
                   <Avatar>
                     {type === 'series' && <TvIcon />}

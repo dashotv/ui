@@ -1,12 +1,14 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+
 import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
-import LoadingIndicator from '../../components/Loading';
+
 import Downloads from '../../components/Downloads';
+import LoadingIndicator from '../../components/Loading';
 
 const pagesize = 42;
 
@@ -44,16 +46,10 @@ export default function RecentPage() {
     <>
       <Helmet>
         <title>Home - Recent</title>
-        <meta
-          name="description"
-          content="A React Boilerplate application homepage"
-        />
+        <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <div>
-        <Pagination
-          count={Math.ceil(count / pagesize)}
-          onChange={handleChange}
-        />
+        <Pagination count={Math.ceil(count / pagesize)} onChange={handleChange} />
       </div>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}

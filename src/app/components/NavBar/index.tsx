@@ -110,10 +110,7 @@ const NavBar = () => {
             >
               {pages.map(({ name, page, exact }) => (
                 <Link key={name} to={page}>
-                  <MenuItem
-                    onClick={handleCloseNavMenu}
-                    selected={matchPath(page, exact)}
-                  >
+                  <MenuItem onClick={handleCloseNavMenu} selected={matchPath(page, exact)}>
                     <Typography textAlign="center">{name}</Typography>
                   </MenuItem>
                 </Link>
@@ -139,10 +136,7 @@ const NavBar = () => {
               DASHOTV
             </Typography>
           </Link>
-          <Box
-            className="menu"
-            sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
-          >
+          <Box className="menu" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map(({ name, page, exact }) => (
               <Link key={name} to={page}>
                 <Button

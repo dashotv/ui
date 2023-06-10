@@ -1,19 +1,21 @@
+import axios from 'axios';
+import { Subscription } from 'nats.ws';
+import { useSnackbar } from 'notistack';
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
-import { useSnackbar } from 'notistack';
-import { useNats } from '../../components/Nats/usenats';
 import { Helmet } from 'react-helmet-async';
+
 import Container from '@mui/material/Container';
-import LoadingIndicator from '../../components/Loading';
-import Downloads from '../../components/Downloads';
-import Media from '../../components/Media';
-import { Subscription } from 'nats.ws';
-import { Torrent, TorrentsResponse } from '../../../types/torrents';
+
+import { Notice } from '../../../types/Notice';
 import { Nzb, NzbResponse, NzbResponseStatus } from '../../../types/Nzb';
 import { Download, DownloadEvent } from '../../../types/download';
 import { Medium, MediumEvent } from '../../../types/medium';
-import { Notice } from '../../../types/Notice';
+import { Torrent, TorrentsResponse } from '../../../types/torrents';
+import Downloads from '../../components/Downloads';
+import LoadingIndicator from '../../components/Loading';
+import Media from '../../components/Media';
+import { useNats } from '../../components/Nats/usenats';
 
 export default function UpcomingPage() {
   const [upcoming, setUpcoming] = useState<Medium[]>([]);
@@ -96,9 +98,7 @@ export default function UpcomingPage() {
 
       if (data.event === 'destroyed' || data.download.status === 'done') {
         // if a download was destroyed or completed, remove from list
-        setDownloads(prevState =>
-          prevState.filter(item => item.id !== data.id),
-        );
+        setDownloads(prevState => prevState.filter(item => item.id !== data.id));
       } else {
         // otherwise, update the download that was changed
         setDownloads(prevState => {
@@ -153,14 +153,7 @@ export default function UpcomingPage() {
       sub4?.unsubscribe();
       sub5?.unsubscribe();
     };
-  }, [
-    ws,
-    handleNzbs,
-    handleTorrents,
-    handleNotices,
-    handleDownloads,
-    handleEpisodes,
-  ]);
+  }, [ws, handleNzbs, handleTorrents, handleNotices, handleDownloads, handleEpisodes]);
 
   useEffect(() => {
     const getUpcoming = () => {
@@ -199,19 +192,11 @@ export default function UpcomingPage() {
     <>
       <Helmet>
         <title>Home</title>
-        <meta
-          name="description"
-          content="A React Boilerplate application homepage"
-        />
+        <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        <Downloads
-          data={downloads}
-          torrents={torrents}
-          nzbs={nzbs}
-          nzbStatus={nzbStatus}
-        />
+        <Downloads data={downloads} torrents={torrents} nzbs={nzbs} nzbStatus={nzbStatus} />
         <Media data={upcoming} type="series" />
       </Container>
     </>

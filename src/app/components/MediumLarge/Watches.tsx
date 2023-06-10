@@ -18,14 +18,7 @@ export default function Watches(props) {
         </thead>
         <tbody>
           {props.data.map(({ id, username, player, watched_at, medium }) => (
-            <WatchRow
-              key={id}
-              id={id}
-              date={watched_at}
-              user={username}
-              player={player}
-              medium={medium}
-            />
+            <WatchRow key={id} id={id} date={watched_at} user={username} player={player} medium={medium} />
           ))}
         </tbody>
       </table>
@@ -43,8 +36,7 @@ function WatchRow(props) {
       </td>
       <td className="user">{props.user}</td>
       <td>
-        {props.medium.season_number}x{props.medium.episode_number}{' '}
-        {props.medium.title}
+        {props.medium.season_number}x{props.medium.episode_number} {props.medium.title}
       </td>
     </tr>
   );

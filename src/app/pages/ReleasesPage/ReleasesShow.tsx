@@ -78,8 +78,7 @@ export default function ReleasesShow(props) {
                 ) : (
                   <CheckCircleOutlineIcon fontSize="small" />
                 )}{' '}
-                {data.name} {data.season}x{data.episode}{' '}
-                {resolution(data.resolution)}
+                {data.name} {data.season}x{data.episode} {resolution(data.resolution)}
               </span>
               {group(data.group, data.author)}
             </div>
@@ -139,8 +138,7 @@ export default function ReleasesShow(props) {
               <tr>
                 <th>Links</th>
                 <td>
-                  <a href={data.view}>View</a> |{' '}
-                  <a href={data.download}>Download</a>
+                  <a href={data.view}>View</a> | <a href={data.download}>Download</a>
                 </td>
               </tr>
               <tr>

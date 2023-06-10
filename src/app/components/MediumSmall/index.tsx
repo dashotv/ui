@@ -78,22 +78,11 @@ function Unwatched(props) {
   if (props.count === undefined || props.count === 0) {
     return <></>;
   }
-  return (
-    <Chip
-      label={props.count > 9 ? '9+' : props.count}
-      variant="filled"
-      size="small"
-    />
-  );
+  return <Chip label={props.count > 9 ? '9+' : props.count} variant="filled" size="small" />;
 }
 
 function BackImage(props) {
-  return (
-    <div
-      className={props.class}
-      style={{ backgroundImage: `url(${props.image})` }}
-    ></div>
-  );
+  return <div className={props.class} style={{ backgroundImage: `url(${props.image})` }}></div>;
 }
 
 function Cover(props) {

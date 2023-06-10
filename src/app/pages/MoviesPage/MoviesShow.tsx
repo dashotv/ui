@@ -77,22 +77,11 @@ export default function MoviesShow() {
     <>
       <Helmet>
         <title>Series{data ? ` - ${data.title}` : ''}</title>
-        <meta
-          name="description"
-          content="A React Boilerplate application homepage"
-        />
+        <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        {data && (
-          <MediumMovie
-            id={data.id}
-            type="movies"
-            data={data}
-            paths={paths}
-            change={changeMovieSetting}
-          />
-        )}
+        {data && <MediumMovie id={data.id} type="movies" data={data} paths={paths} change={changeMovieSetting} />}
       </Container>
     </>
   );

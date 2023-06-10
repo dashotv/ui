@@ -45,10 +45,7 @@ export default function SeriesIndex() {
     <>
       <Helmet>
         <title>Series</title>
-        <meta
-          name="description"
-          content="A React Boilerplate application homepage"
-        />
+        <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container>
@@ -56,10 +53,7 @@ export default function SeriesIndex() {
             <Typography variant="h4">Series</Typography>
           </Grid>
           <Grid item xs={6}>
-            <Pagination
-              count={Math.ceil(count / pagesize)}
-              onChange={handleChange}
-            />
+            <Pagination count={Math.ceil(count / pagesize)} onChange={handleChange} />
           </Grid>
         </Grid>
       </Container>

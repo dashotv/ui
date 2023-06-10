@@ -51,8 +51,7 @@ export default function Downloads(props) {
     if (props.torrents != null) {
       const torrent = props.torrents.get(thash);
       if (torrent) {
-        if (torrent.Finish > 0)
-          return new Date(Date.now() + torrent.Finish * 1000);
+        if (torrent.Finish > 0) return new Date(Date.now() + torrent.Finish * 1000);
       }
     }
 
@@ -60,9 +59,7 @@ export default function Downloads(props) {
       const nzb = props.nzbs.get(Number(thash));
       if (nzb) {
         if (props.nzbStatus.DownloadRate > 0) {
-          const secs =
-            (nzb.RemainingSizeMB * 1024) /
-            (props.nzbStatus.DownloadRate / 1024);
+          const secs = (nzb.RemainingSizeMB * 1024) / (props.nzbStatus.DownloadRate / 1024);
           return new Date(Date.now() + secs * 1000);
         }
       }

@@ -39,10 +39,7 @@ export default function FeedsShow() {
     <>
       <Helmet>
         <title>Releases - Feeds</title>
-        <meta
-          name="description"
-          content="A React Boilerplate application homepage"
-        />
+        <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}

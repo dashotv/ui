@@ -15,11 +15,7 @@ export function MediumTabs(props) {
     <div className="tabs">
       <Box maxWidth="xl">
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             {Object.keys(props.data).map((k, i) => {
               return <Tab key={i} label={k} id={`simple-tabs-${i}`} />;
             })}

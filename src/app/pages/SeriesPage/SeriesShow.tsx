@@ -138,10 +138,7 @@ export default function SeriesShow() {
     <>
       <Helmet>
         <title>Series{data ? ` - ${data.title}` : ''}</title>
-        <meta
-          name="description"
-          content="A React Boilerplate application homepage"
-        />
+        <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}

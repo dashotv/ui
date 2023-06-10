@@ -13,27 +13,14 @@ export default function MediumLarge(props) {
   const tabsMap = {
     Episodes: (
       <>
-        <Seasons
-          current={props.currentSeason}
-          seasons={props.seasons}
-          changeSeason={props.changeSeason}
-        />
-        <Episodes
-          episodes={props.episodes}
-          changeEpisode={props.changeEpisode}
-        />
+        <Seasons current={props.currentSeason} seasons={props.seasons} changeSeason={props.changeSeason} />
+        <Episodes episodes={props.episodes} changeEpisode={props.changeEpisode} />
       </>
     ),
     Files: <Files paths={props.paths} />,
     Downloads: <div>downloads</div>,
     Watches: <Watches data={props.watches} />,
-    Details: (
-      <Details
-        data={props.data}
-        cover={props.data.cover}
-        background={props.data.background}
-      />
-    ),
+    Details: <Details data={props.data} cover={props.data.cover} background={props.data.background} />,
   };
 
   return (

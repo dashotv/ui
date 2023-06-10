@@ -52,11 +52,7 @@ export default function Details(props) {
             <td>
               <div className="images">
                 <ImageSmall class="cover-sm" alt="cover" src={props.cover} />
-                <ImageSmall
-                  class="background-sm"
-                  alt="background"
-                  src={props.background}
-                />
+                <ImageSmall class="background-sm" alt="background" src={props.background} />
               </div>
             </td>
           </tr>

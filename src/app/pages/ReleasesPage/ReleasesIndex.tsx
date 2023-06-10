@@ -97,10 +97,7 @@ export default function ReleasesIndex() {
     <>
       <Helmet>
         <title>Releases - Search</title>
-        <meta
-          name="description"
-          content="A React Boilerplate application homepage"
-        />
+        <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
 
       <Container sx={{ padding: 1 }} style={{ overflow: 'auto' }} maxWidth="xl">
@@ -424,13 +421,7 @@ function ReleaseRow(props) {
           <CheckCircleOutlineIcon fontSize="small" />
         )}
       </td>
-      <td>
-        {props.nzb ? (
-          <ArticleIcon fontSize="small" />
-        ) : (
-          <WavesIcon fontSize="small" />
-        )}
-      </td>
+      <td>{props.nzb ? <ArticleIcon fontSize="small" /> : <WavesIcon fontSize="small" />}</td>
       <td>
         <Typography variant="caption">
           {props.source}:{props.type}
