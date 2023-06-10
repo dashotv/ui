@@ -47,6 +47,30 @@ export default function Downloads(props) {
     return 0;
   }
 
+  function eta(thash) {
+    if (props.torrents != null) {
+      const torrent = props.torrents.get(thash);
+      if (torrent) {
+        if (torrent.Finish > 0)
+          return new Date(Date.now() + torrent.Finish * 1000);
+      }
+    }
+
+    if (props.nzbs != null) {
+      const nzb = props.nzbs.get(Number(thash));
+      if (nzb) {
+        if (props.nzbStatus.DownloadRate > 0) {
+          const secs =
+            (nzb.RemainingSizeMB * 1024) /
+            (props.nzbStatus.DownloadRate / 1024);
+          return new Date(Date.now() + secs * 1000);
+        }
+      }
+    }
+
+    return null;
+  }
+
   function icon(status) {
     switch (status) {
       case 'searching':
@@ -83,6 +107,7 @@ export default function Downloads(props) {
           secondary={medium.display}
           release={medium.release_date}
           progress={progress(thash)}
+          eta={eta(thash)}
           download={true}
           downloadIcon={icon(status)}
           unwatched={medium.unwatched}

@@ -12,7 +12,7 @@ export default function MediumSmall(props) {
       <Link to={`/${props.type}/${props.id}`}>
         <Hover text={props.description} />
         <Cover image={props.background} />
-        <Header text={props.release} />
+        <Header text={props.release} eta={props.eta} />
         <Icons
           active={props.active}
           download={props.download}
@@ -49,9 +49,13 @@ function Header(props) {
   return (
     <div className="header">
       <div className="primary">
-        <Moment calendar={calendarStrings} add={{ days: 1 }}>
-          {props.text}
-        </Moment>
+        {props.eta != null ? (
+          <Moment fromNow>{props.eta}</Moment>
+        ) : (
+          <Moment calendar={calendarStrings} add={{ days: 1 }}>
+            {props.text}
+          </Moment>
+        )}
       </div>
     </div>
   );

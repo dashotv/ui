@@ -10,7 +10,7 @@ import Downloads from '../../components/Downloads';
 import Media from '../../components/Media';
 import { Subscription } from 'nats.ws';
 import { Torrent, TorrentsResponse } from '../../../types/torrents';
-import { Nzb, NzbResponse } from '../../../types/Nzb';
+import { Nzb, NzbResponse, NzbResponseStatus } from '../../../types/Nzb';
 import { Download, DownloadEvent } from '../../../types/download';
 import { Medium, MediumEvent } from '../../../types/medium';
 import { Notice } from '../../../types/Notice';
@@ -20,6 +20,7 @@ export default function UpcomingPage() {
   const [downloads, setDownloads] = useState<Download[]>([]);
   const [torrents, setTorrents] = useState<Map<string, Torrent> | null>(null);
   const [nzbs, setNzbs] = useState<Map<number, Nzb> | null>(null);
+  const [nzbStatus, setNzbStatus] = useState<NzbResponseStatus | null>(null);
   const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const { ws, jc } = useNats();
@@ -60,6 +61,7 @@ export default function UpcomingPage() {
         }
       }
       setNzbs(index);
+      setNzbStatus(data.Status);
     },
     [jc],
   );
@@ -76,7 +78,6 @@ export default function UpcomingPage() {
         // remove from the upcoming list
         setUpcoming(prevState => {
           return prevState.filter(item => {
-            console.log('item:', item.id, 'data:', data.id);
             return item.id !== data.id;
           });
         });
@@ -205,7 +206,12 @@ export default function UpcomingPage() {
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        <Downloads data={downloads} torrents={torrents} nzbs={nzbs} />
+        <Downloads
+          data={downloads}
+          torrents={torrents}
+          nzbs={nzbs}
+          nzbStatus={nzbStatus}
+        />
         <Media data={upcoming} type="series" />
       </Container>
     </>
