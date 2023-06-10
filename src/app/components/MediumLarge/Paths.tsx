@@ -32,7 +32,7 @@ export default function Paths(props) {
         <tbody>
           {props.paths &&
             props.paths.map(row => (
-              <FilesRow
+              <PathsRow
                 key={row.id}
                 id={row.id}
                 type={row.type}
@@ -47,7 +47,7 @@ export default function Paths(props) {
   );
 }
 
-function FilesRow(props) {
+function PathsRow(props) {
   return (
     <tr>
       <th scope="row">
