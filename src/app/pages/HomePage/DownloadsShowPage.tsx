@@ -40,7 +40,7 @@ export default function DownloadsShowPage(props) {
         }
       }
     },
-    [jc],
+    [jc, setTorrent, download],
   );
 
   useEffect(() => {

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Moment from 'react-moment';
+
 import Buttons from '../MediumLarge/Buttons';
 import './banner.scss';
 
@@ -13,6 +14,11 @@ export function Banner(props) {
             {props.release_date}
           </Moment>
         </div>
+        {props.subtitle && (
+          <div className="subtitle">
+            <span>{props.subtitle}</span>
+          </div>
+        )}
         <Buttons
           id={props.id}
           favorite={props.favorite}

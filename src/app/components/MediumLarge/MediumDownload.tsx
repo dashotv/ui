@@ -15,7 +15,8 @@ export default function MediumDownload(props) {
       <Banner
         cover={props.download.medium.cover}
         background={props.download.medium.background}
-        title={props.download.medium.title + ' - ' + props.download.medium.display}
+        title={props.download.medium.title}
+        subtitle={props.download.medium.display}
         release_date={props.download.medium.release_date}
         id={props.download.id}
         favorite={props.download.medium.favorite}
