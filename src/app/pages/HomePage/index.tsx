@@ -11,7 +11,6 @@ export default function HomePage() {
   const items = [
     { name: 'Upcoming', path: '/', exact: true },
     { name: 'Recent', path: '/recent' },
-    { name: 'Download', path: '/download' },
   ];
   return (
     <>
