@@ -1,14 +1,15 @@
 import * as React from 'react';
 import Moment from 'react-moment';
+
+import ClosedCaptionIcon from '@mui/icons-material/ClosedCaption';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
 import ImageIcon from '@mui/icons-material/Image';
 import MovieIcon from '@mui/icons-material/Movie';
 import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import ClosedCaptionIcon from '@mui/icons-material/ClosedCaption';
 
-export default function Files(props) {
+export default function Paths(props) {
   return (
     <div className="files">
       <table

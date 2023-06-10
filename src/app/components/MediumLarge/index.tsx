@@ -1,13 +1,14 @@
 import * as React from 'react';
+
 import { Banner } from './Banner';
-import { MediumTabs } from './MediumTabs';
-import Seasons from './Seasons';
-import Episodes from './Episodes';
-import Files from './Files';
 import Details from './Details';
+import Episodes from './Episodes';
+import { MediumTabs } from './MediumTabs';
+import Paths from './Paths';
+import Seasons from './Seasons';
 import Watches from './Watches';
-import './large.scss';
 import './banner.scss';
+import './large.scss';
 
 export default function MediumLarge(props) {
   const tabsMap = {
@@ -17,7 +18,7 @@ export default function MediumLarge(props) {
         <Episodes episodes={props.episodes} changeEpisode={props.changeEpisode} />
       </>
     ),
-    Files: <Files paths={props.paths} />,
+    Paths: <Paths paths={props.paths} />,
     Downloads: <div>downloads</div>,
     Watches: <Watches data={props.watches} />,
     Details: <Details data={props.data} cover={props.data.cover} background={props.data.background} />,
