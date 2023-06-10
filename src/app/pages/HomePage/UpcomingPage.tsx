@@ -27,6 +27,19 @@ export default function UpcomingPage() {
   const { enqueueSnackbar } = useSnackbar();
   const { ws, jc } = useNats();
 
+  const getDownloads = useCallback(() => {
+    axios
+      .get('/api/tower/downloads/')
+      .then(response => {
+        // console.log(response.data);
+        setDownloads(response.data);
+      })
+      .catch(err => {
+        enqueueSnackbar('error getting data', { variant: 'error' });
+        console.error(err);
+      });
+  }, [enqueueSnackbar]);
+
   const handleTorrents = useCallback(
     (err, msg) => {
       if (err) {
@@ -98,7 +111,7 @@ export default function UpcomingPage() {
 
       const data = jc.decode(msg.data) as DownloadEvent;
 
-      if (data.event == 'created') {
+      if (data.event === 'created') {
         // if a download is created, just get the downloads again
         getDownloads();
         return;
@@ -123,7 +136,7 @@ export default function UpcomingPage() {
         });
       });
     },
-    [jc],
+    [jc, getDownloads],
   );
 
   const handleNotices = useCallback(
@@ -164,19 +177,6 @@ export default function UpcomingPage() {
     };
   }, [ws, handleNzbs, handleTorrents, handleNotices, handleDownloads, handleEpisodes]);
 
-  const getDownloads = useCallback(() => {
-    axios
-      .get('/api/tower/downloads/')
-      .then(response => {
-        // console.log(response.data);
-        setDownloads(response.data);
-      })
-      .catch(err => {
-        enqueueSnackbar('error getting data', { variant: 'error' });
-        console.error(err);
-      });
-  }, []);
-
   useEffect(() => {
     const getUpcoming = () => {
       setLoading(true);
@@ -195,7 +195,7 @@ export default function UpcomingPage() {
 
     getUpcoming();
     getDownloads();
-  }, [enqueueSnackbar]);
+  }, [enqueueSnackbar, getDownloads]);
 
   return (
     <>
