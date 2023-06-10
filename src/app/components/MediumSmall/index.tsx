@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import 'moment-timezone'; // for tz prop on react-moment
 import StarIcon from '@mui/icons-material/Star';
-import './small.scss';
 import Chip from '@mui/material/Chip';
+
+import './small.scss';
 
 export default function MediumSmall(props) {
   return (
