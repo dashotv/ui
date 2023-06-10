@@ -34,6 +34,7 @@ export default function MediumLarge(props) {
         broken={props.data.broken}
         active={props.data.active}
         change={props.change}
+        background={props.data.background}
       />
       <MediumTabs data={tabsMap} />
     </div>
