@@ -49,6 +49,7 @@ function Header(props) {
   return (
     <div className="header">
       <div className="primary">
+        {props.queue ? <Chip label={props.queue} /> : ''}
         {props.eta != null ? (
           <Moment fromNow>{props.eta}</Moment>
         ) : (

@@ -71,6 +71,24 @@ export default function Downloads(props) {
     return null;
   }
 
+  function queue(thash) {
+    if (props.torrents != null) {
+      const torrent = props.torrents.get(thash);
+      if (torrent) {
+        return torrent.Queue;
+      }
+    }
+
+    if (props.nzbs != null) {
+      const nzb = props.nzbs.get(Number(thash));
+      if (nzb) {
+        return nzb.nzbid;
+      }
+    }
+
+    return null;
+  }
+
   function icon(status) {
     switch (status) {
       case 'searching':
@@ -108,6 +126,7 @@ export default function Downloads(props) {
           release={medium.release_date}
           progress={progress(thash)}
           eta={eta(thash)}
+          queue={queue(thash)}
           download={true}
           downloadIcon={icon(status)}
           unwatched={medium.unwatched}

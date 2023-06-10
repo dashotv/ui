@@ -1,5 +1,4 @@
 import * as React from 'react';
-import ImageSmall from '../MediumLarge/ImageSmall';
 import Moment from 'react-moment';
 import Buttons from '../MediumLarge/Buttons';
 import './banner.scss';
