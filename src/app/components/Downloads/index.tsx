@@ -1,14 +1,16 @@
 import * as React from 'react';
-import MediumSmall from '../MediumSmall';
-import SearchIcon from '@mui/icons-material/Search';
-import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
-import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-import ErrorIcon from '@mui/icons-material/Error';
+
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
+import ErrorIcon from '@mui/icons-material/Error';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import PendingIcon from '@mui/icons-material/Pending';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import SearchIcon from '@mui/icons-material/Search';
+import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
+
+import MediumSmall from '../MediumSmall';
 
 export default function Downloads(props) {
   function type(t) {
@@ -114,8 +116,8 @@ export default function Downloads(props) {
       {props.data.map(({ id, thash, status, medium }) => (
         <MediumSmall
           key={id}
-          type={type(medium.type)}
-          id={getID(medium)}
+          type="downloads"
+          id={id}
           active={medium.active}
           background={medium.cover}
           primary={medium.title}

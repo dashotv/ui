@@ -13,7 +13,7 @@ export interface Download {
   timestamps: DownloadTimestamps;
   selected: string;
   status: string;
-  files: DownloadFile[];
+  download_files: DownloadFile[];
 }
 
 export interface DownloadTimestamps {
@@ -26,7 +26,7 @@ export interface DownloadTimestamps {
 
 export interface DownloadFile {
   id: string;
-  mediumId: string;
+  medium_id: string;
   num: number;
 }
 

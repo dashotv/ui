@@ -12,4 +12,14 @@ export interface Torrent {
   Queue: number;
   Name: string;
   Finish: number;
+  Files: TorrentFile[];
+}
+
+export interface TorrentFile {
+  id: number;
+  is_send: boolean;
+  name: string;
+  priority: number;
+  progress: number;
+  size: number;
 }
