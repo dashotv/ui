@@ -29,9 +29,7 @@ export function cleanAndSetup(opts: Options = {}) {
 
   modifyPackageJsonFile();
 
-  shell.echo(
-    chalk.green('Example app removed and setup completed. Happy Coding!!!'),
-  );
+  shell.echo(chalk.green('Example app removed and setup completed. Happy Coding!!!'));
 }
 
 function modifyPackageJsonFile() {
