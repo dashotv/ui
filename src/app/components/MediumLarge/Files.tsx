@@ -1,12 +1,11 @@
-import * as React from 'react';
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
+import * as React from 'react';
 
 export default function Files(props) {
-  console.log('torrent:', props.torrent);
+  // console.log('torrent:', props.torrent);
   return (
     <div className="files">
       <table className="vertical-table" aria-label="a dense table">

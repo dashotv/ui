@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
-import 'moment-timezone'; // for tz prop on react-moment
+import './small.scss';
 import StarIcon from '@mui/icons-material/Star';
 import Chip from '@mui/material/Chip';
-
-import './small.scss';
+import 'moment-timezone';
+import * as React from 'react';
+import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 
 export default function MediumSmall(props) {
   return (
@@ -97,7 +96,7 @@ function Hover(props) {
   );
 }
 
-function Bar(props) {
+export function Bar(props) {
   if (props.progress > 0) {
     return (
       <div className="bar-container">
