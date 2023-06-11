@@ -1,6 +1,10 @@
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
+import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
+import StarsIcon from '@mui/icons-material/Stars';
 import IconButton from '@mui/material/IconButton';
 import * as React from 'react';
 
@@ -67,13 +71,16 @@ function FilesRow(props) {
 
       <td align="right">
         <IconButton size="small">
-          <EditIcon />
+          <CancelIcon />
         </IconButton>
         <IconButton size="small">
-          <DeleteIcon />
+          <PlaylistAddCheckCircleIcon />
         </IconButton>
         <IconButton size="small">
-          <DeleteForeverIcon />
+          <CheckCircleIcon />
+        </IconButton>
+        <IconButton size="small">
+          <StarsIcon color={props.torrentFile?.priority > 0 ? 'secondary' : 'action'} />
         </IconButton>
       </td>
     </tr>
