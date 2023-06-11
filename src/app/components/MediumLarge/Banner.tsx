@@ -33,7 +33,7 @@ export function Banner(props) {
       </div>
       <div className="banner-dimmer"></div>
       <div className="banner-background">
-        <img src={props.background} />
+        <img alt="background" src={props.background} />
       </div>
     </div>
   );

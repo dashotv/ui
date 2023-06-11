@@ -60,7 +60,9 @@ function FilesRow(props) {
   return (
     <tr>
       <th scope="row">{props.num + 1}</th>
-      <td>{props.torrentFile?.name}</td>
+      <td className="name">
+        <div title={props.torrentFile?.name}>{props.torrentFile?.name}</div>
+      </td>
       <td align="right">{size(props.torrentFile?.size)}</td>
       <td align="right">{progress(props.torrentFile?.progress)}</td>
 

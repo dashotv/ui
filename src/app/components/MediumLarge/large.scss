@@ -40,6 +40,16 @@
       }
     }
   }
+  .files {
+    td.name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis ellipsis;
+      div {
+        width: 100px;
+      }
+    }
+  }
 }
 
 .seasons {
