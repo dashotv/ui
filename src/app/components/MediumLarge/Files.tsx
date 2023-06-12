@@ -1,14 +1,12 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import StarsIcon from '@mui/icons-material/Stars';
 import IconButton from '@mui/material/IconButton';
 import * as React from 'react';
 
 export default function Files(props) {
+  // console.log('files:', props.files);
   // console.log('torrent:', props.torrent);
   return (
     <div className="files">
@@ -29,14 +27,14 @@ export default function Files(props) {
           </tr>
         </thead>
         <tbody>
-          {props.files &&
-            props.files.map(row => (
+          {props.torrent &&
+            props.torrent?.Files.sort((a, b) => a.name.localeCompare(b.name)).map(row => (
               <FilesRow
                 key={row.id}
                 id={row.id}
-                num={row.num}
-                mediumid={row.medium_id}
-                torrentFile={props.torrent?.Files[row.num]}
+                num={row.id}
+                mediumid={props.files[row.id].medium_id}
+                torrentFile={row}
               />
             ))}
         </tbody>
@@ -60,11 +58,18 @@ function FilesRow(props) {
     return Number(raw).toFixed(2) + '%';
   }
 
+  function name(raw) {
+    if (raw === undefined) {
+      return;
+    }
+    return raw.split('/').pop();
+  }
+
   return (
     <tr>
       <th scope="row">{props.num + 1}</th>
       <td className="name">
-        <div title={props.torrentFile?.name}>{props.torrentFile?.name}</div>
+        <div title={props.torrentFile?.name}>{name(props.torrentFile?.name)}</div>
       </td>
       <td align="right">{size(props.torrentFile?.size)}</td>
       <td align="right">{progress(props.torrentFile?.progress)}</td>
