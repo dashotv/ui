@@ -1,3 +1,5 @@
+$height: 120px;
+
 .banner-container {
   position: relative;
   margin-bottom: 5px;
@@ -11,7 +13,7 @@
 
     clear: both;
     overflow: hidden;
-    min-height: 120px;
+    min-height: $height;
     position: relative;
 
     .titlebar {
@@ -60,8 +62,8 @@
     right: 0px;
     z-index: 99;
     overflow: hidden;
-    min-height: 120px;
-    max-height: 120px;
+    min-height: $height;
+    max-height: $height;
     img {
       //animation: MoveUpDown 120s linear infinite;
       width: 100%;
@@ -75,8 +77,8 @@
     right: 0px;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 100;
-    min-height: 120px;
-    max-height: 120px;
+    min-height: $height;
+    max-height: $height;
   }
 }
 
