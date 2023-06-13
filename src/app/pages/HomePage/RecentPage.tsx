@@ -10,7 +10,7 @@ import Pagination from '@mui/material/Pagination';
 import Downloads from '../../components/Downloads';
 import LoadingIndicator from '../../components/Loading';
 
-const pagesize = 42;
+const pagesize = 25;
 
 export default function RecentPage() {
   const [recent, setRecent] = useState([]);
@@ -48,10 +48,10 @@ export default function RecentPage() {
         <title>Home - Recent</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <div>
-        <Pagination count={Math.ceil(count / pagesize)} onChange={handleChange} />
-      </div>
       <Container maxWidth="xl">
+        <div>
+          <Pagination count={Math.ceil(count / pagesize)} onChange={handleChange} />
+        </div>
         {loading && <LoadingIndicator />}
         <Downloads data={recent} />
       </Container>

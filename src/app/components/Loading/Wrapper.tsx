@@ -5,11 +5,10 @@ const Wrapper = styled.div`
   width: 40px;
   height: 40px;
   position: absolute;
-  margin-top: 40%;
   top: 0px;
   left: 0px;
   bottom: 0px;
-  right 0px;
+  right: 0px;
   z-index: 1000;
 `;
 
