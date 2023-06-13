@@ -8,6 +8,15 @@ import * as React from 'react';
 export default function Files(props) {
   // console.log('files:', props.files);
   // console.log('torrent:', props.torrent);
+  function sortedFiles(files, torrent) {
+    if (!torrent) {
+      return [];
+    }
+    for (let i = 0; i < files.length; i++) {
+      files[i].torrentFile = torrent.Files[files[i].num];
+    }
+    return files.sort((a, b) => a.torrentFile.name.localeCompare(b.torrentFile.name));
+  }
   return (
     <div className="files">
       <table className="vertical-table" aria-label="a dense table">
@@ -27,18 +36,17 @@ export default function Files(props) {
           </tr>
         </thead>
         <tbody>
-          {props.torrent &&
-            props.torrent?.Files.sort((a, b) => a.name.localeCompare(b.name)).map(row => (
-              <FilesRow
-                key={row.id}
-                id={row.id}
-                num={row.id}
-                medium={props.files[row.id]?.medium}
-                mediumid={props.files[row.id]?.medium_id}
-                downloadFile={props.files[row.id]}
-                torrentFile={row}
-              />
-            ))}
+          {sortedFiles(props.files, props.torrent).map(row => (
+            <FilesRow
+              key={row.num}
+              id={row.id}
+              num={row.num}
+              medium={row.medium}
+              mediumid={row.medium_id}
+              downloadFile={row}
+              torrentFile={row.torrentFile}
+            />
+          ))}
         </tbody>
       </table>
     </div>

@@ -62,12 +62,15 @@ export default function DownloadsShowPage(props) {
 
   useEffect(() => {
     let sub1: Subscription | null = null;
+    // let sub2: Subscription | null = null;
     ws.then(nc => {
       sub1 = nc.subscribe('flame.qbittorrents', { callback: handleTorrents });
+      // sub2 = nc.subscribe('flame.nzbs', { callback: handleNzbs });
     });
 
     return () => {
       sub1?.unsubscribe();
+      // sub2?.unsubscribe();
     };
   }, [ws, handleTorrents]);
 

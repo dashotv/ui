@@ -20,6 +20,16 @@ export function Banner(props) {
               <span>{props.subtitle}</span>
             </div>
           )}
+          {props.progress && (
+            <div className="progress">
+              <span>{props.progress}%</span>
+              {props.eta && (
+                <span>
+                  <Moment fromNow>{props.eta}</Moment>
+                </span>
+              )}
+            </div>
+          )}
           <div className="buttons">
             <Buttons
               id={props.id}

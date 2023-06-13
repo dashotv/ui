@@ -13,24 +13,6 @@ import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 import MediumSmall from '../MediumSmall';
 
 export default function Downloads(props) {
-  // function type(t) {
-  //   switch (t) {
-  //     case 'Movie':
-  //       return 'movies';
-  //     default:
-  //       return 'series';
-  //   }
-  // }
-  //
-  // function getID(medium) {
-  //   switch (medium.type) {
-  //     case 'Episode':
-  //       return medium.series_id;
-  //     default:
-  //       return medium.id;
-  //   }
-  // }
-
   function progress(thash) {
     if (props.torrents != null) {
       const torrent = props.torrents.get(thash);
