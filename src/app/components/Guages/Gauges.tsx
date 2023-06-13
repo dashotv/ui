@@ -13,7 +13,7 @@ import './gauges.scss';
 function BaseGauge(props) {
   return (
     <Box sx={{ minWidth: '32%' }}>
-      <Card variant="outlined">
+      <Card>
         <CardContent>
           <Stack direction="row">
             <Stack direction="column" sx={{ width: '50%' }}>
@@ -22,7 +22,7 @@ function BaseGauge(props) {
             </Stack>
             <Stack direction="column" sx={{ width: '50%' }}>
               <Sparklines sx={{ mt: 2 }} data={props.data} limit={20} width={100} height={35}>
-                <SparklinesLine color="white" />
+                <SparklinesLine color="#90caf9" />
               </Sparklines>
             </Stack>
           </Stack>
@@ -33,15 +33,15 @@ function BaseGauge(props) {
 }
 
 function DiskGauge(props) {
-  return <BaseGauge title="Disk" value={props.value} data={props.data} color={props.color} />;
+  return <BaseGauge title="Disk (GB)" value={props.value} data={props.data} color={props.color} />;
 }
 
 function NzbsGauge(props) {
-  return <BaseGauge title="NZB" value={props.value} data={props.data} color={props.color} />;
+  return <BaseGauge title="NZB (KB/s)" value={props.value} data={props.data} color={props.color} />;
 }
 
 function TorrentsGauge(props) {
-  return <BaseGauge title="Tor" value={props.value} data={props.data} color={props.color} />;
+  return <BaseGauge title="Tor (KB/s)" value={props.value} data={props.data} color={props.color} />;
 }
 
 export function Gauges(props) {
