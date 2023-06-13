@@ -1,8 +1,8 @@
 /**
  * Test the request function
  */
-
 import 'whatwg-fetch';
+
 import { request } from '../request';
 
 declare let window: { fetch: jest.Mock };

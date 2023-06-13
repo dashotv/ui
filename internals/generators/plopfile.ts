@@ -1,7 +1,9 @@
 import { NodePlopAPI } from 'node-plop';
-import { componentGenerator } from './component';
 import shell from 'shelljs';
+
+import { componentGenerator } from './component';
 import { sliceGenerator } from './slice';
+
 interface PrettifyCustomActionData {
   path: string;
 }

@@ -4,25 +4,18 @@
  * This is the entry file for the application, only setup and boilerplate
  * code.
  */
-
-import 'react-app-polyfill/ie11';
-import 'react-app-polyfill/stable';
-
-import * as React from 'react';
-import * as ReactDOMClient from 'react-dom/client';
-import { Provider } from 'react-redux';
-
-// Use consistent styling
-import 'sanitize.css/sanitize.css';
-
 // Import root app
 import { App } from 'app';
-
+import * as React from 'react';
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+import * as ReactDOMClient from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
-
-import { configureAppStore } from 'store/configureStore';
-
+import { Provider } from 'react-redux';
 import reportWebVitals from 'reportWebVitals';
+// Use consistent styling
+import 'sanitize.css/sanitize.css';
+import { configureAppStore } from 'store/configureStore';
 
 // Initialize languages
 import './locales/i18n';

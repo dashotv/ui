@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useNats } from '../Nats/usenats';
 import { Subscription } from 'nats.ws';
-import { TorrentsGauge } from './TorrentsGauge';
+import { useCallback, useEffect, useState } from 'react';
+
+import { NzbResponse } from '../../../types/Nzb';
+import { TorrentsResponse } from '../../../types/torrents';
+import { useNats } from '../Nats/usenats';
 import { DiskGauge } from './DiskGauge';
 import { NzbsGauge } from './NzbsGauge';
-import { TorrentsResponse } from '../../../types/torrents';
-import { NzbResponse } from '../../../types/Nzb';
-
+import { TorrentsGauge } from './TorrentsGauge';
 import './gauges.scss';
 
 export function Gauges(props) {

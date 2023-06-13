@@ -1,11 +1,13 @@
+import axios from 'axios';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useSnackbar } from 'notistack';
+
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
-import axios from 'axios';
+
 import LoadingIndicator from '../../components/Loading';
 import Media from '../../components/Media';
 

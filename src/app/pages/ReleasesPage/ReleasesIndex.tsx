@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { useSnackbar } from 'notistack';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
+import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Moment from 'react-moment';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { Link } from 'react-router-dom';
+
+import ArticleIcon from '@mui/icons-material/Article';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import CircleIcon from '@mui/icons-material/Circle';
-import ArticleIcon from '@mui/icons-material/Article';
-import WavesIcon from '@mui/icons-material/Waves';
+import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
 import FourKIcon from '@mui/icons-material/FourK';
 import TwoKIcon from '@mui/icons-material/TwoK';
-import LoadingIndicator from '../../components/Loading';
-
-import './releases.scss';
+import WavesIcon from '@mui/icons-material/Waves';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
 import Pagination from '@mui/material/Pagination';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+
+import LoadingIndicator from '../../components/Loading';
+import './releases.scss';
 
 const pagesize = 25;
 const formDefaults = {

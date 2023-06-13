@@ -1,10 +1,11 @@
-import * as React from 'react';
-import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import { Store } from '@reduxjs/toolkit';
-import { ThemeProvider } from '../ThemeProvider';
+import { render } from '@testing-library/react';
+import * as React from 'react';
+import { Provider } from 'react-redux';
 import { configureAppStore } from 'store/configureStore';
 import { useTheme } from 'styled-components';
+
+import { ThemeProvider } from '../ThemeProvider';
 import { selectTheme } from '../slice/selectors';
 
 const renderThemeProvider = (store: Store, Child: React.FunctionComponent) =>

@@ -1,20 +1,18 @@
+import { App } from 'app';
+import { NatsProvider } from 'app/components/Nats/context';
+import FontFaceObserver from 'fontfaceobserver';
+import { SnackbarProvider } from 'notistack';
+import * as React from 'react';
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
-
-import * as React from 'react';
 import * as ReactDOMClient from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from 'react-router-dom';
-import FontFaceObserver from 'fontfaceobserver';
-
 // Use consistent styling
 import 'sanitize.css/sanitize.css';
 
-import { App } from 'app';
-import { HelmetProvider } from 'react-helmet-async';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { SnackbarProvider } from 'notistack';
-import { NatsProvider } from 'app/components/Nats/context';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 // Initialize languages
 import './locales/i18n';

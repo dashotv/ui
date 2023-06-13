@@ -1,17 +1,18 @@
+import axios from 'axios';
+import SearchBar from 'material-ui-search-bar';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SearchBar from 'material-ui-search-bar';
+
+import TheatersIcon from '@mui/icons-material/Theaters';
+import TvIcon from '@mui/icons-material/Tv';
 import Avatar from '@mui/material/Avatar';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import TheatersIcon from '@mui/icons-material/Theaters';
-import TvIcon from '@mui/icons-material/Tv';
-import axios from 'axios';
+import ListItemText from '@mui/material/ListItemText';
 
 import './Search.css';
 

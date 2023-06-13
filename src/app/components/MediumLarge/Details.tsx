@@ -1,5 +1,6 @@
-import Moment from 'react-moment';
 import * as React from 'react';
+import Moment from 'react-moment';
+
 import ImageSmall from './ImageSmall';
 
 export default function Details(props) {

@@ -1,9 +1,11 @@
+import { useState } from 'react';
+import * as React from 'react';
+
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+
 import TabPanel from '../TabPanel';
-import { useState } from 'react';
-import * as React from 'react';
 
 export function MediumTabs(props) {
   const [value, setValue] = useState(0);

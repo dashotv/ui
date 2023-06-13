@@ -1,16 +1,16 @@
 import chalk from 'chalk';
 import fs from 'fs';
+import nodePlop from 'node-plop';
+import { PlopGenerator as PG } from 'node-plop';
+import path from 'path';
 import rimraf from 'rimraf';
 import shell from 'shelljs';
-import path from 'path';
-import nodePlop from 'node-plop';
 
 import { ComponentProptNames } from '../../generators/component';
-import { rootStatePath, SliceProptNames } from '../../generators/slice';
-import { PlopGenerator as PG } from 'node-plop';
+import { baseGeneratorPath } from '../../generators/paths';
+import { SliceProptNames, rootStatePath } from '../../generators/slice';
 import { componentVariations } from './componentVariations';
 import { sliceVariations } from './sliceVariations';
-import { baseGeneratorPath } from '../../generators/paths';
 
 interface PlopGenerator extends PG {
   runActions: <T extends string | number>(props: { [P in T]: any }) => Promise<{

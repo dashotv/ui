@@ -1,4 +1,5 @@
 import { translations } from 'locales/translations';
+
 import { i18n } from '../i18n';
 
 describe('i18n', () => {

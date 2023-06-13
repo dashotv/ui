@@ -1,13 +1,15 @@
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { Feed } from '../../../types/Feed';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { Helmet } from 'react-helmet-async';
-import Container from '@mui/material/Container';
-import LoadingIndicator from '../../components/Loading';
+import { useEffect, useState } from 'react';
 import * as React from 'react';
+import { Helmet } from 'react-helmet-async';
 import Moment from 'react-moment';
+import { useParams } from 'react-router-dom';
+
+import Container from '@mui/material/Container';
+
+import { Feed } from '../../../types/Feed';
+import LoadingIndicator from '../../components/Loading';
 
 export default function FeedsShow() {
   const [data, setData] = useState<Feed | null>(null);

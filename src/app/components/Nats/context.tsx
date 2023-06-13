@@ -1,5 +1,5 @@
-import { createContext, ReactChild } from 'react';
-import { connect, JSONCodec } from 'nats.ws';
+import { JSONCodec, connect } from 'nats.ws';
+import { ReactChild, createContext } from 'react';
 
 const url = process.env.NODE_ENV !== 'production' ? 'ws://localhost:9222/' : 'wss://www.dasho.tv:9222/';
 const ws = connect({ servers: url });

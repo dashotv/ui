@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { ButtonGroup, IconButton } from '@mui/material';
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import ReplayIcon from '@mui/icons-material/Replay';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+
 import BuildIcon from '@mui/icons-material/Build';
-import StarIcon from '@mui/icons-material/Star';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ReplayIcon from '@mui/icons-material/Replay';
+import StarIcon from '@mui/icons-material/Star';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { ButtonGroup, IconButton } from '@mui/material';
 
 export default function Buttons(props) {
   const [active, setActive] = useState(props.active);

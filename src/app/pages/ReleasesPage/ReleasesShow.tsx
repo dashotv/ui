@@ -1,16 +1,18 @@
-import * as React from 'react';
-import Container from '@mui/material/Container';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { Release } from '../../../types/release';
-import LoadingIndicator from '../../components/Loading';
-import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import FourKIcon from '@mui/icons-material/FourK';
 import TwoKIcon from '@mui/icons-material/TwoK';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+
+import { Release } from '../../../types/release';
+import LoadingIndicator from '../../components/Loading';
 
 export default function ReleasesShow(props) {
   const [data, setData] = useState<Release | null>(null);

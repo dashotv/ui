@@ -1,12 +1,11 @@
 /**
  * Component Generator
  */
-
-import { Actions, PlopGeneratorConfig } from 'node-plop';
 import inquirer from 'inquirer';
+import { Actions, PlopGeneratorConfig } from 'node-plop';
 
-import { pathExists } from '../utils';
 import { baseGeneratorPath } from '../paths';
+import { pathExists } from '../utils';
 
 inquirer.registerPrompt('directory', require('inquirer-directory'));
 

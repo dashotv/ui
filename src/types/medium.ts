@@ -1,5 +1,5 @@
-import { SearchParams } from './search_params';
 import { Path } from './path';
+import { SearchParams } from './search_params';
 
 export interface Medium {
   id?: string;

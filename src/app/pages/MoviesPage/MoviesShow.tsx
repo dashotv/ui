@@ -1,13 +1,15 @@
+import axios from 'axios';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
-import axios from 'axios';
+
 import Container from '@mui/material/Container';
-import MediumMovie from '../../components/MediumLarge/MediumMovie';
-import LoadingIndicator from '../../components/Loading';
+
 import { Medium } from '../../../types/medium';
 import { Path } from '../../../types/path';
+import LoadingIndicator from '../../components/Loading';
+import MediumMovie from '../../components/MediumLarge/MediumMovie';
 
 export default function MoviesShow() {
   const [data, setData] = useState<Medium | null>(null);

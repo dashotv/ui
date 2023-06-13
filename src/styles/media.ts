@@ -1,15 +1,14 @@
 /*
  * Media queries utility
  */
-
 import {
-  css,
-  DefaultTheme,
   CSSObject,
+  DefaultTheme,
+  FlattenInterpolation,
+  Interpolation,
   InterpolationFunction,
   ThemedStyledProps,
-  Interpolation,
-  FlattenInterpolation,
+  css,
 } from 'styled-components/macro';
 
 /*
