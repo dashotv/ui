@@ -55,7 +55,7 @@ export default function SeriesIndex() {
             <Typography variant="h4">Series</Typography>
           </Grid>
           <Grid item xs={6}>
-            <Pagination count={Math.ceil(count / pagesize)} onChange={handleChange} />
+            <Pagination sx={{ float: 'right' }} count={Math.ceil(count / pagesize)} onChange={handleChange} />
           </Grid>
         </Grid>
       </Container>
