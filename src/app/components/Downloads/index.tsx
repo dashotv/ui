@@ -95,7 +95,7 @@ export default function Downloads(props) {
   }
 
   return (
-    <div className="medium large">
+    <div>
       {props.data.map(({ id, thash, status, medium }) => (
         <Link key={id} to={`/downloads/${id}`}>
           <Banner
