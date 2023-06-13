@@ -47,11 +47,13 @@ function TorrentsGauge(props) {
 export function Gauges(props) {
   const { ws, jc } = useNats();
   const [nzbs, setNzbs] = useState('0.0');
-  const [nzbsData, setNzbsData] = useState<Number[]>([]);
+  const [nzbsData, setNzbsData] = useState<Number[]>([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [torrents, setTorrents] = useState('0.0');
-  const [torrentsData, setTorrentsData] = useState<Number[]>([]);
+  const [torrentsData, setTorrentsData] = useState<Number[]>([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
   const [diskFree, setDiskFree] = useState('0.0');
-  const [diskData, setDiskData] = useState<Number[]>([]);
+  const [diskData, setDiskData] = useState<Number[]>([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   const handleTorrents = useCallback(
     (err, msg) => {
