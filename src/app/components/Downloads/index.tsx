@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
@@ -10,7 +11,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 
-import MediumSmall from '../MediumSmall';
+import { Banner } from '../MediumLarge/Banner';
 
 export default function Downloads(props) {
   function progress(thash) {
@@ -73,45 +74,47 @@ export default function Downloads(props) {
   function icon(status) {
     switch (status) {
       case 'searching':
-        return <SearchIcon fontSize="small" />;
+        return <SearchIcon fontSize="large" />;
       case 'loading':
-        return <YoutubeSearchedForIcon fontSize="small" />;
+        return <YoutubeSearchedForIcon fontSize="large" />;
       case 'managing':
-        return <ManageSearchIcon fontSize="small" />;
+        return <ManageSearchIcon fontSize="large" />;
       case 'reviewing':
-        return <ErrorIcon fontSize="small" />;
+        return <ErrorIcon fontSize="large" />;
       case 'downloading':
-        return <CloudDownloadIcon fontSize="small" />;
+        return <CloudDownloadIcon fontSize="large" />;
       case 'done':
-        return <DownloadDoneIcon fontSize="small" />;
+        return <DownloadDoneIcon fontSize="large" />;
       case 'paused':
-        return <PauseCircleIcon fontSize="small" />;
+        return <PauseCircleIcon fontSize="large" />;
       case 'deleted':
-        return <RemoveCircleIcon fontSize="small" />;
+        return <RemoveCircleIcon fontSize="large" />;
       case 'held':
-        return <PendingIcon fontSize="small" />;
+        return <PendingIcon fontSize="large" />;
     }
   }
 
   return (
-    <div>
+    <div className="medium large">
       {props.data.map(({ id, thash, status, medium }) => (
-        <MediumSmall
-          key={id}
-          type="downloads"
-          id={id}
-          active={medium.active}
-          background={medium.cover}
-          primary={medium.title}
-          secondary={medium.display}
-          release={medium.release_date}
-          progress={progress(thash)}
-          eta={eta(thash)}
-          queue={queue(thash)}
-          download={true}
-          downloadIcon={icon(status)}
-          unwatched={medium.unwatched}
-        />
+        <Link key={id} to={`/downloads/${id}`}>
+          <Banner
+            id={id}
+            cover={medium.cover}
+            background={medium.background}
+            progress={Number(progress(thash)).toFixed(2)}
+            eta={eta(thash)}
+            queue={queue(thash)}
+            title={medium.title}
+            subtitle={medium.display}
+            release_date={medium.release_date}
+            favorite={medium.favorite}
+            broken={medium.broken}
+            active={medium.active}
+            downloadIcon={icon(status)}
+            change={props.change}
+          />
+        </Link>
       ))}
     </div>
   );

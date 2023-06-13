@@ -1,5 +1,6 @@
 .banner-container {
   position: relative;
+  margin-bottom: 5px;
 
   .banner {
     position: absolute;
@@ -10,7 +11,7 @@
 
     clear: both;
     overflow: hidden;
-    min-height: 150px;
+    min-height: 120px;
     position: relative;
 
     .titlebar {
@@ -28,9 +29,27 @@
       }
 
       .buttons {
-        position: absolute;
-        bottom: 5px;
-        left: 5px;
+        //position: absolute;
+        //bottom: 5px;
+        //left: 5px;
+      }
+    }
+    .download {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      padding: 5px 15px;
+      text-align: right;
+      div.progress {
+        font-size: xx-large;
+        font-weight: bolder;
+        span {
+          margin-right: 10px;
+        }
+      }
+      div.eta {
+        font-size: large;
+        font-weight: bold;
       }
     }
   }
@@ -41,8 +60,8 @@
     right: 0px;
     z-index: 99;
     overflow: hidden;
-    min-height: 150px;
-    max-height: 150px;
+    min-height: 120px;
+    max-height: 120px;
     img {
       //animation: MoveUpDown 120s linear infinite;
       width: 100%;
@@ -56,8 +75,8 @@
     right: 0px;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 100;
-    min-height: 150px;
-    max-height: 150px;
+    min-height: 120px;
+    max-height: 120px;
   }
 }
 

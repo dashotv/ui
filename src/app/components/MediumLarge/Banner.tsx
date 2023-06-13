@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Moment from 'react-moment';
 
+import Chip from '@mui/material/Chip';
+
 import Buttons from '../MediumLarge/Buttons';
 import './banner.scss';
 
@@ -20,16 +22,16 @@ export function Banner(props) {
               <span>{props.subtitle}</span>
             </div>
           )}
-          {props.progress && (
+          <div className="download">
             <div className="progress">
-              <span>{props.progress}%</span>
-              {props.eta && (
-                <span>
-                  <Moment fromNow>{props.eta}</Moment>
-                </span>
-              )}
+              {props.progress > 0 && <span>{props.progress}%</span>}
+              {props.downloadIcon}
             </div>
-          )}
+            <div className="eta">
+              {props.queue > 0 && <Chip label={props.queue} />}
+              {props.eta && <Moment fromNow>{props.eta}</Moment>}
+            </div>
+          </div>
           <div className="buttons">
             <Buttons
               id={props.id}
