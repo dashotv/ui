@@ -19,10 +19,15 @@ $height: 120px;
     .titlebar {
       padding: 5px 15px;
 
-      .title span {
-        font-size: xx-large;
-        font-weight: bolder;
-        margin-right: 10px;
+      .title {
+        max-width: 1000px;
+        overflow: hidden;
+        white-space: nowrap;
+        span {
+          font-size: xx-large;
+          font-weight: bolder;
+          margin-right: 10px;
+        }
       }
 
       .subtitle span {
