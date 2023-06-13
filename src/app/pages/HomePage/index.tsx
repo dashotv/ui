@@ -19,9 +19,7 @@ export default function HomePage() {
           <Grid item xs={6}>
             <SubNav items={items} />
           </Grid>
-          <Grid item xs={6}>
-            <Gauges />
-          </Grid>
+          <Grid item xs={6}></Grid>
         </Grid>
       </Container>
 
