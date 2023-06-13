@@ -33,7 +33,9 @@ export default function Files(props) {
                 key={row.id}
                 id={row.id}
                 num={row.id}
-                mediumid={props.files[row.id].medium_id}
+                medium={props.files[row.id]?.medium}
+                mediumid={props.files[row.id]?.medium_id}
+                downloadFile={props.files[row.id]}
                 torrentFile={row}
               />
             ))}
@@ -70,6 +72,7 @@ function FilesRow(props) {
       <th scope="row">{props.num + 1}</th>
       <td className="name">
         <div title={props.torrentFile?.name}>{name(props.torrentFile?.name)}</div>
+        <div className="media">{props.medium?.display}</div>
       </td>
       <td align="right">{size(props.torrentFile?.size)}</td>
       <td align="right">{progress(props.torrentFile?.progress)}</td>
@@ -79,7 +82,7 @@ function FilesRow(props) {
           <CancelIcon />
         </IconButton>
         <IconButton size="small">
-          <PlaylistAddCheckCircleIcon />
+          <PlaylistAddCheckCircleIcon color={props.medium ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton size="small">
           <CheckCircleIcon />

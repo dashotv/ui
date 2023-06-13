@@ -48,6 +48,15 @@
       div {
         width: 100px;
       }
+      div.media {
+        display: none;
+        padding-left: 10px;
+      }
+    }
+    td.name:hover {
+      div.media {
+        display: inherit;
+      }
     }
   }
 }
