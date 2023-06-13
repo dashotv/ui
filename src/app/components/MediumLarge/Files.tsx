@@ -81,7 +81,9 @@ function FilesRow(props) {
       <th scope="row">{props.num + 1}</th>
       <td className="name">
         <div title={props.torrentFile?.name}>{name(props.torrentFile?.name)}</div>
-        <div className="media">{props.medium?.display}</div>
+        <div className="media">
+          {props.medium?.title} {props.medium?.display}
+        </div>
       </td>
       <td align="right">{size(props.torrentFile?.size)}</td>
       <td align="right">{progress(props.torrentFile?.progress)}</td>
@@ -94,7 +96,7 @@ function FilesRow(props) {
           <PlaylistAddCheckCircleIcon color={props.medium ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton size="small">
-          <CheckCircleIcon />
+          <CheckCircleIcon color={props.medium?.downloaded ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton size="small">
           <StarsIcon color={props.torrentFile?.priority > 0 ? 'secondary' : 'action'} />
