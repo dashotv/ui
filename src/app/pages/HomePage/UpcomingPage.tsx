@@ -13,7 +13,6 @@ import { Download, DownloadEvent } from '../../../types/download';
 import { Medium, MediumEvent } from '../../../types/medium';
 import { Torrent, TorrentsResponse } from '../../../types/torrents';
 import Downloads from '../../components/Downloads';
-import { Gauges } from '../../components/Guages';
 import LoadingIndicator from '../../components/Loading';
 import Media from '../../components/Media';
 import { useNats } from '../../components/Nats/usenats';
@@ -206,7 +205,6 @@ export default function UpcomingPage() {
       </Helmet>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        <Gauges />
         <Downloads data={downloads} torrents={torrents} nzbs={nzbs} nzbStatus={nzbStatus} />
         <Media data={upcoming} type="series" />
       </Container>
