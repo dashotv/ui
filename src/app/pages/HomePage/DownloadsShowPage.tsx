@@ -85,7 +85,7 @@ export default function DownloadsShowPage(props) {
         {download && (
           <MediumDownload
             id={download.id}
-            tupe={download.medium.type}
+            type={download.medium.type}
             download={download}
             files={download.download_files}
             torrent={torrent}
