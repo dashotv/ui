@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Subscription } from 'nats.ws';
 import { useSnackbar } from 'notistack';
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
@@ -7,15 +6,14 @@ import { Helmet } from 'react-helmet-async';
 
 import Container from '@mui/material/Container';
 
-import { Notice } from '../../../types/Notice';
-import { Nzb, NzbResponse, NzbResponseStatus } from '../../../types/Nzb';
-import { Download, DownloadEvent } from '../../../types/download';
-import { Medium, MediumEvent } from '../../../types/medium';
-import { Torrent, TorrentsResponse } from '../../../types/torrents';
+import { Nzb, NzbResponseStatus } from '../../../types/Nzb';
+import { Download } from '../../../types/download';
+import { Medium } from '../../../types/medium';
+import { Torrent } from '../../../types/torrents';
 import Downloads from '../../components/Downloads';
 import LoadingIndicator from '../../components/Loading';
 import Media from '../../components/Media';
-import { useNats } from '../../components/Nats/usenats';
+import { useSubscription } from '../../components/Nats/useSubscription';
 
 export default function UpcomingPage() {
   const [upcoming, setUpcoming] = useState<Medium[]>([]);
@@ -25,7 +23,6 @@ export default function UpcomingPage() {
   const [nzbStatus, setNzbStatus] = useState<NzbResponseStatus | null>(null);
   const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const { ws, jc } = useNats();
 
   const getDownloads = useCallback(() => {
     axios
@@ -40,142 +37,100 @@ export default function UpcomingPage() {
       });
   }, [enqueueSnackbar]);
 
-  const handleTorrents = useCallback(
-    (err, msg) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      const data = jc.decode(msg.data) as TorrentsResponse;
-      // console.log('torrents:', data);
-      const index = new Map<string, Torrent>();
-      if (data.Torrents.length > 0) {
-        for (const t of data.Torrents) {
-          index.set(t.Hash, t);
+  useSubscription(
+    'flame.qbittorrents',
+    useCallback(
+      data => {
+        const index = new Map<string, Torrent>();
+        if (data.Torrents.length > 0) {
+          for (const t of data.Torrents) {
+            index.set(t.Hash, t);
+          }
         }
-      }
-      setTorrents(index);
-    },
-    [jc],
+        setTorrents(index);
+      },
+      [setTorrents],
+    ),
   );
 
-  const handleNzbs = useCallback(
-    (err, msg) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      const data = jc.decode(msg.data) as NzbResponse;
-      // console.log('nzbs:', data);
-      const index = new Map<number, Nzb>();
-      if (data.Result.length > 0) {
-        for (const t of data.Result) {
-          index.set(t.nzbid, t);
+  useSubscription(
+    'flame.nzbs',
+    useCallback(
+      data => {
+        const index = new Map<number, Nzb>();
+        if (data.Result.length > 0) {
+          for (const t of data.Result) {
+            index.set(t.nzbid, t);
+          }
         }
-      }
-      setNzbs(index);
-      setNzbStatus(data.Status);
-    },
-    [jc],
+        setNzbs(index);
+        setNzbStatus(data.Status);
+      },
+      [setNzbs, setNzbStatus],
+    ),
   );
 
-  const handleEpisodes = useCallback(
-    (err, msg) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
+  useSubscription(
+    'seer.episodes',
+    useCallback(
+      data => {
+        if (data.episode.downloaded === true) {
+          // if an episode is marked as downloaded (a download was created)
+          // remove from the upcoming list
+          setUpcoming(prevState => {
+            return prevState.filter(item => {
+              return item.id !== data.id;
+            });
+          });
+        }
+      },
+      [setUpcoming],
+    ),
+  );
 
-      const data = jc.decode(msg.data) as MediumEvent;
-      if (data.episode.downloaded === true) {
-        // if an episode is marked as downloaded (a download was created)
-        // remove from the upcoming list
-        setUpcoming(prevState => {
-          return prevState.filter(item => {
-            return item.id !== data.id;
+  useSubscription(
+    'seer.downloads',
+    useCallback(
+      data => {
+        if (data.event === 'created') {
+          // if a download is created, just get the downloads again
+          getDownloads();
+          return;
+        }
+
+        if (data.event === 'destroyed' || data.download.status === 'done') {
+          // if a download was destroyed or completed, remove from list
+          setDownloads(prevState => prevState.filter(item => item.id !== data.id));
+          return;
+        }
+
+        // otherwise, update the download that was changed
+        setDownloads(prevState => {
+          return prevState.map(item => {
+            if (item.id === data.id) {
+              item.status = data.download.status;
+              item.thash = data.download.thash;
+              item.url = data.download.url;
+              item.releaseId = data.download.releaseId;
+            }
+            return item;
           });
         });
-      }
-    },
-    [jc],
+      },
+      [getDownloads, setDownloads],
+    ),
   );
 
-  const handleDownloads = useCallback(
-    (err, msg) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      const data = jc.decode(msg.data) as DownloadEvent;
-
-      if (data.event === 'created') {
-        // if a download is created, just get the downloads again
-        getDownloads();
-        return;
-      }
-
-      if (data.event === 'destroyed' || data.download.status === 'done') {
-        // if a download was destroyed or completed, remove from list
-        setDownloads(prevState => prevState.filter(item => item.id !== data.id));
-        return;
-      }
-
-      // otherwise, update the download that was changed
-      setDownloads(prevState => {
-        return prevState.map(item => {
-          if (item.id === data.id) {
-            item.status = data.download.status;
-            item.thash = data.download.thash;
-            item.url = data.download.url;
-            item.releaseId = data.download.releaseId;
-          }
-          return item;
-        });
-      });
-    },
-    [jc, getDownloads],
+  useSubscription(
+    'seer.notices',
+    useCallback(
+      data => {
+        console.log('notice', data);
+        enqueueSnackbar(data.message, { variant: data.level });
+      },
+      [enqueueSnackbar],
+    ),
   );
-
-  const handleNotices = useCallback(
-    (err, msg) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      const data = jc.decode(msg.data) as Notice;
-      console.log('notice', data);
-      enqueueSnackbar(data.message, { variant: data.level });
-    },
-    [jc, enqueueSnackbar],
-  );
-
-  useEffect(() => {
-    let sub1: Subscription | null = null;
-    let sub2: Subscription | null = null;
-    let sub3: Subscription | null = null;
-    let sub4: Subscription | null = null;
-    let sub5: Subscription | null = null;
-
-    ws.then(nc => {
-      sub1 = nc.subscribe('flame.qbittorrents', { callback: handleTorrents });
-      sub2 = nc.subscribe('flame.nzbs', { callback: handleNzbs });
-      sub3 = nc.subscribe('seer.episodes', { callback: handleEpisodes });
-      sub4 = nc.subscribe('seer.downloads', { callback: handleDownloads });
-      sub5 = nc.subscribe('seer.notices', { callback: handleNotices });
-    });
-
-    return () => {
-      sub1?.unsubscribe();
-      sub2?.unsubscribe();
-      sub3?.unsubscribe();
-      sub4?.unsubscribe();
-      sub5?.unsubscribe();
-    };
-  }, [ws, handleNzbs, handleTorrents, handleNotices, handleDownloads, handleEpisodes]);
 
   useEffect(() => {
     const getUpcoming = () => {
