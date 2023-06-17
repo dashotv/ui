@@ -49,5 +49,7 @@ export function DownloadWrapper(props) {
     ),
   );
 
-  return <DownloadBanner download={download} torrents={torrents} nzbs={nzbs} nzbStatus={nzbStatus} />;
+  return (
+    <>{download && <DownloadBanner download={download} torrents={torrents} nzbs={nzbs} nzbStatus={nzbStatus} />}</>
+  );
 }
