@@ -7,10 +7,10 @@ import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
 
-import Downloads from '../../components/Downloads';
+import { DownloadList } from '../../components/Downloads';
 import LoadingIndicator from '../../components/Loading';
 
-const pagesize = 25;
+const pagesize = 42;
 
 export default function RecentPage() {
   const [recent, setRecent] = useState([]);
@@ -53,7 +53,7 @@ export default function RecentPage() {
           <Pagination count={Math.ceil(count / pagesize)} onChange={handleChange} />
         </div>
         {loading && <LoadingIndicator />}
-        <Downloads data={recent} />
+        <DownloadList data={recent} />
       </Container>
     </>
   );
