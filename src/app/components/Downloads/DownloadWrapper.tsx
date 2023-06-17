@@ -73,6 +73,7 @@ export function DownloadWrapper(props) {
         <DownloadBanner
           download={download}
           torrents={torrents}
+          files={download?.download_files}
           nzbs={nzbs}
           nzbStatus={nzbStatus}
           change={changeSetting}

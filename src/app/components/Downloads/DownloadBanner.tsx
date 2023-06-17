@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -24,6 +26,7 @@ export function DownloadBanner(props) {
   const [multi, setMulti] = useState(props.download.multi);
   const [force, setForce] = useState(props.download.force);
   const { id, medium, status, thash } = props.download;
+  const { cover, background, title, display, release_date, favorite, broken, active } = medium;
 
   const complete = useCallback(ev => {
     console.log('clicked complete');
@@ -31,6 +34,11 @@ export function DownloadBanner(props) {
   }, []);
 
   const buttons = [
+    {
+      icon: <ArrowCircleLeftIcon color="primary" />,
+      // click: <Link to={`/${props.download?.media?.type}/${props.download?.media?.id}`} />,
+      click: complete,
+    },
     {
       icon: <CheckCircleIcon color="primary" />,
       click: complete,
@@ -129,37 +137,37 @@ export function DownloadBanner(props) {
   const icon = useCallback(() => {
     switch (status) {
       case 'searching':
-        return <SearchIcon fontSize="small" />;
+        return <SearchIcon fontSize="medium" />;
       case 'loading':
-        return <YoutubeSearchedForIcon fontSize="small" />;
+        return <YoutubeSearchedForIcon fontSize="medium" />;
       case 'managing':
-        return <ManageSearchIcon fontSize="small" />;
+        return <ManageSearchIcon fontSize="medium" />;
       case 'reviewing':
-        return <ErrorIcon fontSize="small" />;
+        return <ErrorIcon fontSize="medium" />;
       case 'downloading':
-        return <CloudDownloadIcon fontSize="small" />;
+        return <CloudDownloadIcon fontSize="medium" />;
       case 'done':
-        return <DownloadDoneIcon fontSize="small" />;
+        return <DownloadDoneIcon fontSize="medium" />;
       case 'paused':
-        return <PauseCircleIcon fontSize="small" />;
+        return <PauseCircleIcon fontSize="medium" />;
       case 'deleted':
-        return <RemoveCircleIcon fontSize="small" />;
+        return <RemoveCircleIcon fontSize="medium" />;
       case 'held':
-        return <PendingIcon fontSize="small" />;
+        return <PendingIcon fontSize="medium" />;
     }
   }, [status]);
 
   return (
     <Banner
       id={id}
-      cover={medium?.cover}
-      background={medium?.background}
-      title={medium?.title}
-      subtitle={medium?.display}
-      release_date={medium?.release_date}
-      favorite={medium?.favorite}
-      broken={medium?.broken}
-      active={medium?.active}
+      cover={cover}
+      background={background}
+      title={title}
+      subtitle={display}
+      release_date={release_date}
+      favorite={favorite}
+      broken={broken}
+      active={active}
       buttons={buttons}
       progress={Number(progress()).toFixed(2)}
       eta={eta()}

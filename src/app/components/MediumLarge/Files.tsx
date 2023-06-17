@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
+import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import StarsIcon from '@mui/icons-material/Stars';
 import IconButton from '@mui/material/IconButton';
 
@@ -93,7 +93,7 @@ function FilesRow(props) {
           <CancelIcon />
         </IconButton>
         <IconButton size="small">
-          <PlaylistAddCheckCircleIcon color={props.medium ? 'secondary' : 'action'} />
+          <PlaylistAddCircleIcon color={props.medium ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton size="small">
           <CheckCircleIcon color={props.medium?.downloaded ? 'secondary' : 'action'} />

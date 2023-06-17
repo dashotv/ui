@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { ButtonGroup, IconButton } from '@mui/material';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import IconButton from '@mui/material/IconButton';
 
 export function ButtonMap(props) {
   const { size, buttons } = props;
