@@ -18,6 +18,7 @@ import Typography from '@mui/material/Typography';
 
 import { useSubscription } from '../Nats/useSubscription';
 import './Navbar.scss';
+import { Notice } from './Notice';
 import Search from './Search';
 import Logo from './assets/logo-small.png';
 
@@ -62,7 +63,7 @@ const NavBar = () => {
     useCallback(
       data => {
         console.log('notice:navbar:', data);
-        enqueueSnackbar(data.message, { variant: data.level });
+        enqueueSnackbar(<Notice data={data} />, { variant: data.level });
       },
       [enqueueSnackbar],
     ),
