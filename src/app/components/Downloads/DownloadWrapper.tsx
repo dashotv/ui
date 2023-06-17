@@ -9,7 +9,7 @@ import { DownloadBanner } from './index';
 import { useReleases } from './useReleases';
 
 export function DownloadWrapper(props) {
-  const [download, setDownload] = useState<Download | null>();
+  const [download, setDownload] = useState<Download | null>(null);
   const { torrents, nzbs, nzbStatus } = useReleases();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -34,11 +34,11 @@ export function DownloadWrapper(props) {
     'seer.downloads',
     useCallback(
       data => {
-        if (download == null) {
+        if (download === null) {
           return;
         }
 
-        if (download.id == data.id) {
+        if (download.id === data.id) {
           download.status = data.download.status;
           download.thash = data.download.thash;
           download.url = data.download.url;
