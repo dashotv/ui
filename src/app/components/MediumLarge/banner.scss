@@ -36,28 +36,19 @@ $height: 120px;
       }
 
       .buttons {
-        //position: absolute;
-        //bottom: 5px;
-        //left: 5px;
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        padding: 10px 15px;
       }
     }
     .download {
       position: absolute;
-      top: 0px;
-      right: 0px;
-      padding: 5px 15px;
-      text-align: right;
-      div.progress {
-        font-size: xx-large;
-        font-weight: bolder;
-        span {
-          margin-right: 10px;
-        }
-      }
-      div.eta {
-        font-size: large;
-        font-weight: bold;
-      }
+      bottom: 0px;
+      left: 0px;
+      padding: 10px 15px;
+      text-align: left;
+      font-weight: bold;
     }
   }
   .banner-background {

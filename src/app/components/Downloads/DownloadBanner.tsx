@@ -76,23 +76,23 @@ export function DownloadBanner(props) {
   const icon = useCallback(() => {
     switch (status) {
       case 'searching':
-        return <SearchIcon fontSize="large" />;
+        return <SearchIcon fontSize="small" />;
       case 'loading':
-        return <YoutubeSearchedForIcon fontSize="large" />;
+        return <YoutubeSearchedForIcon fontSize="small" />;
       case 'managing':
-        return <ManageSearchIcon fontSize="large" />;
+        return <ManageSearchIcon fontSize="small" />;
       case 'reviewing':
-        return <ErrorIcon fontSize="large" />;
+        return <ErrorIcon fontSize="small" />;
       case 'downloading':
-        return <CloudDownloadIcon fontSize="large" />;
+        return <CloudDownloadIcon fontSize="small" />;
       case 'done':
-        return <DownloadDoneIcon fontSize="large" />;
+        return <DownloadDoneIcon fontSize="small" />;
       case 'paused':
-        return <PauseCircleIcon fontSize="large" />;
+        return <PauseCircleIcon fontSize="small" />;
       case 'deleted':
-        return <RemoveCircleIcon fontSize="large" />;
+        return <RemoveCircleIcon fontSize="small" />;
       case 'held':
-        return <PendingIcon fontSize="large" />;
+        return <PendingIcon fontSize="small" />;
     }
   }, [status]);
 

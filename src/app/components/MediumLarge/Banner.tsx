@@ -2,6 +2,7 @@ import * as React from 'react';
 import Moment from 'react-moment';
 
 import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 
 import Buttons from '../MediumLarge/Buttons';
 import './banner.scss';
@@ -23,14 +24,12 @@ export function Banner(props) {
             </div>
           )}
           <div className="download">
-            <div className="progress">
-              {props.progress > 0 && <span>{props.progress}%</span>}
+            <Stack spacing={1} direction="row">
+              {props.queue > 0 && <Chip label={props.queue} size="small" />}
               {props.downloadIcon}
-            </div>
-            <div className="eta">
-              {props.queue > 0 && <Chip label={props.queue} />}
+              {props.progress > 0 && <span>{props.progress}%</span>}
               {props.eta && <Moment fromNow>{props.eta}</Moment>}
-            </div>
+            </Stack>
           </div>
           <div className="buttons">
             <Buttons
