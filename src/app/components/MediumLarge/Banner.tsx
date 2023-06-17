@@ -4,7 +4,7 @@ import Moment from 'react-moment';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-import Buttons from '../MediumLarge/Buttons';
+import { ButtonMap } from '../MediumLarge/Buttons';
 import './banner.scss';
 
 export function Banner(props) {
@@ -32,13 +32,7 @@ export function Banner(props) {
             </Stack>
           </div>
           <div className="buttons">
-            <Buttons
-              id={props.id}
-              favorite={props.favorite}
-              broken={props.broken}
-              active={props.active}
-              change={props.change}
-            />
+            <ButtonMap size="small" buttons={props.buttons} />
           </div>
         </div>
       </div>

@@ -13,6 +13,24 @@ export function DownloadWrapper(props) {
   const { torrents, nzbs, nzbStatus } = useReleases();
   const { enqueueSnackbar } = useSnackbar();
 
+  const changeSetting = useCallback(
+    (setting, value) => {
+      axios
+        .put(`/api/tower/downloads/${props.id}`, {
+          setting: setting,
+          value: value,
+        })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(err => {
+          enqueueSnackbar('error getting data', { variant: 'error' });
+          console.error(err);
+        });
+    },
+    [enqueueSnackbar, props.id],
+  );
+
   const getDownloads = useCallback(() => {
     axios
       .get(`/api/tower/downloads/${props.id}`)
@@ -50,6 +68,16 @@ export function DownloadWrapper(props) {
   );
 
   return (
-    <>{download && <DownloadBanner download={download} torrents={torrents} nzbs={nzbs} nzbStatus={nzbStatus} />}</>
+    <>
+      {download && (
+        <DownloadBanner
+          download={download}
+          torrents={torrents}
+          nzbs={nzbs}
+          nzbStatus={nzbStatus}
+          change={changeSetting}
+        />
+      )}
+    </>
   );
 }
