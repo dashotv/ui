@@ -16,7 +16,13 @@ export default function MediumDownload(props) {
 
   return (
     <div className="medium large">
-      <DownloadWrapper id={id} />
+      <DownloadWrapper
+        id={id}
+        download={props.download}
+        torrents={props.torrents}
+        nzbs={props.nzbs}
+        nzbStatus={props.nzbStatus}
+      />
       <MediumTabs data={tabsMap} />
     </div>
   );

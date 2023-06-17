@@ -9,39 +9,28 @@ import Container from '@mui/material/Container';
 
 import { Download } from '../../../types/download';
 import { Torrent, TorrentsResponse } from '../../../types/torrents';
+import { useReleases } from '../../components/Downloads/useReleases';
 import LoadingIndicator from '../../components/Loading';
 import MediumDownload from '../../components/MediumLarge/MediumDownload';
+import { useSubscription } from '../../components/Nats/useSubscription';
 import { useNats } from '../../components/Nats/usenats';
 
 export default function DownloadsShowPage(props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [download, setDownload] = useState<Download | null>(null);
-  const [torrent, setTorrent] = useState<Torrent | null>(null);
+  const { torrents, nzbs, nzbStatus } = useReleases();
   const { enqueueSnackbar } = useSnackbar();
   const { ws, jc } = useNats();
 
   // @ts-ignore
   let { id } = useParams();
 
-  const handleTorrents = useCallback(
-    (err, msg) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      const data = jc.decode(msg.data) as TorrentsResponse;
-      // console.log('torrents:', data);
-      if (data.Torrents.length > 0) {
-        for (const t of data.Torrents) {
-          if (t.Hash === download?.thash) {
-            setTorrent(t);
-          }
-        }
-      }
-    },
-    [jc, setTorrent, download],
-  );
+  const getTorrent = useCallback(() => {
+    if (torrents === null || download === null) {
+      return;
+    }
+    return torrents.get(download.thash);
+  }, [torrents, download]);
 
   useEffect(() => {
     const getDownload = () => {
@@ -60,20 +49,6 @@ export default function DownloadsShowPage(props) {
     getDownload();
   }, [id, enqueueSnackbar]);
 
-  useEffect(() => {
-    let sub1: Subscription | null = null;
-    // let sub2: Subscription | null = null;
-    ws.then(nc => {
-      sub1 = nc.subscribe('flame.qbittorrents', { callback: handleTorrents });
-      // sub2 = nc.subscribe('flame.nzbs', { callback: handleNzbs });
-    });
-
-    return () => {
-      sub1?.unsubscribe();
-      // sub2?.unsubscribe();
-    };
-  }, [ws, handleTorrents]);
-
   return (
     <>
       <Helmet>
@@ -88,7 +63,10 @@ export default function DownloadsShowPage(props) {
             type={download.medium.type}
             download={download}
             files={download.download_files}
-            torrent={torrent}
+            torrent={getTorrent()}
+            torrents={torrents}
+            nzbs={nzbs}
+            nzbStatus={nzbStatus}
           />
         )}
       </Container>

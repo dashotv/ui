@@ -9,14 +9,13 @@ import { DownloadBanner } from './index';
 import { useReleases } from './useReleases';
 
 export function DownloadWrapper(props) {
-  const [download, setDownload] = useState<Download | null>(null);
-  const { torrents, nzbs, nzbStatus } = useReleases();
+  const { id, download } = props;
   const { enqueueSnackbar } = useSnackbar();
 
   const changeSetting = useCallback(
     (setting, value) => {
       axios
-        .put(`/api/tower/downloads/${props.id}`, {
+        .put(`/api/tower/downloads/${id}`, {
           setting: setting,
           value: value,
         })
@@ -28,25 +27,8 @@ export function DownloadWrapper(props) {
           console.error(err);
         });
     },
-    [enqueueSnackbar, props.id],
+    [enqueueSnackbar, id],
   );
-
-  const getDownloads = useCallback(() => {
-    axios
-      .get(`/api/tower/downloads/${props.id}`)
-      .then(response => {
-        // console.log(response.data);
-        setDownload(response.data);
-      })
-      .catch(err => {
-        enqueueSnackbar('error getting data', { variant: 'error' });
-        console.error(err);
-      });
-  }, [enqueueSnackbar, setDownload, props.id]);
-
-  useEffect(() => {
-    getDownloads();
-  }, [getDownloads]);
 
   useSubscription(
     'seer.downloads',
@@ -56,14 +38,14 @@ export function DownloadWrapper(props) {
           return;
         }
 
-        if (download.id === data.id) {
+        if (id === data.id) {
           download.status = data.download.status;
           download.thash = data.download.thash;
           download.url = data.download.url;
           download.releaseId = data.download.releaseId;
         }
       },
-      [download],
+      [id, download],
     ),
   );
 
@@ -72,10 +54,10 @@ export function DownloadWrapper(props) {
       {download && (
         <DownloadBanner
           download={download}
-          torrents={torrents}
           files={download?.download_files}
-          nzbs={nzbs}
-          nzbStatus={nzbStatus}
+          torrents={props.torrents}
+          nzbs={props.nzbs}
+          nzbStatus={props.nzbStatus}
           change={changeSetting}
         />
       )}

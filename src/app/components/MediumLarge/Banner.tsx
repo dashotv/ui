@@ -25,8 +25,8 @@ export function Banner(props) {
           )}
           <div className="download">
             <Stack spacing={1} direction="row">
-              {props.queue > 0 && <Chip label={props.queue} size="small" />}
               {props.downloadIcon}
+              {props.queue > 0 && <Chip label={props.queue} size="small" />}
               {props.progress > 0 && <span>{props.progress}%</span>}
               {props.eta && <Moment fromNow>{props.eta}</Moment>}
             </Stack>
