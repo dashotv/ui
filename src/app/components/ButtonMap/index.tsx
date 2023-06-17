@@ -3,7 +3,7 @@ import * as React from 'react';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import IconButton from '@mui/material/IconButton';
 
-export function ButtonMap(props) {
+export default function ButtonMap(props) {
   const { size, buttons } = props;
   return (
     <div className="buttons">

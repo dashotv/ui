@@ -4,10 +4,10 @@ import Moment from 'react-moment';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-import { ButtonMap } from '../MediumLarge/Buttons';
+import ButtonMap from '../ButtonMap';
 import './banner.scss';
 
-export function Banner(props) {
+export default function Banner(props) {
   return (
     <div className="banner-container">
       <div className="banner">

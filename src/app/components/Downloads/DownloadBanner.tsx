@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -19,7 +18,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 
-import { Banner } from '../MediumLarge/Banner';
+import Banner from '../Banner';
 
 export function DownloadBanner(props) {
   const [auto, setAuto] = useState(props.download.auto);
