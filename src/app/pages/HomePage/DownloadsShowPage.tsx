@@ -59,7 +59,7 @@ export default function DownloadsShowPage(props) {
         {loading && <LoadingIndicator />}
         {download && (
           <MediumDownload
-            id={download.id}
+            id={id}
             type={download.medium.type}
             download={download}
             files={download.download_files}
