@@ -1,5 +1,6 @@
+import { useSnackbar } from 'notistack';
 import * as React from 'react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -15,6 +16,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
+import { useSubscription } from '../Nats/useSubscription';
 import './Navbar.scss';
 import Search from './Search';
 import Logo from './assets/logo-small.png';
@@ -31,6 +33,7 @@ const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const location = useLocation();
+  const { enqueueSnackbar } = useSnackbar();
 
   const matchPath = (path, exact) => {
     if (exact) {
@@ -53,6 +56,17 @@ const NavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  useSubscription(
+    'seer.notices',
+    useCallback(
+      data => {
+        console.log('notice:navbar:', data);
+        enqueueSnackbar(data.message, { variant: data.level });
+      },
+      [enqueueSnackbar],
+    ),
+  );
 
   return (
     <AppBar position="static">

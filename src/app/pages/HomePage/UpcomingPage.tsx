@@ -35,17 +35,6 @@ export default function UpcomingPage() {
     ),
   );
 
-  useSubscription(
-    'seer.notices',
-    useCallback(
-      data => {
-        console.log('notice', data);
-        enqueueSnackbar(data.message, { variant: data.level });
-      },
-      [enqueueSnackbar],
-    ),
-  );
-
   useEffect(() => {
     const getUpcoming = () => {
       setLoading(true);
