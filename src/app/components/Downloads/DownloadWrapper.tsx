@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
 import { Download } from '../../../types/download';
-import { DownloadSingle } from './index';
+import { DownloadBanner } from './index';
 import { useReleases } from './useReleases';
 
 export function DownloadWrapper(props) {
@@ -28,5 +28,6 @@ export function DownloadWrapper(props) {
   useEffect(() => {
     getDownloads();
   }, [getDownloads]);
-  return <DownloadSingle download={download} torrents={torrents} nzbs={nzbs} nzbStatus={nzbStatus} />;
+
+  return <DownloadBanner download={download} torrents={torrents} nzbs={nzbs} nzbStatus={nzbStatus} />;
 }

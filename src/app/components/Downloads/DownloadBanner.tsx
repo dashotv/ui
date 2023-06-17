@@ -13,7 +13,7 @@ import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 
 import { Banner } from '../MediumLarge/Banner';
 
-export function DownloadSingle(props) {
+export function DownloadBanner(props) {
   const { id, medium, status, thash } = props.download;
 
   const progress = useCallback(() => {

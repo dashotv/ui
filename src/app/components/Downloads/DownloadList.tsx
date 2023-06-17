@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { Download } from '../../../types/download';
 import { useSubscription } from '../Nats/useSubscription';
-import { DownloadSingle } from './index';
+import { DownloadBanner } from './index';
 import { useReleases } from './useReleases';
 
 export function DownloadList(props) {
@@ -68,7 +68,7 @@ export function DownloadList(props) {
     <div>
       {downloads.map(download => (
         <Link key={download.id} to={`/downloads/${download.id}`}>
-          <DownloadSingle download={download} torrents={torrents} nzbs={nzbs} nzbStatus={nzbStatus} />
+          <DownloadBanner download={download} torrents={torrents} nzbs={nzbs} nzbStatus={nzbStatus} />
         </Link>
       ))}
     </div>
