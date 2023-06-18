@@ -119,7 +119,7 @@ function FilesWithSelector(props) {
   const getEpisode = useCallback(
     id => {
       return props.episodes.filter(e => {
-        console.log('episode: ', id, e.id === id);
+        // console.log('episode: ', id, e.id === id);
         return e.id === id;
       })[0];
     },
@@ -162,7 +162,7 @@ function FilesWithSelector(props) {
   }, [setOpen]);
 
   useEffect(() => {
-    console.log('useEffect update tracking');
+    // console.log('useEffect update tracking');
     if (!props.files) {
       return;
     }
@@ -173,7 +173,7 @@ function FilesWithSelector(props) {
       }
     }
     setTracking(newTracking);
-    console.log(newTracking);
+    // console.log(newTracking);
   }, [setTracking, props.files]);
 
   return (
