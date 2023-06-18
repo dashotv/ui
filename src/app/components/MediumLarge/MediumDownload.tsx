@@ -4,12 +4,14 @@ import { useCallback, useState } from 'react';
 import * as React from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { ButtonGroup } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -47,6 +49,21 @@ export default function MediumDownload(props) {
     [enqueueSnackbar, id],
   );
 
+  const selectMedium = useCallback((eid, num) => {
+    axios
+      .put(`/api/tower/downloads/${id}/select`, {
+        mediumId: eid,
+        num: num,
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        enqueueSnackbar('error getting data', { variant: 'error' });
+        console.error(err);
+      });
+  }, []);
+
   useSubscription(
     'seer.downloads',
     useCallback(
@@ -66,62 +83,10 @@ export default function MediumDownload(props) {
     ),
   );
 
-  const [dopen, setDopen] = useState(false);
-  const [dialogTitle, setDialogTitle] = useState('title');
-  const [selected, setSelected] = useState(0);
-  const [tracking, setTracking] = useState<Map<String, Number>>(new Map<String, Number>());
-
-  const selector = useCallback(
-    id => {
-      let f = props.files.filter(e => {
-        return e.num === selected;
-      })[0];
-      let ep = props.episodes.filter(e => {
-        console.log('episode: ', id, e.id === id);
-        return e.id === id;
-      })[0];
-      console.log('selector:', id, 'selected:', selected, 'found:', ep?.id);
-      f.medium = ep;
-      setTracking(prevState => {
-        prevState[id] = selected;
-        return prevState;
-      });
-    },
-    [props.files, props.episodes, selected],
-  );
-
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('handleClick:');
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleClickOpen = (num, title) => {
-    setSelected(num);
-    setDialogTitle(title);
-    setDopen(true);
-  };
-  const handleClickClear = num => {
-    let f = props.files.filter(e => {
-      return e.num === num;
-    })[0];
-    f.medium = null;
-  };
-
-  const handleDialogClose = () => {
-    setDopen(false);
-  };
-
-  const open = Boolean(anchorEl);
-  const pid = open ? 'simple-popover' : undefined;
-
   const tabsMap = {
-    Files: <Files files={props.files} torrent={props.torrent} open={handleClickOpen} clear={handleClickClear} />,
+    Files: (
+      <FilesWithSelector files={props.files} torrent={props.torrent} episodes={props.episodes} updater={selectMedium} />
+    ),
   };
 
   return (
@@ -135,43 +100,74 @@ export default function MediumDownload(props) {
         change={changeSetting}
       />
       <MediumTabs data={tabsMap} />
+    </div>
+  );
+}
 
-      <Popover
-        id={pid}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        keepMounted
-        anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'center',
-          horizontal: 'right',
-        }}
-        sx={{ maxHeight: '400px;' }}
-      >
-        <List>
-          {props.episodes &&
-            props.episodes.map((e, i) => (
-              <ListItem key={i} disablePadding>
-                <ListItemButton
-                  id={e.id}
-                  onClick={ev => {
-                    selector(ev.currentTarget.id);
-                    handleClose();
-                  }}
-                >
-                  <ListItemText primary={`${e.season_number}x${e.episode_number} ${e.title}`} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-        </List>
-      </Popover>
+function FilesWithSelector(props) {
+  const [open, setOpen] = useState(false);
+  const [dialogTitle, setDialogTitle] = useState('title');
+  const [selected, setSelected] = useState(0);
+  const [tracking, setTracking] = useState<Map<String, Number>>(new Map<String, Number>());
 
+  const getFile = useCallback(
+    num => {
+      return props.files.filter(e => {
+        return e.num === num;
+      })[0];
+    },
+    [props.files, selected],
+  );
+
+  const getEpisode = useCallback(
+    id => {
+      return props.episodes.filter(e => {
+        console.log('episode: ', id, e.id === id);
+        return e.id === id;
+      })[0];
+    },
+    [props.episodes],
+  );
+
+  const selector = useCallback(
+    id => {
+      let f = getFile(selected);
+      let ep = getEpisode(id);
+      console.log('selector:', id, 'selected:', selected, 'found:', ep?.id);
+      f.medium = ep;
+      setTracking(prevState => {
+        prevState[id] = selected;
+        return prevState;
+      });
+      props.updater(id, selected);
+    },
+    [props.files, props.episodes, props.updater, selected, getFile],
+  );
+
+  const handleClickOpen = useCallback(
+    (num, title) => {
+      setSelected(num);
+      setDialogTitle(title);
+      setOpen(true);
+    },
+    [setSelected, setDialogTitle, setOpen],
+  );
+
+  const handleClickClear = useCallback(num => {
+    let f = getFile(num);
+    f.medium = null;
+    // props.updater(id, selected);
+  }, props.files);
+
+  const handleDialogClose = useCallback(() => {
+    setOpen(false);
+  }, [setOpen]);
+
+  return (
+    <>
+      <Files files={props.files} torrent={props.torrent} open={handleClickOpen} clear={handleClickClear} />
       <Dialog
-        open={dopen}
+        open={open}
         onClose={handleDialogClose}
         scroll="paper"
         keepMounted
@@ -211,6 +207,44 @@ export default function MediumDownload(props) {
           </List>
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   );
 }
+
+// function SelectPopover(props) {
+//   return (
+//     <Popover
+//       id={pid}
+//       open={open}
+//       anchorEl={anchorEl}
+//       onClose={handleClose}
+//       keepMounted
+//       anchorOrigin={{
+//         vertical: 'center',
+//         horizontal: 'left',
+//       }}
+//       transformOrigin={{
+//         vertical: 'center',
+//         horizontal: 'right',
+//       }}
+//       sx={{ maxHeight: '400px;' }}
+//     >
+//       <List>
+//         {props.episodes &&
+//           props.episodes.map((e, i) => (
+//             <ListItem key={i} disablePadding>
+//               <ListItemButton
+//                 id={e.id}
+//                 onClick={ev => {
+//                   selector(ev.currentTarget.id);
+//                   handleClose();
+//                 }}
+//               >
+//                 <ListItemText primary={`${e.season_number}x${e.episode_number} ${e.title}`} />
+//               </ListItemButton>
+//             </ListItem>
+//           ))}
+//       </List>
+//     </Popover>
+//   );
+// }
