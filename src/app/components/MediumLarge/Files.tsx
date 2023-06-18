@@ -46,6 +46,8 @@ export default function Files(props) {
               mediumid={row.medium_id}
               downloadFile={row}
               torrentFile={row.torrentFile}
+              open={props.open}
+              clear={props.clear}
             />
           ))}
         </tbody>
@@ -81,18 +83,30 @@ function FilesRow(props) {
       <th scope="row">{props.num + 1}</th>
       <td className="name">
         <div title={props.torrentFile?.name}>{name(props.torrentFile?.name)}</div>
-        <div className="media">
-          {props.medium?.title} {props.medium?.display}
-        </div>
+        {props.medium && (
+          <div className="media">
+            {props.medium?.season_number}x{props.medium?.episode_number} {props.medium?.title} {props.medium?.display}
+          </div>
+        )}
       </td>
       <td align="right">{size(props.torrentFile?.size)}</td>
       <td align="right">{progress(props.torrentFile?.progress)}</td>
 
       <td align="right">
-        <IconButton size="small">
+        <IconButton
+          size="small"
+          onClick={() => {
+            props.clear(props.num);
+          }}
+        >
           <CancelIcon />
         </IconButton>
-        <IconButton size="small">
+        <IconButton
+          size="small"
+          onClick={() => {
+            props.open(props.num, name(props.torrentFile?.name));
+          }}
+        >
           <PlaylistAddCircleIcon color={props.medium ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton size="small">

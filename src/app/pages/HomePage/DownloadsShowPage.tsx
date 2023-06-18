@@ -8,19 +8,16 @@ import { useParams } from 'react-router-dom';
 import Container from '@mui/material/Container';
 
 import { Download } from '../../../types/download';
-import { Torrent, TorrentsResponse } from '../../../types/torrents';
 import { useReleases } from '../../components/Downloads/useReleases';
 import LoadingIndicator from '../../components/Loading';
 import MediumDownload from '../../components/MediumLarge/MediumDownload';
-import { useSubscription } from '../../components/Nats/useSubscription';
-import { useNats } from '../../components/Nats/usenats';
 
 export default function DownloadsShowPage(props) {
   const [loading, setLoading] = useState<boolean>(false);
   const [download, setDownload] = useState<Download | null>(null);
+  const [episodes, setEpisodes] = useState([]);
   const { torrents, nzbs, nzbStatus } = useReleases();
   const { enqueueSnackbar } = useSnackbar();
-  const { ws, jc } = useNats();
 
   // @ts-ignore
   let { id } = useParams();
@@ -49,6 +46,25 @@ export default function DownloadsShowPage(props) {
     getDownload();
   }, [id, enqueueSnackbar]);
 
+  useEffect(() => {
+    const getEpisodes = () => {
+      if (download?.medium?.type !== 'Series') {
+        return;
+      }
+      axios
+        .get(`/api/tower/series/${download.medium.id}/seasons/all`)
+        .then(response => {
+          console.log('getEpisodes:', response.data);
+          setEpisodes(response.data);
+        })
+        .catch(err => {
+          enqueueSnackbar('error getting data', { variant: 'error' });
+          console.error(err);
+        });
+    };
+    getEpisodes();
+  }, [download, download?.medium]);
+
   return (
     <>
       <Helmet>
@@ -63,6 +79,7 @@ export default function DownloadsShowPage(props) {
             type={download.medium.type}
             download={download}
             files={download.download_files}
+            episodes={episodes}
             torrent={getTorrent()}
             torrents={torrents}
             nzbs={nzbs}
