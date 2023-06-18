@@ -130,15 +130,13 @@ function FilesWithSelector(props) {
     id => {
       let f = getFile(selected);
       let ep = getEpisode(id);
-      console.log('selector:', id, 'selected:', selected, 'found:', ep?.id);
       f.medium = ep;
-      setTracking(prevState => {
-        prevState[id] = selected;
-        return prevState;
-      });
+      tracking.set(id, selected);
+      setTracking(tracking);
+      console.log(tracking);
       props.updater(id, selected);
     },
-    [getEpisode, props, selected, getFile],
+    [getEpisode, setTracking, tracking, props, selected, getFile],
   );
 
   const handleClickOpen = useCallback(
@@ -170,11 +168,12 @@ function FilesWithSelector(props) {
     }
     let newTracking = new Map<string, number>();
     for (const f of props.files) {
-      if (f.medium_id !== null) {
-        newTracking[f.medium_id] = f.num;
+      if (f.medium_id !== null && f.medium_id !== '000000000000000000000000') {
+        newTracking.set(f.medium_id, f.num);
       }
     }
     setTracking(newTracking);
+    console.log(newTracking);
   }, [setTracking, props.files]);
 
   return (
@@ -204,7 +203,9 @@ function FilesWithSelector(props) {
                   >
                     <ListItemIcon>
                       <CheckCircleIcon
-                        color={tracking[e.id] === selected ? 'primary' : tracking[e.id] ? 'secondary' : 'action'}
+                        color={
+                          tracking.get(e.id) === selected ? 'primary' : tracking.has(e.id) ? 'secondary' : 'action'
+                        }
                       />
                     </ListItemIcon>
                     <ListItemText>
