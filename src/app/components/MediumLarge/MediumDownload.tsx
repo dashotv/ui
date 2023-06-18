@@ -1,23 +1,17 @@
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import * as React from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { ButtonGroup } from '@mui/material';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Popover from '@mui/material/Popover';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
@@ -49,20 +43,23 @@ export default function MediumDownload(props) {
     [enqueueSnackbar, id],
   );
 
-  const selectMedium = useCallback((eid, num) => {
-    axios
-      .put(`/api/tower/downloads/${id}/select`, {
-        mediumId: eid,
-        num: num,
-      })
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(err => {
-        enqueueSnackbar('error getting data', { variant: 'error' });
-        console.error(err);
-      });
-  }, []);
+  const selectMedium = useCallback(
+    (eid, num) => {
+      axios
+        .put(`/api/tower/downloads/${id}/select`, {
+          mediumId: eid,
+          num: num,
+        })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(err => {
+          enqueueSnackbar('error getting data', { variant: 'error' });
+          console.error(err);
+        });
+    },
+    [id, enqueueSnackbar],
+  );
 
   useSubscription(
     'seer.downloads',
@@ -116,7 +113,7 @@ function FilesWithSelector(props) {
         return e.num === num;
       })[0];
     },
-    [props.files, selected],
+    [props.files],
   );
 
   const getEpisode = useCallback(
@@ -141,7 +138,7 @@ function FilesWithSelector(props) {
       });
       props.updater(id, selected);
     },
-    [props.files, props.episodes, props.updater, selected, getFile],
+    [getEpisode, props, selected, getFile],
   );
 
   const handleClickOpen = useCallback(
@@ -153,15 +150,32 @@ function FilesWithSelector(props) {
     [setSelected, setDialogTitle, setOpen],
   );
 
-  const handleClickClear = useCallback(num => {
-    let f = getFile(num);
-    f.medium = null;
-    // props.updater(id, selected);
-  }, props.files);
+  const handleClickClear = useCallback(
+    num => {
+      let f = getFile(num);
+      f.medium = null;
+      props.updater(null, num);
+    },
+    [getFile, props],
+  );
 
   const handleDialogClose = useCallback(() => {
     setOpen(false);
   }, [setOpen]);
+
+  useEffect(() => {
+    console.log('useEffect update tracking');
+    if (!props.files) {
+      return;
+    }
+    let newTracking = new Map<string, number>();
+    for (const f of props.files) {
+      if (f.medium_id !== null) {
+        newTracking[f.medium_id] = f.num;
+      }
+    }
+    setTracking(newTracking);
+  }, [setTracking, props.files]);
 
   return (
     <>
