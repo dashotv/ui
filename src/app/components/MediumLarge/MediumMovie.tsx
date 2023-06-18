@@ -30,14 +30,17 @@ export default function MediumMovie(props) {
     {
       icon: <CloudDownloadIcon color="primary" />,
       click: complete,
+      title: 'create download',
     },
     {
       icon: <VisibilityOffIcon color="primary" />,
       click: complete,
+      title: 'history???',
     },
     {
       icon: <ReplayIcon color="primary" />,
       click: complete,
+      title: 'refresh',
     },
     {
       icon: <FavoriteIcon color={favorite ? 'secondary' : 'action'} />,
@@ -45,6 +48,7 @@ export default function MediumMovie(props) {
         props.change(props.id, 'favorite', !favorite);
         setFavorite(!favorite);
       },
+      title: 'favorite',
     },
     {
       icon: <BuildIcon color={broken ? 'secondary' : 'action'} />,
@@ -52,6 +56,7 @@ export default function MediumMovie(props) {
         props.change(props.id, 'broken', !broken);
         setBroken(!broken);
       },
+      title: 'broken',
     },
     {
       icon: <StarIcon color={active ? 'secondary' : 'action'} />,
@@ -59,10 +64,12 @@ export default function MediumMovie(props) {
         props.change(props.id, 'active', !active);
         setActive(!active);
       },
+      title: 'active',
     },
     {
       icon: <DeleteIcon color="error" />,
       click: complete,
+      title: 'delete',
     },
   ];
 

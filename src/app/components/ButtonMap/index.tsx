@@ -10,7 +10,7 @@ export default function ButtonMap(props) {
       <ButtonGroup>
         {buttons &&
           buttons.map((button, index) => (
-            <IconButton key={index} size={size} onClick={button.click}>
+            <IconButton key={index} size={size} onClick={button.click} title={button.title}>
               {button.icon}
             </IconButton>
           ))}

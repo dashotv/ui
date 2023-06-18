@@ -37,14 +37,17 @@ export function DownloadBanner(props) {
       icon: <ArrowCircleLeftIcon color="primary" />,
       // click: <Link to={`/${props.download?.media?.type}/${props.download?.media?.id}`} />,
       click: complete,
+      title: 'Go to Media',
     },
     {
       icon: <CheckCircleIcon color="primary" />,
       click: complete,
+      title: 'mark complete',
     },
     {
       icon: <ChangeCircleIcon color="primary" />,
       click: complete,
+      title: 'reset',
     },
     {
       icon: <OfflineBoltIcon color={auto ? 'secondary' : 'action'} />,
@@ -53,6 +56,7 @@ export function DownloadBanner(props) {
         setAuto(!auto);
         ev.preventDefault(); // for the buttons inside the Link component
       },
+      title: 'toggle auto',
     },
     {
       icon: <PlaylistAddCheckCircleIcon color={multi ? 'secondary' : 'action'} />,
@@ -61,6 +65,7 @@ export function DownloadBanner(props) {
         setMulti(!multi);
         ev.preventDefault(); // for the buttons inside the Link component
       },
+      title: 'toggle multi',
     },
     {
       icon: <SwapHorizontalCircleIcon color={force ? 'secondary' : 'action'} />,
@@ -69,10 +74,12 @@ export function DownloadBanner(props) {
         setForce(!force);
         ev.preventDefault(); // for the buttons inside the Link component
       },
+      title: 'toggle force',
     },
     {
       icon: <CancelIcon color="error" />,
       click: complete,
+      title: 'delete',
     },
   ];
 
