@@ -44,6 +44,7 @@ const formDefaults = {
   exact: false,
   verified: false,
 };
+
 export default function ReleasesIndex() {
   const [releases, setReleases] = useState([]);
   const [count, setCount] = useState(0);
@@ -385,34 +386,23 @@ function Releases(props) {
 }
 
 function ReleaseRow(props) {
-  function resolution(r) {
-    switch (r) {
-      case '2160':
-        return <FourKIcon color="primary" fontSize="small" />;
-      case '1080':
-        return <TwoKIcon color="secondary" fontSize="small" />;
-      default:
-        return '';
+  const resolution = useCallback(r => {
+    if (r) {
+      return <Chip label={r} size="small" color="primary" />;
     }
-  }
+    return;
+  }, []);
 
-  function group() {
+  const group = useCallback(() => {
     if (props.group) {
-      return (
-        <Typography className="spacer" variant="caption">
-          {props.group}
-        </Typography>
-      );
+      return <Typography variant="overline">{props.group}</Typography>;
     }
     if (props.author) {
-      return (
-        <Typography className="spacer" variant="caption">
-          [{props.author}]
-        </Typography>
-      );
+      return <Typography variant="overline">[{props.author}]</Typography>;
     }
     return '';
-  }
+  }, [props.author, props.group]);
+
   return (
     <tr>
       <td>
@@ -424,16 +414,18 @@ function ReleaseRow(props) {
       </td>
       <td>{props.nzb ? <ArticleIcon fontSize="small" /> : <WavesIcon fontSize="small" />}</td>
       <td>
-        <Typography variant="caption">
+        <Typography variant="overline">
           {props.source}:{props.type}
         </Typography>
       </td>
       <td>
-        <Link to={props.id} title={props.raw}>
-          {props.display}
-        </Link>
-        {resolution(props.resolution)}
-        {group()}
+        <Stack spacing={1} direction="row">
+          <Link to={props.id} title={props.raw}>
+            <Typography variant="subtitle1">{props.display}</Typography>
+          </Link>
+          {resolution(props.resolution)}
+          {group()}
+        </Stack>
       </td>
       <td align="right">
         <Moment fromNow>{props.published}</Moment>

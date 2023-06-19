@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import * as React from 'react';
 
 import { DownloadBanner } from '../Downloads';
 import { useSubscription } from '../Nats/useSubscription';
-import { FilesWithSelector } from './FilesWithSelector';
-import { MediumTabs } from './MediumTabs';
+import { FilesWithSelector } from '../Tabs/FilesWithSelector';
+import { MediumTabs } from '../Tabs/MediumTabs';
+import { Torch } from '../Tabs/Torch';
 import './large.scss';
 
 export default function MediumDownload(props) {

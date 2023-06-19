@@ -10,12 +10,12 @@ import StarIcon from '@mui/icons-material/Star';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import Banner from '../Banner';
-import Details from './Details';
-import Episodes from './Episodes';
-import { MediumTabs } from './MediumTabs';
-import Paths from './Paths';
-import Seasons from './Seasons';
-import Watches from './Watches';
+import Details from '../Tabs/Details';
+import Episodes from '../Tabs/Episodes';
+import { MediumTabs } from '../Tabs/MediumTabs';
+import Paths from '../Tabs/Paths';
+import Seasons from '../Tabs/Seasons';
+import Watches from '../Tabs/Watches';
 import './large.scss';
 
 export default function MediumLarge(props) {

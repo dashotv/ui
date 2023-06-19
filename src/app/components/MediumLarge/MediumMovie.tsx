@@ -10,9 +10,9 @@ import StarIcon from '@mui/icons-material/Star';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import Banner from '../Banner';
-import Details from './Details';
-import { MediumTabs } from './MediumTabs';
-import Paths from './Paths';
+import Details from '../Tabs/Details';
+import { MediumTabs } from '../Tabs/MediumTabs';
+import Paths from '../Tabs/Paths';
 import './large.scss';
 
 export default function MediumMovie(props) {
