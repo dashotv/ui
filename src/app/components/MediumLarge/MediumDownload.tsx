@@ -14,7 +14,7 @@ export default function MediumDownload(props) {
   const { enqueueSnackbar } = useSnackbar();
   const { id, download } = props;
   const { medium } = download;
-  const { search, kind, type, season_number, episode_number, search_params } = medium;
+  const { search, kind, season_number, episode_number, search_params } = medium;
 
   const form = {
     text: search,

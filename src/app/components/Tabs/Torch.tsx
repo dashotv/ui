@@ -1,45 +1,15 @@
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect, useState } from 'react';
-import Moment from 'react-moment';
-import { Link } from 'react-router-dom';
 
-import ArticleIcon from '@mui/icons-material/Article';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
-import FourKIcon from '@mui/icons-material/FourK';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
-import TwoKIcon from '@mui/icons-material/TwoK';
-import WavesIcon from '@mui/icons-material/Waves';
-import Chip from '@mui/material/Chip';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 
 import LoadingIndicator from '../Loading';
 import { ReleasesList } from '../Releases/ReleasesList';
 import { Search } from '../Search';
 
 const pagesize = 25;
-const formDefaults = {
-  text: '',
-  year: '',
-  season: '',
-  episode: '',
-  group: '',
-  author: '',
-  resolution: '',
-  source: '',
-  type: '',
-  exact: false,
-  verified: false,
-};
 export function Torch(props) {
   const [loading, setLoading] = useState(false);
   const [releases, setReleases] = useState([]);

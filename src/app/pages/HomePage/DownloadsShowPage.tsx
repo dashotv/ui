@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Subscription } from 'nats.ws';
 import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -64,7 +63,7 @@ export default function DownloadsShowPage(props) {
         });
     };
     getEpisodes();
-  }, [download, download?.medium]);
+  }, [download, download?.medium, enqueueSnackbar]);
 
   return (
     <>
