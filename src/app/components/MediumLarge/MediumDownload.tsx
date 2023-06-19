@@ -110,10 +110,10 @@ export default function MediumDownload(props) {
   // }, []);
 
   const tabsMap = {
-    Torch: <Torch form={form} />,
     Files: (
       <FilesWithSelector files={props.files} torrent={props.torrent} episodes={props.episodes} updater={selectMedium} />
     ),
+    Torch: <Torch form={form} />,
   };
 
   return (
