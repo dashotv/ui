@@ -20,7 +20,7 @@ $height: 120px;
       padding: 5px 15px;
 
       .title {
-        max-width: 1000px;
+        max-width: 100%;
         overflow: hidden;
         white-space: nowrap;
         span {
@@ -39,7 +39,7 @@ $height: 120px;
         position: absolute;
         bottom: 0px;
         right: 0px;
-        padding: 10px 15px;
+        padding: 5px 15px;
       }
     }
     .download {
