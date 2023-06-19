@@ -13,6 +13,22 @@ import './large.scss';
 export default function MediumDownload(props) {
   const { enqueueSnackbar } = useSnackbar();
   const { id, download } = props;
+  const { medium } = download;
+  const { search, kind, type, season_number, episode_number, search_params } = medium;
+
+  const form = {
+    text: search,
+    year: '',
+    season: kind !== 'anime' ? season_number : '',
+    episode: episode_number,
+    group: search_params.group,
+    author: '',
+    resolution: search_params.resolution,
+    source: search_params.source,
+    type: search_params.type,
+    exact: search_params.exact,
+    verified: search_params.verified,
+  };
 
   const changeSetting = useCallback(
     (setting, value) => {
@@ -69,7 +85,32 @@ export default function MediumDownload(props) {
     ),
   );
 
+  // const mediumForm = useCallback(() => {
+  //   console.log('medium:', medium);
+  //   if (!medium) {
+  //     return {};
+  //   }
+  //   let form = {
+  //     text: search,
+  //     year: '',
+  //     season: '',
+  //     episode: episode_number,
+  //     group: '',
+  //     author: '',
+  //     resolution: '',
+  //     source: '',
+  //     type: '',
+  //     exact: false,
+  //     verified: false,
+  //   };
+  //   if (kind !== 'anime') {
+  //     form.season = season_number;
+  //   }
+  //   return form;
+  // }, []);
+
   const tabsMap = {
+    Torch: <Torch form={form} />,
     Files: (
       <FilesWithSelector files={props.files} torrent={props.torrent} episodes={props.episodes} updater={selectMedium} />
     ),

@@ -35,6 +35,7 @@ export default function DownloadsShowPage(props) {
       axios
         .get(`/api/tower/downloads/${id}`)
         .then(response => {
+          console.log(response.data);
           setDownload(response.data);
           setLoading(false);
         })

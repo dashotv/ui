@@ -13,10 +13,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import FourKIcon from '@mui/icons-material/FourK';
 import TwoKIcon from '@mui/icons-material/TwoK';
 import WavesIcon from '@mui/icons-material/Waves';
+import Chip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import LoadingIndicator from '../Loading';
@@ -128,30 +130,18 @@ function TorchResults(props) {
 
 function TorchResultsRow(props) {
   const resolution = useCallback(r => {
-    switch (r) {
-      case '2160':
-        return <FourKIcon color="primary" fontSize="small" />;
-      case '1080':
-        return <TwoKIcon color="secondary" fontSize="small" />;
-      default:
-        return '';
+    if (r) {
+      return <Chip label={r} size="small" color="primary" />;
     }
+    return;
   }, []);
 
   const group = useCallback(() => {
     if (props.group) {
-      return (
-        <Typography className="spacer" variant="caption">
-          {props.group}
-        </Typography>
-      );
+      return <Typography variant="overline">{props.group}</Typography>;
     }
     if (props.author) {
-      return (
-        <Typography className="spacer" variant="caption">
-          [{props.author}]
-        </Typography>
-      );
+      return <Typography variant="overline">[{props.author}]</Typography>;
     }
     return '';
   }, [props.author, props.group]);
@@ -167,16 +157,18 @@ function TorchResultsRow(props) {
       </td>
       <td>{props.nzb ? <ArticleIcon fontSize="small" /> : <WavesIcon fontSize="small" />}</td>
       <td>
-        <Typography variant="caption">
+        <Typography variant="overline">
           {props.source}:{props.type}
         </Typography>
       </td>
       <td>
-        <Link to={props.id} title={props.raw}>
-          {props.display}
-        </Link>
-        {resolution(props.resolution)}
-        {group()}
+        <Stack spacing={1} direction="row">
+          <Link to={props.id} title={props.raw}>
+            <Typography variant="subtitle1">{props.display}</Typography>
+          </Link>
+          {resolution(props.resolution)}
+          {group()}
+        </Stack>
       </td>
       <td align="right">
         <Moment fromNow>{props.published}</Moment>
