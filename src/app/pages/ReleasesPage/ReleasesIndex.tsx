@@ -12,6 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import WavesIcon from '@mui/icons-material/Waves';
+import { autocompleteClasses } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -21,6 +22,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import LoadingIndicator from '../../components/Loading';
+import { ReleasesList } from '../../components/Releases/ReleasesList';
 import { Search } from '../../components/Search';
 import './releases.scss';
 
@@ -63,6 +65,28 @@ export default function ReleasesIndex() {
     console.log('setPage=', value);
     setPage(value);
   }, []);
+
+  const click = useCallback(ev => {
+    console.log('click');
+  }, []);
+
+  const actions = [
+    {
+      icon: <EditIcon fontSize="small" color="primary" />,
+      click: click,
+      title: 'Edit',
+    },
+    {
+      icon: <DeleteIcon fontSize="small" color="warning" />,
+      click: click,
+      title: 'delete from db',
+    },
+    {
+      icon: <DeleteForeverIcon fontSize="small" color="error" />,
+      click: click,
+      title: 'delete from db and disk',
+    },
+  ];
 
   useEffect(() => {
     const getReleases = () => {
@@ -110,110 +134,8 @@ export default function ReleasesIndex() {
       </Container>
       <Container maxWidth="xl">
         {loading && <LoadingIndicator />}
-        <Releases data={releases} />
+        <ReleasesList data={releases} actions={actions} />
       </Container>
     </>
-  );
-}
-
-function Releases(props) {
-  return (
-    <div className="releases">
-      <table className="vertical-table">
-        <thead>
-          <tr>
-            <td className="number"></td>
-            <td className="number"></td>
-            <td className="date">Type</td>
-            <td>Title</td>
-            <td className="actions" align="right">
-              Published
-            </td>
-            <td className="actions" align="right">
-              Actions
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {props.data &&
-            props.data.map(row => (
-              <ReleaseRow
-                key={row.id}
-                id={row.id}
-                type={row.type}
-                nzb={row.nzb}
-                source={row.source}
-                display={row.display}
-                raw={row.raw}
-                resolution={row.resolution}
-                group={row.group}
-                author={row.author}
-                published={row.published_at}
-                verified={row.verified}
-              />
-            ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function ReleaseRow(props) {
-  const resolution = useCallback(r => {
-    if (r) {
-      return <Chip label={r} size="small" color="primary" />;
-    }
-    return;
-  }, []);
-
-  const group = useCallback(() => {
-    if (props.group) {
-      return <Typography variant="overline">{props.group}</Typography>;
-    }
-    if (props.author) {
-      return <Typography variant="overline">[{props.author}]</Typography>;
-    }
-    return '';
-  }, [props.author, props.group]);
-
-  return (
-    <tr>
-      <td>
-        {props.verified ? (
-          <CheckCircleIcon color="primary" fontSize="small" />
-        ) : (
-          <CheckCircleOutlineIcon fontSize="small" />
-        )}
-      </td>
-      <td>{props.nzb ? <ArticleIcon fontSize="small" /> : <WavesIcon fontSize="small" />}</td>
-      <td>
-        <Typography variant="overline">
-          {props.source}:{props.type}
-        </Typography>
-      </td>
-      <td>
-        <Stack spacing={1} direction="row">
-          <Link to={props.id} title={props.raw}>
-            <Typography variant="subtitle1">{props.display}</Typography>
-          </Link>
-          {resolution(props.resolution)}
-          {group()}
-        </Stack>
-      </td>
-      <td align="right">
-        <Moment fromNow>{props.published}</Moment>
-      </td>
-      <td align="right">
-        <IconButton size="small">
-          <EditIcon fontSize="small" />
-        </IconButton>
-        <IconButton size="small">
-          <DeleteIcon fontSize="small" />
-        </IconButton>
-        <IconButton size="small">
-          <DeleteForeverIcon fontSize="small" />
-        </IconButton>
-      </td>
-    </tr>
   );
 }
