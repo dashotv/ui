@@ -15,7 +15,7 @@ export default function MediumDownload(props) {
   const { enqueueSnackbar } = useSnackbar();
   const { id, download } = props;
   const { medium } = download;
-  const { search, kind, season_number, episode_number, absolute_number, search_params } = medium;
+  const { source_id, search, kind, season_number, episode_number, absolute_number, search_params } = medium;
 
   const changeSetting = useCallback(
     (setting, value) => {
@@ -72,7 +72,7 @@ export default function MediumDownload(props) {
     ),
   );
 
-  const mediumForm = useCallback(() => {
+  const processSearch = useCallback(() => {
     let s = search.split(':');
     let text = s[0];
     let minus = Number(s[1]);
@@ -80,7 +80,13 @@ export default function MediumDownload(props) {
     if (minus) {
       episode = absolute_number - minus;
     }
-    let form = {
+    return { text, episode };
+  }, [absolute_number, episode_number, search]);
+
+  const torchForm = useCallback(() => {
+    const { text, episode } = processSearch();
+
+    return {
       text: text,
       year: '',
       season: kind !== 'anime' ? season_number : '',
@@ -93,12 +99,9 @@ export default function MediumDownload(props) {
       exact: search_params.exact,
       verified: search_params.verified,
     };
-    return form;
   }, [
-    absolute_number,
-    episode_number,
+    processSearch,
     kind,
-    search,
     season_number,
     search_params.exact,
     search_params.group,
@@ -108,12 +111,21 @@ export default function MediumDownload(props) {
     search_params.verified,
   ]);
 
+  const nzbForm = useCallback(() => {
+    const { episode } = processSearch();
+    return {
+      tvdbid: source_id,
+      season: season_number,
+      episode: episode,
+    };
+  }, [season_number, source_id, processSearch]);
+
   const tabsMap = {
-    Nzbgeek: <Nzbgeek form={mediumForm()} />,
     Files: (
       <FilesWithSelector files={props.files} torrent={props.torrent} episodes={props.episodes} updater={selectMedium} />
     ),
-    Torch: <Torch form={mediumForm()} />,
+    Torch: <Torch form={torchForm()} />,
+    Nzbgeek: <Nzbgeek form={nzbForm()} />,
   };
 
   return (
