@@ -13,6 +13,7 @@ import Pagination from '@mui/material/Pagination';
 import LoadingIndicator from '../../components/Loading';
 import { ReleasesList } from '../../components/Releases/ReleasesList';
 import { Search } from '../../components/Search';
+import { useQueryString } from '../../components/Utils/useQueryString';
 import './releases.scss';
 
 const pagesize = 25;
@@ -37,18 +38,7 @@ export default function ReleasesIndex() {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(formDefaults);
   const { enqueueSnackbar } = useSnackbar();
-
-  const queryString = useCallback(form => {
-    const str = [];
-    for (const p in form)
-      if (form.hasOwnProperty(p)) {
-        // @ts-ignore
-        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(form[p]));
-      }
-    const qs = str.join('&');
-    console.log('queryString=', qs);
-    return qs;
-  }, []);
+  const { queryString } = useQueryString();
 
   const handleChange = useCallback((event: React.ChangeEvent<unknown>, value: number) => {
     console.log('setPage=', value);

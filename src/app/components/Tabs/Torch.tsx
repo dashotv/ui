@@ -8,6 +8,7 @@ import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 import LoadingIndicator from '../Loading';
 import { ReleasesList } from '../Releases/ReleasesList';
 import { Search } from '../Search';
+import { useQueryString } from '../Utils/useQueryString';
 
 const pagesize = 25;
 export function Torch(props) {
@@ -15,18 +16,7 @@ export function Torch(props) {
   const [releases, setReleases] = useState([]);
   const [form, setForm] = useState(props.form);
   const { enqueueSnackbar } = useSnackbar();
-
-  const queryString = useCallback(form => {
-    const str = [];
-    for (const p in form)
-      if (form.hasOwnProperty(p)) {
-        // @ts-ignore
-        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(form[p]));
-      }
-    const qs = str.join('&');
-    console.log('queryString=', qs);
-    return qs;
-  }, []);
+  const { queryString } = useQueryString();
 
   useEffect(() => {
     const getReleases = () => {
