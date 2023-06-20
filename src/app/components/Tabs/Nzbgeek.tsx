@@ -148,7 +148,13 @@ function NzbList(props) {
         <tbody>
           {props.data &&
             props.data.map(row => (
-              <NzbListRow key={row.Guid} id={row.Guid} title={row.title} actions={props.actions} />
+              <NzbListRow
+                key={row.Guid}
+                id={row.Guid}
+                title={row.title}
+                published={row.pubDate}
+                actions={props.actions}
+              />
             ))}
         </tbody>
       </table>
