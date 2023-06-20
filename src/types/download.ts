@@ -8,7 +8,7 @@ export interface Download {
   multi: boolean;
   force: boolean;
   url: string;
-  releaseId: string;
+  release_id: string;
   thash: string;
   timestamps: DownloadTimestamps;
   selected: string;

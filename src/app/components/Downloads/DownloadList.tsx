@@ -50,7 +50,7 @@ export function DownloadList(props) {
               item.status = data.download.status;
               item.thash = data.download.thash;
               item.url = data.download.url;
-              item.releaseId = data.download.releaseId;
+              item.release_id = data.download.release_id;
             }
             return item;
           });
