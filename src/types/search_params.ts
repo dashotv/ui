@@ -7,4 +7,5 @@ export interface SearchParams {
   source?: string;
   uncensored?: boolean;
   bluray?: boolean;
+  exact?: boolean;
 }

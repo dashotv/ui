@@ -7,6 +7,7 @@ import { DownloadBanner } from '../Downloads';
 import { useSubscription } from '../Nats/useSubscription';
 import { FilesWithSelector } from '../Tabs/FilesWithSelector';
 import { MediumTabs } from '../Tabs/MediumTabs';
+import { Nzbgeek } from '../Tabs/Nzbgeek';
 import { Torch } from '../Tabs/Torch';
 import './large.scss';
 
@@ -14,21 +15,7 @@ export default function MediumDownload(props) {
   const { enqueueSnackbar } = useSnackbar();
   const { id, download } = props;
   const { medium } = download;
-  const { search, kind, season_number, episode_number, search_params } = medium;
-
-  const form = {
-    text: search,
-    year: '',
-    season: kind !== 'anime' ? season_number : '',
-    episode: episode_number,
-    group: search_params.group,
-    author: '',
-    resolution: search_params.resolution,
-    source: search_params.source,
-    type: search_params.type,
-    exact: search_params.exact,
-    verified: search_params.verified,
-  };
+  const { search, kind, season_number, episode_number, absolute_number, search_params } = medium;
 
   const changeSetting = useCallback(
     (setting, value) => {
@@ -85,35 +72,48 @@ export default function MediumDownload(props) {
     ),
   );
 
-  // const mediumForm = useCallback(() => {
-  //   console.log('medium:', medium);
-  //   if (!medium) {
-  //     return {};
-  //   }
-  //   let form = {
-  //     text: search,
-  //     year: '',
-  //     season: '',
-  //     episode: episode_number,
-  //     group: '',
-  //     author: '',
-  //     resolution: '',
-  //     source: '',
-  //     type: '',
-  //     exact: false,
-  //     verified: false,
-  //   };
-  //   if (kind !== 'anime') {
-  //     form.season = season_number;
-  //   }
-  //   return form;
-  // }, []);
+  const mediumForm = useCallback(() => {
+    let s = search.split(':');
+    let text = s[0];
+    let minus = Number(s[1]);
+    let episode = episode_number;
+    if (minus) {
+      episode = absolute_number - minus;
+    }
+    let form = {
+      text: text,
+      year: '',
+      season: kind !== 'anime' ? season_number : '',
+      episode: episode,
+      group: search_params.group,
+      author: '',
+      resolution: search_params.resolution,
+      source: search_params.source,
+      type: search_params.type,
+      exact: search_params.exact,
+      verified: search_params.verified,
+    };
+    return form;
+  }, [
+    absolute_number,
+    episode_number,
+    kind,
+    search,
+    season_number,
+    search_params.exact,
+    search_params.group,
+    search_params.resolution,
+    search_params.source,
+    search_params.type,
+    search_params.verified,
+  ]);
 
   const tabsMap = {
+    Nzbgeek: <Nzbgeek form={mediumForm()} />,
     Files: (
       <FilesWithSelector files={props.files} torrent={props.torrent} episodes={props.episodes} updater={selectMedium} />
     ),
-    Torch: <Torch form={form} />,
+    Torch: <Torch form={mediumForm()} />,
   };
 
   return (

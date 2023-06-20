@@ -27,6 +27,9 @@ export interface Medium {
   paths?: Path[];
   cover?: string;
   background?: string;
+  episode_number?: number;
+  season_number?: number;
+  absolute_number?: number;
 }
 
 export interface MediumEvent {
