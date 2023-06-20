@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
 import './SubNav.scss';
@@ -18,17 +17,15 @@ export default function SubNav(props) {
   };
 
   return (
-    <Container maxWidth="xl">
-      <div className="subnav">
-        {props.items &&
-          props.items.map(({ name, path, exact }) => (
-            <Link key={name} to={path}>
-              <Button variant={matchPath(path, exact) ? 'outlined' : 'text'}>
-                <Typography textAlign="center">{name}</Typography>
-              </Button>
-            </Link>
-          ))}
-      </div>
-    </Container>
+    <div className="subnav">
+      {props.items &&
+        props.items.map(({ name, path, exact }) => (
+          <Link key={name} to={path}>
+            <Button variant={matchPath(path, exact) ? 'outlined' : 'text'}>
+              <Typography textAlign="center">{name}</Typography>
+            </Button>
+          </Link>
+        ))}
+    </div>
   );
 }
