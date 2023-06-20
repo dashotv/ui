@@ -3,9 +3,9 @@ import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
@@ -66,9 +66,9 @@ export default function ReleasesIndex() {
       title: 'Edit',
     },
     {
-      icon: <DeleteIcon fontSize="small" color="warning" />,
+      icon: <RestartAltIcon fontSize="small" color="warning" />,
       click: click,
-      title: 'delete from db',
+      title: 're-process',
     },
     {
       icon: <DeleteForeverIcon fontSize="small" color="error" />,
