@@ -53,7 +53,7 @@ export default function RecentPage() {
           <Pagination count={Math.ceil(count / pagesize)} onChange={handleChange} />
         </div>
         {loading && <LoadingIndicator />}
-        <DownloadList data={recent} />
+        <DownloadList downloads={recent} />
       </Container>
     </>
   );
