@@ -17,6 +17,7 @@ export function Torch(props) {
   const [form, setForm] = useState(props.form);
   const { enqueueSnackbar } = useSnackbar();
   const { queryString } = useQueryString();
+  const { selector } = props;
 
   useEffect(() => {
     const getReleases = () => {
@@ -41,6 +42,15 @@ export function Torch(props) {
     console.log('click');
   }, []);
 
+  const handleSelect = useCallback(
+    (ev, args) => {
+      const [id, view, download] = args;
+      console.log('handleSelect:', ev, 'args:', args);
+      selector(id);
+    },
+    [selector],
+  );
+
   const actions = [
     {
       icon: <OutboundRoundedIcon fontSize="small" color="primary" />,
@@ -49,7 +59,7 @@ export function Torch(props) {
     },
     {
       icon: <CheckCircleIcon fontSize="small" color="primary" />,
-      click: click,
+      click: handleSelect,
       title: 'select',
     },
   ];

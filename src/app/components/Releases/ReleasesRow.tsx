@@ -58,7 +58,7 @@ export function ReleasesRow(props) {
         <Moment fromNow>{props.published}</Moment>
       </td>
       <td align="right">
-        <ButtonMap buttons={props.actions} />
+        <ButtonMap buttons={props.actions} args={[props.id, props.view, props.download]} />
       </td>
     </tr>
   );

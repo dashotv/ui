@@ -3,7 +3,7 @@ import { useSnackbar } from 'notistack';
 import { useCallback } from 'react';
 import * as React from 'react';
 
-import { DownloadBanner } from '../Downloads';
+import { DownloadBanner, DownloadInfo } from '../Downloads';
 import { useSubscription } from '../Nats/useSubscription';
 import { FilesWithSelector } from '../Tabs/FilesWithSelector';
 import { MediumTabs } from '../Tabs/MediumTabs';
@@ -124,8 +124,8 @@ export default function MediumDownload(props) {
     Files: (
       <FilesWithSelector files={props.files} torrent={props.torrent} episodes={props.episodes} updater={selectMedium} />
     ),
-    Torch: <Torch form={torchForm()} />,
-    Nzbgeek: <Nzbgeek form={nzbForm()} />,
+    Torch: <Torch form={torchForm()} selector={props.torchSelector} />,
+    Nzbgeek: <Nzbgeek form={nzbForm()} selector={props.nzbSelector} />,
   };
 
   return (
@@ -138,6 +138,7 @@ export default function MediumDownload(props) {
         nzbStatus={props.nzbStatus}
         change={changeSetting}
       />
+      <DownloadInfo download={props.download} />
       <MediumTabs data={tabsMap} />
     </div>
   );

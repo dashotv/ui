@@ -10,7 +10,14 @@ export default function ButtonMap(props) {
       <ButtonGroup>
         {buttons &&
           buttons.map((button, index) => (
-            <IconButton key={index} size={size} onClick={button.click} title={button.title}>
+            <IconButton
+              key={index}
+              size={size}
+              onClick={ev => {
+                button.click && button.click(ev, props.args);
+              }}
+              title={button.title}
+            >
               {button.icon}
             </IconButton>
           ))}

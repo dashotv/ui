@@ -37,6 +37,8 @@ export function ReleasesList(props) {
                 published={row.published_at}
                 verified={row.verified}
                 actions={props.actions}
+                view={row.view}
+                download={row.download}
               />
             ))}
         </tbody>

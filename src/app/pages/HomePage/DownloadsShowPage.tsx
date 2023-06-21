@@ -18,7 +18,6 @@ export default function DownloadsShowPage(props) {
   const { torrents, nzbs, nzbStatus } = useReleases();
   const { enqueueSnackbar } = useSnackbar();
 
-  // @ts-ignore
   let { id } = useParams();
 
   const getTorrent = useCallback(() => {
@@ -34,7 +33,7 @@ export default function DownloadsShowPage(props) {
       axios
         .get(`/api/tower/downloads/${id}`)
         .then(response => {
-          console.log(response.data);
+          console.log('download:', response.data);
           setDownload(response.data);
           setLoading(false);
         })
@@ -65,6 +64,29 @@ export default function DownloadsShowPage(props) {
     getEpisodes();
   }, [download, download?.medium, enqueueSnackbar]);
 
+  const torchSelector = useCallback(
+    release => {
+      if (!release) {
+        return;
+      }
+      console.log('torch:', release);
+      setDownload(prevState => {
+        if (!prevState) {
+          return prevState;
+        }
+        prevState['status'] = 'loading';
+        prevState['release_id'] = release;
+        prevState['url'] = '';
+        console.log('prevState:', prevState);
+        return prevState;
+      });
+    },
+    [setDownload],
+  );
+  const nzbSelector = useCallback(release => {
+    console.log('nzb:', release);
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -84,6 +106,8 @@ export default function DownloadsShowPage(props) {
             torrents={torrents}
             nzbs={nzbs}
             nzbStatus={nzbStatus}
+            torchSelector={torchSelector}
+            nzbSelector={nzbSelector}
           />
         )}
       </Container>
