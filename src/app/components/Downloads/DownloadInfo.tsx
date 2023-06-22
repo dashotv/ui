@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
-import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 
-const statuses = [
-  { label: 'searching', value: 'searching' },
-  { label: 'loading', value: 'loading' },
-  { label: 'managing', value: 'managing' },
-  { label: 'downloading', value: 'downloading' },
-  { label: 'reviewing', value: 'reviewing' },
-  { label: 'done', value: 'done' },
-  { label: 'paused', value: 'paused' },
-  { label: 'deleted', value: 'deleted' },
-  { label: 'hold', value: 'hold' },
-];
+// const statuses = [
+//   { label: 'searching', value: 'searching' },
+//   { label: 'loading', value: 'loading' },
+//   { label: 'managing', value: 'managing' },
+//   { label: 'downloading', value: 'downloading' },
+//   { label: 'reviewing', value: 'reviewing' },
+//   { label: 'done', value: 'done' },
+//   { label: 'paused', value: 'paused' },
+//   { label: 'deleted', value: 'deleted' },
+//   { label: 'hold', value: 'hold' },
+// ];
 
 export function DownloadInfo(props) {
   const [data, setData] = useState({ torch: '', url: '', status: '', hash: '' });
@@ -33,10 +29,10 @@ export function DownloadInfo(props) {
     setData(tmp);
   }, [release_id, url, status, thash]);
 
-  const handleChange = ev => {
-    setData({ ...data, [ev.target.name]: ev.target.value });
-    console.log('handleChange:', data);
-  };
+  // const handleChange = ev => {
+  //   setData({ ...data, [ev.target.name]: ev.target.value });
+  //   console.log('handleChange:', data);
+  // };
 
   return (
     <Stack direction="row" sx={{ float: 'right' }}>

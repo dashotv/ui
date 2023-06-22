@@ -44,7 +44,7 @@ export function Torch(props) {
 
   const handleSelect = useCallback(
     (ev, args) => {
-      const [id, view, download] = args;
+      const [id] = args;
       console.log('handleSelect:', ev, 'args:', args);
       selector(id);
     },
