@@ -88,7 +88,7 @@ export default function ReleasesIndex() {
               siblingCount={0}
               boundaryCount={1}
               page={page}
-              count={Math.ceil(data.Total / pagesize)}
+              count={Math.ceil((data?.Total || 0) / pagesize)}
               onChange={handleChange}
             />
           </Grid>
