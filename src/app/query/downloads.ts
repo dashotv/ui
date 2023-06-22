@@ -9,15 +9,28 @@ export const getDownloadsActive = async () => {
   return response.data as Download[];
 };
 
+export const getDownloadsRecent = async page => {
+  const response = await axios.get(`/api/tower/downloads/recent?page=${page}`);
+  return response.data;
+};
+
 export const getDownload = async id => {
   const response = await axios.get(`/api/tower/downloads/${id}`);
   return response.data as Download;
 };
 
-export const useDownloadsQuery = () =>
+export const useDownloadsActiveQuery = () =>
   useQuery({
     queryKey: ['downloads', 'active'],
     queryFn: () => getDownloadsActive(),
+    keepPreviousData: true,
+    retry: false,
+  });
+
+export const useDownloadsRecentQuery = page =>
+  useQuery({
+    queryKey: ['downloads', 'recent', page],
+    queryFn: () => getDownloadsRecent(page),
     keepPreviousData: true,
     retry: false,
   });
