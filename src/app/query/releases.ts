@@ -18,7 +18,7 @@ export const getReleasesPage = async (page, pagesize, qs) => {
 };
 
 export const getRelease = async id => {
-  const response = await axios.get(`/api/scry/releases/${id}`);
+  const response = await axios.get(`/api/tower/releases/${id}`);
   return response.data;
 };
 
@@ -27,6 +27,7 @@ export const useReleasesQuery = (start, pagesize, queryString) =>
     queryKey: ['releases', start, pagesize, queryString],
     queryFn: () => getReleasesPage(start, pagesize, queryString),
     keepPreviousData: true,
+    retry: false,
   });
 
 export const useReleaseQuery = id =>

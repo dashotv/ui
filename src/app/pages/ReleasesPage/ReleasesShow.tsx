@@ -1,7 +1,4 @@
-import axios from 'axios';
-import { useSnackbar } from 'notistack';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -11,33 +8,13 @@ import TwoKIcon from '@mui/icons-material/TwoK';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
-import { Release } from '../../../types/release';
 import LoadingIndicator from '../../components/Loading';
+import { useReleaseQuery } from '../../query/releases';
 
 export default function ReleasesShow(props) {
-  const [data, setData] = useState<Release | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const { enqueueSnackbar } = useSnackbar();
-  // @ts-ignore
   let { id } = useParams();
+  const { isFetching, data, error } = useReleaseQuery(id);
 
-  useEffect(() => {
-    const getData = () => {
-      setLoading(true);
-      axios
-        .get(`/api/tower/releases/${id}`)
-        .then(response => {
-          console.log(response.data);
-          setData(response.data);
-          setLoading(false);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    };
-    getData();
-  }, [id, enqueueSnackbar]);
   function resolution(r) {
     switch (r) {
       case '2160':
@@ -67,9 +44,17 @@ export default function ReleasesShow(props) {
     return '';
   }
 
+  if (error instanceof Error) {
+    console.error(error.message);
+    return <Container maxWidth="xl">Error: {error.message}</Container>;
+  }
+
+  if (isFetching) {
+    return <LoadingIndicator />;
+  }
+
   return (
     <Container maxWidth="xl">
-      {loading && <LoadingIndicator />}
       {data && (
         <div className="release">
           <div className="titlebar">

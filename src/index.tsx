@@ -38,11 +38,12 @@ const darkTheme = createTheme({
 });
 
 const queryClient = new QueryClient({
-  // defaultOptions: {
-  //   queries: {
-  //     staleTime: 5 * 1000,
-  //   },
-  // },
+  defaultOptions: {
+    queries: {
+      retry: false,
+      staleTime: 5 * 1000,
+    },
+  },
 });
 
 ReactDOMClient.createRoot(MOUNT_NODE!).render(
