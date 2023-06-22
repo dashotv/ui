@@ -10,7 +10,7 @@ export default function Files(props) {
   // console.log('files:', props.files);
   // console.log('torrent:', props.torrent);
   function sortedFiles(files, torrent) {
-    if (!torrent) {
+    if (!files || !torrent) {
       return [];
     }
     for (let i = 0; i < files.length; i++) {
