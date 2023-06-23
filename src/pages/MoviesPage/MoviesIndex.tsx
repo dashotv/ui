@@ -1,6 +1,4 @@
-import axios from 'axios';
-import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Container from '@mui/material/Container';
@@ -10,38 +8,17 @@ import Typography from '@mui/material/Typography';
 
 import LoadingIndicator from 'components/Loading';
 import Media from 'components/Media';
+import { useMoviesAllQuery } from 'query/movies';
 
 const pagesize = 42;
 
 export default function MoviesIndex() {
-  const [data, setData] = useState([]);
-  const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const { enqueueSnackbar } = useSnackbar();
+  const { isFetching, data } = useMoviesAllQuery(page);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
-
-  useEffect(() => {
-    const getData = () => {
-      setLoading(true);
-      axios
-        .get(`/api/tower/movies/?page=${page}`)
-        .then(response => {
-          console.log(response.data);
-          setData(response.data.results);
-          setCount(response.data.count);
-          setLoading(false);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    };
-    getData();
-  }, [page, enqueueSnackbar]);
 
   return (
     <>
@@ -55,13 +32,17 @@ export default function MoviesIndex() {
             <Typography variant="h4">Movies</Typography>
           </Grid>
           <Grid item xs={6}>
-            <Pagination sx={{ float: 'right' }} count={Math.ceil(count / pagesize)} onChange={handleChange} />
+            <Pagination
+              sx={{ float: 'right' }}
+              count={Math.ceil((data?.count || 0) / pagesize)}
+              onChange={handleChange}
+            />
           </Grid>
         </Grid>
       </Container>
       <Container maxWidth="xl" sx={{ overflow: 'auto' }}>
-        {loading && <LoadingIndicator />}
-        {data && <Media data={data} type="movies" />}
+        {isFetching && <LoadingIndicator />}
+        {data && <Media data={data.results} type="movies" />}
       </Container>
     </>
   );
