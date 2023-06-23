@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 import { Download } from '../../types/download';
@@ -21,6 +21,11 @@ export const getDownload = async id => {
 
 export const getDownloadMedium = async id => {
   const response = await axios.get(`/api/tower/downloads/${id}/medium`);
+  return response.data;
+};
+
+export const putDownload = async (id: string, download: Download) => {
+  const response = await axios.put(`/api/tower/downloads/${id}`, download);
   return response.data;
 };
 
@@ -55,3 +60,12 @@ export const useDownloadMediumQuery = id =>
     keepPreviousData: true,
     retry: false,
   });
+
+export const useDownloadMutation = id => {
+  const queryClient = useQueryClient();
+  return useMutation((download: Download) => axios.put(`/api/tower/downloads/${id}`, download), {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['downloads', id] });
+    },
+  });
+};

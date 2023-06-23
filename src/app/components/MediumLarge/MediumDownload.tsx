@@ -20,7 +20,7 @@ export default function MediumDownload(props) {
   const changeSetting = useCallback(
     (setting, value) => {
       axios
-        .put(`/api/tower/downloads/${id}`, {
+        .patch(`/api/tower/downloads/${id}`, {
           setting: setting,
           value: value,
         })

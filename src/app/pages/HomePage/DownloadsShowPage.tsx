@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
@@ -7,13 +7,14 @@ import Container from '@mui/material/Container';
 import { useReleases } from '../../components/Downloads/useReleases';
 import LoadingIndicator from '../../components/Loading';
 import MediumDownload from '../../components/MediumLarge/MediumDownload';
-import { useDownloadMediumQuery, useDownloadQuery } from '../../query/downloads';
+import { useDownloadMediumQuery, useDownloadMutation, useDownloadQuery } from '../../query/downloads';
 
 export default function DownloadsShowPage(props) {
   let { id } = useParams();
   const download = useDownloadQuery(id);
   const episodes = useDownloadMediumQuery(id);
   const { torrents, nzbs, nzbStatus } = useReleases();
+  const downloadUpdate = useDownloadMutation(id);
 
   const getTorrent = useCallback(() => {
     if (!torrents || !download.data) {
@@ -22,22 +23,21 @@ export default function DownloadsShowPage(props) {
     return torrents.get(download.data.thash);
   }, [torrents, download.data]);
 
-  const torchSelector = useCallback(release => {
-    if (!release) {
-      return;
-    }
-    // console.log('torch:', release);
-    // setDownload(prevState => {
-    //   if (!prevState) {
-    //     return prevState;
-    //   }
-    //   prevState['status'] = 'loading';
-    //   prevState['release_id'] = release;
-    //   prevState['url'] = '';
-    //   console.log('prevState:', prevState);
-    //   return prevState;
-    // });
-  }, []);
+  const torchSelector = useCallback(
+    release => {
+      if (!release || !download.data) {
+        return;
+      }
+
+      let n = download.data;
+      n['status'] = 'loading';
+      n['release_id'] = release;
+      n['url'] = '';
+      downloadUpdate.mutate(n);
+    },
+    [download?.data, downloadUpdate],
+  );
+
   const nzbSelector = useCallback(release => {
     console.log('nzb:', release);
   }, []);
