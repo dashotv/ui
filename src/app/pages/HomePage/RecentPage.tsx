@@ -5,9 +5,9 @@ import { Helmet } from 'react-helmet-async';
 import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
 
-import { useDownloadsRecentQuery } from '../../../query/downloads';
-import { DownloadList } from '../../components/Downloads';
-import LoadingIndicator from '../../components/Loading';
+import { DownloadList } from 'app/components/Downloads';
+import LoadingIndicator from 'app/components/Loading';
+import { useDownloadsRecentQuery } from 'query/downloads';
 
 const pagesize = 42;
 

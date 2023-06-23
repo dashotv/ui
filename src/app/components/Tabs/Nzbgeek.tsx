@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useQueryString } from 'hooks/utils/useQueryString';
 import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect, useState } from 'react';
 import Moment from 'react-moment';
@@ -14,7 +15,6 @@ import Typography from '@mui/material/Typography';
 
 import ButtonMap from '../ButtonMap';
 import LoadingIndicator from '../Loading';
-import { useQueryString } from '../Utils/useQueryString';
 
 const pagesize = 25;
 export function Nzbgeek(props) {

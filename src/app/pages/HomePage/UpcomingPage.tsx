@@ -5,12 +5,12 @@ import { Helmet } from 'react-helmet-async';
 
 import Container from '@mui/material/Container';
 
-import { useDownloadsActiveQuery } from '../../../query/downloads';
-import { useUpcomingQuery } from '../../../query/upcoming';
-import { DownloadList } from '../../components/Downloads';
-import LoadingIndicator from '../../components/Loading';
-import Media from '../../components/Media';
-import { useSubscription } from '../../components/Nats/useSubscription';
+import { DownloadList } from 'app/components/Downloads';
+import LoadingIndicator from 'app/components/Loading';
+import Media from 'app/components/Media';
+import { useSubscription } from 'app/components/Nats/useSubscription';
+import { useDownloadsActiveQuery } from 'query/downloads';
+import { useUpcomingQuery } from 'query/upcoming';
 
 export default function UpcomingPage() {
   const queryClient = useQueryClient();

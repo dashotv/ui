@@ -4,8 +4,8 @@ import { Outlet } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
-import { Gauges } from '../../components/Guages';
-import SubNav from '../../components/SubNav';
+import { Gauges } from 'app/components/Guages';
+import SubNav from 'app/components/SubNav';
 
 export default function HomePage() {
   const items = [

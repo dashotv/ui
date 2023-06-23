@@ -8,8 +8,8 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
-import { Feed } from '../../../types/Feed';
-import LoadingIndicator from '../../components/Loading';
+import LoadingIndicator from 'app/components/Loading';
+import { Feed } from 'types/Feed';
 
 export default function FeedsShow() {
   const [data, setData] = useState<Feed | null>(null);

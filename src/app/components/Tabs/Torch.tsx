@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useQueryString } from 'hooks/utils/useQueryString';
 import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect, useState } from 'react';
 
@@ -8,7 +9,6 @@ import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 import LoadingIndicator from '../Loading';
 import { ReleasesList } from '../Releases/ReleasesList';
 import { Search } from '../Search';
-import { useQueryString } from '../Utils/useQueryString';
 
 const pagesize = 25;
 export function Torch(props) {

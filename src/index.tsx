@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { App } from 'app';
-import { NatsProvider } from 'app/components/Nats/context';
 import FontFaceObserver from 'fontfaceobserver';
 import { SnackbarProvider } from 'notistack';
 import * as React from 'react';
@@ -15,6 +14,8 @@ import 'sanitize.css/sanitize.css';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+import { NatsProvider } from 'app/components/Nats/context';
 
 // Initialize languages
 import './locales/i18n';

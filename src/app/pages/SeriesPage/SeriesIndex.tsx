@@ -6,9 +6,9 @@ import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 
-import { useSeriesAllQuery } from '../../../query/series';
-import LoadingIndicator from '../../components/Loading';
-import Media from '../../components/Media';
+import LoadingIndicator from 'app/components/Loading';
+import Media from 'app/components/Media';
+import { useSeriesAllQuery } from 'query/series';
 
 const pagesize = 42;
 

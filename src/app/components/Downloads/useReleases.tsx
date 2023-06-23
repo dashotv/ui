@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react';
 
-import { Nzb, NzbResponseStatus } from '../../../types/Nzb';
-import { Torrent } from '../../../types/torrents';
+import { Nzb, NzbResponseStatus } from 'types/Nzb';
+import { Torrent } from 'types/torrents';
+
 import { useSubscription } from '../Nats/useSubscription';
 
 export function useReleases() {

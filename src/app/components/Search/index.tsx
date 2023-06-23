@@ -10,7 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 
-import { SearchForm } from '../../../types/search_form';
+import { SearchForm } from 'types/search_form';
 
 const resolutions = [
   { label: '', value: '' },

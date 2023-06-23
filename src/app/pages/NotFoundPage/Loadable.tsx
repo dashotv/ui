@@ -4,7 +4,7 @@
 import * as React from 'react';
 import { lazyLoad } from 'utils/loadable';
 
-import LoadingIndicator from '../../components/Loading';
+import LoadingIndicator from 'app/components/Loading';
 
 export const NotFoundPage = lazyLoad(
   () => import('./index'),

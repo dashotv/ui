@@ -6,10 +6,10 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
-import { Medium } from '../../../types/medium';
-import { Path } from '../../../types/path';
-import LoadingIndicator from '../../components/Loading';
-import MediumMovie from '../../components/MediumLarge/MediumMovie';
+import LoadingIndicator from 'app/components/Loading';
+import MediumMovie from 'app/components/MediumLarge/MediumMovie';
+import { Medium } from 'types/medium';
+import { Path } from 'types/path';
 
 export default function MoviesShow() {
   const [data, setData] = useState<Medium | null>(null);

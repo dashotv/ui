@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import SubNav from '../../components/SubNav';
+import SubNav from 'app/components/SubNav';
 
 export default function FeedsPage() {
   const items = [
