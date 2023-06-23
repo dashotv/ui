@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+import { useReleases } from 'hooks/useReleases';
+
 import { DownloadBanner } from './index';
-import { useReleases } from './useReleases';
 
 export function DownloadList(props) {
   const { torrents, nzbs, nzbStatus } = useReleases();

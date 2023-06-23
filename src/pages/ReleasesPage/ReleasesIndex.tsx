@@ -11,7 +11,7 @@ import Pagination from '@mui/material/Pagination';
 import LoadingIndicator from 'components/Loading';
 import { ReleasesList } from 'components/Releases/ReleasesList';
 import { Search } from 'components/Search';
-import { useQueryString } from 'hooks/utils/useQueryString';
+import { useQueryString } from 'hooks/useQueryString';
 import { useReleasesQuery } from 'query/releases';
 
 import './releases.scss';

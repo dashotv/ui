@@ -8,7 +8,7 @@ import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 import LoadingIndicator from 'components/Loading';
 import { ReleasesList } from 'components/Releases/ReleasesList';
 import { Search } from 'components/Search';
-import { useQueryString } from 'hooks/utils/useQueryString';
+import { useQueryString } from 'hooks/useQueryString';
 
 const pagesize = 25;
 export function Torch(props) {

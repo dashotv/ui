@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 
 import ButtonMap from 'components/ButtonMap';
 import LoadingIndicator from 'components/Loading';
-import { useQueryString } from 'hooks/utils/useQueryString';
+import { useQueryString } from 'hooks/useQueryString';
 
 const pagesize = 25;
 export function Nzbgeek(props) {
