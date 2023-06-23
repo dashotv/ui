@@ -10,7 +10,7 @@ import LoadingIndicator from '../../components/Loading';
 import Media from '../../components/Media';
 import { useSubscription } from '../../components/Nats/useSubscription';
 import { useDownloadsActiveQuery } from '../../query/downloads';
-import { useUpcomingQuery } from '../../query/media';
+import { useUpcomingQuery } from '../../query/upcoming';
 
 export default function UpcomingPage() {
   const queryClient = useQueryClient();
