@@ -38,7 +38,7 @@ export default function SeriesShow() {
       return;
     }
     setCurrentSeason(series.currentSeason);
-  }, [series?.currentSeason]);
+  }, [series, series?.currentSeason]);
 
   return (
     <>

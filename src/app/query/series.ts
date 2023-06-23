@@ -60,16 +60,16 @@ export interface SettingsArgs {
   setting: Setting;
 }
 export const useEpisodeSettingMutation = () => {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   return useMutation(
     (args: SettingsArgs) => {
       const { id, setting } = args;
       return axios.patch(`/api/tower/episodes/${id}`, setting);
     },
-    // {
-    //   onSuccess: async () => {
-    //     await queryClient.invalidateQueries({ queryKey: ['series', id] });
-    //   },
-    // },
+    {
+      onSuccess: async (data, args) => {
+        await queryClient.invalidateQueries({ queryKey: ['series', args.id, 'season'] });
+      },
+    },
   );
 };
