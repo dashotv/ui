@@ -24,11 +24,6 @@ export const getDownloadMedium = async id => {
   return response.data;
 };
 
-export const putDownload = async (id: string, download: Download) => {
-  const response = await axios.put(`/api/tower/downloads/${id}`, download);
-  return response.data;
-};
-
 export const useDownloadsActiveQuery = () =>
   useQuery({
     queryKey: ['downloads', 'active'],
