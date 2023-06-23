@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { useQueryString } from 'hooks/utils/useQueryString';
 import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
+
+import { useQueryString } from 'hooks/utils/useQueryString';
 
 import LoadingIndicator from '../Loading';
 import { ReleasesList } from '../Releases/ReleasesList';

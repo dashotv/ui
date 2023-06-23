@@ -1,15 +1,16 @@
-import React from 'react';
+import * as React from 'react';
 import { Outlet } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
-import SubNav from 'app/components/SubNav';
+import { Gauges } from 'components/Guages';
+import SubNav from 'components/SubNav';
 
-export default function ReleasesPage() {
+export default function HomePage() {
   const items = [
-    { name: 'Releases', path: '/releases' },
-    { name: 'Feeds', path: '/feeds' },
+    { name: 'Upcoming', path: '/', exact: true },
+    { name: 'Recent', path: '/recent' },
   ];
   return (
     <>
@@ -18,7 +19,9 @@ export default function ReleasesPage() {
           <Grid item xs={6}>
             <SubNav items={items} />
           </Grid>
-          <Grid item xs={6}></Grid>
+          <Grid item xs={6}>
+            <Gauges />
+          </Grid>
         </Grid>
       </Container>
       <Outlet />

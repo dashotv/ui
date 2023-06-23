@@ -15,7 +15,7 @@ import 'sanitize.css/sanitize.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import { NatsProvider } from 'app/components/Nats/context';
+import { NatsProvider } from 'components/Nats/context';
 
 // Initialize languages
 import './locales/i18n';

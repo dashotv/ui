@@ -1,4 +1,3 @@
-import { useQueryString } from 'hooks/utils/useQueryString';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
@@ -9,9 +8,10 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 
-import LoadingIndicator from 'app/components/Loading';
-import { ReleasesList } from 'app/components/Releases/ReleasesList';
-import { Search } from 'app/components/Search';
+import LoadingIndicator from 'components/Loading';
+import { ReleasesList } from 'components/Releases/ReleasesList';
+import { Search } from 'components/Search';
+import { useQueryString } from 'hooks/utils/useQueryString';
 import { useReleasesQuery } from 'query/releases';
 
 import './releases.scss';

@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
-import LoadingIndicator from 'app/components/Loading';
-import MediumLarge from 'app/components/MediumLarge';
+import LoadingIndicator from 'components/Loading';
+import MediumLarge from 'components/MediumLarge';
 import {
   useEpisodeSettingMutation,
   useSeriesQuery,

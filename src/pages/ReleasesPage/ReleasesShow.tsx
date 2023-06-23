@@ -8,7 +8,7 @@ import TwoKIcon from '@mui/icons-material/TwoK';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
-import LoadingIndicator from 'app/components/Loading';
+import LoadingIndicator from 'components/Loading';
 import { useReleaseQuery } from 'query/releases';
 
 export default function ReleasesShow(props) {

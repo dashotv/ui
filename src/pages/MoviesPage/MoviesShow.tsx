@@ -6,8 +6,8 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
-import LoadingIndicator from 'app/components/Loading';
-import MediumMovie from 'app/components/MediumLarge/MediumMovie';
+import LoadingIndicator from 'components/Loading';
+import MediumMovie from 'components/MediumLarge/MediumMovie';
 import { Medium } from 'types/medium';
 import { Path } from 'types/path';
 

@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
-import LoadingIndicator from 'app/components/Loading';
+import LoadingIndicator from 'components/Loading';
 import { Feed } from 'types/Feed';
 
 export default function FeedsShow() {

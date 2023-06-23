@@ -13,26 +13,27 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
 
-import { GlobalStyle } from '../styles/global-styles';
-import NavBar from './components/NavBar';
+import NavBar from 'components/NavBar';
+import FeedsPage from 'pages/FeedsPage';
+import FeedsIndex from 'pages/FeedsPage/FeedsIndex';
+import FeedsShow from 'pages/FeedsPage/FeedsShow';
+import HomePage from 'pages/HomePage';
+import DownloadsShowPage from 'pages/HomePage/DownloadsShowPage';
+import RecentPage from 'pages/HomePage/RecentPage';
+import UpcomingPage from 'pages/HomePage/UpcomingPage';
+import MoviesPage from 'pages/MoviesPage';
+import MoviesIndex from 'pages/MoviesPage/MoviesIndex';
+import MoviesShow from 'pages/MoviesPage/MoviesShow';
+import { NotFoundPage } from 'pages/NotFoundPage';
+import ReleasesPage from 'pages/ReleasesPage';
+import ReleasesIndex from 'pages/ReleasesPage/ReleasesIndex';
+import ReleasesShow from 'pages/ReleasesPage/ReleasesShow';
+import SeriesPage from 'pages/SeriesPage';
+import SeriesIndex from 'pages/SeriesPage/SeriesIndex';
+import SeriesShow from 'pages/SeriesPage/SeriesShow';
+import { GlobalStyle } from 'styles/global-styles';
+
 import './index.scss';
-import FeedsPage from './pages/FeedsPage';
-import FeedsIndex from './pages/FeedsPage/FeedsIndex';
-import FeedsShow from './pages/FeedsPage/FeedsShow';
-import HomePage from './pages/HomePage';
-import DownloadsShowPage from './pages/HomePage/DownloadsShowPage';
-import RecentPage from './pages/HomePage/RecentPage';
-import UpcomingPage from './pages/HomePage/UpcomingPage';
-import MoviesPage from './pages/MoviesPage';
-import MoviesIndex from './pages/MoviesPage/MoviesIndex';
-import MoviesShow from './pages/MoviesPage/MoviesShow';
-import { NotFoundPage } from './pages/NotFoundPage';
-import ReleasesPage from './pages/ReleasesPage';
-import ReleasesIndex from './pages/ReleasesPage/ReleasesIndex';
-import ReleasesShow from './pages/ReleasesPage/ReleasesShow';
-import SeriesPage from './pages/SeriesPage';
-import SeriesIndex from './pages/SeriesPage/SeriesIndex';
-import SeriesShow from './pages/SeriesPage/SeriesShow';
 
 export function App() {
   return (

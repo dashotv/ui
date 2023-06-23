@@ -15,7 +15,7 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
-import LoadingIndicator from 'app/components/Loading';
+import LoadingIndicator from 'components/Loading';
 
 export default function FeedsIndex(props) {
   const [feeds, setFeeds] = useState([]);
