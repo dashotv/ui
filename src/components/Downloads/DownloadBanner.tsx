@@ -18,7 +18,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 
-import Banner from '../Banner';
+import Banner from 'components/Banner';
 
 export function DownloadBanner(props) {
   const [auto, setAuto] = useState(props.download.auto);

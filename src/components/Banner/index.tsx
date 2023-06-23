@@ -4,7 +4,8 @@ import Moment from 'react-moment';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-import ButtonMap from '../ButtonMap';
+import ButtonMap from 'components/ButtonMap';
+
 import './banner.scss';
 
 export default function Banner(props) {

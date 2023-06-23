@@ -9,13 +9,14 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import StarIcon from '@mui/icons-material/Star';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-import Banner from '../Banner';
-import Details from '../Tabs/Details';
-import Episodes from '../Tabs/Episodes';
-import { MediumTabs } from '../Tabs/MediumTabs';
-import Paths from '../Tabs/Paths';
-import Seasons from '../Tabs/Seasons';
-import Watches from '../Tabs/Watches';
+import Banner from 'components/Banner';
+import Details from 'components/Tabs/Details';
+import Episodes from 'components/Tabs/Episodes';
+import { MediumTabs } from 'components/Tabs/MediumTabs';
+import Paths from 'components/Tabs/Paths';
+import Seasons from 'components/Tabs/Seasons';
+import Watches from 'components/Tabs/Watches';
+
 import './large.scss';
 
 export default function MediumLarge(props) {

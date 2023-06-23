@@ -9,10 +9,11 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import StarIcon from '@mui/icons-material/Star';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-import Banner from '../Banner';
-import Details from '../Tabs/Details';
-import { MediumTabs } from '../Tabs/MediumTabs';
-import Paths from '../Tabs/Paths';
+import Banner from 'components/Banner';
+import Details from 'components/Tabs/Details';
+import { MediumTabs } from 'components/Tabs/MediumTabs';
+import Paths from 'components/Tabs/Paths';
+
 import './large.scss';
 
 export default function MediumMovie(props) {

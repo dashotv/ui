@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import MediumSmall from '../MediumSmall';
+import MediumSmall from 'components/MediumSmall';
 
 export default function Media(props) {
   return (

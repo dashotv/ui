@@ -16,7 +16,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
-import { useSubscription } from '../Nats/useSubscription';
+import { useSubscription } from 'components/Nats/useSubscription';
+
 import './Navbar.scss';
 import { Notice } from './Notice';
 import Search from './Search';

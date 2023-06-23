@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
-import TabPanel from '../TabPanel';
+import TabPanel from 'components/TabPanel';
 
 export function MediumTabs(props) {
   const [value, setValue] = useState(0);

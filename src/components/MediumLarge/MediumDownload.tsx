@@ -3,12 +3,13 @@ import { useSnackbar } from 'notistack';
 import { useCallback } from 'react';
 import * as React from 'react';
 
-import { DownloadBanner, DownloadInfo } from '../Downloads';
-import { useSubscription } from '../Nats/useSubscription';
-import { FilesWithSelector } from '../Tabs/FilesWithSelector';
-import { MediumTabs } from '../Tabs/MediumTabs';
-import { Nzbgeek } from '../Tabs/Nzbgeek';
-import { Torch } from '../Tabs/Torch';
+import { DownloadBanner, DownloadInfo } from 'components/Downloads';
+import { useSubscription } from 'components/Nats/useSubscription';
+import { FilesWithSelector } from 'components/Tabs/FilesWithSelector';
+import { MediumTabs } from 'components/Tabs/MediumTabs';
+import { Nzbgeek } from 'components/Tabs/Nzbgeek';
+import { Torch } from 'components/Tabs/Torch';
+
 import './large.scss';
 
 export default function MediumDownload(props) {

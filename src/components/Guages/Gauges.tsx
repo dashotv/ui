@@ -7,7 +7,8 @@ import OpacityIcon from '@mui/icons-material/Opacity';
 import { Stack } from '@mui/material';
 import Chip from '@mui/material/Chip';
 
-import { useSubscription } from '../Nats/useSubscription';
+import { useSubscription } from 'components/Nats/useSubscription';
+
 import './gauges.scss';
 
 function BaseGauge(props) {

@@ -1,9 +1,8 @@
 import { useCallback, useState } from 'react';
 
+import { useSubscription } from 'components/Nats/useSubscription';
 import { Nzb, NzbResponseStatus } from 'types/Nzb';
 import { Torrent } from 'types/torrents';
-
-import { useSubscription } from '../Nats/useSubscription';
 
 export function useReleases() {
   const [torrents, setTorrents] = useState<Map<string, Torrent> | null>(null);

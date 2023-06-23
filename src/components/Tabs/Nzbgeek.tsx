@@ -12,10 +12,9 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
+import ButtonMap from 'components/ButtonMap';
+import LoadingIndicator from 'components/Loading';
 import { useQueryString } from 'hooks/utils/useQueryString';
-
-import ButtonMap from '../ButtonMap';
-import LoadingIndicator from '../Loading';
 
 const pagesize = 25;
 export function Nzbgeek(props) {

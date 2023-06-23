@@ -10,7 +10,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import ButtonMap from '../ButtonMap';
+import ButtonMap from 'components/ButtonMap';
 
 export function ReleasesRow(props) {
   const resolution = useCallback(r => {
