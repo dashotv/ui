@@ -1,114 +1,66 @@
-import axios from 'axios';
-import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
-import { Medium } from '../../../types/medium';
 import LoadingIndicator from '../../components/Loading';
 import MediumLarge from '../../components/MediumLarge';
+import {
+  useEpisodeSettingMutation,
+  useSeriesQuery,
+  useSeriesSeasonEpisodesQuery,
+  useSeriesSettingMutation,
+} from '../../query/series';
 
 export default function SeriesShow() {
-  const [data, setData] = useState<Medium | null>(null);
-  const [paths, setPaths] = useState<Medium | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [seasons, setSeasons] = useState([]);
-  const [currentSeason, setCurrentSeason] = useState(-1);
-  const [episodes, setEpisodes] = useState([]);
-  const [watches, setWatches] = useState([]);
-  const { enqueueSnackbar } = useSnackbar();
-
-  // @ts-ignore
   let { id } = useParams();
+  const { isFetching, data: series } = useSeriesQuery(id);
+  const [currentSeason, setCurrentSeason] = useState(null);
+  const { isFetching: episodesFetching, data: episodes } = useSeriesSeasonEpisodesQuery(id, currentSeason);
 
-  const changeSetting = (type, id, setting, value) => {
-    axios
-      .put(`/api/tower/${type}/${id}`, {
-        setting: setting,
-        value: value,
-      })
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(err => {
-        enqueueSnackbar('error getting data', { variant: 'error' });
-        console.error(err);
-      });
-  };
+  const seriesSetting = useSeriesSettingMutation(id);
+  const episodeSetting = useEpisodeSettingMutation();
 
   function changeSeason(season) {
     console.log(`changeSeason: ${season}`);
     setCurrentSeason(season);
   }
-  function changeEpisodeSetting(id, setting, value) {
-    changeSetting('episodes', id, setting, value);
+  function changeEpisodeSetting(id, key, value) {
+    episodeSetting.mutate({ id: id, setting: { setting: key, value: value } });
   }
-  function changeSeriesSetting(id, setting, value) {
-    changeSetting('series', id, setting, value);
+  function changeSeriesSetting(id: string, key: string, value: any) {
+    seriesSetting.mutate({ setting: key, value: value });
   }
 
   useEffect(() => {
-    const getData = () => {
-      setLoading(true);
-      axios
-        .get(`/api/tower/series/${id}`)
-        .then(response => {
-          console.log('getData:', response.data);
-          setData(response.data);
-          setSeasons(response.data.seasons);
-          setCurrentSeason(response.data.currentSeason);
-          setPaths(response.data.paths);
-          setWatches(response.data.watches);
-          setLoading(false);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    };
-    getData();
-  }, [id, enqueueSnackbar]);
-
-  useEffect(() => {
-    const getSeason = season => {
-      axios
-        .get(`/api/tower/series/${id}/seasons/${season}`)
-        .then(response => {
-          console.log('season:', currentSeason, ':', response.data);
-          setEpisodes(response.data);
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    };
-    if (currentSeason >= 0) {
-      getSeason(currentSeason);
+    if (!series || !series.currentSeason) {
+      return;
     }
-  }, [currentSeason, id]);
+    setCurrentSeason(series.currentSeason);
+  }, [series?.currentSeason]);
 
   return (
     <>
       <Helmet>
-        <title>Series{data ? ` - ${data.title}` : ''}</title>
+        <title>Series{series ? ` - ${series.title}` : ''}</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container maxWidth="xl">
-        {loading && <LoadingIndicator />}
-        {data && (
+        {(isFetching || episodesFetching) && <LoadingIndicator />}
+        {series && (
           <MediumLarge
-            id={data.id}
-            tupe="series"
-            data={data}
-            paths={paths}
-            seasons={seasons}
+            id={series.id}
+            type="series"
+            data={series}
+            paths={series.paths}
+            seasons={series.seasons}
             currentSeason={currentSeason}
             episodes={episodes}
             changeSeason={changeSeason}
             changeEpisode={changeEpisodeSetting}
             change={changeSeriesSetting}
-            watches={watches}
+            watches={series.watches}
           />
         )}
       </Container>

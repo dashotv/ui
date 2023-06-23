@@ -30,20 +30,21 @@ export default function Episodes(props) {
           </tr>
         </thead>
         <tbody>
-          {props.episodes.map(row => (
-            <EpisodeRow
-              key={row.id}
-              id={row.id}
-              number={row.episode_number}
-              title={row.title}
-              release={row.release_date}
-              skipped={row.skipped}
-              downloaded={row.downloaded}
-              completed={row.completed}
-              watched={row.watched}
-              changeEpisode={props.changeEpisode}
-            />
-          ))}
+          {props.episodes &&
+            props.episodes.map(row => (
+              <EpisodeRow
+                key={row.id}
+                id={row.id}
+                number={row.episode_number}
+                title={row.title}
+                release={row.release_date}
+                skipped={row.skipped}
+                downloaded={row.downloaded}
+                completed={row.completed}
+                watched={row.watched}
+                changeEpisode={props.changeEpisode}
+              />
+            ))}
         </tbody>
       </table>
     </div>

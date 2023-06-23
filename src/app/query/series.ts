@@ -1,5 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+
+export interface Setting {
+  setting: string;
+  value: any;
+}
 
 export const getSeriesAll = async page => {
   const response = await axios.get(`/api/tower/series/?page=${page}`);
@@ -8,6 +13,11 @@ export const getSeriesAll = async page => {
 
 export const getSeries = async id => {
   const response = await axios.get(`/api/tower/series/${id}`);
+  return response.data;
+};
+
+export const getSeriesSeasonEpisodes = async (id, season) => {
+  const response = await axios.get(`/api/tower/series/${id}/seasons/${season}`);
   return response.data;
 };
 
@@ -26,3 +36,40 @@ export const useSeriesQuery = id =>
     keepPreviousData: true,
     retry: false,
   });
+
+export const useSeriesSeasonEpisodesQuery = (id, season) =>
+  useQuery({
+    queryKey: ['series', id, 'season', season],
+    queryFn: () => getSeriesSeasonEpisodes(id, season),
+    keepPreviousData: true,
+    retry: false,
+    enabled: !!season,
+  });
+
+export const useSeriesSettingMutation = id => {
+  const queryClient = useQueryClient();
+  return useMutation((setting: Setting) => axios.patch(`/api/tower/series/${id}`, setting), {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['series', id] });
+    },
+  });
+};
+
+export interface SettingsArgs {
+  id: string;
+  setting: Setting;
+}
+export const useEpisodeSettingMutation = () => {
+  // const queryClient = useQueryClient();
+  return useMutation(
+    (args: SettingsArgs) => {
+      const { id, setting } = args;
+      return axios.patch(`/api/tower/episodes/${id}`, setting);
+    },
+    // {
+    //   onSuccess: async () => {
+    //     await queryClient.invalidateQueries({ queryKey: ['series', id] });
+    //   },
+    // },
+  );
+};
