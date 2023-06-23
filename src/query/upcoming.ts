@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { Medium } from '../../types/medium';
+import { Medium } from '../types/medium';
 
 export const getMediaUpcoming = async () => {
   const response = await axios.get('/api/tower/upcoming/');

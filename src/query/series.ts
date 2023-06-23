@@ -1,10 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
-export interface Setting {
-  setting: string;
-  value: any;
-}
+import { Setting, SettingsArgs } from '../types/setting';
 
 export const getSeriesAll = async page => {
   const response = await axios.get(`/api/tower/series/?page=${page}`);
@@ -55,21 +52,17 @@ export const useSeriesSettingMutation = id => {
   });
 };
 
-export interface SettingsArgs {
-  id: string;
-  setting: Setting;
-}
 export const useEpisodeSettingMutation = () => {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   return useMutation(
     (args: SettingsArgs) => {
       const { id, setting } = args;
       return axios.patch(`/api/tower/episodes/${id}`, setting);
     },
-    {
-      onSuccess: async (data, args) => {
-        await queryClient.invalidateQueries({ queryKey: ['series', args.id, 'season'] });
-      },
-    },
+    // {
+    //   onSuccess: async (data, args) => {
+    //     await queryClient.invalidateQueries({ queryKey: ['series', args.id, 'season'] });
+    //   },
+    // },
   );
 };

@@ -4,14 +4,14 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
-import LoadingIndicator from '../../components/Loading';
-import MediumLarge from '../../components/MediumLarge';
 import {
   useEpisodeSettingMutation,
   useSeriesQuery,
   useSeriesSeasonEpisodesQuery,
   useSeriesSettingMutation,
-} from '../../query/series';
+} from '../../../query/series';
+import LoadingIndicator from '../../components/Loading';
+import MediumLarge from '../../components/MediumLarge';
 
 export default function SeriesShow() {
   let { id } = useParams();
@@ -26,9 +26,11 @@ export default function SeriesShow() {
     console.log(`changeSeason: ${season}`);
     setCurrentSeason(season);
   }
+
   function changeEpisodeSetting(id, key, value) {
     episodeSetting.mutate({ id: id, setting: { setting: key, value: value } });
   }
+
   function changeSeriesSetting(id: string, key: string, value: any) {
     seriesSetting.mutate({ setting: key, value: value });
   }

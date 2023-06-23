@@ -8,11 +8,11 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 
+import { useReleasesQuery } from '../../../query/releases';
 import LoadingIndicator from '../../components/Loading';
 import { ReleasesList } from '../../components/Releases/ReleasesList';
 import { Search } from '../../components/Search';
 import { useQueryString } from '../../components/Utils/useQueryString';
-import { useReleasesQuery } from '../../query/releases';
 import './releases.scss';
 
 const pagesize = 25;

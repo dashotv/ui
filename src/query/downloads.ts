@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { Download } from '../../types/download';
+import { Download } from '../types/download';
 
 export const getDownloadsActive = async () => {
   const response = await axios.get('/api/tower/downloads/');

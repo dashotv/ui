@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
+import { useDownloadMediumQuery, useDownloadMutation, useDownloadQuery } from '../../../query/downloads';
 import { useReleases } from '../../components/Downloads/useReleases';
 import LoadingIndicator from '../../components/Loading';
 import MediumDownload from '../../components/MediumLarge/MediumDownload';
-import { useDownloadMediumQuery, useDownloadMutation, useDownloadQuery } from '../../query/downloads';
 
 export default function DownloadsShowPage(props) {
   let { id } = useParams();

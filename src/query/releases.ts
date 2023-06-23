@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { Release } from '../../types/release';
+import { Release } from '../types/release';
 
 export interface ReleasesResponse {
   Count: number;
