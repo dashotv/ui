@@ -19,6 +19,11 @@ export const getDownload = async id => {
   return response.data as Download;
 };
 
+export const getDownloadMedium = async id => {
+  const response = await axios.get(`/api/tower/downloads/${id}/medium`);
+  return response.data;
+};
+
 export const useDownloadsActiveQuery = () =>
   useQuery({
     queryKey: ['downloads', 'active'],
@@ -31,6 +36,22 @@ export const useDownloadsRecentQuery = page =>
   useQuery({
     queryKey: ['downloads', 'recent', page],
     queryFn: () => getDownloadsRecent(page),
+    keepPreviousData: true,
+    retry: false,
+  });
+
+export const useDownloadQuery = id =>
+  useQuery({
+    queryKey: ['downloads', id],
+    queryFn: () => getDownload(id),
+    keepPreviousData: true,
+    retry: false,
+  });
+
+export const useDownloadMediumQuery = id =>
+  useQuery({
+    queryKey: ['downloads', 'medium', id],
+    queryFn: () => getDownloadMedium(id),
     keepPreviousData: true,
     retry: false,
   });

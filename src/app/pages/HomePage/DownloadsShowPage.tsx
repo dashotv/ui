@@ -1,88 +1,43 @@
-import axios from 'axios';
-import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
-import { Download } from '../../../types/download';
 import { useReleases } from '../../components/Downloads/useReleases';
 import LoadingIndicator from '../../components/Loading';
 import MediumDownload from '../../components/MediumLarge/MediumDownload';
+import { useDownloadMediumQuery, useDownloadQuery } from '../../query/downloads';
 
 export default function DownloadsShowPage(props) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [download, setDownload] = useState<Download | null>(null);
-  const [episodes, setEpisodes] = useState([]);
-  const { torrents, nzbs, nzbStatus } = useReleases();
-  const { enqueueSnackbar } = useSnackbar();
-
   let { id } = useParams();
+  const download = useDownloadQuery(id);
+  const episodes = useDownloadMediumQuery(id);
+  const { torrents, nzbs, nzbStatus } = useReleases();
 
   const getTorrent = useCallback(() => {
-    if (torrents === null || download === null) {
+    if (!torrents || !download.data) {
       return;
     }
-    return torrents.get(download.thash);
-  }, [torrents, download]);
+    return torrents.get(download.data.thash);
+  }, [torrents, download.data]);
 
-  useEffect(() => {
-    const getDownload = () => {
-      setLoading(true);
-      axios
-        .get(`/api/tower/downloads/${id}`)
-        .then(response => {
-          console.log('download:', response.data);
-          setDownload(response.data);
-          setLoading(false);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    };
-    getDownload();
-  }, [id, enqueueSnackbar]);
-
-  useEffect(() => {
-    const getEpisodes = () => {
-      if (download?.medium?.type !== 'Series') {
-        return;
-      }
-      axios
-        .get(`/api/tower/series/${download.medium.id}/seasons/all`)
-        .then(response => {
-          console.log('getEpisodes:', response.data);
-          setEpisodes(response.data);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    };
-    getEpisodes();
-  }, [download, download?.medium, enqueueSnackbar]);
-
-  const torchSelector = useCallback(
-    release => {
-      if (!release) {
-        return;
-      }
-      console.log('torch:', release);
-      setDownload(prevState => {
-        if (!prevState) {
-          return prevState;
-        }
-        prevState['status'] = 'loading';
-        prevState['release_id'] = release;
-        prevState['url'] = '';
-        console.log('prevState:', prevState);
-        return prevState;
-      });
-    },
-    [setDownload],
-  );
+  const torchSelector = useCallback(release => {
+    if (!release) {
+      return;
+    }
+    // console.log('torch:', release);
+    // setDownload(prevState => {
+    //   if (!prevState) {
+    //     return prevState;
+    //   }
+    //   prevState['status'] = 'loading';
+    //   prevState['release_id'] = release;
+    //   prevState['url'] = '';
+    //   console.log('prevState:', prevState);
+    //   return prevState;
+    // });
+  }, []);
   const nzbSelector = useCallback(release => {
     console.log('nzb:', release);
   }, []);
@@ -90,18 +45,18 @@ export default function DownloadsShowPage(props) {
   return (
     <>
       <Helmet>
-        <title>Series{download ? ` - ${download.medium.display}` : ''}</title>
+        <title>Series{download.data ? ` - ${download.data.medium.display}` : ''}</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container maxWidth="xl">
-        {loading && <LoadingIndicator />}
-        {download && (
+        {download.isFetching && <LoadingIndicator />}
+        {download.data && (
           <MediumDownload
             id={id}
-            type={download.medium.type}
-            download={download}
-            files={download.download_files}
-            episodes={episodes}
+            type={download.data.medium.type}
+            download={download.data}
+            files={download.data.download_files}
+            episodes={episodes.data}
             torrent={getTorrent()}
             torrents={torrents}
             nzbs={nzbs}

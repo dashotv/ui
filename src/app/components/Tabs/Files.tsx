@@ -10,13 +10,16 @@ export default function Files(props) {
   // console.log('files:', props.files);
   // console.log('torrent:', props.torrent);
   function sortedFiles(files, torrent) {
-    if (!files || !torrent) {
+    if (!files) {
       return [];
     }
-    for (let i = 0; i < files.length; i++) {
-      files[i].torrentFile = torrent.Files[files[i].num];
+    if (torrent) {
+      for (let i = 0; i < files.length; i++) {
+        files[i].torrentFile = torrent.Files[files[i].num];
+      }
+      return files.sort((a, b) => a.torrentFile.name.localeCompare(b.torrentFile.name));
     }
-    return files.sort((a, b) => a.torrentFile.name.localeCompare(b.torrentFile.name));
+    return files.sort((a, b) => a.num.localeCompare(b.num));
   }
   return (
     <div className="files">
