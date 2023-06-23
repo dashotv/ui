@@ -43,7 +43,7 @@ export const useSeriesSeasonEpisodesQuery = (id, season) =>
     queryFn: () => getSeriesSeasonEpisodes(id, season),
     keepPreviousData: true,
     retry: false,
-    enabled: !!season,
+    enabled: season !== null && season !== undefined,
   });
 
 export const useSeriesSettingMutation = id => {
