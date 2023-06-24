@@ -14,7 +14,6 @@
   * un-select torch
   * select/unselect nzb
   * manual entry for tdo id and url
-  * back to media button
   * complete button
   * reset button
   * create download (series, episode, and movie)
