@@ -1,17 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 
+import ArticleIcon from '@mui/icons-material/Article';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import WavesIcon from '@mui/icons-material/Waves';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 import LoadingIndicator from 'components/Loading';
 import { ReleasesList } from 'components/Releases/ReleasesList';
 import { Search } from 'components/Search';
 import { useQueryString } from 'hooks/useQueryString';
+import { useReleaseGroup } from 'hooks/useReleaseGroup';
+import { useReleaseResolution } from 'hooks/useReleaseResolution';
 import { useReleasesQuery } from 'query/releases';
 
 import './releases.scss';
@@ -36,11 +48,12 @@ export default function ReleasesIndex() {
   const { queryString } = useQueryString();
   const [page, setPage] = useState(1);
   const [qs, setQs] = useState(queryString(form));
+  const { resolution } = useReleaseResolution();
+  const { group } = useReleaseGroup();
 
   const { isFetching, data } = useReleasesQuery(page, pagesize, qs);
 
   const handleChange = useCallback((event: React.ChangeEvent<unknown>, value: number) => {
-    console.log('setPage=', value);
     setPage(value);
   }, []);
 
@@ -48,28 +61,55 @@ export default function ReleasesIndex() {
     console.log('click');
   }, []);
 
-  const actions = [
-    {
-      icon: <EditIcon fontSize="small" color="primary" />,
-      click: click,
-      title: 'Edit',
-    },
-    {
-      icon: <RestartAltIcon fontSize="small" color="warning" />,
-      click: click,
-      title: 're-process',
-    },
-    {
-      icon: <DeleteForeverIcon fontSize="small" color="error" />,
-      click: click,
-      title: 'delete from db and disk',
-    },
-  ];
-
   useEffect(() => {
     console.log('setQs:');
     setQs(queryString(form));
   }, [form, queryString]);
+
+  const renderRow = row => {
+    return (
+      <tr key={row.id}>
+        <td>
+          {row.verified ? (
+            <CheckCircleIcon color="primary" fontSize="small" />
+          ) : (
+            <CheckCircleOutlineIcon fontSize="small" />
+          )}
+        </td>
+        <td>{row.nzb ? <ArticleIcon fontSize="small" /> : <WavesIcon fontSize="small" />}</td>
+        <td>
+          <Typography variant="overline">
+            {row.source}:{row.type}
+          </Typography>
+        </td>
+        <td>
+          <Stack spacing={1} direction="row">
+            <Link to={row.id} title={row.raw}>
+              <Typography variant="subtitle1">{row.display}</Typography>
+            </Link>
+            {resolution(row.resolution)}
+            {group(row.group, row.author)}
+          </Stack>
+        </td>
+        <td align="right">
+          <Moment fromNow>{row.published}</Moment>
+        </td>
+        <td align="right">
+          <ButtonGroup>
+            <IconButton size="small" onClick={click} title="edit">
+              <EditIcon fontSize="small" color="primary" />
+            </IconButton>
+            <IconButton size="small" onClick={click} title="re-process">
+              <RestartAltIcon fontSize="small" color="warning" />
+            </IconButton>
+            <IconButton size="small" onClick={click} title="delete">
+              <DeleteForeverIcon fontSize="small" color="error" />
+            </IconButton>
+          </ButtonGroup>
+        </td>
+      </tr>
+    );
+  };
 
   return (
     <>
@@ -97,7 +137,7 @@ export default function ReleasesIndex() {
       </Container>
       <Container maxWidth="xl">
         {isFetching && <LoadingIndicator />}
-        {data && <ReleasesList data={data.Releases} actions={actions} />}
+        {data && <ReleasesList data={data.Releases} render={renderRow} />}
       </Container>
     </>
   );
