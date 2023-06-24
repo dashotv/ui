@@ -1,6 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
+import Container from '@mui/material/Container';
+
 import SubNav from 'components/SubNav';
 
 export default function FeedsPage() {
@@ -10,7 +12,9 @@ export default function FeedsPage() {
   ];
   return (
     <>
-      <SubNav items={items} />
+      <Container maxWidth="xl">
+        <SubNav items={items} />
+      </Container>
       <Outlet />
     </>
   );

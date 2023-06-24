@@ -1,7 +1,4 @@
-import axios from 'axios';
-import { useSnackbar } from 'notistack';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
@@ -16,29 +13,10 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
 import LoadingIndicator from 'components/Loading';
+import { useFeedsAllQuery } from 'query/feeds';
 
 export default function FeedsIndex(props) {
-  const [feeds, setFeeds] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
-
-  useEffect(() => {
-    const getFeeds = () => {
-      setLoading(true);
-      axios
-        .get('/api/tower/feeds/')
-        .then(response => {
-          console.log(response.data);
-          setFeeds(response.data);
-          setLoading(false);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    };
-    getFeeds();
-  }, [enqueueSnackbar]);
+  const { isFetching, data } = useFeedsAllQuery();
 
   return (
     <>
@@ -47,8 +25,8 @@ export default function FeedsIndex(props) {
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container maxWidth="xl">
-        {loading && <LoadingIndicator />}
-        <Feeds data={feeds} />
+        {isFetching && <LoadingIndicator />}
+        {data && <Feeds data={data} />}
       </Container>
     </>
   );
