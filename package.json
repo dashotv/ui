@@ -47,7 +47,6 @@
     "jest-styled-components": "7.0.8",
     "lint-staged": "12.1.7",
     "material-ui-image": "3.3.2",
-    "material-ui-search-bar": "1.0.0",
     "moment": "2.29.4",
     "moment-timezone": "0.5.38",
     "nats.ws": "1.10.0",

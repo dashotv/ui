@@ -8,7 +8,7 @@ export interface Medium {
   kind?: string;
   source?: string;
   source_id?: string;
-  title?: string;
+  title: string;
   description?: string;
   slug?: string;
   text?: string;
