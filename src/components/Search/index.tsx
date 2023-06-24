@@ -72,13 +72,14 @@ export function Search(props) {
       >
         <TextField
           sx={{ m: 1, width: '75px' }}
-          id="text"
+          id="search"
           name="text"
           label="Name"
           variant="standard"
           margin="none"
           size="small"
           value={data.text}
+          autoComplete="off"
           onChange={handleChange}
         />
         <TextField
