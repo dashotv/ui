@@ -1,10 +1,10 @@
+import { useCallback } from 'react';
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
@@ -33,6 +33,42 @@ export default function FeedsIndex(props) {
 }
 
 function Feeds(props) {
+  const renderRow = useCallback(row => {
+    return (
+      <tr key={row.id}>
+        <td>
+          <IconButton size="small">
+            <CheckCircleIcon color={row.active ? 'secondary' : 'action'} fontSize="small" />
+          </IconButton>
+        </td>
+        <td>
+          <Typography variant="caption">
+            {row.source}:{row.type}
+          </Typography>
+        </td>
+        <td>
+          <span title={row.url}>
+            <Link to={row.id}>{row.name}</Link>
+          </span>
+        </td>
+        <td align="right">
+          <Moment fromNow>{row.processed}</Moment>
+        </td>
+        <td align="right">
+          <IconButton size="small">
+            <EditIcon fontSize="small" />
+          </IconButton>
+          <IconButton size="small">
+            <DeleteIcon fontSize="small" />
+          </IconButton>
+          <IconButton size="small">
+            <DeleteForeverIcon fontSize="small" />
+          </IconButton>
+        </td>
+      </tr>
+    );
+  }, []);
+
   return (
     <div className="feeds">
       <table className="vertical-table">
@@ -49,60 +85,8 @@ function Feeds(props) {
             </td>
           </tr>
         </thead>
-        <tbody>
-          {props.data &&
-            props.data.map(row => (
-              <FeedsRow
-                key={row.id}
-                id={row.id}
-                active={row.active}
-                name={row.name}
-                url={row.url}
-                source={row.source}
-                type={row.type}
-                processed={row.processed}
-              />
-            ))}
-        </tbody>
+        <tbody>{props.data && props.data.map(row => renderRow(row))}</tbody>
       </table>
     </div>
-  );
-}
-
-function FeedsRow(props) {
-  return (
-    <tr>
-      <td>
-        {props.active ? (
-          <CheckCircleIcon color="primary" fontSize="small" />
-        ) : (
-          <CheckCircleOutlineIcon fontSize="small" />
-        )}
-      </td>
-      <td>
-        <Typography variant="caption">
-          {props.source}:{props.type}
-        </Typography>
-      </td>
-      <td>
-        <span title={props.url}>
-          <Link to={props.id}>{props.name}</Link>
-        </span>
-      </td>
-      <td align="right">
-        <Moment fromNow>{props.processed}</Moment>
-      </td>
-      <td align="right">
-        <IconButton size="small">
-          <EditIcon fontSize="small" />
-        </IconButton>
-        <IconButton size="small">
-          <DeleteIcon fontSize="small" />
-        </IconButton>
-        <IconButton size="small">
-          <DeleteForeverIcon fontSize="small" />
-        </IconButton>
-      </td>
-    </tr>
   );
 }
