@@ -1,5 +1,4 @@
-import { useCallback } from 'react';
-import * as React from 'react';
+import React, { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
@@ -56,13 +55,10 @@ function Feeds(props) {
         </td>
         <td align="right">
           <IconButton size="small">
-            <EditIcon fontSize="small" />
+            <EditIcon fontSize="small" color="primary" />
           </IconButton>
           <IconButton size="small">
-            <DeleteIcon fontSize="small" />
-          </IconButton>
-          <IconButton size="small">
-            <DeleteForeverIcon fontSize="small" />
+            <DeleteForeverIcon fontSize="small" color="error" />
           </IconButton>
         </td>
       </tr>
