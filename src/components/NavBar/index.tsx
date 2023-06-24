@@ -63,7 +63,6 @@ const NavBar = () => {
     'seer.notices',
     useCallback(
       data => {
-        console.log('notice:navbar:', data);
         enqueueSnackbar(<Notice data={data} />, { variant: data.level });
       },
       [enqueueSnackbar],
