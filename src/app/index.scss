@@ -1,5 +1,15 @@
 table.vertical-table {
   width: 100%;
+
+  thead {
+    tr {
+      th,
+      td {
+        padding: 5px 10px;
+      }
+    }
+  }
+
   td,
   th {
     padding: 2px;
@@ -9,11 +19,11 @@ table.vertical-table {
     background-color: #222222;
   }
   thead td {
-    font-weight: bold;
+    font-weight: bolder;
   }
 
   thead td.number {
-    width: 50px;
+    width: 30px;
     font-weight: bold;
     font-size: large;
     text-align: center;
@@ -29,7 +39,7 @@ table.vertical-table {
 
   th.actions,
   td.actions {
-    width: 225px;
+    width: 125px;
   }
   tr:nth-child(even) {
     background-color: #222222;
