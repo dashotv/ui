@@ -5,7 +5,6 @@ import { Medium } from '../types/medium';
 
 export const getMediaUpcoming = async () => {
   const response = await axios.get('/api/tower/upcoming/');
-  console.log('getMediaUpcoming:', response.data);
   return response.data as Medium[];
 };
 

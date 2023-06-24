@@ -5,7 +5,6 @@ import { Download } from '../types/download';
 
 export const getDownloadsActive = async () => {
   const response = await axios.get('/api/tower/downloads/');
-  console.log('getDownloadsActive:', response.data);
   return response.data as Download[];
 };
 
