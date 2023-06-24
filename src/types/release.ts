@@ -19,6 +19,6 @@ export interface Release {
   tags?: string[];
   resolution?: number;
   created_at?: string;
-  published?: string;
   updated_at?: string;
+  published_at?: string;
 }

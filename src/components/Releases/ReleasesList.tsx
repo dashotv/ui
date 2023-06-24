@@ -53,9 +53,7 @@ export function ReleasesList({ data, actions }) {
                     {group(row.group, row.author)}
                   </Stack>
                 </td>
-                <td align="right">
-                  <Moment fromNow>{row.published}</Moment>
-                </td>
+                <td align="right">{row.published_at && <Moment fromNow>{row.published_at}</Moment>}</td>
                 <td align="right">{actions && actions(row)}</td>
               </tr>
             ))}
