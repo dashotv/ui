@@ -78,26 +78,24 @@ export default function ReleasesIndex() {
       </Helmet>
 
       <Container sx={{ padding: 1 }} style={{ overflow: 'auto' }} maxWidth="xl">
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid item xs={9}>
-            <Search form={form} setForm={setForm} defaults={formDefaults} />
+            {data && <ReleasesList data={data.Releases} actions={renderActions} />}
           </Grid>
-          <Grid item xs={3}>
+          <Grid item md={3} xs={12}>
             <Pagination
-              sx={{ mt: 3 }}
-              siblingCount={0}
-              boundaryCount={1}
+              sx={{ mt: 3, float: 'right' }}
+              siblingCount={1}
+              boundaryCount={0}
               page={page}
               count={Math.ceil((data?.Total || 0) / pagesize)}
               onChange={handleChange}
             />
+            <Search form={form} setForm={setForm} defaults={formDefaults} />
           </Grid>
         </Grid>
       </Container>
-      <Container maxWidth="xl">
-        {isFetching && <LoadingIndicator />}
-        {data && <ReleasesList data={data.Releases} actions={renderActions} />}
-      </Container>
+      <Container maxWidth="xl">{isFetching && <LoadingIndicator />}</Container>
     </>
   );
 }

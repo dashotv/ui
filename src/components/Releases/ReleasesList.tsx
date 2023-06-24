@@ -47,7 +47,11 @@ export function ReleasesList({ data, actions }) {
                 <td>
                   <Stack spacing={1} direction="row">
                     <Link to={row.id} title={row.raw}>
-                      <Typography variant="subtitle1">{row.display}</Typography>
+                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '15rem' }}>
+                        <Typography variant="subtitle1" noWrap>
+                          {row.display}
+                        </Typography>
+                      </div>
                     </Link>
                     {resolution(row.resolution)}
                     {group(row.group, row.author)}
