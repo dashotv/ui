@@ -3,6 +3,7 @@ import * as React from 'react';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import StarIcon from '@mui/icons-material/Star';
 import Chip from '@mui/material/Chip';
 
@@ -20,6 +21,7 @@ export default function MediumSmall(props) {
           download={props.download}
           downloadIcon={props.downloadIcon}
           unwatched={props.unwatched}
+          completed={props.completed}
         />
         <Bar progress={props.progress} eta={props.eta} queue={props.queue} />
         <Footer primary={props.primary} secondary={props.secondary} />
@@ -71,6 +73,7 @@ function Icons(props) {
       <Unwatched count={props.unwatched} />
       {props.active && <StarIcon fontSize="small" />}
       {props.download && props.downloadIcon}
+      {props.completed && <CheckCircleIcon fontSize="small" />}
     </div>
   );
 }
