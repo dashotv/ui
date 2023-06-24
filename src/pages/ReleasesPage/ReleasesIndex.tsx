@@ -85,7 +85,6 @@ export default function ReleasesIndex() {
           </Grid>
           <Grid item md={3} xs={12}>
             <Pagination
-              sx={{ mt: 3, float: 'right' }}
               siblingCount={1}
               boundaryCount={0}
               page={page}
