@@ -11,8 +11,6 @@ import LoadingIndicator from 'components/Loading';
 import { ReleasesList } from 'components/Releases/ReleasesList';
 import { Search } from 'components/Search';
 import { useQueryString } from 'hooks/useQueryString';
-import { useReleaseGroup } from 'hooks/useReleaseGroup';
-import { useReleaseResolution } from 'hooks/useReleaseResolution';
 
 const pagesize = 25;
 export function Torch(props) {

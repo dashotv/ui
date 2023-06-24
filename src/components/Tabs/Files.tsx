@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import * as React from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -9,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 export default function Files(props) {
   // console.log('files:', props.files);
   // console.log('torrent:', props.torrent);
-  function sortedFiles(files, torrent) {
+  const sortedFiles = useCallback((files, torrent) => {
     if (!files) {
       return [];
     }
@@ -19,8 +20,9 @@ export default function Files(props) {
       }
       return files.sort((a, b) => a.torrentFile.name.localeCompare(b.torrentFile.name));
     }
-    return files.sort((a, b) => a.num.localeCompare(b.num));
-  }
+    return files.sort((a, b) => a.num - b.num);
+  }, []);
+
   return (
     <div className="files">
       <table className="vertical-table" aria-label="a dense table">
