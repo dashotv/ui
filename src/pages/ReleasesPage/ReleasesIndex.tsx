@@ -77,7 +77,8 @@ export default function ReleasesIndex() {
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
 
-      <Container sx={{ padding: 1 }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container sx={{ padding: 1 }} style={{ overflow: 'hidden' }} maxWidth="xl">
+        {isFetching && <LoadingIndicator />}
         <Grid container spacing={2}>
           <Grid item xs={9}>
             {data && <ReleasesList data={data.Releases} actions={renderActions} />}
@@ -95,7 +96,6 @@ export default function ReleasesIndex() {
           </Grid>
         </Grid>
       </Container>
-      <Container maxWidth="xl">{isFetching && <LoadingIndicator />}</Container>
     </>
   );
 }
