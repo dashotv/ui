@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -26,17 +27,38 @@ export function DownloadBanner(props) {
   const [force, setForce] = useState(props.download.force);
   const { id, medium, status, thash } = props.download;
   const { cover, background, title, display, release_date, favorite, broken, active } = medium;
+  const navigate = useNavigate();
 
   const complete = useCallback(ev => {
     console.log('clicked complete');
     ev.preventDefault(); // for the buttons inside the Link component
   }, []);
 
+  const gotoMedia = useCallback(() => {
+    if (!medium) {
+      return;
+    }
+    let id = medium.id;
+    let type = 'series';
+    switch (medium.type) {
+      case 'Episode':
+        id = medium.series_id;
+        break;
+      case 'Series':
+        break;
+      case 'Movie':
+        type = 'movies';
+        break;
+    }
+
+    navigate('/' + type + '/' + id);
+  }, [medium, navigate]);
+
   const buttons = [
     {
       icon: <ArrowCircleLeftIcon color="primary" />,
       // click: <Link to={`/${props.download?.media?.type}/${props.download?.media?.id}`} />,
-      click: complete,
+      click: ev => gotoMedia(),
       title: 'Go to Media',
     },
     {
