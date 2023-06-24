@@ -65,7 +65,7 @@ function EpisodeRow(props) {
           {props.release}
         </Moment>
       </td>
-      <td align="right">
+      <td style={{ width: '225px' }} align="right">
         <IconButton size="small">
           <CloudCircleIcon color="primary" />
         </IconButton>
