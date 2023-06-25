@@ -2,7 +2,10 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import TheatersIcon from '@mui/icons-material/Theaters';
+import TvIcon from '@mui/icons-material/Tv';
 import Autocomplete from '@mui/material/Autocomplete';
+import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 
@@ -30,6 +33,16 @@ export default function Search(props) {
     navigate(`/${type}/${selected.id}`);
   }, [selected]);
 
+  const icon = option => {
+    switch (option.type) {
+      case 'series':
+        return <TvIcon fontSize="small" />;
+      case 'movie':
+        return <TheatersIcon fontSize="small" />;
+    }
+    return null;
+  };
+
   return (
     <Autocomplete
       id="asynchronous-demo"
@@ -50,9 +63,14 @@ export default function Search(props) {
       isOptionEqualToValue={(option, value) =>
         value === undefined || option?.id?.toString() === (value?.id ?? value)?.toString()
       }
-      getOptionLabel={option => option.display + (option.kind ? ` (${option.kind})` : '')}
+      getOptionLabel={option => option.name}
       options={data ? data : []}
       loading={isFetching}
+      renderOption={(props, option) => (
+        <Box key={option.id} component="li" sx={{ '& > svg': { mr: 2, flexShrink: 0 } }} {...props}>
+          {icon(option)} {option.name}
+        </Box>
+      )}
       renderInput={params => (
         <TextField
           {...params}

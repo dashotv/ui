@@ -9,6 +9,7 @@ export interface Medium {
   source?: string;
   source_id?: string;
   title: string;
+  name: string;
   description?: string;
   slug?: string;
   text?: string;
