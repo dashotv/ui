@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { Setting, SettingsArgs } from '../types/setting';
+import { Setting, SettingsArgs } from 'types/setting';
 
 export const getSeriesAll = async page => {
   const response = await axios.get(`/api/tower/series/?page=${page}`);

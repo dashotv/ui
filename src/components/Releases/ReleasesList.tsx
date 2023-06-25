@@ -5,15 +5,23 @@ import { Link } from 'react-router-dom';
 import ArticleIcon from '@mui/icons-material/Article';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import WavesIcon from '@mui/icons-material/Waves';
+import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { useReleaseGroup } from 'hooks/useReleaseGroup';
 import { useReleaseResolution } from 'hooks/useReleaseResolution';
+import { useReleaseSettingMutation } from 'query/releases';
 
 export function ReleasesList({ data, actions }) {
   const { resolution } = useReleaseResolution();
   const { group } = useReleaseGroup();
+  const releaseUpdate = useReleaseSettingMutation();
+
+  const toggleVerified = row => {
+    releaseUpdate.mutate({ id: row.id, setting: { setting: 'verified', value: !row.verified } });
+  };
+
   return (
     <div className="releases">
       <table className="vertical-table">
@@ -36,7 +44,9 @@ export function ReleasesList({ data, actions }) {
             data.map(row => (
               <tr key={row.id}>
                 <td>
-                  <CheckCircleIcon color={row.verified ? 'secondary' : 'action'} fontSize="small" />
+                  <IconButton size="small" onClick={ev => toggleVerified(row)} title="verified">
+                    <CheckCircleIcon color={row.verified ? 'secondary' : 'action'} fontSize="small" />
+                  </IconButton>
                 </td>
                 <td>{row.nzb ? <ArticleIcon fontSize="small" /> : <WavesIcon fontSize="small" />}</td>
                 <td>

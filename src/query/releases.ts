@@ -1,7 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { Release } from '../types/release';
+import { Release } from 'types/release';
+import { SettingsArgs } from 'types/setting';
 
 export interface ReleasesResponse {
   Count: number;
@@ -35,3 +36,21 @@ export const useReleaseQuery = id =>
     queryKey: ['releases', id],
     queryFn: () => getRelease(id),
   });
+
+export const useReleaseMutation = id => {
+  const queryClient = useQueryClient();
+  return useMutation((release: Release) => axios.put(`/api/tower/releases/${id}`, release), {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['releases', id] });
+    },
+  });
+};
+
+export const useReleaseSettingMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation((args: SettingsArgs) => axios.patch(`/api/tower/releases/${args.id}`, args.setting), {
+    onSuccess: async (data, args) => {
+      await queryClient.invalidateQueries({ queryKey: ['releases', args.id] });
+    },
+  });
+};
