@@ -26,12 +26,12 @@ export default function Search(props) {
       return;
     }
     let type = selected.type;
-    if (type == 'movie') {
+    if (type === 'movie') {
       type = 'movies';
     }
     setSelected(null);
     navigate(`/${type}/${selected.id}`);
-  }, [selected]);
+  }, [selected, navigate]);
 
   const icon = option => {
     switch (option.type) {
