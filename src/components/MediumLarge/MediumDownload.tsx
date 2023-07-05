@@ -9,6 +9,7 @@ import { FilesWithSelector } from 'components/Tabs/FilesWithSelector';
 import { MediumTabs } from 'components/Tabs/MediumTabs';
 import { Nzbgeek } from 'components/Tabs/Nzbgeek';
 import { Torch } from 'components/Tabs/Torch';
+import { useDownloadMutation } from 'query/downloads';
 
 import './large.scss';
 
@@ -17,6 +18,7 @@ export default function MediumDownload(props) {
   const { id, download } = props;
   const { medium } = download;
   const { source_id, search, kind, season_number, episode_number, absolute_number, search_params } = medium;
+  const downloadUpdate = useDownloadMutation(id);
 
   const changeSetting = useCallback(
     (setting, value) => {
@@ -121,6 +123,13 @@ export default function MediumDownload(props) {
     };
   }, [season_number, source_id, processSearch]);
 
+  const deleteInfo = ev => {
+    console.log('deleteInfo');
+    download.release_id = '';
+    download.url = '';
+    downloadUpdate.mutate(download);
+  };
+
   const tabsMap = {
     Files: (
       <FilesWithSelector files={props.files} torrent={props.torrent} episodes={props.episodes} updater={selectMedium} />
@@ -139,7 +148,7 @@ export default function MediumDownload(props) {
         nzbStatus={props.nzbStatus}
         change={changeSetting}
       />
-      <DownloadInfo download={props.download} />
+      <DownloadInfo download={props.download} delete={deleteInfo} />
       <MediumTabs data={tabsMap} />
     </div>
   );

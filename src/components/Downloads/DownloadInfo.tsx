@@ -37,8 +37,12 @@ export function DownloadInfo(props) {
   return (
     <Stack direction="row" sx={{ float: 'right' }}>
       {data.hash && <Chip label={`Hash: ${data.hash}`} variant="outlined" size="small" color="primary" />}
-      {data.url && <Chip label={`URL: ${data.url}`} variant="outlined" size="small" color="primary" />}
-      {data.torch && <Chip label={`Torch: ${data.torch}`} variant="outlined" size="small" color="primary" />}
+      {data.url && (
+        <Chip label={`URL: ${data.url}`} onDelete={props.delete} variant="outlined" size="small" color="primary" />
+      )}
+      {data.torch && (
+        <Chip label={`Torch: ${data.torch}`} onDelete={props.delete} variant="outlined" size="small" color="primary" />
+      )}
     </Stack>
   );
 
