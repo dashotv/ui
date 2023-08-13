@@ -47,7 +47,7 @@ export function FilesWithSelector(props) {
       f.medium = ep;
       tracking.set(id, selected);
       setTracking(tracking);
-      console.log(tracking);
+      // console.log(tracking);
       props.updater(id, selected);
     },
     [getEpisode, setTracking, tracking, props, selected, getFile],

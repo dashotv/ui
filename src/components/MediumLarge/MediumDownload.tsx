@@ -9,7 +9,7 @@ import { FilesWithSelector } from 'components/Tabs/FilesWithSelector';
 import { MediumTabs } from 'components/Tabs/MediumTabs';
 import { Nzbgeek } from 'components/Tabs/Nzbgeek';
 import { Torch } from 'components/Tabs/Torch';
-import { useDownloadMutation } from 'query/downloads';
+import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMutation } from 'query/downloads';
 
 import './large.scss';
 
@@ -19,42 +19,16 @@ export default function MediumDownload(props) {
   const { medium } = download;
   const { source_id, search, kind, season_number, episode_number, absolute_number, search_params } = medium;
   const downloadUpdate = useDownloadMutation(id);
+  const downloadSetting = useDownloadSettingMutation(id);
+  const downloadSelection = useDownloadSelectionMutation(id);
 
-  const changeSetting = useCallback(
-    (setting, value) => {
-      axios
-        .patch(`/api/tower/downloads/${id}`, {
-          setting: setting,
-          value: value,
-        })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    },
-    [enqueueSnackbar, id],
-  );
+  function changeSetting(setting, value) {
+    downloadSetting.mutate({ setting: setting, value: value });
+  }
 
-  const selectMedium = useCallback(
-    (eid, num) => {
-      axios
-        .put(`/api/tower/downloads/${id}/select`, {
-          mediumId: eid,
-          num: num,
-        })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    },
-    [id, enqueueSnackbar],
-  );
+  function selectMedium(eid, num) {
+    downloadSelection.mutate({ mediumId: eid, num: num });
+  }
 
   useSubscription(
     'seer.downloads',

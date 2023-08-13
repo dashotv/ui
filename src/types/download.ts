@@ -35,3 +35,8 @@ export interface DownloadEvent {
   event: string;
   download: Download;
 }
+
+export interface DownloadSelection {
+  mediumId: number;
+  num: number;
+}
