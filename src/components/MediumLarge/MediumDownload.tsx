@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { useSnackbar } from 'notistack';
 import { useCallback } from 'react';
 import * as React from 'react';
 
@@ -14,7 +12,6 @@ import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMu
 import './large.scss';
 
 export default function MediumDownload(props) {
-  const { enqueueSnackbar } = useSnackbar();
   const { id, download } = props;
   const { medium } = download;
   const { source_id, search, kind, season_number, episode_number, absolute_number, search_params } = medium;
