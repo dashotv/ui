@@ -57,7 +57,7 @@ export function ReleasesList({ data, actions }) {
                 <td>
                   <Stack spacing={1} direction="row">
                     <Link to={row.id} title={row.raw}>
-                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '15rem' }}>
+                      <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '575px' }}>
                         <Typography variant="subtitle1" noWrap>
                           {row.display}
                         </Typography>

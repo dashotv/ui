@@ -61,167 +61,159 @@ export function Search(props) {
     setData(defaults);
   };
   return (
-    <Box
-      component="form"
-      // sx={{
-      //   '& > :not(style)': { m: 1 },
-      // }}
-      sx={{ mr: '5px' }}
-      noValidate
-      autoComplete="off"
-    >
-      <Checkbox
-        sx={{ m: 1 }}
-        name="exact"
-        icon={<CircleOutlinedIcon />}
-        checkedIcon={<CircleIcon />}
-        checked={data.exact}
-        onChange={handleChangeCheckbox}
-      />
-      <Checkbox
-        sx={{ m: 1 }}
-        name="verified"
-        icon={<CheckCircleOutlineIcon />}
-        checkedIcon={<CheckCircleIcon />}
-        checked={data.verified}
-        onChange={handleChangeCheckbox}
-      />
-      <Button sx={{ mt: 0 }} onClick={handleSubmit}>
-        Go
-      </Button>
-      <Button sx={{ mt: 0 }} onClick={handleReset}>
-        Reset
-      </Button>
-      <TextField
-        sx={{ m: 1, mr: 25 }}
-        fullWidth={true}
-        id="search"
-        name="text"
-        label="Name"
-        variant="standard"
-        margin="none"
-        size="small"
-        value={data.text}
+    <>
+      <Box
+        component="form"
+        // sx={{
+        //   '& > :not(style)': { m: 1 },
+        // }}
+        noValidate
         autoComplete="off"
-        onChange={handleChange}
-      />
-      <TextField
-        sx={{ m: 1 }}
-        fullWidth={true}
-        id="year"
-        name="year"
-        label="Year"
-        variant="standard"
-        margin="none"
-        size="small"
-        value={data.year}
-        onChange={handleChange}
-      />
-      <TextField
-        sx={{ m: 1 }}
-        fullWidth={true}
-        id="season"
-        name="season"
-        label="Season"
-        variant="standard"
-        margin="none"
-        size="small"
-        value={data.season}
-        onChange={handleChange}
-      />
-      <TextField
-        sx={{ m: 1 }}
-        fullWidth={true}
-        id="episode"
-        name="episode"
-        label="Episode"
-        variant="standard"
-        margin="none"
-        size="small"
-        value={data.episode}
-        onChange={handleChange}
-      />
-      <TextField
-        sx={{ m: 1 }}
-        fullWidth={true}
-        id="group"
-        name="group"
-        label="Group"
-        variant="standard"
-        margin="none"
-        size="small"
-        value={data.group}
-        onChange={handleChange}
-      />
-      <TextField
-        sx={{ m: 1 }}
-        fullWidth={true}
-        id="author"
-        name="author"
-        label="Author"
-        variant="standard"
-        margin="none"
-        size="small"
-        value={data.author}
-        onChange={handleChange}
-      />
-      <TextField
-        sx={{ m: 1 }}
-        fullWidth={true}
-        id="resolution"
-        name="resolution"
-        select
-        label="Res"
-        variant="standard"
-        margin="none"
-        size="small"
-        value={data.resolution}
-        onChange={handleChange}
       >
-        {resolutions.map(option => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextField
-        sx={{ m: 1 }}
-        fullWidth={true}
-        id="source"
-        name="source"
-        select
-        label="Source"
-        variant="standard"
-        margin="none"
-        size="small"
-        value={data.source}
-        onChange={handleChange}
-      >
-        {sources.map(option => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextField
-        sx={{ m: 1 }}
-        fullWidth={true}
-        id="type"
-        name="type"
-        select
-        label="Type"
-        variant="standard"
-        margin="none"
-        size="small"
-        value={data.type}
-        onChange={handleChange}
-      >
-        {types.map(option => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
-    </Box>
+        <TextField
+          sx={{ m: 1, width: '75px' }}
+          id="search"
+          name="text"
+          label="Name"
+          variant="standard"
+          margin="none"
+          size="small"
+          value={data.text}
+          autoComplete="off"
+          onChange={handleChange}
+        />
+        <TextField
+          sx={{ m: 1, width: '50px' }}
+          id="year"
+          name="year"
+          label="Year"
+          variant="standard"
+          margin="none"
+          size="small"
+          value={data.year}
+          onChange={handleChange}
+        />
+        <TextField
+          sx={{ m: 1, width: '50px' }}
+          id="season"
+          name="season"
+          label="Season"
+          variant="standard"
+          margin="none"
+          size="small"
+          value={data.season}
+          onChange={handleChange}
+        />
+        <TextField
+          sx={{ m: 1, width: '50px' }}
+          id="episode"
+          name="episode"
+          label="Episode"
+          variant="standard"
+          margin="none"
+          size="small"
+          value={data.episode}
+          onChange={handleChange}
+        />
+        <TextField
+          sx={{ m: 1, width: '50px' }}
+          id="group"
+          name="group"
+          label="Group"
+          variant="standard"
+          margin="none"
+          size="small"
+          value={data.group}
+          onChange={handleChange}
+        />
+        <TextField
+          sx={{ m: 1, width: '50px' }}
+          id="author"
+          name="author"
+          label="Author"
+          variant="standard"
+          margin="none"
+          size="small"
+          value={data.author}
+          onChange={handleChange}
+        />
+        <TextField
+          sx={{ m: 1, width: '75px' }}
+          id="resolution"
+          name="resolution"
+          select
+          label="Res"
+          variant="standard"
+          margin="none"
+          size="small"
+          value={data.resolution}
+          onChange={handleChange}
+        >
+          {resolutions.map(option => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          sx={{ m: 1, width: '75px' }}
+          id="source"
+          name="source"
+          select
+          label="Source"
+          variant="standard"
+          margin="none"
+          size="small"
+          value={data.source}
+          onChange={handleChange}
+        >
+          {sources.map(option => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          sx={{ m: 1, width: '75px' }}
+          id="type"
+          name="type"
+          select
+          label="Type"
+          variant="standard"
+          margin="none"
+          size="small"
+          value={data.type}
+          onChange={handleChange}
+        >
+          {types.map(option => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <Checkbox
+          sx={{ mt: 2 }}
+          name="exact"
+          icon={<CircleOutlinedIcon />}
+          checkedIcon={<CircleIcon />}
+          checked={data.exact}
+          onChange={handleChangeCheckbox}
+        />
+        <Checkbox
+          sx={{ mt: 2 }}
+          name="verified"
+          icon={<CheckCircleOutlineIcon />}
+          checkedIcon={<CheckCircleIcon />}
+          checked={data.verified}
+          onChange={handleChangeCheckbox}
+        />
+        <Button sx={{ mt: 2 }} onClick={handleSubmit}>
+          Go
+        </Button>
+        <Button sx={{ mt: 2 }} onClick={handleReset}>
+          Reset
+        </Button>
+      </Box>
+    </>
   );
 }

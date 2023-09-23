@@ -79,11 +79,11 @@ export default function ReleasesIndex() {
 
       <Container sx={{ padding: 1 }} style={{ overflow: 'hidden' }} maxWidth="xl">
         {isFetching && <LoadingIndicator />}
-        <Grid container spacing={2}>
-          <Grid item xs={9}>
-            {data && <ReleasesList data={data.Releases} actions={renderActions} />}
+        <Grid container>
+          <Grid item xs={9} sx={{ pt: 1, pb: 2 }}>
+            <Search form={form} setForm={setForm} defaults={formDefaults} />
           </Grid>
-          <Grid item md={3} xs={12}>
+          <Grid item xs={3} sx={{ pt: 3 }}>
             <Pagination
               siblingCount={1}
               boundaryCount={0}
@@ -91,9 +91,11 @@ export default function ReleasesIndex() {
               count={Math.ceil((data?.Total || 0) / pagesize)}
               onChange={handleChange}
             />
-            <Search form={form} setForm={setForm} defaults={formDefaults} />
           </Grid>
         </Grid>
+      </Container>
+      <Container sx={{ padding: 1 }} style={{ overflow: 'hidden' }} maxWidth="xl">
+        {data && <ReleasesList data={data.Releases} actions={renderActions} />}
       </Container>
     </>
   );
