@@ -12,6 +12,9 @@ span.spacer {
 }
 
 div.popular {
+  margin-right: 7px;
+  margin-left: 7px;
+
   div.header {
     font-size: xx-large;
     font-weight: bolder;
@@ -32,6 +35,9 @@ div.popular {
       text-overflow: ellipsis;
       width: 350px;
       font-size: 18px;
+      padding-top: 1px;
+      padding-bottom: 1px;
+      padding-left: 5px;
     }
 
     span.number {
@@ -39,7 +45,9 @@ div.popular {
       text-align: right;
       font-size: 18px;
       width: 50px;
-      padding-right: 15px;
+      padding-top: 1px;
+      padding-bottom: 1px;
+      padding-right: 5px;
     }
   }
 }
