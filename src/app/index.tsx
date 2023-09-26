@@ -14,9 +14,6 @@ import { Helmet } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
 
 import NavBar from 'components/NavBar';
-import FeedsPage from 'pages/FeedsPage';
-import FeedsIndex from 'pages/FeedsPage/FeedsIndex';
-import FeedsShow from 'pages/FeedsPage/FeedsShow';
 import HomePage from 'pages/HomePage';
 import DownloadsShowPage from 'pages/HomePage/DownloadsShowPage';
 import RecentPage from 'pages/HomePage/RecentPage';
@@ -26,7 +23,10 @@ import MoviesIndex from 'pages/MoviesPage/MoviesIndex';
 import MoviesShow from 'pages/MoviesPage/MoviesShow';
 import { NotFoundPage } from 'pages/NotFoundPage';
 import ReleasesPage from 'pages/ReleasesPage';
+import FeedsIndex from 'pages/ReleasesPage/FeedsIndex';
+import FeedsShow from 'pages/ReleasesPage/FeedsShow';
 import ReleasesIndex from 'pages/ReleasesPage/ReleasesIndex';
+import ReleasesSearch from 'pages/ReleasesPage/ReleasesSearch';
 import ReleasesShow from 'pages/ReleasesPage/ReleasesShow';
 import SeriesPage from 'pages/SeriesPage';
 import SeriesIndex from 'pages/SeriesPage/SeriesIndex';
@@ -61,11 +61,10 @@ export function App() {
         </Route>
         <Route path="releases" element={<ReleasesPage />}>
           <Route path="" element={<ReleasesIndex />} />
+          <Route path="search" element={<ReleasesSearch />} />
           <Route path=":id" element={<ReleasesShow />} />
-        </Route>
-        <Route path="feeds" element={<FeedsPage />}>
-          <Route path="" element={<FeedsIndex />} />
-          <Route path=":id" element={<FeedsShow />} />
+          <Route path="feeds" element={<FeedsIndex />} />
+          <Route path="feeds/:id" element={<FeedsShow />} />
         </Route>
         <Route element={<NotFoundPage />} />
       </Routes>

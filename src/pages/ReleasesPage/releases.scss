@@ -4,12 +4,40 @@ span.spacer {
 }
 
 .release {
-  .titlebar {
-  }
-
   .title span.title {
     font-size: xx-large;
     font-weight: bolder;
     margin-right: 10px;
+  }
+}
+
+div.popular {
+  div.header {
+    font-size: xx-large;
+    font-weight: bolder;
+    margin-left: 3px;
+  }
+
+  div.entry {
+    display: inline-flex;
+    flex-flow: row nowrap;
+    max-width: 100%; /* or width:100% if you want the spans to take all available space */
+
+    span.title {
+      flex: 1;
+      white-space: pre;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 350px;
+    }
+
+    span.number {
+      white-space: nowrap;
+      text-align: right;
+      font-size: 14px;
+      width: 50px;
+      display: inline-block;
+      padding-right: 15px;
+    }
   }
 }

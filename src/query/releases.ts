@@ -23,6 +23,11 @@ export const getRelease = async id => {
   return response.data;
 };
 
+export const getPopular = async (interval: string) => {
+  const response = await axios.get(`/api/tower/releases/popular/${interval}`);
+  return response.data;
+};
+
 export const useReleasesQuery = (start, pagesize, queryString) =>
   useQuery({
     queryKey: ['releases', start, pagesize, queryString],
@@ -35,6 +40,12 @@ export const useReleaseQuery = id =>
   useQuery({
     queryKey: ['releases', id],
     queryFn: () => getRelease(id),
+  });
+
+export const usePopularQuery = (interval: string) =>
+  useQuery({
+    queryKey: ['releases', 'popular', interval],
+    queryFn: () => getPopular(interval),
   });
 
 export const useReleaseMutation = id => {
