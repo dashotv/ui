@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -46,7 +47,8 @@ function SearchURL(text, type) {
 }
 
 export default function ReleasesIndex() {
-  const { isFetching, data } = usePopularQuery('daily');
+  const { interval } = useParams();
+  const { isFetching, data } = usePopularQuery(interval || 'daily');
 
   return (
     <>

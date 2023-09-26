@@ -8,7 +8,9 @@ import SubNav from 'components/SubNav';
 
 export default function ReleasesPage() {
   const items = [
-    { name: 'Releases', path: '/releases', exact: true },
+    { name: 'Daily', path: '/releases', exact: true },
+    { name: 'Weekly', path: '/releases/weekly' },
+    { name: 'Monthly', path: '/releases/monthly' },
     { name: 'Search', path: '/releases/search' },
     { name: 'Feeds', path: '/releases/feeds' },
   ];

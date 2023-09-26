@@ -61,8 +61,9 @@ export function App() {
         </Route>
         <Route path="releases" element={<ReleasesPage />}>
           <Route path="" element={<ReleasesIndex />} />
+          <Route path=":interval" element={<ReleasesIndex />} />
           <Route path="search" element={<ReleasesSearch />} />
-          <Route path=":id" element={<ReleasesShow />} />
+          <Route path="search/:id" element={<ReleasesShow />} />
           <Route path="feeds" element={<FeedsIndex />} />
           <Route path="feeds/:id" element={<FeedsShow />} />
         </Route>
