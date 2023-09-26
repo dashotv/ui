@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useSearchParams } from 'react-router-dom';
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
@@ -34,11 +35,19 @@ const formDefaults = {
 };
 
 export default function ReleasesSearch() {
-  const [form, setForm] = useState(formDefaults);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [form, setForm] = useState(
+    Object.assign(formDefaults, {
+      text: searchParams.get('text') || '',
+      type: searchParams.get('type') || '',
+      resolution: searchParams.get('resolution') || '',
+      exact: searchParams.get('exact') == 'true',
+      verified: searchParams.get('verified') == 'true',
+    }),
+  );
   const { queryString } = useQueryString();
   const [page, setPage] = useState(1);
   const [qs, setQs] = useState(queryString(form));
-
   const { isFetching, data } = useReleasesQuery(page, pagesize, qs);
 
   const handleChange = useCallback((event: React.ChangeEvent<unknown>, value: number) => {

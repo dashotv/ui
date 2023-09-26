@@ -3,24 +3,46 @@ import { Helmet } from 'react-helmet-async';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 
 import LoadingIndicator from 'components/Loading';
+import { useQueryString } from 'hooks/useQueryString';
 import { usePopularQuery } from 'query/releases';
 
 import './releases.scss';
 
 function PopularList({ data, type }) {
+  const url = type != 'anime' ? `http://themoviedb.org/search?query=` : 'https://myanimelist.net/search/all?cat=all&q=';
+
   return (
     <div className="popular">
       <div className="header">{type}</div>
       {data?.map((row, index) => (
         <div key={index} className="entry">
-          <span className="title">{row.name}</span>
-          <span className="number">{row.count}</span>
+          <span className="title">
+            <Link href={`${url}${row.name}`}>{row.name}</Link>
+          </span>
+          <span className="number">
+            <Link href={SearchURL(row.name, row.type)}>{row.count}</Link>
+          </span>
         </div>
       ))}
     </div>
   );
+}
+
+function SearchURL(text, type) {
+  const { queryString } = useQueryString();
+  const base = '/releases/search?';
+  const settings = {
+    text: text,
+    type: type,
+    resolution: type == 'movies' ? '1080' : '',
+    exact: type == 'movies' ? false : true,
+    verified: true,
+  };
+
+  return base + queryString(settings);
 }
 
 export default function ReleasesIndex() {

@@ -8,8 +8,8 @@ export function useQueryString() {
         // @ts-ignore
         str.push(encodeURIComponent(p) + '=' + encodeURIComponent(form[p]));
       }
+
     const qs = str.join('&');
-    console.log('queryString=', qs);
     return qs;
   }, []);
 

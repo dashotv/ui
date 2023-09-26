@@ -17,7 +17,9 @@ div.popular {
     font-weight: bolder;
     margin-left: 3px;
   }
-
+  div.entry:nth-child(odd) {
+    background-color: #1f1f1f;
+  }
   div.entry {
     display: inline-flex;
     flex-flow: row nowrap;
@@ -29,14 +31,14 @@ div.popular {
       overflow: hidden;
       text-overflow: ellipsis;
       width: 350px;
+      font-size: 18px;
     }
 
     span.number {
       white-space: nowrap;
       text-align: right;
-      font-size: 14px;
+      font-size: 18px;
       width: 50px;
-      display: inline-block;
       padding-right: 15px;
     }
   }
