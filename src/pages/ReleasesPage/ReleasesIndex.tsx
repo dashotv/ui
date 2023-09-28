@@ -21,7 +21,9 @@ function PopularList({ data, type }) {
       {data?.map((row, index) => (
         <div key={index} className="entry">
           <span className="title">
-            <Link href={`${url}${row.name}`}>{row.name}</Link>
+            <Link href={`${url}${row.name}`} target="_window">
+              {row.name}
+            </Link>
           </span>
           <span className="number">
             <Link href={SearchURL(row.name, row.type)}>{row.count}</Link>
