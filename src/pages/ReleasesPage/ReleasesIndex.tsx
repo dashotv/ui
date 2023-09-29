@@ -14,7 +14,7 @@ import './releases.scss';
 
 function PopularList({ data, type }) {
   const url =
-    type !== 'anime' ? `http://themoviedb.org/search?query=` : 'https://myanimelist.net/search/anime.php?cat=anime&q=';
+    type !== 'anime' ? `http://themoviedb.org/search?query=` : 'https://myanimelist.net/anime.php?cat=anime&q=';
 
   return (
     <div className="popular">
