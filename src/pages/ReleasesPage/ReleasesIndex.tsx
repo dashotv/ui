@@ -13,7 +13,8 @@ import { usePopularQuery } from 'query/releases';
 import './releases.scss';
 
 function PopularList({ data, type }) {
-  const url = type != 'anime' ? `http://themoviedb.org/search?query=` : 'https://myanimelist.net/search/all?cat=all&q=';
+  const url =
+    type !== 'anime' ? `http://themoviedb.org/search?query=` : 'https://myanimelist.net/search/anime.php?cat=anime&q=';
 
   return (
     <div className="popular">
@@ -40,8 +41,8 @@ function SearchURL(text, type) {
   const settings = {
     text: text,
     type: type,
-    resolution: type == 'movies' ? '1080' : '',
-    exact: type == 'movies' ? false : true,
+    resolution: type === 'movies' ? '1080' : '',
+    exact: type === 'movies' ? false : true,
     verified: true,
   };
 
