@@ -24,6 +24,7 @@ function PopularList({ data, type }) {
           <span className="title">
             <Link href={`${url}${row.name}`} target="_window">
               {row.name}
+              {row.year > 0 && ` (${row.year})`}
             </Link>
           </span>
           <span className="number">
