@@ -3,12 +3,6 @@ type: docker
 name: default
 
 steps:
-  - name: test
-    commands:
-      - echo "KEY=${REACT_APP_CLERK_PUBLISHABLE_KEY}"
-    environment:
-      REACT_APP_CLERK_PUBLISHABLE_KEY:
-        from_secret: REACT_APP_CLERK_PUBLISHABLE_KEY
   - name: publish
     image: plugins/docker
     commands:
