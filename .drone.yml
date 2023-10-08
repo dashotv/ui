@@ -6,11 +6,11 @@ steps:
   - name: publish
     image: plugins/docker
     commands:
-      - echo "KEY=${TEST}"
+      - echo "KEY=${REACT_APP_CLERK_PUBLISHABLE_KEY}"
       - env
     environment:
-      TEST:
-        from_secret: REACT_APP_CLERK_PUBLISHABLE_KEY
+      REACT_APP_CLERK_PUBLISHABLE_KEY:
+        from_secret: CLERK_KEY
     settings:
       username:
         from_secret: dockerhub_username
