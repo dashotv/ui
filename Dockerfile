@@ -7,6 +7,9 @@ RUN yarn install --production
 COPY . .
 RUN yarn build
 
+ARG REACT_APP_CLERK_PUBLISHABLE_KEY
+ENV REACT_APP_CLERK_PUBLISHABLE_KEY=$REACT_APP_CLERK_PUBLISHABLE_KEY
+
 FROM nginx:alpine
 
 COPY ./etc/default.conf /etc/nginx/conf.d/default.conf

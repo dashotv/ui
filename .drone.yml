@@ -13,6 +13,7 @@ steps:
       repo: dashotv/ui
       tags:
         - latest
+      build_args_from_env: [REACT_APP_CLERK_PUBLISHABLE_KEY]
   - name: deploy
     image: appleboy/drone-ssh
     settings:
