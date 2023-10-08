@@ -14,6 +14,9 @@ steps:
       tags:
         - latest
       build_args_from_env: [REACT_APP_CLERK_PUBLISHABLE_KEY]
+      environment:
+        REACT_APP_CLERK_PUBLISHABLE_KEY:
+          from_secret: REACT_APP_CLERK_PUBLISHABLE_KEY
   - name: deploy
     image: appleboy/drone-ssh
     settings:
