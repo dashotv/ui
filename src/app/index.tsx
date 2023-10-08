@@ -5,6 +5,7 @@
  * This component is the skeleton around the actual pages, and should only
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
+import { ClerkProvider, RedirectToSignIn, SignIn, SignUp, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -35,6 +36,10 @@ import { GlobalStyle } from 'styles/global-styles';
 
 import './index.scss';
 
+export function ClerkWrapper({ children }) {
+  return <SignedIn>{children}</SignedIn>;
+}
+
 export function App() {
   return (
     <>
@@ -44,31 +49,155 @@ export function App() {
 
       <NavBar />
       <Routes>
-        <Route path="/" element={<HomePage />}>
-          <Route path="" element={<UpcomingPage />} />
-          <Route path="recent" element={<RecentPage />} />
+        <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
+        <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
+        <Route
+          path="/"
+          element={
+            <ClerkWrapper>
+              <HomePage />
+            </ClerkWrapper>
+          }
+        >
+          <Route
+            path=""
+            element={
+              <ClerkWrapper>
+                <UpcomingPage />
+              </ClerkWrapper>
+            }
+          />
+          <Route
+            path="recent"
+            element={
+              <ClerkWrapper>
+                <RecentPage />
+              </ClerkWrapper>
+            }
+          />
           <Route path="downloads">
-            <Route path=":id" element={<DownloadsShowPage />} />
+            <Route
+              path=":id"
+              element={
+                <ClerkWrapper>
+                  <DownloadsShowPage />
+                </ClerkWrapper>
+              }
+            />
           </Route>
         </Route>
-        <Route path="series" element={<SeriesPage />}>
-          <Route path="" element={<SeriesIndex />} />
-          <Route path=":id" element={<SeriesShow />} />
+        <Route
+          path="series"
+          element={
+            <ClerkWrapper>
+              <SeriesPage />
+            </ClerkWrapper>
+          }
+        >
+          <Route
+            path=""
+            element={
+              <ClerkWrapper>
+                <SeriesIndex />
+              </ClerkWrapper>
+            }
+          />
+          <Route
+            path=":id"
+            element={
+              <ClerkWrapper>
+                <SeriesShow />
+              </ClerkWrapper>
+            }
+          />
         </Route>
-        <Route path="movies" element={<MoviesPage />}>
-          <Route path="" element={<MoviesIndex />} />
-          <Route path=":id" element={<MoviesShow />} />
+        <Route
+          path="movies"
+          element={
+            <ClerkWrapper>
+              <MoviesPage />
+            </ClerkWrapper>
+          }
+        >
+          <Route
+            path=""
+            element={
+              <ClerkWrapper>
+                <MoviesIndex />
+              </ClerkWrapper>
+            }
+          />
+          <Route
+            path=":id"
+            element={
+              <ClerkWrapper>
+                <MoviesShow />
+              </ClerkWrapper>
+            }
+          />
         </Route>
-        <Route path="releases" element={<ReleasesPage />}>
-          <Route path="" element={<ReleasesIndex />} />
-          <Route path=":interval" element={<ReleasesIndex />} />
-          <Route path="search" element={<ReleasesSearch />} />
-          <Route path="search/:id" element={<ReleasesShow />} />
-          <Route path="feeds" element={<FeedsIndex />} />
-          <Route path="feeds/:id" element={<FeedsShow />} />
+        <Route
+          path="releases"
+          element={
+            <ClerkWrapper>
+              <ReleasesPage />
+            </ClerkWrapper>
+          }
+        >
+          <Route
+            path=""
+            element={
+              <ClerkWrapper>
+                <ReleasesIndex />
+              </ClerkWrapper>
+            }
+          />
+          <Route
+            path=":interval"
+            element={
+              <ClerkWrapper>
+                <ReleasesIndex />
+              </ClerkWrapper>
+            }
+          />
+          <Route
+            path="search"
+            element={
+              <ClerkWrapper>
+                <ReleasesSearch />
+              </ClerkWrapper>
+            }
+          />
+          <Route
+            path="search/:id"
+            element={
+              <ClerkWrapper>
+                <ReleasesShow />
+              </ClerkWrapper>
+            }
+          />
+          <Route
+            path="feeds"
+            element={
+              <ClerkWrapper>
+                <FeedsIndex />
+              </ClerkWrapper>
+            }
+          />
+          <Route
+            path="feeds/:id"
+            element={
+              <ClerkWrapper>
+                <FeedsShow />
+              </ClerkWrapper>
+            }
+          />
         </Route>
         <Route element={<NotFoundPage />} />
       </Routes>
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
       <GlobalStyle />
     </>
   );

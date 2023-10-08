@@ -1,3 +1,4 @@
+import { UserButton } from '@clerk/clerk-react';
 import { useSnackbar } from 'notistack';
 import * as React from 'react';
 import { useCallback, useState } from 'react';
@@ -171,6 +172,10 @@ const NavBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            <UserButton />
+          </Box>
+
+          {/*<Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Shawn" src="/static/images/avatar/2.jpg" />
@@ -198,7 +203,7 @@ const NavBar = () => {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>

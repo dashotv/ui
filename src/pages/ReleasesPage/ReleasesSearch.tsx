@@ -35,14 +35,14 @@ const formDefaults = {
 };
 
 export default function ReleasesSearch() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [form, setForm] = useState(
     Object.assign(formDefaults, {
       text: searchParams.get('text') || '',
       type: searchParams.get('type') || '',
       resolution: searchParams.get('resolution') || '',
-      exact: searchParams.get('exact') == 'true',
-      verified: searchParams.get('verified') == 'true',
+      exact: searchParams.get('exact') === 'true',
+      verified: searchParams.get('verified') === 'true',
     }),
   );
   const { queryString } = useQueryString();
