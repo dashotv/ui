@@ -6,10 +6,10 @@ steps:
   - name: publish
     image: plugins/docker
     commands:
-      - echo "KEY=${REACT_APP_CLERK_PUBLISHABLE_KEY}"
+      - echo "KEY=${TEST}"
       - env
     environment:
-      REACT_APP_CLERK_PUBLISHABLE_KEY:
+      TEST:
         from_secret: REACT_APP_CLERK_PUBLISHABLE_KEY
     settings:
       username:
