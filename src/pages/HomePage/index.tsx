@@ -16,10 +16,10 @@ export default function HomePage() {
     <>
       <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <SubNav items={items} />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Gauges />
           </Grid>
         </Grid>

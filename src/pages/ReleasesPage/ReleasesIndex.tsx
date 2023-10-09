@@ -64,13 +64,13 @@ export default function ReleasesIndex() {
       <Container style={{ overflow: 'hidden' }} maxWidth="xl">
         {isFetching && <LoadingIndicator />}
         <Grid container>
-          <Grid item xs={4}>
+          <Grid item md={4} xs={12}>
             {data && data.tv && <PopularList type="tv" data={data.tv} />}
           </Grid>
-          <Grid item xs={4}>
+          <Grid item md={4} xs={12}>
             {data && data.anime && <PopularList type="anime" data={data.anime} />}
           </Grid>
-          <Grid item xs={4}>
+          <Grid item md={4} xs={12}>
             {data && data.movies && <PopularList type="movies" data={data.movies} />}
           </Grid>
         </Grid>

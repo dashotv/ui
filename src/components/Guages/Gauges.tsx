@@ -11,8 +11,8 @@ import { useSubscription } from 'components/Nats/useSubscription';
 
 import './gauges.scss';
 
-function BaseGauge(props) {
-  return <Chip icon={props.icon} label={`${props.title}: ${props.value}`} />;
+function BaseGauge({ icon, title, value, data, color }) {
+  return <Chip icon={icon} label={value} />;
 }
 
 function DiskGauge(props) {

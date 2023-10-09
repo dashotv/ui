@@ -28,10 +28,10 @@ export default function MoviesIndex() {
       </Helmet>
       <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="h4">Movies</Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Pagination
               sx={{ float: 'right' }}
               count={Math.ceil((data?.count || 0) / pagesize)}

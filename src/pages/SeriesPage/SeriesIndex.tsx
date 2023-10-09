@@ -28,10 +28,10 @@ export default function SeriesIndex() {
       </Helmet>
       <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="h4">Series</Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             {data && (
               <Pagination
                 sx={{ float: 'right' }}

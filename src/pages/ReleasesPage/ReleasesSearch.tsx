@@ -89,10 +89,10 @@ export default function ReleasesSearch() {
       <Container style={{ overflow: 'hidden' }} maxWidth="xl">
         {isFetching && <LoadingIndicator />}
         <Grid container>
-          <Grid item xs={9}>
+          <Grid item xs={12} md={9}>
             <Search form={form} setForm={setForm} defaults={formDefaults} />
           </Grid>
-          <Grid item xs={3} sx={{ pt: 3 }}>
+          <Grid item xs={12} md={3} sx={{ pt: 3 }}>
             <Pagination
               siblingCount={1}
               boundaryCount={0}
