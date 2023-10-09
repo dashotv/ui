@@ -34,6 +34,8 @@ steps:
     settings:
       webhook:
         from_secret: slack_webhook
+    when:
+      status: [success, failure]
 
 trigger:
   branch:
