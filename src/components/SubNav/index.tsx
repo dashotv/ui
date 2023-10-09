@@ -1,12 +1,20 @@
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import MoreIcon from '@mui/icons-material/MoreVert';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import './SubNav.scss';
 
-export default function SubNav(props) {
+export default function Subnav({ items }) {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const location = useLocation();
 
   const matchPath = (path, exact) => {
@@ -16,16 +24,123 @@ export default function SubNav(props) {
     return location.pathname.startsWith(path);
   };
 
+  const current = () => {
+    for (const { name, path, exact } of items) {
+      if (matchPath(path, exact)) {
+        return name;
+      }
+    }
+    return 'Viewing';
+  };
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
   return (
-    <div className="subnav">
-      {props.items &&
-        props.items.map(({ name, path, exact }) => (
-          <Link key={name} to={path}>
-            <Button variant={matchPath(path, exact) ? 'outlined' : 'text'}>
-              <Typography textAlign="center">{name}</Typography>
-            </Button>
-          </Link>
-        ))}
-    </div>
+    <Toolbar disableGutters>
+      <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleOpenNavMenu}
+          color="inherit"
+        >
+          <MoreIcon />
+          <Typography sx={{ ml: '5px' }} variant="h6" onClick={handleOpenNavMenu}>
+            {current()}
+          </Typography>
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorElNav}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          open={Boolean(anchorElNav)}
+          onClose={handleCloseNavMenu}
+          sx={{
+            display: { xs: 'block', md: 'none' },
+          }}
+        >
+          {items &&
+            items.map(({ name, path, exact }) => (
+              <Link key={name} to={path}>
+                <MenuItem key={name} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{name}</Typography>
+                </MenuItem>
+              </Link>
+            ))}
+        </Menu>
+      </Box>
+
+      <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+        {items &&
+          items.map(({ name, path, exact }) => (
+            <Link key={name} to={path}>
+              <Button variant={matchPath(path, exact) ? 'outlined' : 'text'}>
+                <Typography textAlign="center">{name}</Typography>
+              </Button>
+            </Link>
+          ))}
+      </Box>
+    </Toolbar>
   );
 }
+
+// function No({ items }) {
+//   return (
+//     <Box sx={{ flexGrow: 1 }}>
+//       <AppBar position="static">
+//         <Toolbar>
+//           <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+//             <MenuIcon />
+//           </IconButton>
+//           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+//             {items &&
+//               items.map(({ name, path, exact }) => (
+//                 <Link key={name} to={path}>
+//                   <Button variant={matchPath(path, exact) ? 'outlined' : 'text'}>
+//                     <Typography textAlign="center">{name}</Typography>
+//                   </Button>
+//                 </Link>
+//               ))}
+//           </Box>
+//
+//           <Box className="menu" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+//             {pages.map(({ name, page, exact }) => (
+//               <Link key={name} to={page}>
+//                 <Button
+//                   onClick={handleCloseNavMenu}
+//                   sx={{ my: 2, display: 'block' }}
+//                   variant={matchPath(page, exact) ? 'outlined' : 'text'}
+//                 >
+//                   {name}
+//                 </Button>
+//               </Link>
+//             ))}
+//           </Box>
+//           <Search>
+//             <SearchIconWrapper>
+//               <SearchIcon />
+//             </SearchIconWrapper>
+//             <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+//           </Search>
+//         </Toolbar>
+//       </AppBar>
+//       {renderMobileMenu}
+//     </Box>
+//   );
+// }
