@@ -1,4 +1,5 @@
 import { ClerkProvider } from '@clerk/clerk-react';
+import { dark } from '@clerk/themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { App } from 'app';
@@ -55,7 +56,12 @@ const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 ReactDOMClient.createRoot(MOUNT_NODE!).render(
   // <Provider store={store}>
-  <ClerkProvider publishableKey={clerkPubKey}>
+  <ClerkProvider
+    publishableKey={clerkPubKey}
+    appearance={{
+      baseTheme: dark,
+    }}
+  >
     <ThemeProvider theme={darkTheme}>
       <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: 'center', vertical: 'top' }}>
         <NatsProvider>
