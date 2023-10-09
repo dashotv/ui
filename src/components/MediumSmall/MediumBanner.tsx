@@ -113,6 +113,7 @@ export default function MediumBanner({
       active={active}
       //   change={change}
       buttons={buttons}
+      unwatched={unwatched}
       tertiary={<Release date={release_date} />}
     />
   );

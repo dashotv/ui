@@ -17,36 +17,56 @@ $height: 120px;
     position: relative;
 
     .titlebar {
-      padding: 5px 15px;
+      padding: 5px 5px;
+
+      time {
+        color: #cccccc;
+        font-size: medium;
+        margin-top: 17px;
+      }
 
       .title {
+        display: inline-flex;
+        flex-flow: row nowrap;
         max-width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
         span {
           font-size: xx-large;
           font-weight: bolder;
-          margin-right: 10px;
+          margin-right: 5px;
+          flex: 1;
+          white-space: pre;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
 
-      .subtitle span {
-        font-size: large;
-        font-weight: bold;
+      .subtitle {
+        display: inline-flex;
+        flex-flow: row nowrap;
+        max-width: 100%;
+        span {
+          color: #cccccc;
+          font-size: medium;
+          flex: 1;
+          white-space: pre;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 375px;
+        }
       }
 
       .buttons {
         position: absolute;
         bottom: 0px;
         right: 0px;
-        padding: 5px 15px;
+        padding: 8px;
       }
     }
     .download {
       position: absolute;
       bottom: 0px;
       left: 0px;
-      padding: 10px 15px;
+      padding: 5px 8px;
       text-align: left;
       font-weight: bold;
     }
