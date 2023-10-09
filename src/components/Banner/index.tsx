@@ -26,6 +26,7 @@ export default function Banner(props) {
           )}
           <div className="download">
             <Stack spacing={1} direction="row">
+              {props.tertiary}
               {props.downloadIcon}
               {props.queue > 0 && <Chip label={props.queue} size="small" />}
               {props.progress > 0 && <span>{props.progress}%</span>}

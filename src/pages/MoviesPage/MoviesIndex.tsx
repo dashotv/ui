@@ -41,8 +41,10 @@ export default function MoviesIndex() {
         </Grid>
       </Container>
       <Container maxWidth="xl" sx={{ overflow: 'auto' }}>
-        {isFetching && <LoadingIndicator />}
-        {data && <Media data={data.results} type="movies" />}
+        <Grid container spacing={1}>
+          {isFetching && <LoadingIndicator />}
+          {data && <Media data={data.results} type="movies" />}
+        </Grid>
       </Container>
     </>
   );

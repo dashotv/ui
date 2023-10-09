@@ -44,8 +44,10 @@ export default function SeriesIndex() {
         </Grid>
       </Container>
       <Container maxWidth="xl" sx={{ overflow: 'auto' }}>
-        {isFetching && <LoadingIndicator />}
-        {data && <Media data={data.results} type="series" />}
+        <Grid container spacing={1}>
+          {isFetching && <LoadingIndicator />}
+          {data && <Media data={data.results} type="series" />}
+        </Grid>
       </Container>
     </>
   );
