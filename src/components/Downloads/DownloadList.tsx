@@ -14,8 +14,8 @@ export function DownloadList(props) {
     <>
       {props.downloads &&
         props.downloads.map(download => (
-          <Grid item md={4} xs={12}>
-            <Link key={download.id} to={`/downloads/${download.id}`}>
+          <Grid item key={download.id} md={4} xs={12}>
+            <Link to={`/downloads/${download.id}`}>
               <DownloadBanner download={download} torrents={torrents} nzbs={nzbs} nzbStatus={nzbStatus} />
             </Link>
           </Grid>

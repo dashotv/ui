@@ -53,7 +53,7 @@ export default function Subnav({ items }) {
           color="inherit"
         >
           <MoreIcon />
-          <Typography sx={{ ml: '5px' }} variant="h6" onClick={handleOpenNavMenu}>
+          <Typography sx={{ ml: '5px' }} variant="h6">
             {current()}
           </Typography>
         </IconButton>

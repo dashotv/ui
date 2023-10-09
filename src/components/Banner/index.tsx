@@ -30,9 +30,9 @@ export default function Banner(props) {
 
   const actions = () => {
     // TODO: show these on hover
-    // if (props.downloadIcon !== undefined) {
-    //   return <ButtonMap size="small" buttons={props.buttons} />;
-    // }
+    if (props.downloadIcon !== undefined) {
+      return <ButtonMap size="small" buttons={props.buttons} />;
+    }
     return (
       <Icons
         active={props.active}
@@ -70,7 +70,7 @@ export default function Banner(props) {
               {props.eta && <Moment fromNow>{props.eta}</Moment>}
             </Stack>
           </div>
-          <div className="buttons">{actions()}</div>
+          <div>{actions()}</div>
         </div>
       </div>
       <div className="banner-dimmer"></div>
