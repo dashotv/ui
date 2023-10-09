@@ -17,7 +17,7 @@ FROM nginx:alpine
 ARG REACT_APP_CLERK_PUBLISHABLE_KEY
 ENV REACT_APP_CLERK_PUBLISHABLE_KEY=$REACT_APP_CLERK_PUBLISHABLE_KEY
 
-COPY ./etc/default.conf /etc/nginx/conf.d/default.conf
+COPY ./etc/default.nginx /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build /usr/share/nginx/html
 
 RUN echo "REACT_APP_CLERK_PUBLISHABLE_KEY=$REACT_APP_CLERK_PUBLISHABLE_KEY"
