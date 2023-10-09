@@ -7,12 +7,16 @@ import MediumSmall from 'components/MediumSmall';
 import MediumBanner from 'components/MediumSmall/MediumBanner';
 
 export default function Media(props) {
-  const path = (type, id) => {
+  const path = (type, id, series_id) => {
     switch (type) {
-      case 'Episode':
+      case 'Series':
         return `/series/${id}`;
+      case 'Episode':
+        return `/series/${series_id}`;
+      case 'Movie':
+        return `/movies/${id}`;
       default:
-        return `/${type}/${id}`;
+        return `/404`;
     }
   };
   return (
@@ -34,7 +38,7 @@ export default function Media(props) {
           broken,
         }) => (
           <Grid item key={id} md={4} xs={12}>
-            <Link to={path(type, id)}>
+            <Link to={path(type, id, series_id)}>
               <MediumBanner
                 type={props.type}
                 id={series_id || id}
