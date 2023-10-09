@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 export default function ButtonMap(props) {
   const { size, buttons } = props;
   return (
-    <div className="buttons">
+    <div className="buttonMap">
       <ButtonGroup>
         {buttons &&
           buttons.map((button, index) => (

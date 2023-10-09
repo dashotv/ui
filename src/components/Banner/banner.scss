@@ -54,13 +54,6 @@ $height: 120px;
           width: 375px;
         }
       }
-
-      .buttons {
-        position: absolute;
-        bottom: 0px;
-        right: 0px;
-        padding: 0px;
-      }
     }
     .download {
       position: absolute;
@@ -69,6 +62,29 @@ $height: 120px;
       padding: 5px 8px;
       text-align: left;
       font-weight: bold;
+    }
+
+    .actions {
+      position: absolute;
+      bottom: 3px;
+      right: 8px;
+      overflow: hidden;
+      height: 28px;
+
+      .buttonMap {
+        padding: 0;
+        float: right;
+        button {
+          padding: 0px 2px;
+        }
+      }
+      .icons {
+        float: right;
+        // height: 35px;
+        .MuiChip-root {
+          margin-left: 2px;
+        }
+      }
     }
   }
   .banner-background {

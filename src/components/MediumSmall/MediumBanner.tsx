@@ -2,17 +2,13 @@ import { useCallback, useState } from 'react';
 import * as React from 'react';
 import Moment from 'react-moment';
 
-import BuildIcon from '@mui/icons-material/Build';
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ReplayIcon from '@mui/icons-material/Replay';
-import StarIcon from '@mui/icons-material/Star';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import RecommendIcon from '@mui/icons-material/Recommend';
+import StarsIcon from '@mui/icons-material/Stars';
 
 import Banner from 'components/Banner';
 
-function Release({ date }) {
+function Release({ date }: { date: string }) {
   const calendarStrings = {
     lastDay: '[Yesterday]',
     sameDay: '[Today]',
@@ -32,11 +28,27 @@ function Release({ date }) {
     </div>
   );
 }
+type MediumBannerProps = {
+  id: string;
+  type?: string;
+  change?: any;
+  cover: string;
+  background: string;
+  title: string;
+  display: string;
+  release_date: string;
+  description?: string;
+  unwatched: number;
+  completed?: boolean;
+  favorite: boolean;
+  broken: boolean;
+  active: boolean;
+};
 
 export default function MediumBanner({
   id,
   type,
-  //   change,
+  change,
   cover,
   background,
   title,
@@ -48,7 +60,11 @@ export default function MediumBanner({
   favorite,
   broken,
   active,
-}) {
+}: MediumBannerProps) {
+  const [activeCurrent, setActive] = useState(active);
+  const [favoriteCurrent, setFavorite] = useState(favorite);
+  // const [brokenCurrent, setBroken] = useState(broken);
+
   const complete = useCallback(ev => {
     console.log('clicked complete');
     ev.preventDefault(); // for the buttons inside the Link component
@@ -56,49 +72,49 @@ export default function MediumBanner({
 
   const buttons = [
     {
-      icon: <CloudDownloadIcon color="primary" />,
+      icon: <DownloadForOfflineIcon color="primary" />,
       click: complete,
       title: 'create download',
     },
-    {
-      icon: <VisibilityOffIcon color="primary" />,
-      click: complete,
-      title: 'history???',
-    },
-    {
-      icon: <ReplayIcon color="primary" />,
-      click: complete,
-      title: 'refresh',
-    },
     // {
-    //   icon: <FavoriteIcon color={favorite ? 'secondary' : 'action'} />,
-    //   click: ev => {
-    //     props.change(props.id, 'favorite', !favorite);
-    //     setFavorite(!favorite);
-    //   },
-    //   title: 'favorite',
+    //   icon: <VisibilityOffIcon color="primary" />,
+    //   click: complete,
+    //   title: 'history???',
     // },
     // {
-    //   icon: <BuildIcon color={broken ? 'secondary' : 'action'} />,
+    //   icon: <ReplayCircleFilledIcon color="primary" />,
+    //   click: complete,
+    //   title: 'refresh',
+    // },
+    {
+      icon: <RecommendIcon color={favorite ? 'secondary' : 'action'} />,
+      click: ev => {
+        change(id, 'favorite', !favoriteCurrent);
+        setFavorite(!favoriteCurrent);
+      },
+      title: 'favorite',
+    },
+    // {
+    //   icon: <BuildCircleIcon color={broken ? 'secondary' : 'action'} />,
     //   click: ev => {
-    //     props.change(props.id, 'broken', !broken);
-    //     setBroken(!broken);
+    //     change(id, 'broken', !brokenCurrent);
+    //     setBroken(!brokenCurrent);
     //   },
     //   title: 'broken',
     // },
-    // {
-    //   icon: <StarIcon color={active ? 'secondary' : 'action'} />,
-    //   click: ev => {
-    //     props.change(props.id, 'active', !active);
-    //     setActive(!active);
-    //   },
-    //   title: 'active',
-    // },
     {
-      icon: <DeleteIcon color="error" />,
-      click: complete,
-      title: 'delete',
+      icon: <StarsIcon color={active ? 'secondary' : 'action'} />,
+      click: ev => {
+        change(id, 'active', !activeCurrent);
+        setActive(!activeCurrent);
+      },
+      title: 'active',
     },
+    // {
+    //   icon: <RemoveCircleIcon color="error" />,
+    //   click: complete,
+    //   title: 'delete',
+    // },
   ];
   return (
     <Banner

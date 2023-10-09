@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
+import Moment from 'react-moment';
 import { useNavigate } from 'react-router-dom';
 
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
@@ -18,6 +19,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
+import Chip from '@mui/material/Chip';
 
 import Banner from 'components/Banner';
 
@@ -162,28 +164,16 @@ export function DownloadBanner(props) {
     return null;
   }, [props.nzbs, props.torrents, thash]);
 
-  const icon = useCallback(() => {
-    switch (status) {
-      case 'searching':
-        return <SearchIcon fontSize="medium" />;
-      case 'loading':
-        return <YoutubeSearchedForIcon fontSize="medium" />;
-      case 'managing':
-        return <ManageSearchIcon fontSize="medium" />;
-      case 'reviewing':
-        return <ErrorIcon fontSize="medium" />;
-      case 'downloading':
-        return <CloudDownloadIcon fontSize="medium" />;
-      case 'done':
-        return <DownloadDoneIcon fontSize="medium" />;
-      case 'paused':
-        return <PauseCircleIcon fontSize="medium" />;
-      case 'deleted':
-        return <RemoveCircleIcon fontSize="medium" />;
-      case 'held':
-        return <PendingIcon fontSize="medium" />;
-    }
-  }, [status]);
+  function tertiary() {
+    return (
+      <>
+        <Icon status={status} />
+        <Progress value={progress()} />
+        <Eta eta={eta()} />
+        <Queue queue={queue()} />
+      </>
+    );
+  }
 
   return (
     <Banner
@@ -197,10 +187,53 @@ export function DownloadBanner(props) {
       broken={broken}
       active={active}
       buttons={buttons}
-      progress={Number(progress()).toFixed(2)}
-      eta={eta()}
-      queue={queue()}
-      downloadIcon={icon()}
+      tertiary={tertiary()}
     />
   );
+}
+
+function Queue({ queue }) {
+  if (!queue) {
+    return null;
+  }
+  return <Chip label={queue} size="small" />;
+}
+
+function Progress({ value }) {
+  if (value && value > 0) {
+    return <span>{Number(value).toFixed(2)}%</span>;
+  }
+  return null;
+}
+
+function Eta({ eta }) {
+  if (!eta) {
+    return null;
+  }
+  return <Moment fromNow>{eta}</Moment>;
+}
+
+function Icon({ status }) {
+  switch (status) {
+    case 'searching':
+      return <SearchIcon fontSize="medium" />;
+    case 'loading':
+      return <YoutubeSearchedForIcon fontSize="medium" />;
+    case 'managing':
+      return <ManageSearchIcon fontSize="medium" />;
+    case 'reviewing':
+      return <ErrorIcon fontSize="medium" />;
+    case 'downloading':
+      return <CloudDownloadIcon fontSize="medium" />;
+    case 'done':
+      return <DownloadDoneIcon fontSize="medium" />;
+    case 'paused':
+      return <PauseCircleIcon fontSize="medium" />;
+    case 'deleted':
+      return <RemoveCircleIcon fontSize="medium" />;
+    case 'held':
+      return <PendingIcon fontSize="medium" />;
+    default:
+      return <SearchIcon fontSize="medium" />;
+  }
 }

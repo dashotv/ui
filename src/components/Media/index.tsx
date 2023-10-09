@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 
-import MediumSmall from 'components/MediumSmall';
 import MediumBanner from 'components/MediumSmall/MediumBanner';
 
 export default function Media(props) {

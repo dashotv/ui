@@ -1,8 +1,6 @@
 import * as React from 'react';
 import Moment from 'react-moment';
 
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import StarIcon from '@mui/icons-material/Star';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
@@ -10,72 +8,98 @@ import ButtonMap from 'components/ButtonMap';
 
 import './banner.scss';
 
-export default function Banner(props) {
-  function Unwatched(props) {
-    if (props.count === undefined || props.count === 0) {
-      return <></>;
-    }
-    return <Chip label={props.count > 9 ? '9+' : props.count} variant="filled" size="small" />;
+function Unwatched({ count }: { count?: number }) {
+  if (count === undefined || count === 0) {
+    return <></>;
   }
-  function Icons(props) {
-    return (
-      <div className="icons">
-        <Unwatched count={props.unwatched} />
-        {props.active && <StarIcon fontSize="small" />}
-        {props.download && props.downloadIcon}
-        {props.completed && <CheckCircleIcon fontSize="small" />}
-      </div>
-    );
-  }
+  return <Chip label={count > 9 ? '9+' : count} variant="filled" size="small" />;
+}
+function Icons({ unwatched }: { active?: boolean; unwatched?: number; completed?: boolean }) {
+  return (
+    <div className="icons">
+      {/* {active && <StarIcon fontSize="small" />} */}
+      {/* {completed && <CheckCircleIcon fontSize="small" />} */}
+      <Unwatched count={unwatched} />
+    </div>
+  );
+}
+type ActionsProps = {
+  active?: boolean;
+  unwatched?: number;
+  completed?: boolean;
+  buttons?: any[];
+};
+function Actions({ unwatched, buttons }: ActionsProps) {
+  return (
+    <div>
+      <Icons unwatched={unwatched} />
+      <ButtonMap size="small" buttons={buttons} />
+    </div>
+  );
+}
 
-  const actions = () => {
-    // TODO: show these on hover
-    if (props.downloadIcon !== undefined) {
-      return <ButtonMap size="small" buttons={props.buttons} />;
-    }
-    return (
-      <Icons
-        active={props.active}
-        download={props.download}
-        downloadIcon={props.downloadIcon}
-        unwatched={props.unwatched}
-        completed={props.completed}
-      />
-    );
-  };
-
+type BannerProps = {
+  id: string;
+  title: string;
+  subtitle?: string;
+  release_date?: string;
+  background: string;
+  cover?: string;
+  tertiary?: React.ReactNode;
+  downloadIcon?: React.ReactNode;
+  queue?: number;
+  progress?: number;
+  eta?: Date | null;
+  favorite?: boolean;
+  broken?: boolean;
+  active?: boolean;
+  unwatched?: number;
+  completed?: boolean;
+  change?: any;
+  buttons: any[];
+};
+export default function Banner({
+  id,
+  title,
+  subtitle,
+  release_date,
+  background,
+  tertiary,
+  active,
+  unwatched,
+  completed,
+  buttons,
+}: BannerProps) {
   return (
     <div className="banner-container">
       <div className="banner">
         <div className="titlebar">
           <div className="title">
-            <span>{props.title}</span>
-            {!props.tertiary && (
+            <span>{title}</span>
+            {!tertiary && (
               <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
-                {props.release_date}
+                {release_date}
               </Moment>
             )}
           </div>
-          {props.subtitle && (
+          {subtitle && (
             <div className="subtitle">
-              <span>{props.subtitle}</span>
+              <span>{subtitle}</span>
             </div>
           )}
           <div className="download">
             <Stack spacing={1} direction="row">
-              {props.tertiary}
-              {props.downloadIcon}
-              {props.queue > 0 && <Chip label={props.queue} size="small" />}
-              {props.progress > 0 && <span>{props.progress}%</span>}
-              {props.eta && <Moment fromNow>{props.eta}</Moment>}
+              {tertiary}
             </Stack>
           </div>
-          <div>{actions()}</div>
+          <div className="actions">
+            <Actions {...{ active, unwatched, completed, buttons }} />
+          </div>
         </div>
       </div>
       <div className="banner-dimmer"></div>
       <div className="banner-background">
-        <img alt="background" src={props.background} />
+        <img alt="background" src={background} />
       </div>
     </div>
   );
