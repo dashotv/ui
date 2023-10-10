@@ -2,6 +2,7 @@ import * as React from 'react';
 import Moment from 'react-moment';
 
 import Chip from '@mui/material/Chip';
+import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
 import ButtonMap from 'components/ButtonMap';
@@ -74,34 +75,36 @@ export default function Banner({
   buttons,
 }: BannerProps) {
   return (
-    <div className="banner-container">
-      <div className="banner">
-        <div className="titlebar">
-          <div className="title">
-            <span>{title}</span>
-            {!tertiary && (
-              <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
-                {release_date}
-              </Moment>
-            )}
-          </div>
-          {subtitle && (
-            <div className="subtitle">
-              <span>{subtitle}</span>
+    <Paper elevation={5}>
+      <div className="banner-container">
+        <div className="banner">
+          <div className="titlebar">
+            <div className="title">
+              <span>{title}</span>
+              {!tertiary && (
+                <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
+                  {release_date}
+                </Moment>
+              )}
             </div>
-          )}
-          <div className="download">
-            <Stack spacing={1} direction="row">
-              {tertiary}
-            </Stack>
-          </div>
-          <div className="actions">
-            <Actions {...{ active, unwatched, completed, buttons }} />
+            {subtitle && (
+              <div className="subtitle">
+                <span>{subtitle}</span>
+              </div>
+            )}
+            <div className="download">
+              <Stack spacing={1} direction="row">
+                {tertiary}
+              </Stack>
+            </div>
+            <div className="actions">
+              <Actions {...{ active, unwatched, completed, buttons }} />
+            </div>
           </div>
         </div>
+        <div className="banner-dimmer"></div>
+        <div className="banner-background">{background && <img alt="background" src={background} />}</div>
       </div>
-      <div className="banner-dimmer"></div>
-      <div className="banner-background">{background && <img alt="background" src={background} />}</div>
-    </div>
+    </Paper>
   );
 }
