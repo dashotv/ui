@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { objectToQueryString } from 'hooks/useQueryString';
 import { Medium } from 'types/medium';
 
 export const getSearch = async search => {
-  const response = await axios.get(`/api/scry/media/?name=*${search}*&limit=10&type=series movie`);
+  const qs = objectToQueryString({ name: `*${search}*`, limit: 10, type: 'series movie' });
+  const response = await axios.get(`/api/scry/media/?${qs}`);
   return response.data.Media as Medium[];
 };
 

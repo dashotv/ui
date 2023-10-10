@@ -63,6 +63,7 @@ export default function Search(props) {
       isOptionEqualToValue={(option, value) =>
         value === undefined || option?.id?.toString() === (value?.id ?? value)?.toString()
       }
+      filterOptions={(options: Medium[], state: any) => options}
       getOptionLabel={option => option.name}
       options={data ? data : []}
       loading={isFetching}
@@ -74,9 +75,9 @@ export default function Search(props) {
       renderInput={params => (
         <TextField
           {...params}
-          label="Search"
           InputProps={{
             ...params.InputProps,
+            size: 'small',
             endAdornment: (
               <React.Fragment>
                 {isFetching ? <CircularProgress color="inherit" size={20} /> : null}
