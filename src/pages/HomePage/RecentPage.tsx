@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 
 import { DownloadList } from 'components/Downloads';
@@ -30,8 +31,10 @@ export default function RecentPage() {
         <Pagination count={Math.ceil(recent.data?.count / pagesize)} onChange={handleChange} />
       </Container>
       <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
-        {recent.isFetching && <LoadingIndicator />}
-        {recent.data && <DownloadList downloads={recent.data?.results} />}
+        <Grid container spacing={1}>
+          {recent.isFetching && <LoadingIndicator />}
+          {recent.data && <DownloadList downloads={recent.data?.results} />}
+        </Grid>
       </Container>
     </>
   );

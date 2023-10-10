@@ -12,7 +12,7 @@ import { useSubscription } from 'components/Nats/useSubscription';
 import './gauges.scss';
 
 function BaseGauge({ icon, title, value, data, color }) {
-  return <Chip icon={icon} label={value} />;
+  return <Chip icon={icon} label={value} color={color} />;
 }
 
 function DiskGauge(props) {
@@ -68,9 +68,9 @@ export function Gauges(props) {
   return (
     <div className="gauges">
       <Stack spacing={2} direction="row">
-        <DiskGauge value={diskFree} />
-        <NzbsGauge value={nzbs} />
-        <TorrentsGauge value={torrents} />
+        <DiskGauge value={diskFree} color="primary" />
+        <NzbsGauge value={nzbs} color="primary" />
+        <TorrentsGauge value={torrents} color="primary" />
       </Stack>
     </div>
   );
