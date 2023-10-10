@@ -28,16 +28,16 @@ function Icons({ unwatched }: IconsProps) {
 }
 
 type ActionsProps = {
-  active?: boolean;
+  // active?: boolean;
   unwatched?: number;
-  completed?: boolean;
-  buttons?: any[];
+  // completed?: boolean;
+  // buttons?: any[];
 };
-function Actions({ unwatched, buttons }: ActionsProps) {
+function Actions({ unwatched }: ActionsProps) {
   return (
     <div>
       <Icons unwatched={unwatched} />
-      <ButtonMap size="small" buttons={buttons} />
+      {/* <ButtonMap size="small" buttons={buttons} /> */}
     </div>
   );
 }
@@ -98,7 +98,7 @@ export default function Banner({
               </Stack>
             </div>
             <div className="actions">
-              <Actions {...{ active, unwatched, completed, buttons }} />
+              <Actions {...{ unwatched }} />
             </div>
           </div>
         </div>
