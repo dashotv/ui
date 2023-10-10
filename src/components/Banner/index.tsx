@@ -14,7 +14,9 @@ function Unwatched({ count }: { count?: number }) {
   }
   return <Chip label={count > 9 ? '9+' : count} variant="filled" size="small" />;
 }
-function Icons({ unwatched }: { active?: boolean; unwatched?: number; completed?: boolean }) {
+
+type IconsProps = { active?: boolean; unwatched?: number; completed?: boolean };
+function Icons({ unwatched }: IconsProps) {
   return (
     <div className="icons">
       {/* {active && <StarIcon fontSize="small" />} */}
@@ -23,6 +25,7 @@ function Icons({ unwatched }: { active?: boolean; unwatched?: number; completed?
     </div>
   );
 }
+
 type ActionsProps = {
   active?: boolean;
   unwatched?: number;
@@ -98,9 +101,7 @@ export default function Banner({
         </div>
       </div>
       <div className="banner-dimmer"></div>
-      <div className="banner-background">
-        <img alt="background" src={background} />
-      </div>
+      <div className="banner-background">{background && <img alt="background" src={background} />}</div>
     </div>
   );
 }
