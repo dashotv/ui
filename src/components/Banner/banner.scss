@@ -15,14 +15,12 @@ $height: 120px;
     min-height: $height;
     position: relative;
 
+    time {
+      color: #cccccc;
+    }
+
     .titlebar {
       padding: 5px 5px;
-
-      time {
-        color: #cccccc;
-        font-size: medium;
-        margin-top: 17px;
-      }
 
       .title {
         display: inline-flex;
@@ -61,7 +59,7 @@ $height: 120px;
       position: absolute;
       bottom: 0px;
       left: 0px;
-      padding: 5px 8px;
+      padding: 8px 12px;
       text-align: left;
       font-weight: bold;
     }

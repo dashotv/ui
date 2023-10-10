@@ -20,6 +20,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 
 import Banner from 'components/Banner';
 
@@ -166,12 +167,12 @@ export function DownloadBanner(props) {
 
   function tertiary() {
     return (
-      <>
+      <Stack spacing={1} direction="row">
         <Icon status={status} />
         <Progress value={progress()} />
         <Eta eta={eta()} />
         <Queue queue={queue()} />
-      </>
+      </Stack>
     );
   }
 
