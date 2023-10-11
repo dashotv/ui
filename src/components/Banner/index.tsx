@@ -31,13 +31,13 @@ type ActionsProps = {
   // active?: boolean;
   unwatched?: number;
   // completed?: boolean;
-  // buttons?: any[];
+  buttons?: any[];
 };
-function Actions({ unwatched }: ActionsProps) {
+function Actions({ unwatched, buttons }: ActionsProps) {
   return (
     <div>
       <Icons unwatched={unwatched} />
-      {/* <ButtonMap size="small" buttons={buttons} /> */}
+      <ButtonMap size="small" buttons={buttons} />
     </div>
   );
 }
@@ -98,7 +98,7 @@ export default function Banner({
               </Stack>
             </div>
             <div className="actions">
-              <Actions {...{ unwatched }} />
+              <Actions {...{ unwatched, buttons }} />
             </div>
           </div>
         </div>
