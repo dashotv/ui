@@ -187,7 +187,7 @@ export function DownloadBanner(props) {
       favorite={favorite}
       broken={broken}
       active={active}
-      buttons={buttons}
+      buttons={props.variant === 'small' ? [] : buttons}
       tertiary={tertiary()}
     />
   );
@@ -217,24 +217,64 @@ function Eta({ eta }) {
 function Icon({ status }) {
   switch (status) {
     case 'searching':
-      return <SearchIcon fontSize="medium" />;
+      return (
+        <div title="searching">
+          <SearchIcon fontSize="medium" />
+        </div>
+      );
     case 'loading':
-      return <YoutubeSearchedForIcon fontSize="medium" />;
+      return (
+        <div title="loading">
+          <YoutubeSearchedForIcon fontSize="medium" />
+        </div>
+      );
     case 'managing':
-      return <ManageSearchIcon fontSize="medium" />;
+      return (
+        <div title="managing">
+          <ManageSearchIcon fontSize="medium" />
+        </div>
+      );
     case 'reviewing':
-      return <ErrorIcon fontSize="medium" />;
+      return (
+        <div title="reviewing">
+          <ErrorIcon fontSize="medium" />
+        </div>
+      );
     case 'downloading':
-      return <CloudDownloadIcon fontSize="medium" />;
+      return (
+        <div title="downloading">
+          <CloudDownloadIcon fontSize="medium" />
+        </div>
+      );
     case 'done':
-      return <DownloadDoneIcon fontSize="medium" />;
+      return (
+        <div title="done">
+          <DownloadDoneIcon fontSize="medium" />
+        </div>
+      );
     case 'paused':
-      return <PauseCircleIcon fontSize="medium" />;
+      return (
+        <div title="paused">
+          <PauseCircleIcon fontSize="medium" />
+        </div>
+      );
     case 'deleted':
-      return <RemoveCircleIcon fontSize="medium" />;
+      return (
+        <div title="deleted">
+          <RemoveCircleIcon fontSize="medium" />
+        </div>
+      );
     case 'held':
-      return <PendingIcon fontSize="medium" />;
+      return (
+        <div title="held">
+          <PendingIcon fontSize="medium" />
+        </div>
+      );
     default:
-      return <SearchIcon fontSize="medium" />;
+      return (
+        <div title="search">
+          <SearchIcon fontSize="medium" />
+        </div>
+      );
   }
 }

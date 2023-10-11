@@ -1,6 +1,10 @@
 import * as React from 'react';
 import Moment from 'react-moment';
 
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+// import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import RecommendIcon from '@mui/icons-material/Recommend';
+import StarsIcon from '@mui/icons-material/Stars';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -16,29 +20,36 @@ function Unwatched({ count }: { count?: number }) {
   return <Chip label={count > 9 ? '9+' : count} variant="filled" size="small" />;
 }
 
-type IconsProps = { active?: boolean; unwatched?: number; completed?: boolean };
-function Icons({ unwatched }: IconsProps) {
+type IconsProps = {
+  active?: boolean;
+  completed?: boolean;
+  favorite?: boolean;
+  unwatched?: number;
+};
+function Icons({ unwatched, active, completed, favorite }: IconsProps) {
   return (
     <div className="icons">
-      {/* {active && <StarIcon fontSize="small" />} */}
-      {/* {completed && <CheckCircleIcon fontSize="small" />} */}
+      {active && <StarsIcon fontSize="small" />}
+      {completed && <CheckCircleIcon fontSize="small" />}
+      {favorite && <RecommendIcon fontSize="small" />}
       <Unwatched count={unwatched} />
     </div>
   );
 }
 
 type ActionsProps = {
-  // active?: boolean;
+  active?: boolean;
+  completed?: boolean;
+  favorite?: boolean;
   unwatched?: number;
-  // completed?: boolean;
   buttons?: any[];
 };
-function Actions({ unwatched, buttons }: ActionsProps) {
+function Actions({ unwatched, buttons, active, favorite, completed }: ActionsProps) {
   return (
-    <div>
-      <Icons unwatched={unwatched} />
+    <Stack spacing={1} direction="row">
       <ButtonMap size="small" buttons={buttons} />
-    </div>
+      <Icons {...{ active, favorite, completed, unwatched }} />
+    </Stack>
   );
 }
 
@@ -70,8 +81,9 @@ export default function Banner({
   background,
   tertiary,
   active,
-  unwatched,
   completed,
+  favorite,
+  unwatched,
   buttons,
 }: BannerProps) {
   return (
@@ -92,13 +104,9 @@ export default function Banner({
                 <span>{subtitle}</span>
               </div>
             )}
-            <div className="download">
-              <Stack spacing={1} direction="row">
-                {tertiary}
-              </Stack>
-            </div>
+            <div className="download">{tertiary}</div>
             <div className="actions">
-              <Actions {...{ unwatched, buttons }} />
+              <Actions {...{ unwatched, buttons, active, completed, favorite }} />
             </div>
           </div>
         </div>

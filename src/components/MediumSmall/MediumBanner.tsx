@@ -1,10 +1,4 @@
-import { useCallback, useState } from 'react';
-import * as React from 'react';
 import Moment from 'react-moment';
-
-import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
-import RecommendIcon from '@mui/icons-material/Recommend';
-import StarsIcon from '@mui/icons-material/Stars';
 
 import Banner from 'components/Banner';
 
@@ -28,10 +22,10 @@ function Release({ date }: { date: string }) {
     </div>
   );
 }
+
 type MediumBannerProps = {
   id: string;
   type?: string;
-  change?: any;
   cover: string;
   background: string;
   title: string;
@@ -48,7 +42,6 @@ type MediumBannerProps = {
 export default function MediumBanner({
   id,
   type,
-  change,
   cover,
   background,
   title,
@@ -61,21 +54,27 @@ export default function MediumBanner({
   broken,
   active,
 }: MediumBannerProps) {
-  const [activeCurrent, setActive] = useState(active);
-  const [favoriteCurrent, setFavorite] = useState(favorite);
+  // const [activeCurrent, setActive] = useState(active);
+  // const [favoriteCurrent, setFavorite] = useState(favorite);
+  // const [completedCurrent, setCompleted] = useState(completed);
   // const [brokenCurrent, setBroken] = useState(broken);
 
-  const complete = useCallback(ev => {
-    console.log('clicked complete');
-    ev.preventDefault(); // for the buttons inside the Link component
-  }, []);
+  //   const complete = useCallback(ev => {
+  //     console.log('clicked complete');
+  //     ev.preventDefault(); // for the buttons inside the Link component
+  //   }, []);
+  //
+  //   const change = useCallback((ev, field, value) => {
+  //     console.log('clicked change');
+  //     ev.preventDefault(); // for the buttons inside the Link component
+  //   }, []);
 
   const buttons = [
-    {
-      icon: <DownloadForOfflineIcon color="primary" />,
-      click: complete,
-      title: 'create download',
-    },
+    // {
+    //   icon: <DownloadForOfflineIcon color="primary" />,
+    //   click: complete,
+    //   title: 'create download',
+    // },
     // {
     //   icon: <VisibilityOffIcon color="primary" />,
     //   click: complete,
@@ -86,14 +85,6 @@ export default function MediumBanner({
     //   click: complete,
     //   title: 'refresh',
     // },
-    {
-      icon: <RecommendIcon color={favorite ? 'secondary' : 'action'} />,
-      click: ev => {
-        change(id, 'favorite', !favoriteCurrent);
-        setFavorite(!favoriteCurrent);
-      },
-      title: 'favorite',
-    },
     // {
     //   icon: <BuildCircleIcon color={broken ? 'secondary' : 'action'} />,
     //   click: ev => {
@@ -102,14 +93,30 @@ export default function MediumBanner({
     //   },
     //   title: 'broken',
     // },
-    {
-      icon: <StarsIcon color={active ? 'secondary' : 'action'} />,
-      click: ev => {
-        change(id, 'active', !activeCurrent);
-        setActive(!activeCurrent);
-      },
-      title: 'active',
-    },
+    // {
+    //   icon: <CheckCircleIcon color={completedCurrent ? 'secondary' : 'action'} />,
+    //   click: ev => {
+    //     change(id, 'favorite', !completedCurrent);
+    //     setFavorite(!completedCurrent);
+    //   },
+    //   title: 'completed',
+    // },
+    // {
+    //   icon: <RecommendIcon color={favoriteCurrent ? 'secondary' : 'action'} />,
+    //   click: ev => {
+    //     change(id, 'favorite', !favoriteCurrent);
+    //     setFavorite(!favoriteCurrent);
+    //   },
+    //   title: 'favorite',
+    // },
+    // {
+    //   icon: <StarsIcon color={activeCurrent ? 'secondary' : 'action'} />,
+    //   click: ev => {
+    //     change(id, 'active', !activeCurrent);
+    //     setActive(!activeCurrent);
+    //   },
+    //   title: 'active',
+    // },
     // {
     //   icon: <RemoveCircleIcon color="error" />,
     //   click: complete,
@@ -127,6 +134,7 @@ export default function MediumBanner({
       favorite={favorite}
       broken={broken}
       active={active}
+      completed={completed}
       //   change={change}
       buttons={buttons}
       unwatched={unwatched}

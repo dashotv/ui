@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 
 import MediumBanner from 'components/MediumSmall/MediumBanner';
 
-export default function Media(props) {
+export default function Media({ type, data }) {
   const path = (type, id, series_id) => {
     switch (type) {
       case 'Series':
@@ -20,44 +20,48 @@ export default function Media(props) {
   };
   return (
     <>
-      {props.data.map(
-        ({
-          id,
-          type,
-          series_id,
-          title,
-          display,
-          description,
-          cover,
-          release_date,
-          active,
-          unwatched,
-          completed,
-          favorite,
-          broken,
-        }) => (
-          <Grid item key={id} md={4} xs={12}>
-            <Link to={path(type, id, series_id)}>
-              <MediumBanner
-                type={props.type}
-                id={series_id || id}
-                background={cover}
-                title={title}
-                display={display}
-                release_date={release_date}
-                active={active}
-                description={description}
-                unwatched={unwatched}
-                completed={completed}
-                cover={cover}
-                favorite={favorite}
-                broken={broken}
-                // change={change?}
-              />
-            </Link>
-          </Grid>
-        ),
-      )}
+      {data &&
+        data.map(
+          ({
+            id,
+            type,
+            series_id,
+            title,
+            display,
+            description,
+            cover,
+            background,
+            release_date,
+            active,
+            unwatched,
+            completed,
+            favorite,
+            broken,
+          }) => (
+            <Grid item key={id} md={4} xs={12}>
+              <Link to={path(type, id, series_id)}>
+                <MediumBanner
+                  {...{
+                    type,
+                    id,
+                    series_id,
+                    cover,
+                    background,
+                    title,
+                    display,
+                    release_date,
+                    description,
+                    unwatched,
+                    active,
+                    completed,
+                    favorite,
+                    broken,
+                  }}
+                />
+              </Link>
+            </Grid>
+          ),
+        )}
     </>
   );
 }
