@@ -1,5 +1,10 @@
 # TODO
 
+- Home and General
+  - Get last time downloads process was run so the timer can be set correctly
+  - search on mobile
+  - custom user profile?
+  - tables on mobile
 - Feeds
   - enable/disable
   - edit in dialog?
