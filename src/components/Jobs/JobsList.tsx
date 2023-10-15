@@ -1,0 +1,41 @@
+import Moment from 'react-moment';
+
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
+
+import { Job } from 'types/job';
+
+export function JobsList({ jobs }) {
+  return (
+    <>
+      <div className="releases">
+        <table className="vertical-table">
+          <thead>
+            <tr>
+              <td className="number"></td>
+              <td>Title</td>
+              <td className="actions" align="right">
+                Processed
+              </td>
+            </tr>
+          </thead>
+          <tbody>{jobs && jobs.map(job => <JobRow key={job.id} {...job} />)}</tbody>
+        </table>
+      </div>
+    </>
+  );
+}
+
+export function JobRow({ id, name, processed_at, error }: Job) {
+  return (
+    <>
+      <tr key={id}>
+        <td>{error == '' ? <CheckCircleIcon fontSize="small" /> : <ErrorIcon fontSize="small" />}</td>
+        <td>{name}</td>
+        <td className="actions" align="right">
+          <Moment fromNow>{processed_at.toString()}</Moment>
+        </td>
+      </tr>
+    </>
+  );
+}

@@ -16,6 +16,7 @@ import { Route, Routes } from 'react-router-dom';
 import NavBar from 'components/NavBar';
 import HomePage from 'pages/HomePage';
 import DownloadsShowPage from 'pages/HomePage/DownloadsShowPage';
+import JobsPage from 'pages/HomePage/JobsPage';
 import RecentPage from 'pages/HomePage/RecentPage';
 import UpcomingPage from 'pages/HomePage/UpcomingPage';
 import MoviesPage from 'pages/MoviesPage';
@@ -71,6 +72,14 @@ export function App() {
             element={
               <ClerkWrapper>
                 <RecentPage />
+              </ClerkWrapper>
+            }
+          />
+          <Route
+            path="jobs"
+            element={
+              <ClerkWrapper>
+                <JobsPage />
               </ClerkWrapper>
             }
           />
