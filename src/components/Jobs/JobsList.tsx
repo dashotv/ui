@@ -30,7 +30,13 @@ export function JobRow({ id, name, processed_at, error }: Job) {
   return (
     <>
       <tr key={id}>
-        <td>{error == '' ? <CheckCircleIcon fontSize="small" /> : <ErrorIcon fontSize="small" />}</td>
+        <td title={error}>
+          {error == '' ? (
+            <CheckCircleIcon fontSize="small" color="success" />
+          ) : (
+            <ErrorIcon fontSize="small" color="error" />
+          )}
+        </td>
         <td>{name}</td>
         <td className="actions" align="right">
           <Moment fromNow>{processed_at.toString()}</Moment>
