@@ -10,6 +10,7 @@ import { Stack } from '@mui/material';
 import Chip from '@mui/material/Chip';
 
 import { useSubscription } from 'components/Nats/useSubscription';
+import { useDownloadsLastQuery } from 'query/downloads';
 
 import './gauges.scss';
 
@@ -49,6 +50,17 @@ function DiskGauge(props) {
 
 function CountdownGauge(props) {
   const [last, setLast] = useState('');
+  const [event, setEvent] = useState(300);
+  const initial = useDownloadsLastQuery();
+
+  useEffect(() => {
+    if (initial.data) {
+      const seconds = initial.data - Math.round(new Date().getTime() / 1000) + 300;
+      console.log('intial setting last', seconds, initial.data);
+      setLast(seconds.toString());
+      setEvent(seconds);
+    }
+  }, [initial.data]);
 
   useSubscription(
     'seer.notices',
@@ -56,6 +68,7 @@ function CountdownGauge(props) {
       console.log(data);
       if (data.message === 'processing downloads') {
         setLast(data.time);
+        setEvent(300);
       }
     }, []),
   );
@@ -64,9 +77,9 @@ function CountdownGauge(props) {
     <BaseGauge
       title="Countdown"
       icon={<WatchLaterIcon />}
-      value={<Countdown eventTime={300} interval={1000} last={last} />}
+      value={<Countdown eventTime={event} interval={1000} last={last} />}
       data={props.data}
-      color={props.color}
+      color={initial.isFetching ? 'secondary' : props.color}
     />
   );
 }
