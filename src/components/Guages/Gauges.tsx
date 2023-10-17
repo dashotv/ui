@@ -1,5 +1,4 @@
-import moment from 'moment';
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useCountdown } from 'usehooks-ts';
 
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
@@ -31,7 +30,7 @@ function Countdown({ eventTime, interval, last }) {
 
   useEffect(() => {
     resetCountdown();
-  }, [last]);
+  }, [last, resetCountdown]);
 
   return <div>{count}</div>;
 }

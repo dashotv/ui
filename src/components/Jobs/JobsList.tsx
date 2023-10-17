@@ -31,7 +31,7 @@ export function JobRow({ id, name, processed_at, error }: Job) {
     <>
       <tr key={id}>
         <td title={error}>
-          {error == '' ? (
+          {error === '' ? (
             <CheckCircleIcon fontSize="small" color="success" />
           ) : (
             <ErrorIcon fontSize="small" color="error" />

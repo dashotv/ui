@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
@@ -11,6 +10,7 @@ import { useJobsQuery } from 'query/jobs';
 export default function JobsPage() {
   const [page, setPage] = useState(1);
   const jobs = useJobsQuery(page);
+
   return (
     <>
       <Helmet>
