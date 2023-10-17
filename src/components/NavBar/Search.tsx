@@ -7,6 +7,7 @@ import TvIcon from '@mui/icons-material/Tv';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 
 import { useSearchQuery } from 'query/search';
@@ -46,7 +47,16 @@ export default function Search(props) {
   return (
     <Autocomplete
       id="asynchronous-demo"
-      sx={{ width: 300 }}
+      sx={{ minWidth: 100, maxWidth: 200 }}
+      fullWidth
+      componentsProps={{
+        popper: {
+          style: { width: 'fit-content' },
+        },
+        paper: {
+          // sx: { width: '500px !important' },
+        },
+      }}
       open={open}
       onChange={(event: any, newValue: Medium | null) => {
         setSelected(newValue);
@@ -69,7 +79,10 @@ export default function Search(props) {
       loading={isFetching}
       renderOption={(props, option) => (
         <Box key={option.id} component="li" sx={{ '& > svg': { mr: 2, flexShrink: 0 } }} {...props}>
-          {icon(option)} {option.name}
+          <Stack direction="row" spacing={3}>
+            {icon(option)}
+            <div>{option.name}</div>
+          </Stack>
         </Box>
       )}
       renderInput={params => (

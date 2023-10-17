@@ -18,6 +18,7 @@ import Typography from '@mui/material/Typography';
 import { useSubscription } from 'components/Nats/useSubscription';
 
 import './Navbar.scss';
+import NewMedia from './NewMedia';
 import { Notice } from './Notice';
 import Search from './Search';
 import Logo from './assets/logo-small.png';
@@ -64,7 +65,10 @@ const NavBar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/*<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />*/}
-          <Box sx={{ mr: 2 }}>
+          <Box sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
+            <img alt="logo" src={Logo} width="40" height="40" />
+          </Box>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <img alt="logo" src={Logo} width="40" height="40" />
           </Box>
           <Typography
@@ -124,7 +128,7 @@ const NavBar = () => {
             </Menu>
           </Box>
           {/*<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />*/}
-          <Link to="/#/">
+          {/* <Link to="/#/">
             <Typography
               variant="h5"
               noWrap
@@ -141,7 +145,7 @@ const NavBar = () => {
             >
               DASHOTV
             </Typography>
-          </Link>
+          </Link> */}
           <Box className="menu" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map(({ name, page, exact }) => (
               <Link key={name} to={page}>
@@ -156,12 +160,14 @@ const NavBar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0, mr: 3, display: { xs: 'none', md: 'flex' } }}>
-            <Search />
+          <Box sx={{ flexGrow: 0, mr: 0 }}>
+            <NewMedia />
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, mr: 1 }}>
             <UserButton />
+          </Box>
+          <Box sx={{ flexGrow: 0, mr: 0 }}>
+            <Search />
           </Box>
 
           {/*<Box sx={{ flexGrow: 0 }}>
