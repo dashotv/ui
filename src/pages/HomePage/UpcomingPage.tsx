@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import Alert from '@mui/material/Alert';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
@@ -45,8 +46,8 @@ export default function UpcomingPage() {
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container maxWidth="xl">
+        {(downloads.isFetching || upcoming.isFetching) && <LoadingIndicator />}
         <Grid container spacing={1}>
-          {(downloads.isFetching || upcoming.isFetching) && <LoadingIndicator />}
           {downloads.data && <DownloadList downloads={downloads.data} />}
           {upcoming.data && <Media data={upcoming.data} type="series" />}
         </Grid>

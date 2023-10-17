@@ -45,6 +45,7 @@ const queryClient = new QueryClient({
     queries: {
       retry: false,
       staleTime: 5 * 1000,
+      useErrorBoundary: true,
     },
   },
 });

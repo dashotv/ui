@@ -10,8 +10,11 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
+
+import Alert from '@mui/material/Alert';
 
 import NavBar from 'components/NavBar';
 import HomePage from 'pages/HomePage';
@@ -36,6 +39,18 @@ import { GlobalStyle } from 'styles/global-styles';
 
 import './index.scss';
 
+function fallbackRender({ error, resetErrorBoundary }) {
+  // Call resetErrorBoundary() to reset the error boundary and retry the render.
+
+  return (
+    <>
+      <Alert severity="error" onClose={() => resetErrorBoundary()}>
+        <div role="alert">{error.message}</div>
+      </Alert>
+    </>
+  );
+}
+
 export function ClerkWrapper({ children }) {
   return <SignedIn>{children}</SignedIn>;
 }
@@ -48,164 +63,167 @@ export function App() {
       </Helmet>
 
       <NavBar />
-      <Routes>
-        <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
-        <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
-        <Route
-          path="/"
-          element={
-            <ClerkWrapper>
-              <HomePage />
-            </ClerkWrapper>
-          }
-        >
+      <ErrorBoundary fallbackRender={fallbackRender}>
+        <Routes>
+          <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
+          <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
           <Route
-            path=""
+            path="/"
             element={
               <ClerkWrapper>
-                <UpcomingPage />
+                <HomePage />
               </ClerkWrapper>
             }
-          />
+          >
+            <Route
+              path=""
+              element={
+                <ClerkWrapper>
+                  <UpcomingPage />
+                </ClerkWrapper>
+              }
+            />
+            <Route
+              path="recent"
+              element={
+                <ClerkWrapper>
+                  <RecentPage />
+                </ClerkWrapper>
+              }
+            />
+            <Route
+              path="jobs"
+              element={
+                <ClerkWrapper>
+                  <JobsPage />
+                </ClerkWrapper>
+              }
+            />
+            <Route path="downloads">
+              <Route
+                path=":id"
+                element={
+                  <ClerkWrapper>
+                    <DownloadsShowPage />
+                  </ClerkWrapper>
+                }
+              />
+            </Route>
+          </Route>
           <Route
-            path="recent"
+            path="series"
             element={
               <ClerkWrapper>
-                <RecentPage />
+                <SeriesPage />
               </ClerkWrapper>
             }
-          />
-          <Route
-            path="jobs"
-            element={
-              <ClerkWrapper>
-                <JobsPage />
-              </ClerkWrapper>
-            }
-          />
-          <Route path="downloads">
+          >
+            <Route
+              path=""
+              element={
+                <ClerkWrapper>
+                  <SeriesIndex />
+                </ClerkWrapper>
+              }
+            />
             <Route
               path=":id"
               element={
                 <ClerkWrapper>
-                  <DownloadsShowPage />
+                  <SeriesShow />
                 </ClerkWrapper>
               }
             />
           </Route>
-        </Route>
-        <Route
-          path="series"
-          element={
-            <ClerkWrapper>
-              <SeriesPage />
-            </ClerkWrapper>
-          }
-        >
           <Route
-            path=""
+            path="movies"
             element={
               <ClerkWrapper>
-                <SeriesIndex />
+                <MoviesPage />
               </ClerkWrapper>
             }
-          />
+          >
+            <Route
+              path=""
+              element={
+                <ClerkWrapper>
+                  <MoviesIndex />
+                </ClerkWrapper>
+              }
+            />
+            <Route
+              path=":id"
+              element={
+                <ClerkWrapper>
+                  <MoviesShow />
+                </ClerkWrapper>
+              }
+            />
+          </Route>
           <Route
-            path=":id"
+            path="releases"
             element={
               <ClerkWrapper>
-                <SeriesShow />
+                <ReleasesPage />
               </ClerkWrapper>
             }
-          />
-        </Route>
-        <Route
-          path="movies"
-          element={
-            <ClerkWrapper>
-              <MoviesPage />
-            </ClerkWrapper>
-          }
-        >
-          <Route
-            path=""
-            element={
-              <ClerkWrapper>
-                <MoviesIndex />
-              </ClerkWrapper>
-            }
-          />
-          <Route
-            path=":id"
-            element={
-              <ClerkWrapper>
-                <MoviesShow />
-              </ClerkWrapper>
-            }
-          />
-        </Route>
-        <Route
-          path="releases"
-          element={
-            <ClerkWrapper>
-              <ReleasesPage />
-            </ClerkWrapper>
-          }
-        >
-          <Route
-            path=""
-            element={
-              <ClerkWrapper>
-                <ReleasesIndex />
-              </ClerkWrapper>
-            }
-          />
-          <Route
-            path=":interval"
-            element={
-              <ClerkWrapper>
-                <ReleasesIndex />
-              </ClerkWrapper>
-            }
-          />
-          <Route
-            path="search"
-            element={
-              <ClerkWrapper>
-                <ReleasesSearch />
-              </ClerkWrapper>
-            }
-          />
-          <Route
-            path="search/:id"
-            element={
-              <ClerkWrapper>
-                <ReleasesShow />
-              </ClerkWrapper>
-            }
-          />
-          <Route
-            path="feeds"
-            element={
-              <ClerkWrapper>
-                <FeedsIndex />
-              </ClerkWrapper>
-            }
-          />
-          <Route
-            path="feeds/:id"
-            element={
-              <ClerkWrapper>
-                <FeedsShow />
-              </ClerkWrapper>
-            }
-          />
-        </Route>
-        <Route element={<NotFoundPage />} />
-      </Routes>
+          >
+            <Route
+              path=""
+              element={
+                <ClerkWrapper>
+                  <ReleasesIndex />
+                </ClerkWrapper>
+              }
+            />
+            <Route
+              path=":interval"
+              element={
+                <ClerkWrapper>
+                  <ReleasesIndex />
+                </ClerkWrapper>
+              }
+            />
+            <Route
+              path="search"
+              element={
+                <ClerkWrapper>
+                  <ReleasesSearch />
+                </ClerkWrapper>
+              }
+            />
+            <Route
+              path="search/:id"
+              element={
+                <ClerkWrapper>
+                  <ReleasesShow />
+                </ClerkWrapper>
+              }
+            />
+            <Route
+              path="feeds"
+              element={
+                <ClerkWrapper>
+                  <FeedsIndex />
+                </ClerkWrapper>
+              }
+            />
+            <Route
+              path="feeds/:id"
+              element={
+                <ClerkWrapper>
+                  <FeedsShow />
+                </ClerkWrapper>
+              }
+            />
+          </Route>
+          <Route element={<NotFoundPage />} />
+        </Routes>
+      </ErrorBoundary>
       <SignedOut>
         <RedirectToSignIn />
       </SignedOut>
+
       <GlobalStyle />
     </>
   );
