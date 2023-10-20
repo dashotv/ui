@@ -18,9 +18,8 @@ import Typography from '@mui/material/Typography';
 import { useSubscription } from 'components/Nats/useSubscription';
 
 import './Navbar.scss';
-import NewMedia from './NewMedia';
 import { Notice } from './Notice';
-import Search from './Search';
+import SuperSearch from './SuperSearch';
 import Logo from './assets/logo-small.png';
 
 const pages = [
@@ -160,14 +159,11 @@ const NavBar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0, mr: 0 }}>
-            <NewMedia />
+          <Box sx={{ flexGrow: 0, mr: 1 }}>
+            <SuperSearch />
           </Box>
           <Box sx={{ flexGrow: 0, mr: 1 }}>
             <UserButton />
-          </Box>
-          <Box sx={{ flexGrow: 0, mr: 0 }}>
-            <Search />
           </Box>
 
           {/*<Box sx={{ flexGrow: 0 }}>

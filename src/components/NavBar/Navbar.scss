@@ -18,3 +18,12 @@ a:hover {
 a:active {
   text-decoration: none;
 }
+
+.searchItem {
+  max-width: 100%;
+  span {
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
