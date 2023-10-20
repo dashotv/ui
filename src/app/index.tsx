@@ -15,6 +15,8 @@ import { Helmet } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
 
 import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Box from '@mui/material/Box';
 
 import NavBar from 'components/NavBar';
 import HomePage from 'pages/HomePage';
@@ -40,13 +42,23 @@ import { GlobalStyle } from 'styles/global-styles';
 import './index.scss';
 
 function fallbackRender({ error, resetErrorBoundary }) {
-  // Call resetErrorBoundary() to reset the error boundary and retry the render.
-
   return (
     <>
-      <Alert severity="error" onClose={() => resetErrorBoundary()}>
-        <div role="alert">{error.message}</div>
-      </Alert>
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
+        <Alert severity="error" onClose={() => resetErrorBoundary()}>
+          <AlertTitle>Failure</AlertTitle>
+          <div role="alert">{error.message}</div>
+        </Alert>
+      </Box>
     </>
   );
 }
@@ -62,8 +74,8 @@ export function App() {
         <meta name="description" content="DashoTV media server" />
       </Helmet>
 
-      <NavBar />
       <ErrorBoundary fallbackRender={fallbackRender}>
+        <NavBar />
         <Routes>
           <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
           <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
