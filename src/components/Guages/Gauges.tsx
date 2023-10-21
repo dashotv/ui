@@ -5,8 +5,8 @@ import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import FeedIcon from '@mui/icons-material/Feed';
 import OpacityIcon from '@mui/icons-material/Opacity';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
-import { Stack } from '@mui/material';
 import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 
 import { useSubscription } from 'components/Nats/useSubscription';
 import { useDownloadsLastQuery } from 'query/downloads';
@@ -37,7 +37,7 @@ function Countdown({ eventTime, interval, last }) {
     }
   }, [last, resetCountdown]);
 
-  return <div>{count}</div>;
+  return <div title={`${count}`}>{count > 0 ? count : 0}</div>;
 }
 
 function DiskGauge(props) {
