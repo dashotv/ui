@@ -3,9 +3,13 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { Link } from 'react-router-dom';
 import { useDebounce } from 'usehooks-ts';
 
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import TvIcon from '@mui/icons-material/Tv';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -28,7 +32,6 @@ import { TvdbResult } from 'types/tvdb';
 export default function SuperSearch() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
-  const [tab, setTab] = useState(0);
   const debouncedValue = useDebounce<string>(value, 400);
   const [options, setOptions] = useState<Medium[]>([]);
   const [tvdbOptions, setTvdbOptions] = useState<TvdbResult[]>([]);
@@ -84,7 +87,7 @@ export default function SuperSearch() {
       return;
     }
 
-    setTvdbOptions(tvdb.data);
+    setTvdbOptions(tvdb.data.slice(0, 10));
   }, [tvdb.data]);
 
   useEffect(() => {
@@ -93,12 +96,8 @@ export default function SuperSearch() {
       return;
     }
 
-    setTmdbOptions(tmdb.data);
+    setTmdbOptions(tmdb.data.slice(0, 10));
   }, [tmdb.data]);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTab(newValue);
-  };
 
   return (
     <>
@@ -106,7 +105,7 @@ export default function SuperSearch() {
         <TravelExploreIcon />
       </IconButton>
 
-      <Dialog open={open} onClose={handleClose} fullWidth={true}>
+      <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
         <DialogTitle>
           <TextField
             autoFocus
@@ -126,16 +125,15 @@ export default function SuperSearch() {
             }}
           />
         </DialogTitle>
-        <DialogContent sx={{ height: '300px' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label={<TabLabel name="Dasho.TV" count={options.length} />} {...a11yProps(0)} aria-selected="true" />
-              <Tab label={<TabLabel name="TVDB" count={tvdbOptions.length} />} {...a11yProps(1)} />
-              <Tab label={<TabLabel name="TMDB" count={tmdbOptions.length} />} {...a11yProps(2)} />
-            </Tabs>
-          </Box>
-          <Box sx={{ width: '100%' }} component="span">
-            <CustomTabPanel value={tab} index={0}>
+        <DialogContent sx={{ height: '430px' }}>
+          <Accordion defaultExpanded disableGutters expanded={options.length > 0}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+              <Chip sx={{ mr: 2 }} color="primary" size="small" label={options.length} />
+              <Typography variant="button" color="primary">
+                DashoTV
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
               {options.map((option: Medium) => (
                 <Link
                   key={option.id}
@@ -148,8 +146,16 @@ export default function SuperSearch() {
                   </Stack>
                 </Link>
               ))}
-            </CustomTabPanel>
-            <CustomTabPanel value={tab} index={1}>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion disableGutters expanded={tvdbOptions.length > 0}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2a-content" id="panel2a-header">
+              <Chip sx={{ mr: 2 }} color="primary" size="small" label={tvdbOptions.length} />
+              <Typography variant="button" color="primary">
+                TVDB
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
               {tvdbOptions.map((option: TvdbResult) => (
                 <Stack key={option.id} className="searchItem" direction="row" spacing={2}>
                   {icon(option)}
@@ -158,8 +164,16 @@ export default function SuperSearch() {
                   </span>
                 </Stack>
               ))}
-            </CustomTabPanel>
-            <CustomTabPanel value={tab} index={2}>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion disableGutters expanded={tmdbOptions.length > 0}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2a-content" id="panel2a-header">
+              <Chip sx={{ mr: 2 }} color="primary" size="small" label={tmdbOptions.length} />
+              <Typography variant="button" color="primary">
+                TMDB
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
               {tmdbOptions.map((option: TmdbResult) => (
                 <Stack key={option.id} className="searchItem" direction="row" spacing={2}>
                   {icon(option)}
@@ -168,8 +182,8 @@ export default function SuperSearch() {
                   </span>
                 </Stack>
               ))}
-            </CustomTabPanel>
-          </Box>
+            </AccordionDetails>
+          </Accordion>
         </DialogContent>
         <DialogActions>{/* <Button onClick={handleClose}>Add</Button> */}</DialogActions>
       </Dialog>
