@@ -1,8 +1,16 @@
 {
   "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "target": "ESNext",
+    "types": [
+      "vite/client"
+    ],
+    "isolatedModules": true,
     "noImplicitAny": false,
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -12,13 +20,15 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
     "jsx": "react-jsx",
     "baseUrl": "./src"
   },
-  "include": ["./src", "./src/app"],
+  "include": [
+    "./src",
+    "./src/app"
+  ],
   "ts-node": {
     "compilerOptions": {
       "esModuleInterop": true,
