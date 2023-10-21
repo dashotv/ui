@@ -50,10 +50,10 @@ const queryClient = new QueryClient({
   },
 });
 
-if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
+if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key');
 }
-const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
+const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
 
 ReactDOMClient.createRoot(MOUNT_NODE!).render(
   <StrictMode>
