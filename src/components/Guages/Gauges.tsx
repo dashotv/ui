@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCountdown } from 'usehooks-ts';
 
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
@@ -24,12 +24,17 @@ function Countdown({ eventTime, interval, last }) {
     intervalMs: intervalValue,
   });
 
+  const lastRef = useRef(last);
+
   useEffect(() => {
     startCountdown();
   });
 
   useEffect(() => {
-    resetCountdown();
+    if (lastRef.current !== last) {
+      lastRef.current = last;
+      resetCountdown();
+    }
   }, [last, resetCountdown]);
 
   return <div>{count}</div>;
@@ -55,7 +60,6 @@ function CountdownGauge(props) {
   useEffect(() => {
     if (initial.data) {
       const seconds = initial.data - Math.round(new Date().getTime() / 1000) + 300;
-      console.log('intial setting last', seconds, initial.data);
       setLast(seconds.toString());
       setEvent(seconds);
     }
