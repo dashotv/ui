@@ -1,3 +1,5 @@
+import { StringLiteral } from '@babel/types';
+import { UseQueryOptions } from '@tanstack/react-query';
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { Link } from 'react-router-dom';
@@ -10,35 +12,25 @@ import TvIcon from '@mui/icons-material/Tv';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
 import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { useSearchQuery, useTmdbSearchQuery, useTvdbSearchQuery } from 'query/search';
-import { Medium } from 'types/medium';
-import { TmdbResult } from 'types/tmdb';
-import { TvdbResult } from 'types/tvdb';
+import { useSearchAllQuery } from 'query/search';
+import { SearchAllResponse, SearchResponse, SearchResult } from 'types/search';
 
 export default function SuperSearch() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const debouncedValue = useDebounce<string>(value, 400);
-  const [options, setOptions] = useState<Medium[]>([]);
-  const [tvdbOptions, setTvdbOptions] = useState<TvdbResult[]>([]);
-  const [tmdbOptions, setTmdbOptions] = useState<TmdbResult[]>([]);
-  const search = useSearchQuery(debouncedValue);
-  const tvdb = useTvdbSearchQuery(debouncedValue);
-  const tmdb = useTmdbSearchQuery(debouncedValue);
+  const { data } = useSearchAllQuery(debouncedValue);
 
   useHotkeys('mod+k', () => setOpen(true), [open]);
 
@@ -50,59 +42,15 @@ export default function SuperSearch() {
     setOpen(false);
   };
 
-  const icon = option => {
-    switch (option.type) {
-      case 'series':
-        return <TvIcon fontSize="small" />;
-      case 'movie':
-        return <TheatersIcon fontSize="small" />;
-    }
-    switch (option.media_type) {
-      case 'series':
-      case 'tv':
-        return <TvIcon fontSize="small" />;
-      case 'movie':
-        return <TheatersIcon fontSize="small" />;
-    }
-    return null;
-  };
-
   const select = useCallback(() => {
     setValue('');
     setOpen(false);
   }, []);
 
-  useEffect(() => {
-    if (!search.data) {
-      setOptions([]);
-      return;
-    }
-
-    setOptions(search.data);
-  }, [search.data]);
-
-  useEffect(() => {
-    if (!tvdb.data) {
-      setOptions([]);
-      return;
-    }
-
-    setTvdbOptions(tvdb.data.slice(0, 10));
-  }, [tvdb.data]);
-
-  useEffect(() => {
-    if (!tmdb.data) {
-      setOptions([]);
-      return;
-    }
-
-    setTmdbOptions(tmdb.data.slice(0, 10));
-  }, [tmdb.data]);
-
   return (
     <>
       <IconButton onClick={handleClickOpen}>
-        <TravelExploreIcon />
+        <TravelExploreIcon fontSize="large" />
       </IconButton>
 
       <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
@@ -118,114 +66,91 @@ export default function SuperSearch() {
               setValue(event.target.value);
             }}
             variant="outlined"
-            InputProps={{
-              endAdornment: (
-                <Fragment>{search.isFetching ? <CircularProgress color="inherit" size={20} /> : null}</Fragment>
-              ),
-            }}
           />
         </DialogTitle>
         <DialogContent sx={{ height: '430px' }}>
-          <Accordion defaultExpanded disableGutters expanded={options.length > 0}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-              <Chip sx={{ mr: 2 }} color="primary" size="small" label={options.length} />
-              <Typography variant="button" color="primary">
-                DashoTV
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              {options.map((option: Medium) => (
-                <Link
-                  key={option.id}
-                  to={`/${option.type === 'movie' ? 'movies' : option.type}/${option.id}`}
-                  onClick={select}
-                >
-                  <Stack className="searchItem" direction="row" spacing={2}>
-                    {icon(option)}
-                    <span>{option.name}</span>
-                  </Stack>
-                </Link>
-              ))}
-            </AccordionDetails>
-          </Accordion>
-          <Accordion disableGutters expanded={tvdbOptions.length > 0}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2a-content" id="panel2a-header">
-              <Chip sx={{ mr: 2 }} color="primary" size="small" label={tvdbOptions.length} />
-              <Typography variant="button" color="primary">
-                TVDB
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              {tvdbOptions.map((option: TvdbResult) => (
-                <Stack key={option.id} className="searchItem" direction="row" spacing={2}>
-                  {icon(option)}
-                  <span>
-                    {option.name} {option.first_air_time && `(${option.first_air_time})`}
-                  </span>
-                </Stack>
-              ))}
-            </AccordionDetails>
-          </Accordion>
-          <Accordion disableGutters expanded={tmdbOptions.length > 0}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2a-content" id="panel2a-header">
-              <Chip sx={{ mr: 2 }} color="primary" size="small" label={tmdbOptions.length} />
-              <Typography variant="button" color="primary">
-                TMDB
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              {tmdbOptions.map((option: TmdbResult) => (
-                <Stack key={option.id} className="searchItem" direction="row" spacing={2}>
-                  {icon(option)}
-                  <span>
-                    {option.name || option.title} {option.release_date && `(${option.release_date})`}
-                  </span>
-                </Stack>
-              ))}
-            </AccordionDetails>
-          </Accordion>
+          {data?.Media?.Error || data?.Tvdb?.Error || data?.Tmdb?.Error ? (
+            <Alert severity="error">{data?.Media?.Error || data?.Tvdb?.Error || data?.Tmdb?.Error}</Alert>
+          ) : null}
+          <SuperSearchAccordion name="Dasho.TV" data={data && data.Media.Results} select={select} link={true} />
+          <SuperSearchAccordion name="TVDB" type="series" data={data && data.Tvdb.Results} link={false} />
+          <SuperSearchAccordion name="TMDB" type="movie" data={data && data.Tmdb.Results} link={false} />
         </DialogContent>
-        <DialogActions>{/* <Button onClick={handleClose}>Add</Button> */}</DialogActions>
       </Dialog>
     </>
   );
 }
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 1 }}>
-          <Typography component="span">{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
+interface Option {
+  ID: string;
+  Title: string;
+  Type: string;
+  Date: string;
 }
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+interface SuperSearchAccordionProps {
+  name: string;
+  data: SearchResult[] | undefined;
+  select?: () => void;
+  type?: string;
+  link: boolean;
+}
+const SuperSearchAccordion = ({ name, data, select, type, link }: SuperSearchAccordionProps) => {
+  const [options, setOptions] = useState<Option[]>([]);
+
+  const withLink = (option: Option) => {
+    return (
+      <Link key={option.ID} to={`/${option.Type === 'movie' ? 'movies' : option.Type}/${option.ID}`} onClick={select}>
+        {withItem(option)}
+      </Link>
+    );
   };
-}
+  const withItem = (option: Option) => {
+    return (
+      <Stack key={option.ID} className="searchItem" direction="row" spacing={2}>
+        <SuperSearchIcon type={type || option.Type} />
+        <Typography
+          sx={{ flexGrow: 1, maxWidth: '100%', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
+        >
+          {option.Title}
+        </Typography>
+        <Typography sx={{ whiteSpace: 'nowrap' }}>{option.Date}</Typography>
+      </Stack>
+    );
+  };
 
-function TabLabel({ name, count }) {
+  useEffect(() => {
+    if (!data || data.length === 0) {
+      setOptions([]);
+      return;
+    }
+
+    console.log(name, data);
+    setOptions(data);
+  }, [data]);
+
   return (
-    <div>
-      <span>{name}</span>
-      <Chip sx={{ ml: 2 }} size="small" label={count} />
-    </div>
+    <Accordion defaultExpanded disableGutters expanded={options.length > 0}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+        <Chip sx={{ mr: 2 }} color="primary" size="small" label={options.length} />
+        <Typography variant="button" color="primary">
+          {name}
+        </Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        {options.map((option: Option) => (
+          <>{link ? withLink(option) : withItem(option)}</>
+        ))}
+      </AccordionDetails>
+    </Accordion>
   );
-}
+};
+
+const SuperSearchIcon = ({ type }: { type: string | undefined }) => {
+  switch (type) {
+    case 'series':
+      return <TvIcon color="primary" fontSize="small" />;
+    case 'movie':
+      return <TheatersIcon color="primary" fontSize="small" />;
+  }
+  return null;
+};
