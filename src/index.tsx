@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { App } from 'app';
 import FontFaceObserver from 'fontfaceobserver';
 import { SnackbarProvider } from 'notistack';
-import * as React from 'react';
+import { StrictMode } from 'react';
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import * as ReactDOMClient from 'react-dom/client';
@@ -56,32 +56,32 @@ if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
 const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 ReactDOMClient.createRoot(MOUNT_NODE!).render(
-  // <Provider store={store}>
-  <ClerkProvider
-    publishableKey={clerkPubKey}
-    appearance={{
-      baseTheme: dark,
-    }}
-  >
-    <ThemeProvider theme={darkTheme}>
-      <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: 'center', vertical: 'top' }}>
-        <NatsProvider>
-          <Router>
-            <CssBaseline />
-            <HelmetProvider>
-              {/*<React.StrictMode>*/}
-              <QueryClientProvider client={queryClient}>
-                <App />
-                <ReactQueryDevtools initialIsOpen={false} />
-              </QueryClientProvider>
-              {/*</React.StrictMode>*/}
-            </HelmetProvider>
-          </Router>
-        </NatsProvider>
-      </SnackbarProvider>
-    </ThemeProvider>
-  </ClerkProvider>,
-  // </Provider>,
+  <StrictMode>
+    <ClerkProvider
+      publishableKey={clerkPubKey}
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
+      <ThemeProvider theme={darkTheme}>
+        <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: 'center', vertical: 'top' }}>
+          <NatsProvider>
+            <Router>
+              <CssBaseline />
+              <HelmetProvider>
+                {/*<React.StrictMode>*/}
+                <QueryClientProvider client={queryClient}>
+                  <App />
+                  <ReactQueryDevtools initialIsOpen={false} />
+                </QueryClientProvider>
+                {/*</React.StrictMode>*/}
+              </HelmetProvider>
+            </Router>
+          </NatsProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </ClerkProvider>
+  </StrictMode>,
 );
 
 // Hot reloadable translation json files
