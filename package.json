@@ -71,7 +71,6 @@
     "react-moment": "1.1.2",
     "react-redux": "7.2.6",
     "react-router-dom": "6.2.0",
-    "react-scripts": "5.0.1",
     "react-sparklines": "1.7.0",
     "react-test-renderer": "18.1.0",
     "react-timeago": "7.1.0",
@@ -96,8 +95,9 @@
     "web-vitals": "2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start:prod": "yarn run build && serve -s build",
