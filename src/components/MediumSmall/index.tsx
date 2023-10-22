@@ -5,7 +5,8 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import StarIcon from '@mui/icons-material/Star';
 import Chip from '@mui/material/Chip';
 
-import Chrono from 'components/Date';
+import Chrono from 'components/Chrono';
+
 import './small.scss';
 
 export default function MediumSmall(props) {
@@ -43,9 +44,7 @@ function Header(props) {
   return (
     <div className="header">
       <div className="primary">
-        <Chrono special>
-          {props.text}
-        </Chrono>
+        <Chrono special>{props.text}</Chrono>
       </div>
     </div>
   );

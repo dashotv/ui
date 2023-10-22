@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
-import Chrono from 'components/Date';
+import Chrono from 'components/Chrono';
 import LoadingIndicator from 'components/Loading';
 import { useFeedsAllQuery } from 'query/feeds';
 

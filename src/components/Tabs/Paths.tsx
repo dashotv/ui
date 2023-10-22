@@ -8,7 +8,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import MovieIcon from '@mui/icons-material/Movie';
 import IconButton from '@mui/material/IconButton';
 
-import Chrono from 'components/Date';
+import Chrono from 'components/Chrono';
 
 export default function Paths(props) {
   return (

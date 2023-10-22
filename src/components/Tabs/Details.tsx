@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Chrono from 'components/Date';
 
+import Chrono from 'components/Chrono';
 import ImageSmall from 'components/MediumLarge/ImageSmall';
 
 export default function Details(props) {
@@ -31,9 +31,7 @@ export default function Details(props) {
           <tr>
             <th>Release</th>
             <td>
-              <Chrono format="YYYY-MM-DD">
-                {props.data.release_date}
-              </Chrono>
+              <Chrono format="YYYY-MM-DD">{props.data.release_date}</Chrono>
             </td>
           </tr>
           <tr>

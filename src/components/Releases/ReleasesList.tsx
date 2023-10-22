@@ -8,10 +8,10 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import Chrono from 'components/Chrono';
 import { useReleaseGroup } from 'hooks/useReleaseGroup';
 import { useReleaseResolution } from 'hooks/useReleaseResolution';
 import { useReleaseSettingMutation } from 'query/releases';
-import Chrono from 'components/Date';
 
 export function ReleasesList({ data, actions }) {
   const { resolution } = useReleaseResolution();

@@ -8,8 +8,8 @@ import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
-import Chrono from 'components/Date';
 import ButtonMap from 'components/ButtonMap';
+import Chrono from 'components/Chrono';
 
 import './banner.scss';
 
@@ -93,9 +93,7 @@ export default function Banner({
           <div className="titlebar">
             <div className="title">
               <span>{title}</span>
-              {(!tertiary && release_date !== undefined) && (
-                <Chrono format="YYYY-MM-DD">{release_date}</Chrono>
-              )}
+              {!tertiary && release_date !== undefined && <Chrono format="YYYY-MM-DD">{release_date}</Chrono>}
             </div>
             {subtitle && (
               <div className="subtitle">

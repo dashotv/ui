@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
+import Chrono from 'components/Chrono';
 import LoadingIndicator from 'components/Loading';
 import { useFeedQuery } from 'query/feeds';
-import Chrono from 'components/Date';
 
 export default function FeedsShow() {
   let { id } = useParams();

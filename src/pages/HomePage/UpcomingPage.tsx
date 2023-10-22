@@ -21,7 +21,7 @@ export default function UpcomingPage() {
     'seer.downloads',
     useCallback(
       data => {
-        queryClient.invalidateQueries({queryKey: ['downloads', 'active']});
+        queryClient.invalidateQueries({ queryKey: ['downloads', 'active'] });
       },
       [queryClient],
     ),
@@ -31,7 +31,7 @@ export default function UpcomingPage() {
     'seer.episodes',
     useCallback(
       data => {
-        queryClient.invalidateQueries({queryKey: ['media', 'upcoming']});
+        queryClient.invalidateQueries({ queryKey: ['media', 'upcoming'] });
       },
       [queryClient],
     ),

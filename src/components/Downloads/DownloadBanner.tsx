@@ -21,8 +21,8 @@ import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-import Chrono from 'components/Date';
 import Banner from 'components/Banner';
+import Chrono from 'components/Chrono';
 
 export function DownloadBanner(props) {
   const [auto, setAuto] = useState(props.download.auto);

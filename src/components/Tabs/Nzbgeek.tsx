@@ -11,8 +11,8 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import Chrono from 'components/Date';
 import ButtonMap from 'components/ButtonMap';
+import Chrono from 'components/Chrono';
 import LoadingIndicator from 'components/Loading';
 import { useQueryString } from 'hooks/useQueryString';
 

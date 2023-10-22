@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Chrono from 'components/Date';
+
+import Chrono from 'components/Chrono';
 
 export default function Watches(props) {
   return (
@@ -30,9 +31,7 @@ function WatchRow(props) {
   return (
     <tr>
       <td className="date">
-        <Chrono format="YYYY-MM-DD">
-          {props.date}
-        </Chrono>
+        <Chrono format="YYYY-MM-DD">{props.date}</Chrono>
       </td>
       <td className="user">{props.user}</td>
       <td>
