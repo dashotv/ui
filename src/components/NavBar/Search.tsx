@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDebounce } from 'usehooks-ts';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -8,6 +8,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import TvIcon from '@mui/icons-material/Tv';
+import { Link } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -29,6 +30,7 @@ export default function SuperSearch() {
   const [value, setValue] = useState('');
   const debouncedValue = useDebounce<string>(value, 400);
   const { data } = useSearchAllQuery(debouncedValue);
+  const navigate = useNavigate();
 
   useHotkeys('mod+k', () => setOpen(true), [open]);
 
@@ -40,9 +42,17 @@ export default function SuperSearch() {
     setOpen(false);
   };
 
-  const select = useCallback(() => {
+  const select = useCallback((option: Option) => {
     setValue('');
     setOpen(false);
+    console.log('select: ', option);
+    navigate(`/${option.Type == 'movie' ? 'movies' : option.Type}/${option.ID}`);
+  }, []);
+
+  const create = useCallback((option: Option) => {
+    setValue('');
+    setOpen(false);
+    console.log('create: ', option);
   }, []);
 
   return (
@@ -71,8 +81,20 @@ export default function SuperSearch() {
             <Alert severity="error">{data?.Media?.Error || data?.Tvdb?.Error || data?.Tmdb?.Error}</Alert>
           ) : null}
           <SuperSearchAccordion name="Dasho.TV" data={data && data.Media.Results} select={select} link={true} />
-          <SuperSearchAccordion name="TVDB" type="series" data={data && data.Tvdb.Results} link={false} />
-          <SuperSearchAccordion name="TMDB" type="movie" data={data && data.Tmdb.Results} link={false} />
+          <SuperSearchAccordion
+            name="TVDB"
+            type="series"
+            data={data && data.Tvdb.Results}
+            select={create}
+            link={false}
+          />
+          <SuperSearchAccordion
+            name="TMDB"
+            type="movie"
+            data={data && data.Tmdb.Results}
+            select={create}
+            link={false}
+          />
         </DialogContent>
       </Dialog>
     </>
@@ -85,36 +107,24 @@ interface Option {
   Type: string;
   Date: string;
 }
+
+function SuperSearchDialog() {
+  // do this
+}
+
+function SuperSearchConfirm() {
+  // do this
+}
+
 interface SuperSearchAccordionProps {
   name: string;
   data: SearchResult[] | undefined;
-  select?: () => void;
+  select: (option: Option) => void;
   type?: string;
   link: boolean;
 }
 const SuperSearchAccordion = ({ name, data, select, type, link }: SuperSearchAccordionProps) => {
   const [options, setOptions] = useState<Option[]>([]);
-
-  const withLink = (option: Option) => {
-    return (
-      <Link key={option.ID} to={`/${option.Type === 'movie' ? 'movies' : option.Type}/${option.ID}`} onClick={select}>
-        {withItem(option)}
-      </Link>
-    );
-  };
-  const withItem = (option: Option) => {
-    return (
-      <Stack key={option.ID} className="searchItem" direction="row" spacing={2}>
-        <SuperSearchIcon type={type || option.Type} />
-        <Typography
-          sx={{ flexGrow: 1, maxWidth: '100%', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}
-        >
-          {option.Title}
-        </Typography>
-        <Typography sx={{ whiteSpace: 'nowrap' }}>{option.Date}</Typography>
-      </Stack>
-    );
-  };
 
   useEffect(() => {
     if (!data || data.length === 0) {
@@ -135,7 +145,13 @@ const SuperSearchAccordion = ({ name, data, select, type, link }: SuperSearchAcc
       </AccordionSummary>
       <AccordionDetails>
         {options.map((option: Option) => (
-          <>{link ? withLink(option) : withItem(option)}</>
+          <Link key={option.ID} underline="none" color="inherit" onClick={() => select(option)}>
+            <Stack className="searchItem" direction="row" spacing={2}>
+              <SuperSearchIcon type={type || option.Type} />
+              <Typography component="span">{option.Title}</Typography>
+              <Typography sx={{ whiteSpace: 'nowrap' }}>{option.Date}</Typography>
+            </Stack>
+          </Link>
         ))}
       </AccordionDetails>
     </Accordion>

@@ -21,11 +21,18 @@ a:active {
 
 .searchItem {
   max-width: 100%;
+  cursor: pointer;
+  padding: 3px 1px;
   span {
+    flex-grow: 1;
+    max-width: '100%';
     white-space: pre;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
+.searchItem:hover {
+  background-color: gray;
 }
 
 .notice {
