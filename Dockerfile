@@ -17,4 +17,4 @@ ARG VITE_APP_CLERK_PUBLISHABLE_KEY
 ENV VITE_APP_CLERK_PUBLISHABLE_KEY=$VITE_APP_CLERK_PUBLISHABLE_KEY
 
 COPY ./etc/default.nginx /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html

@@ -1,4 +1,4 @@
-import { esbuildCommonjs, viteCommonjs } from '@originjs/vite-plugin-commonjs';
+import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
