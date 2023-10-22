@@ -1,11 +1,23 @@
+import { esbuildCommonjs, viteCommonjs } from '@originjs/vite-plugin-commonjs';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   // depending on your application, base can also be "/"
   base: '/',
-  plugins: [react(), viteTsconfigPaths()],
+  plugins: [react(), nodePolyfills(), viteTsconfigPaths()],
+  build: {
+    rollupOptions: {
+      external: ['fs'],
+    },
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      plugins: [esbuildCommonjs(['react-moment'])],
+    },
+  },
   //   test: {
   //     globals: true,
   //     environment: 'jsdom',
@@ -23,5 +35,27 @@ export default defineConfig({
     open: true,
     // this sets a default port to 3000
     port: 3000,
+    proxy: {
+      '/api/tower': {
+        target: 'http://localhost:9000',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        rewrite: path => path.replace(/^\/api\/tower/, ''),
+      },
+      '/api/scry': {
+        target: 'http://localhost:10080',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        rewrite: path => path.replace(/^\/api\/scry/, ''),
+      },
+      '/media-images': {
+        target: 'http://seer.dasho.net/',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+    },
   },
 });

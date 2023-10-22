@@ -27,7 +27,6 @@ import UpcomingPage from 'pages/HomePage/UpcomingPage';
 import MoviesPage from 'pages/MoviesPage';
 import MoviesIndex from 'pages/MoviesPage/MoviesIndex';
 import MoviesShow from 'pages/MoviesPage/MoviesShow';
-import { NotFoundPage } from 'pages/NotFoundPage';
 import ReleasesPage from 'pages/ReleasesPage';
 import FeedsIndex from 'pages/ReleasesPage/FeedsIndex';
 import FeedsShow from 'pages/ReleasesPage/FeedsShow';
@@ -229,7 +228,7 @@ export function App() {
               }
             />
           </Route>
-          <Route element={<NotFoundPage />} />
+          {/* <Route element={<NotFoundPage />} /> */}
         </Routes>
       </ErrorBoundary>
       <SignedOut>
