@@ -19,9 +19,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { NatsProvider } from 'components/Nats/context';
 
-// Initialize languages
-import './locales/i18n';
-
 // Observe loading of Inter (to remove 'Inter', remove the <link> tag in
 // the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Inter', {});
