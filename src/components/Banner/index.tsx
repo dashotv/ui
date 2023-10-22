@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Moment from 'react-moment';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 // import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
@@ -9,6 +8,7 @@ import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
+import Date from 'components/Date';
 import ButtonMap from 'components/ButtonMap';
 
 import './banner.scss';
@@ -94,9 +94,9 @@ export default function Banner({
             <div className="title">
               <span>{title}</span>
               {!tertiary && (
-                <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
+                <Date format="YYYY-MM-DD" add={{ days: 1 }}>
                   {release_date}
-                </Moment>
+                </Date>
               )}
             </div>
             {subtitle && (

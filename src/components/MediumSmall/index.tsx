@@ -1,12 +1,11 @@
-import 'moment-timezone';
 import * as React from 'react';
-import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import StarIcon from '@mui/icons-material/Star';
 import Chip from '@mui/material/Chip';
 
+import Date from 'components/Date';
 import './small.scss';
 
 export default function MediumSmall(props) {
@@ -40,21 +39,13 @@ function Footer(props) {
 }
 
 function Header(props) {
-  const calendarStrings = {
-    lastDay: '[Yesterday]',
-    sameDay: '[Today]',
-    nextDay: '[Tomorrow]',
-    lastWeek: '[last] dddd',
-    nextWeek: 'dddd',
-    sameElse: 'YYYY-MM-DD',
-  };
   /* had to add day to deal with UTC time, not sure why tz prop doesn't work */
   return (
     <div className="header">
       <div className="primary">
-        <Moment calendar={calendarStrings} add={{ days: 1 }}>
+        <Date special>
           {props.text}
-        </Moment>
+        </Date>
       </div>
     </div>
   );
@@ -107,7 +98,7 @@ export function Bar(props) {
       <div className="bar-container">
         <div className="eta">
           <Queue queue={props.queue} />
-          <Moment fromNow>{props.eta}</Moment>
+          <Date fromNow>{props.eta}</Date>
         </div>
         <div className="bar" style={{ width: props.progress + '%' }} />
         <div className="bar-background" />

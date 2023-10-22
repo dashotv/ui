@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import * as React from 'react';
-import Moment from 'react-moment';
 
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -8,6 +7,7 @@ import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IconButton } from '@mui/material';
+import Date from 'components/Date';
 
 export default function Episodes(props) {
   return (
@@ -61,9 +61,9 @@ function EpisodeRow(props) {
       <th scope="row">{props.number}</th>
       <td>{props.title}</td>
       <td align="right">
-        <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
+        <Date format="YYYY-MM-DD" add={{ days: 1 }}>
           {props.release}
-        </Moment>
+        </Date>
       </td>
       <td style={{ width: '225px' }} align="right">
         <IconButton size="small">

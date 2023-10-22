@@ -1,5 +1,4 @@
 import React from 'react';
-import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
 import ArticleIcon from '@mui/icons-material/Article';
@@ -12,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import { useReleaseGroup } from 'hooks/useReleaseGroup';
 import { useReleaseResolution } from 'hooks/useReleaseResolution';
 import { useReleaseSettingMutation } from 'query/releases';
+import Date from 'components/Date';
 
 export function ReleasesList({ data, actions }) {
   const { resolution } = useReleaseResolution();
@@ -67,7 +67,7 @@ export function ReleasesList({ data, actions }) {
                     {group(row.group, row.author)}
                   </Stack>
                 </td>
-                <td align="right">{row.published_at && <Moment fromNow>{row.published_at}</Moment>}</td>
+                <td align="right">{row.published_at && <Date fromNow>{row.published_at}</Date>}</td>
                 <td align="right">{actions && actions(row)}</td>
               </tr>
             ))}

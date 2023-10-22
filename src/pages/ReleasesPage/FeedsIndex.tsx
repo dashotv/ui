@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
-import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -10,6 +9,7 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
+import Date from 'components/Date';
 import LoadingIndicator from 'components/Loading';
 import { useFeedsAllQuery } from 'query/feeds';
 
@@ -50,7 +50,7 @@ function Feeds(props) {
           </span>
         </td>
         <td align="right">
-          <Moment fromNow>{row.processed}</Moment>
+          <Date fromNow>{row.processed}</Date>
         </td>
         <td align="right">
           <IconButton size="small">

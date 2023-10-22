@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Moment from 'react-moment';
+import Date from 'components/Date';
 
 import ImageSmall from 'components/MediumLarge/ImageSmall';
 
@@ -31,9 +31,9 @@ export default function Details(props) {
           <tr>
             <th>Release</th>
             <td>
-              <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
+              <Date format="YYYY-MM-DD" add={{ days: 1 }}>
                 {props.data.release_date}
-              </Moment>
+              </Date>
             </td>
           </tr>
           <tr>
@@ -45,7 +45,7 @@ export default function Details(props) {
           <tr>
             <th>Updated</th>
             <td>
-              <Moment fromNow>{props.data.updated_at}</Moment>
+              <Date fromNow>{props.data.updated_at}</Date>
             </td>
           </tr>
           <tr>

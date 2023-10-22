@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Moment from 'react-moment';
+import Date from 'components/Date';
 
 export default function Watches(props) {
   return (
@@ -30,9 +30,9 @@ function WatchRow(props) {
   return (
     <tr>
       <td className="date">
-        <Moment format="YYYY-MM-DD" add={{ days: 1 }}>
+        <Date format="YYYY-MM-DD" add={{ days: 1 }}>
           {props.date}
-        </Moment>
+        </Date>
       </td>
       <td className="user">{props.user}</td>
       <td>

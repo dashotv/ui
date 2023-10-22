@@ -1,8 +1,7 @@
-import Moment from 'react-moment';
-
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 
+import Date from 'components/Date';
 import { Job } from 'types/job';
 
 export function JobsList({ jobs }) {
@@ -39,7 +38,7 @@ export function JobRow({ id, name, processed_at, error }: Job) {
         </td>
         <td>{name}</td>
         <td className="actions" align="right">
-          <Moment fromNow>{processed_at.toString()}</Moment>
+          <Date fromNow>{processed_at.toString()}</Date>
         </td>
       </tr>
     </>

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import React, { useCallback, useEffect, useState } from 'react';
-import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 
 import ArticleIcon from '@mui/icons-material/Article';
@@ -12,6 +11,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
+import Date from 'components/Date';
 import ButtonMap from 'components/ButtonMap';
 import LoadingIndicator from 'components/Loading';
 import { useQueryString } from 'hooks/useQueryString';
@@ -174,7 +174,7 @@ function NzbListRow(props) {
         </Link>
       </td>
       <td align="right">
-        <Moment fromNow>{props.published}</Moment>
+        <Date fromNow>{props.published}</Date>
       </td>
       <td align="right">
         <ButtonMap buttons={props.actions} />

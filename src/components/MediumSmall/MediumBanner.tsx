@@ -1,23 +1,15 @@
-import Moment from 'react-moment';
 
 import Banner from 'components/Banner';
+import Date from 'components/Date';
 
 function Release({ date }: { date: string }) {
-  const calendarStrings = {
-    lastDay: '[Yesterday]',
-    sameDay: '[Today]',
-    nextDay: '[Tomorrow]',
-    lastWeek: '[last] dddd',
-    nextWeek: 'dddd',
-    sameElse: 'YYYY-MM-DD',
-  };
   /* had to add day to deal with UTC time, not sure why tz prop doesn't work */
   return (
     <div className="header">
       <div className="primary">
-        <Moment calendar={calendarStrings} add={{ days: 1 }}>
+        <Date special>
           {date}
-        </Moment>
+        </Date>
       </div>
     </div>
   );

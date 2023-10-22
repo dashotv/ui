@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Moment from 'react-moment';
 
 import ClosedCaptionIcon from '@mui/icons-material/ClosedCaption';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,6 +7,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import ImageIcon from '@mui/icons-material/Image';
 import MovieIcon from '@mui/icons-material/Movie';
 import IconButton from '@mui/material/IconButton';
+
+import Date from 'components/Date';
 
 export default function Paths(props) {
   return (
@@ -59,7 +60,7 @@ function PathsRow(props) {
         {props.local}.{props.extension}
       </td>
       <td align="right">
-        <Moment fromNow>{props.updated}</Moment>
+        <Date fromNow>{props.updated}</Date>
       </td>
 
       <td align="right">

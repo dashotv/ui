@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
-import Moment from 'react-moment';
 import { useNavigate } from 'react-router-dom';
 
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
@@ -22,6 +21,7 @@ import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
+import Date from 'components/Date';
 import Banner from 'components/Banner';
 
 export function DownloadBanner(props) {
@@ -211,7 +211,7 @@ function Eta({ eta }) {
   if (!eta) {
     return null;
   }
-  return <Moment fromNow>{eta}</Moment>;
+  return <Date fromNow>{eta}</Date>;
 }
 
 function Icon({ status }) {
