@@ -5,7 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import StarIcon from '@mui/icons-material/Star';
 import Chip from '@mui/material/Chip';
 
-import Date from 'components/Date';
+import Chrono from 'components/Date';
 import './small.scss';
 
 export default function MediumSmall(props) {
@@ -43,9 +43,9 @@ function Header(props) {
   return (
     <div className="header">
       <div className="primary">
-        <Date special>
+        <Chrono special>
           {props.text}
-        </Date>
+        </Chrono>
       </div>
     </div>
   );
@@ -98,7 +98,7 @@ export function Bar(props) {
       <div className="bar-container">
         <div className="eta">
           <Queue queue={props.queue} />
-          <Date fromNow>{props.eta}</Date>
+          <Chrono fromNow>{props.eta}</Chrono>
         </div>
         <div className="bar" style={{ width: props.progress + '%' }} />
         <div className="bar-background" />

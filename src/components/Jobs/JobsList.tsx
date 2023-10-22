@@ -1,7 +1,7 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 
-import Date from 'components/Date';
+import Chrono from 'components/Date';
 import { Job } from 'types/job';
 
 export function JobsList({ jobs }) {
@@ -38,7 +38,7 @@ export function JobRow({ id, name, processed_at, error }: Job) {
         </td>
         <td>{name}</td>
         <td className="actions" align="right">
-          <Date fromNow>{processed_at.toString()}</Date>
+          <Chrono fromNow>{processed_at.toString()}</Chrono>
         </td>
       </tr>
     </>

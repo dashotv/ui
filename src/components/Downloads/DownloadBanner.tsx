@@ -21,7 +21,7 @@ import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-import Date from 'components/Date';
+import Chrono from 'components/Date';
 import Banner from 'components/Banner';
 
 export function DownloadBanner(props) {
@@ -211,7 +211,7 @@ function Eta({ eta }) {
   if (!eta) {
     return null;
   }
-  return <Date fromNow>{eta}</Date>;
+  return <Chrono fromNow>{eta}</Chrono>;
 }
 
 function Icon({ status }) {

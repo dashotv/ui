@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import Date from 'components/Date';
+import Chrono from 'components/Date';
 import ButtonMap from 'components/ButtonMap';
 import LoadingIndicator from 'components/Loading';
 import { useQueryString } from 'hooks/useQueryString';
@@ -174,7 +174,7 @@ function NzbListRow(props) {
         </Link>
       </td>
       <td align="right">
-        <Date fromNow>{props.published}</Date>
+        <Chrono fromNow>{props.published}</Chrono>
       </td>
       <td align="right">
         <ButtonMap buttons={props.actions} />

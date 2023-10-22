@@ -7,7 +7,7 @@ import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IconButton } from '@mui/material';
-import Date from 'components/Date';
+import Chrono from 'components/Date';
 
 export default function Episodes(props) {
   return (
@@ -61,9 +61,9 @@ function EpisodeRow(props) {
       <th scope="row">{props.number}</th>
       <td>{props.title}</td>
       <td align="right">
-        <Date format="YYYY-MM-DD" add={{ days: 1 }}>
+        <Chrono format="YYYY-MM-DD">
           {props.release}
-        </Date>
+        </Chrono>
       </td>
       <td style={{ width: '225px' }} align="right">
         <IconButton size="small">

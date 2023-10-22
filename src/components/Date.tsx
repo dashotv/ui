@@ -9,7 +9,7 @@ interface DateProps {
     special?: boolean;
     children: string;
 }
-export default function Date({fromNow, format = "YYYY-MM-DD", special, children}: DateProps) {
+export default function Chrono({fromNow, format = "YYYY-MM-DD", special, children}: DateProps) {
     const process = (date: string) => {
         const i = dayjs(date)
         const offset = i.utcOffset()

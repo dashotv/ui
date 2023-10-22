@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Date from 'components/Date';
+import Chrono from 'components/Date';
 
 import ImageSmall from 'components/MediumLarge/ImageSmall';
 
@@ -31,9 +31,9 @@ export default function Details(props) {
           <tr>
             <th>Release</th>
             <td>
-              <Date format="YYYY-MM-DD" add={{ days: 1 }}>
+              <Chrono format="YYYY-MM-DD">
                 {props.data.release_date}
-              </Date>
+              </Chrono>
             </td>
           </tr>
           <tr>
@@ -45,7 +45,7 @@ export default function Details(props) {
           <tr>
             <th>Updated</th>
             <td>
-              <Date fromNow>{props.data.updated_at}</Date>
+              <Chrono fromNow>{props.data.updated_at}</Chrono>
             </td>
           </tr>
           <tr>

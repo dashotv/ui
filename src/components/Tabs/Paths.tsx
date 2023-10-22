@@ -8,7 +8,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import MovieIcon from '@mui/icons-material/Movie';
 import IconButton from '@mui/material/IconButton';
 
-import Date from 'components/Date';
+import Chrono from 'components/Date';
 
 export default function Paths(props) {
   return (
@@ -60,7 +60,7 @@ function PathsRow(props) {
         {props.local}.{props.extension}
       </td>
       <td align="right">
-        <Date fromNow>{props.updated}</Date>
+        <Chrono fromNow>{props.updated}</Chrono>
       </td>
 
       <td align="right">

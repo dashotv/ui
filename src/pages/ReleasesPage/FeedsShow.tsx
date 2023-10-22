@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 
 import LoadingIndicator from 'components/Loading';
 import { useFeedQuery } from 'query/feeds';
-import Date from 'components/Date';
+import Chrono from 'components/Date';
 
 export default function FeedsShow() {
   let { id } = useParams();
@@ -52,7 +52,7 @@ function FeedShow(props) {
           <tr>
             <th>Processed</th>
             <td>
-              <Date fromNow>{props.data.processed}</Date>
+              <Chrono fromNow>{props.data.processed}</Chrono>
             </td>
           </tr>
         </tbody>

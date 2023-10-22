@@ -1,15 +1,15 @@
 
 import Banner from 'components/Banner';
-import Date from 'components/Date';
+import Chrono from 'components/Date';
 
 function Release({ date }: { date: string }) {
   /* had to add day to deal with UTC time, not sure why tz prop doesn't work */
   return (
     <div className="header">
       <div className="primary">
-        <Date special>
+        <Chrono special>
           {date}
-        </Date>
+        </Chrono>
       </div>
     </div>
   );
