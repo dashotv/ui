@@ -1,7 +1,11 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
+import weekday from 'dayjs/plugin/weekday';
 
 dayjs.extend(relativeTime);
+dayjs.extend(utc);
+dayjs.extend(weekday);
 
 interface DateProps {
   fromNow?: boolean;
@@ -10,15 +14,14 @@ interface DateProps {
   children: string;
 }
 export default function Chrono({ fromNow, format = 'YYYY-MM-DD', special, children }: DateProps) {
-  const process = (date: string) => {
-    const i = dayjs(date);
-    const offset = i.utcOffset();
-    let d = i.subtract(offset, 'minutes');
+  const raw = dayjs(children).utc();
 
-    if (special !== undefined) {
-      const diff = d.diff(dayjs(), 'days');
+  const process = () => {
+    if (special !== undefined || special) {
+      const diff = raw.diff(dayjs().utc().startOf('day'), 'days', true);
+      // console.log('raw: ', raw, 'diff: ', diff);
       if (diff > 7 || diff < -7) {
-        return d.format(format);
+        return raw.format(format);
       }
       if (diff == 1) {
         return 'Tomorrow';
@@ -29,22 +32,22 @@ export default function Chrono({ fromNow, format = 'YYYY-MM-DD', special, childr
       if (diff == -1) {
         return 'Yesterday';
       }
-      if (diff > -7 && diff <= -1) {
-        return d.subtract(diff, 'days').format('dddd');
+      if (diff > -7 && diff < 0) {
+        return 'last ' + raw.weekday(diff).format('dddd');
       }
-      return d.format('dddd');
+      return raw.weekday(diff).format('dddd');
     }
 
     if (fromNow !== undefined || fromNow) {
-      return d.fromNow();
+      return raw.fromNow();
     }
 
-    return d.format(format);
+    return raw.format(format);
   };
 
   return (
-    <span className="dashotv-date" title={`fromnow: ${fromNow}`}>
-      {process(children)}
+    <span className="dashotv-date" title={`${raw}`}>
+      {process()}
     </span>
   );
 }
