@@ -96,11 +96,11 @@
     "web-vitals": "3.5.0"
   },
   "scripts": {
-    "start": "bunx --bun vite",
-    "build": "bunx --bun tsc && bunx --bun vite build",
-    "preview": "bunx --bun vite preview",
-    "test": "bunx --bun vitest",
-    "test:coverage": "bunx --bun vitest run --coverage --watch=false",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage --watch=false",
     "checkTs": "tsc --noEmit",
     "eslint": "eslint --ext js,ts,tsx",
     "lint": "yarn run eslint src",

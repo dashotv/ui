@@ -10,6 +10,7 @@ RUN yarn install --production
 COPY . .
 RUN yarn build
 
+####################################################################################################
 FROM nginx:alpine
 
 ARG VITE_APP_CLERK_PUBLISHABLE_KEY
