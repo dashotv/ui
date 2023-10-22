@@ -50,7 +50,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
+    "preview": "yarn build && vite preview",
     "test": "vitest",
     "test:coverage": "vitest run --coverage --watch=false",
     "checkTs": "tsc --noEmit",
