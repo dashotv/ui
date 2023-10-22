@@ -19,8 +19,8 @@ import { useSubscription } from 'components/Nats/useSubscription';
 
 import './Navbar.scss';
 import { Notice } from './Notice';
-import SuperSearch from './SuperSearch';
-import Logo from './assets/logo-small.png';
+import SuperSearch from './Search';
+import Logo from '/logo-small.png';
 
 const pages = [
   { name: 'Home', page: '/', exact: true },
@@ -119,7 +119,7 @@ const NavBar = () => {
             >
               {pages.map(({ name, page, exact }) => (
                 <Link key={name} to={page}>
-                  <MenuItem onClick={handleCloseNavMenu} selected={matchPath(page, exact)}>
+                  <MenuItem sx={{ width: '300px' }} onClick={handleCloseNavMenu} selected={matchPath(page, exact)}>
                     <Typography textAlign="center">{name}</Typography>
                   </MenuItem>
                 </Link>
