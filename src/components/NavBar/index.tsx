@@ -49,15 +49,7 @@ const NavBar = () => {
     setAnchorElNav(null);
   };
 
-  useSubscription(
-    'seer.notices',
-    useCallback(
-      data => {
-        enqueueSnackbar(<Notice data={data} />, { variant: data.level });
-      },
-      [enqueueSnackbar],
-    ),
-  );
+  useSubscription('seer.notices', data => enqueueSnackbar(<Notice data={data} />, { variant: data.level }));
 
   return (
     <AppBar position="static">

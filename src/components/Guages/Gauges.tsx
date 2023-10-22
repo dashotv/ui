@@ -68,7 +68,6 @@ function CountdownGauge(props) {
   useSubscription(
     'seer.notices',
     useCallback(data => {
-      console.log(data);
       if (data.message === 'processing downloads') {
         setLast(data.time);
         setEvent(300);

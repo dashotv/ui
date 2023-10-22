@@ -27,3 +27,17 @@ a:active {
     text-overflow: ellipsis;
   }
 }
+
+.notice {
+  width: 300px;
+  .title {
+    font-weight: bold;
+  }
+  .title,
+  .message {
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

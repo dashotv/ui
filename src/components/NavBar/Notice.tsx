@@ -1,10 +1,10 @@
 export function Notice(props) {
   return (
-    <div>
-      <div>
+    <div className="notice">
+      <div className="title">
         <b>{props.data.class}</b>
       </div>
-      <div>{props.data.message}</div>
+      <div className="message">{props.data.message}</div>
     </div>
   );
 }

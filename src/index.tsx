@@ -42,32 +42,36 @@ if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
 const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
 
 ReactDOMClient.createRoot(MOUNT_NODE!).render(
-  <StrictMode>
-    <ClerkProvider
-      publishableKey={clerkPubKey}
-      appearance={{
-        baseTheme: dark,
-      }}
-    >
-      <ThemeProvider theme={darkTheme}>
-        <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: 'center', vertical: 'top' }}>
-          <NatsProvider>
-            <Router>
-              <CssBaseline />
-              <HelmetProvider>
-                {/*<React.StrictMode>*/}
-                <QueryClientProvider client={queryClient}>
-                  <App />
-                  <ReactQueryDevtools initialIsOpen={false} />
-                </QueryClientProvider>
-                {/*</React.StrictMode>*/}
-              </HelmetProvider>
-            </Router>
-          </NatsProvider>
-        </SnackbarProvider>
-      </ThemeProvider>
-    </ClerkProvider>
-  </StrictMode>,
+  <ClerkProvider
+    publishableKey={clerkPubKey}
+    appearance={{
+      baseTheme: dark,
+    }}
+  >
+    <ThemeProvider theme={darkTheme}>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+        disableWindowBlurListener={true}
+        TransitionProps={{ direction: 'down' }}
+        dense={true}
+      >
+        <NatsProvider>
+          <Router>
+            <CssBaseline />
+            <HelmetProvider>
+              {/*<React.StrictMode>*/}
+              <QueryClientProvider client={queryClient}>
+                <App />
+                <ReactQueryDevtools initialIsOpen={false} />
+              </QueryClientProvider>
+              {/*</React.StrictMode>*/}
+            </HelmetProvider>
+          </Router>
+        </NatsProvider>
+      </SnackbarProvider>
+    </ThemeProvider>
+  </ClerkProvider>,
 );
 
 // Hot reloadable translation json files

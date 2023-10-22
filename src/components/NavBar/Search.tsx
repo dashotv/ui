@@ -122,7 +122,6 @@ const SuperSearchAccordion = ({ name, data, select, type, link }: SuperSearchAcc
       return;
     }
 
-    console.log(name, data);
     setOptions(data);
   }, [data]);
 
