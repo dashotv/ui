@@ -3,7 +3,6 @@ import { dark } from '@clerk/themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { App } from 'app';
-import FontFaceObserver from 'fontfaceobserver';
 import { SnackbarProvider } from 'notistack';
 import { StrictMode } from 'react';
 import 'react-app-polyfill/ie11';
@@ -21,12 +20,12 @@ import { NatsProvider } from 'components/Nats/context';
 
 // Observe loading of Inter (to remove 'Inter', remove the <link> tag in
 // the index.html file and this observer)
-const openSansObserver = new FontFaceObserver('Inter', {});
+// const openSansObserver = new FontFaceObserver('Inter', {});
 
 // When Inter is loaded, add a font-family using Inter to the body
-openSansObserver.load().then(() => {
-  document.body.classList.add('fontLoaded');
-});
+// openSansObserver.load().then(() => {
+//   document.body.classList.add('fontLoaded');
+// });
 
 // const store = configureAppStore();
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
@@ -42,7 +41,7 @@ const queryClient = new QueryClient({
     queries: {
       retry: false,
       staleTime: 5 * 1000,
-      useErrorBoundary: true,
+      throwOnError: true,
     },
   },
 });

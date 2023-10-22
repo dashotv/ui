@@ -32,7 +32,7 @@ export const useReleasesQuery = (start, pagesize, queryString) =>
   useQuery({
     queryKey: ['releases', start, pagesize, queryString],
     queryFn: () => getReleasesPage(start, pagesize, queryString),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
 
@@ -50,7 +50,8 @@ export const usePopularQuery = (interval: string) =>
 
 export const useReleaseMutation = id => {
   const queryClient = useQueryClient();
-  return useMutation((release: Release) => axios.put(`/api/tower/releases/${id}`, release), {
+  return useMutation({
+    mutationFn: (release: Release) => axios.put(`/api/tower/releases/${id}`, release),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['releases', id] });
     },
@@ -59,7 +60,8 @@ export const useReleaseMutation = id => {
 
 export const useReleaseSettingMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation((args: SettingsArgs) => axios.patch(`/api/tower/releases/${args.id}`, args.setting), {
+  return useMutation({
+    mutationFn: (args: SettingsArgs) => axios.patch(`/api/tower/releases/${args.id}`, args.setting),
     onSuccess: async (data, args) => {
       await queryClient.invalidateQueries({ queryKey: ['releases', args.id] });
     },

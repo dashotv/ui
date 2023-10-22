@@ -33,7 +33,7 @@ export const useDownloadsActiveQuery = () =>
   useQuery({
     queryKey: ['downloads', 'active'],
     queryFn: () => getDownloadsActive(),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
 
@@ -41,7 +41,7 @@ export const useDownloadsLastQuery = () =>
   useQuery({
     queryKey: ['downloads', 'last'],
     queryFn: () => getDownloadsLast(),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
 
@@ -49,7 +49,7 @@ export const useDownloadsRecentQuery = page =>
   useQuery({
     queryKey: ['downloads', 'recent', page],
     queryFn: () => getDownloadsRecent(page),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
 
@@ -57,7 +57,7 @@ export const useDownloadQuery = id =>
   useQuery({
     queryKey: ['downloads', id],
     queryFn: () => getDownload(id),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
 
@@ -65,13 +65,14 @@ export const useDownloadMediumQuery = id =>
   useQuery({
     queryKey: ['downloads', 'medium', id],
     queryFn: () => getDownloadMedium(id),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
 
 export const useDownloadMutation = id => {
   const queryClient = useQueryClient();
-  return useMutation((download: Download) => axios.put(`/api/tower/downloads/${id}`, download), {
+  return useMutation({
+    mutationFn: (download: Download) => axios.put(`/api/tower/downloads/${id}`, download),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['downloads', id] });
     },
@@ -80,7 +81,8 @@ export const useDownloadMutation = id => {
 
 export const useDownloadSettingMutation = id => {
   const queryClient = useQueryClient();
-  return useMutation((setting: Setting) => axios.patch(`/api/tower/downloads/${id}`, setting), {
+  return useMutation({
+    mutationFn: (setting: Setting) => axios.patch(`/api/tower/downloads/${id}`, setting),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['downloads', id] });
     },
@@ -89,7 +91,8 @@ export const useDownloadSettingMutation = id => {
 
 export const useDownloadSelectionMutation = id => {
   const queryClient = useQueryClient();
-  return useMutation((selection: DownloadSelection) => axios.put(`/api/tower/downloads/${id}/select`, selection), {
+  return useMutation({
+    mutationFn: (selection: DownloadSelection) => axios.put(`/api/tower/downloads/${id}/select`, selection),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['downloads', id] });
     },

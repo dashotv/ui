@@ -17,7 +17,7 @@ export const useMoviesAllQuery = page =>
   useQuery({
     queryKey: ['movies', 'all', page],
     queryFn: () => getMoviesAll(page),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
 
@@ -25,13 +25,14 @@ export const useMovieQuery = id =>
   useQuery({
     queryKey: ['movies', id],
     queryFn: () => getMovie(id),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
 
 export const useMovieSettingMutation = id => {
   const queryClient = useQueryClient();
-  return useMutation((setting: Setting) => axios.patch(`/api/tower/movies/${id}`, setting), {
+  return useMutation({
+    mutationFn: (setting: Setting) => axios.patch(`/api/tower/movies/${id}`, setting),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['movies', id] });
     },

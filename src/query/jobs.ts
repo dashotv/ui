@@ -12,6 +12,6 @@ export const useJobsQuery = page =>
   useQuery({
     queryKey: ['jobs', page],
     queryFn: () => getJobs(page),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });

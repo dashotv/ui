@@ -21,7 +21,7 @@ export const useSearchQuery = (search: string) =>
   useQuery({
     queryKey: ['search', search],
     queryFn: () => getSearch(search),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
 
@@ -29,6 +29,6 @@ export const useSearchAllQuery = (search: string) =>
   useQuery({
     queryKey: ['search', 'all', search],
     queryFn: () => getSearchAll(search),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });

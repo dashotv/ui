@@ -22,7 +22,7 @@ export const useSeriesAllQuery = page =>
   useQuery({
     queryKey: ['series', 'all', page],
     queryFn: () => getSeriesAll(page),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
 
@@ -30,7 +30,7 @@ export const useSeriesQuery = id =>
   useQuery({
     queryKey: ['series', id],
     queryFn: () => getSeries(id),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
 
@@ -38,14 +38,15 @@ export const useSeriesSeasonEpisodesQuery = (id, season) =>
   useQuery({
     queryKey: ['series', id, 'season', season],
     queryFn: () => getSeriesSeasonEpisodes(id, season),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
     enabled: season !== null && season !== undefined,
   });
 
 export const useSeriesSettingMutation = id => {
   const queryClient = useQueryClient();
-  return useMutation((setting: Setting) => axios.patch(`/api/tower/series/${id}`, setting), {
+  return useMutation({
+    mutationFn: (setting: Setting) => axios.patch(`/api/tower/series/${id}`, setting),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['series', id] });
     },
@@ -54,8 +55,8 @@ export const useSeriesSettingMutation = id => {
 
 export const useEpisodeSettingMutation = () => {
   // const queryClient = useQueryClient();
-  return useMutation(
-    (args: SettingsArgs) => {
+  return useMutation({
+    mutationFn: (args: SettingsArgs) => {
       const { id, setting } = args;
       return axios.patch(`/api/tower/episodes/${id}`, setting);
     },
@@ -64,5 +65,5 @@ export const useEpisodeSettingMutation = () => {
     //     await queryClient.invalidateQueries({ queryKey: ['series', args.id, 'season'] });
     //   },
     // },
-  );
+  });
 };

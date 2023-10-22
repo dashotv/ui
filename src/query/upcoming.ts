@@ -12,6 +12,6 @@ export const useUpcomingQuery = () =>
   useQuery({
     queryKey: ['media', 'upcoming'],
     queryFn: () => getMediaUpcoming(),
-    keepPreviousData: true,
+    placeholderData: (previousData, previousQuery) => previousData,
     retry: false,
   });
