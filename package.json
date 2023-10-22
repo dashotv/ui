@@ -33,6 +33,7 @@
     "@types/webpack": "5.28.0",
     "@types/webpack-env": "1.16.3",
     "@vitejs/plugin-react": "4.1.0",
+    "@vitejs/plugin-react-swc": "3.4.0",
     "axios": "0.27.2",
     "chalk": "4.1.2",
     "cross-env": "7.0.3",
@@ -91,6 +92,7 @@
     "use-axios-client": "2.0.0",
     "usehooks-ts": "2.9.1",
     "vite": "4.5.0",
+    "vite-plugin-svgr": "4.1.0",
     "vite-tsconfig-paths": "4.2.1",
     "web-vitals": "2.1.2"
   },
@@ -98,9 +100,8 @@
     "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start:prod": "yarn run build && serve -s build",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage --watch=false",
     "test:generators": "ts-node ./internals/testing/generators/test-generators.ts",
     "checkTs": "tsc --noEmit",
     "eslint": "eslint --ext js,ts,tsx",
@@ -159,5 +160,10 @@
         "statements": 90
       }
     }
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "0.34.6",
+    "jsdom": "22.1.0",
+    "vitest": "0.34.6"
   }
 }
