@@ -40,6 +40,7 @@ steps:
 trigger:
   branch:
     - main
+    - vite-bun
   event:
     - push
     - custom
