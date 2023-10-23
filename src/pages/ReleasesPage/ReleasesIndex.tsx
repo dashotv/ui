@@ -61,7 +61,7 @@ export default function ReleasesIndex() {
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
 
-      <Container style={{ overflow: 'hidden' }} maxWidth="xl">
+      <Container style={{ overflow: 'hidden' }} sx={{ pb: 5 }} maxWidth="xl">
         {isFetching && <LoadingIndicator />}
         <Grid container>
           <Grid item md={4} xs={12}>
