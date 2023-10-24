@@ -14,29 +14,26 @@ interface DateProps {
   children: string;
 }
 export default function Chrono({ fromNow, format = 'YYYY-MM-DD', special, children }: DateProps) {
-  const raw = dayjs(children);
+  const raw = dayjs(children).utc();
 
   const process = () => {
     if (special !== undefined || special) {
-      const today = dayjs().startOf('day');
+      const today = dayjs().startOf('day').utc();
       const diff = raw.diff(today, 'days', true);
       // console.log('today: ', today.toString(), 'raw: ', raw.toString(), 'diff: ', diff);
-      if (diff > 7 || diff < -7) {
-        return raw.format(format);
-      }
-      if (diff > -1 && diff < 0) {
+      if (diff > -2 && diff <= -1) {
         return 'Yesterday';
       }
-      if (diff < 1) {
+      if (diff > -1 && diff <= 0) {
         return 'Today';
       }
-      if (diff < 2) {
+      if (diff > 0 && diff <= 1) {
         return 'Tomorrow';
       }
-      if (diff > -7 && diff < 0) {
-        return 'last ' + raw.weekday(diff).format('dddd');
+      if (diff > 1 && diff <= 7) {
+        return raw.weekday(diff + 1).format('dddd');
       }
-      return raw.weekday(diff).format('dddd');
+      return raw.format(format);
     }
 
     if (fromNow !== undefined || fromNow) {
