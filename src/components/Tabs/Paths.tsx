@@ -32,10 +32,10 @@ export default function Paths(props) {
         </thead>
         <tbody>
           {props.paths &&
-            props.paths.map(row => (
+            props.paths.map((row, i) => (
               <PathsRow
-                key={row.id}
-                id={row.id}
+                key={i}
+                id={i}
                 type={row.type}
                 local={row.local}
                 extension={row.extension}
@@ -48,19 +48,19 @@ export default function Paths(props) {
   );
 }
 
-function PathsRow(props) {
+function PathsRow({ id, extension, local, type, updated }) {
   return (
-    <tr>
+    <tr key={id}>
       <th scope="row">
-        {props.extension === 'jpg' && <ImageIcon />}
-        {props.type === 'video' && <MovieIcon />}
-        {props.type === 'subtitle' && <ClosedCaptionIcon />}
+        {extension === 'jpg' && <ImageIcon />}
+        {type === 'video' && <MovieIcon />}
+        {type === 'subtitle' && <ClosedCaptionIcon />}
       </th>
       <td>
-        {props.local}.{props.extension}
+        {local}.{extension}
       </td>
       <td align="right">
-        <Chrono fromNow>{props.updated}</Chrono>
+        <Chrono fromNow>{updated}</Chrono>
       </td>
 
       <td align="right">
