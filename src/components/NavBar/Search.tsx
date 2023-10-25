@@ -44,7 +44,7 @@ export default function SuperSearch() {
 
   const createSeries = useCallback((option: Option) => {
     series.mutate(
-      { id: option.ID, source: option.Source },
+      { id: option.ID, source: option.Source, title: option.Title },
       {
         onSuccess: data => {
           if (data.error) {
@@ -60,7 +60,7 @@ export default function SuperSearch() {
 
   const createMovie = useCallback((option: Option) => {
     movie.mutate(
-      { id: option.ID, source: option.Source },
+      { id: option.ID, source: option.Source, title: option.Title },
       {
         onSuccess: data => {
           if (data.error) {

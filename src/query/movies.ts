@@ -5,8 +5,8 @@ import { Setting } from 'types/setting';
 
 import { CreateRequest } from './common';
 
-export const createMovie = async (id: string, source: string) => {
-  const response = await axios.post(`/api/tower/movies/`, { id: id, source: source });
+export const createMovie = async (r: CreateRequest) => {
+  const response = await axios.post(`/api/tower/movies/`, r);
   return response.data;
 };
 
@@ -49,7 +49,7 @@ export const useMovieSettingMutation = id => {
 export const useMovieCreateMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (n: CreateRequest) => createMovie(n.id, n.source),
+    mutationFn: (n: CreateRequest) => createMovie(n),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['movies', 'all'] });
     },

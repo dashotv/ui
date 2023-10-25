@@ -5,8 +5,8 @@ import { Setting, SettingsArgs } from 'types/setting';
 
 import { CreateRequest } from './common';
 
-export const createSeries = async (id: string, source: string) => {
-  const response = await axios.post(`/api/tower/series/`, { id: id, source: source });
+export const createSeries = async (r: CreateRequest) => {
+  const response = await axios.post(`/api/tower/series/`, r);
   return response.data;
 };
 
@@ -72,7 +72,7 @@ export const useEpisodeSettingMutation = () => {
 export const useSeriesCreateMutation = () => {
   return useMutation({
     mutationFn: (n: CreateRequest) => {
-      return createSeries(n.id, n.source);
+      return createSeries(n);
     },
   });
 };
