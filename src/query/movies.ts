@@ -3,6 +3,13 @@ import axios from 'axios';
 
 import { Setting } from 'types/setting';
 
+import { CreateRequest } from './common';
+
+export const createMovie = async (id: string, source: string) => {
+  const response = await axios.post(`/api/tower/movies/`, { id: id, source: source });
+  return response.data;
+};
+
 export const getMoviesAll = async page => {
   const response = await axios.get(`/api/tower/movies/?page=${page}`);
   return response.data;
@@ -35,6 +42,16 @@ export const useMovieSettingMutation = id => {
     mutationFn: (setting: Setting) => axios.patch(`/api/tower/movies/${id}`, setting),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['movies', id] });
+    },
+  });
+};
+
+export const useMovieCreateMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (n: CreateRequest) => createMovie(n.id, n.source),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['movies', 'all'] });
     },
   });
 };

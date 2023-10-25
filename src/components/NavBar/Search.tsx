@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate } from 'react-router-dom';
 import { useDebounce } from 'usehooks-ts';
@@ -13,8 +13,10 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
@@ -22,81 +24,82 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
+import { useMovieCreateMutation } from 'query/movies';
 import { useSearchAllQuery } from 'query/search';
-import { SearchResult } from 'types/search';
+import { useSeriesCreateMutation } from 'query/series';
 
 export default function SuperSearch() {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
-  const debouncedValue = useDebounce<string>(value, 400);
-  const { data } = useSearchAllQuery(debouncedValue);
+  const [confirm, setConfirm] = useState(false);
+  const [option, setOption] = useState<Option | null>(null);
+  const series = useSeriesCreateMutation();
+  const movie = useMovieCreateMutation();
   const navigate = useNavigate();
 
-  useHotkeys('mod+k', () => setOpen(true), [open]);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const select = useCallback((option: Option) => {
-    setValue('');
-    setOpen(false);
-    console.log('select: ', option);
-    navigate(`/${option.Type == 'movie' ? 'movies' : option.Type}/${option.ID}`);
+  const showCreate = useCallback((option: Option) => {
+    setConfirm(true);
+    console.log('showCreate: ', option);
+    setOption(option);
   }, []);
 
-  const create = useCallback((option: Option) => {
-    setValue('');
-    setOpen(false);
+  const createSeries = useCallback((option: Option) => {
+    series.mutate(
+      { id: option.ID, source: option.Source },
+      {
+        onSuccess: data => {
+          if (data.error) {
+            console.error('error: ', data.error);
+            return;
+          }
+          console.log('onSuccess: ', data);
+          navigate(`/series/${data.series.id}`);
+        },
+      },
+    );
+  }, []);
+
+  const createMovie = useCallback((option: Option) => {
+    movie.mutate(
+      { id: option.ID, source: option.Source },
+      {
+        onSuccess: data => {
+          if (data.error) {
+            console.error('error: ', data.error);
+            return;
+          }
+          console.log('onSuccess: ', data);
+          navigate(`/movies/${data.movie.id}`);
+        },
+      },
+    );
+  }, []);
+
+  const create = useCallback((option: Option | null) => {
+    setConfirm(false);
     console.log('create: ', option);
+    if (option) {
+      switch (option.Type) {
+        case 'series':
+          createSeries(option);
+          break;
+        case 'movie':
+          createMovie(option);
+          break;
+      }
+    }
   }, []);
+
+  if (series.isSuccess) {
+    console.log('series.isSuccess: ', series.isSuccess, 'series.data: ', series.data);
+  }
 
   return (
     <>
-      <IconButton onClick={handleClickOpen}>
+      <IconButton onClick={() => setOpen(true)}>
         <TravelExploreIcon fontSize="large" />
       </IconButton>
-
-      <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
-        <DialogTitle>
-          <TextField
-            autoFocus
-            margin="none"
-            id="name"
-            placeholder="Search for existing or new media"
-            fullWidth
-            hiddenLabel
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setValue(event.target.value);
-            }}
-            variant="outlined"
-          />
-        </DialogTitle>
-        <DialogContent sx={{ height: '430px' }}>
-          {data?.Media?.Error || data?.Tvdb?.Error || data?.Tmdb?.Error ? (
-            <Alert severity="error">{data?.Media?.Error || data?.Tvdb?.Error || data?.Tmdb?.Error}</Alert>
-          ) : null}
-          <SuperSearchAccordion name="Dasho.TV" data={data && data.Media.Results} select={select} link={true} />
-          <SuperSearchAccordion
-            name="TVDB"
-            type="series"
-            data={data && data.Tvdb.Results}
-            select={create}
-            link={false}
-          />
-          <SuperSearchAccordion
-            name="TMDB"
-            type="movie"
-            data={data && data.Tmdb.Results}
-            select={create}
-            link={false}
-          />
-        </DialogContent>
-      </Dialog>
+      <SuperSearchDialog open={open} setOpen={setOpen} confirm={showCreate} />
+      <SuperSearchConfirm open={confirm} confirm={create} option={option} />
     </>
   );
 }
@@ -106,19 +109,96 @@ interface Option {
   Title: string;
   Type: string;
   Date: string;
+  Source: string;
 }
 
-function SuperSearchDialog() {
-  // do this
+interface SuperSearchDialogProps {
+  open: boolean;
+  setOpen: (value: SetStateAction<boolean>) => void;
+  confirm: (option: Option) => void;
 }
 
-function SuperSearchConfirm() {
-  // do this
+function SuperSearchDialog({ open, setOpen, confirm }: SuperSearchDialogProps) {
+  const [value, setValue] = useState('');
+  const debouncedValue = useDebounce<string>(value, 400);
+  const { data } = useSearchAllQuery(debouncedValue);
+  const navigate = useNavigate();
+
+  useHotkeys('mod+k', () => setOpen(true), [open]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const select = useCallback((option: Option) => {
+    setValue('');
+    setOpen(false);
+    navigate(`/${option.Type == 'movie' ? 'movies' : option.Type}/${option.ID}`);
+  }, []);
+
+  const create = useCallback((option: Option) => {
+    setValue('');
+    setOpen(false);
+    console.log('create: ', option);
+    confirm(option);
+  }, []);
+
+  return (
+    <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
+      <DialogTitle>
+        <TextField
+          autoFocus
+          margin="none"
+          id="name"
+          placeholder="Search for existing or new media"
+          fullWidth
+          hiddenLabel
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setValue(event.target.value);
+          }}
+          variant="outlined"
+        />
+      </DialogTitle>
+      <DialogContent sx={{ height: '430px' }}>
+        {data?.Media?.Error || data?.Tvdb?.Error || data?.Tmdb?.Error ? (
+          <Alert severity="error">{data?.Media?.Error || data?.Tvdb?.Error || data?.Tmdb?.Error}</Alert>
+        ) : null}
+        <SuperSearchAccordion name="Dasho.TV" data={data && data.Media.Results} select={select} link={true} />
+        <SuperSearchAccordion name="TVDB" type="series" data={data && data.Tvdb.Results} select={create} link={false} />
+        <SuperSearchAccordion name="TMDB" type="movie" data={data && data.Tmdb.Results} select={create} link={false} />
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+interface SuperSearchConfirmProps {
+  open: boolean;
+  confirm: (option: Option | null) => void;
+  option: Option | null;
+}
+
+function SuperSearchConfirm({ open, confirm, option }: SuperSearchConfirmProps) {
+  if (!option) return null;
+
+  return (
+    <Dialog open={open} onClose={() => confirm(null)} maxWidth="md">
+      <DialogTitle>Confirm</DialogTitle>
+      <DialogContent>
+        Create {option.Type} {option.Title} ({option.Date})?
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => confirm(null)}>Cancel</Button>
+        <Button autoFocus onClick={() => confirm(option)}>
+          Ok
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 }
 
 interface SuperSearchAccordionProps {
   name: string;
-  data: SearchResult[] | undefined;
+  data: Option[] | undefined;
   select: (option: Option) => void;
   type?: string;
   link: boolean;

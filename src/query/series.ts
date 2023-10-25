@@ -3,6 +3,13 @@ import axios from 'axios';
 
 import { Setting, SettingsArgs } from 'types/setting';
 
+import { CreateRequest } from './common';
+
+export const createSeries = async (id: string, source: string) => {
+  const response = await axios.post(`/api/tower/series/`, { id: id, source: source });
+  return response.data;
+};
+
 export const getSeriesAll = async page => {
   const response = await axios.get(`/api/tower/series/?page=${page}`);
   return response.data;
@@ -54,16 +61,18 @@ export const useSeriesSettingMutation = id => {
 };
 
 export const useEpisodeSettingMutation = () => {
-  // const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (args: SettingsArgs) => {
       const { id, setting } = args;
       return axios.patch(`/api/tower/episodes/${id}`, setting);
     },
-    // {
-    //   onSuccess: async (data, args) => {
-    //     await queryClient.invalidateQueries({ queryKey: ['series', args.id, 'season'] });
-    //   },
-    // },
+  });
+};
+
+export const useSeriesCreateMutation = () => {
+  return useMutation({
+    mutationFn: (n: CreateRequest) => {
+      return createSeries(n.id, n.source);
+    },
   });
 };

@@ -14,4 +14,5 @@ export interface SearchResult {
   Title: string;
   Type: string;
   Date: string;
+  Source: string;
 }
