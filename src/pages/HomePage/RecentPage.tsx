@@ -27,7 +27,7 @@ export default function RecentPage() {
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
-        <Pagination count={Math.ceil(recent.data?.count / pagesize)} onChange={handleChange} />
+        <Pagination count={Math.ceil(recent?.data?.count ? recent.data.count / pagesize : 0)} onChange={handleChange} />
       </Container>
       <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container spacing={1}>

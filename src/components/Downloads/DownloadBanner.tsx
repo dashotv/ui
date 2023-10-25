@@ -172,6 +172,7 @@ export function DownloadBanner(props) {
         <Progress value={progress()} />
         <Eta eta={eta()} />
         <Queue queue={queue()} />
+        {status == 'done' && <Chrono fromNow>{props.download.updated_at}</Chrono>}
       </Stack>
     );
   }
