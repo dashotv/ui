@@ -25,6 +25,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import { useMovieCreateMutation } from 'query/movies';
+import { Option } from 'query/option';
 import { useSearchAllQuery } from 'query/search';
 import { useSeriesCreateMutation } from 'query/series';
 
@@ -43,35 +44,29 @@ export default function SuperSearch() {
   }, []);
 
   const createSeries = useCallback((option: Option) => {
-    series.mutate(
-      { id: option.ID, source: option.Source, title: option.Title },
-      {
-        onSuccess: data => {
-          if (data.error) {
-            console.error('error: ', data.error);
-            return;
-          }
-          console.log('onSuccess: ', data);
-          navigate(`/series/${data.series.id}`);
-        },
+    series.mutate(option, {
+      onSuccess: data => {
+        if (data.error) {
+          console.error('error: ', data.error);
+          return;
+        }
+        console.log('onSuccess: ', data);
+        navigate(`/series/${data.series.id}`);
       },
-    );
+    });
   }, []);
 
   const createMovie = useCallback((option: Option) => {
-    movie.mutate(
-      { id: option.ID, source: option.Source, title: option.Title },
-      {
-        onSuccess: data => {
-          if (data.error) {
-            console.error('error: ', data.error);
-            return;
-          }
-          console.log('onSuccess: ', data);
-          navigate(`/movies/${data.movie.id}`);
-        },
+    movie.mutate(option, {
+      onSuccess: data => {
+        if (data.error) {
+          console.error('error: ', data.error);
+          return;
+        }
+        console.log('onSuccess: ', data);
+        navigate(`/movies/${data.movie.id}`);
       },
-    );
+    });
   }, []);
 
   const create = useCallback((option: Option | null) => {
@@ -102,14 +97,6 @@ export default function SuperSearch() {
       <SuperSearchConfirm open={confirm} confirm={create} option={option} />
     </>
   );
-}
-
-interface Option {
-  ID: string;
-  Title: string;
-  Type: string;
-  Date: string;
-  Source: string;
 }
 
 interface SuperSearchDialogProps {

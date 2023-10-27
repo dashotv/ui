@@ -1,11 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { Option } from 'query/option';
 import { Setting, SettingsArgs } from 'types/setting';
 
-import { CreateRequest } from './common';
-
-export const createSeries = async (r: CreateRequest) => {
+export const createSeries = async (r: Option) => {
   const response = await axios.post(`/api/tower/series/`, r);
   return response.data;
 };
@@ -71,7 +70,7 @@ export const useEpisodeSettingMutation = () => {
 
 export const useSeriesCreateMutation = () => {
   return useMutation({
-    mutationFn: (n: CreateRequest) => {
+    mutationFn: (n: Option) => {
       return createSeries(n);
     },
   });
