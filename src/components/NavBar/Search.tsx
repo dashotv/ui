@@ -93,8 +93,8 @@ export default function SuperSearch() {
       <IconButton onClick={() => setOpen(true)}>
         <TravelExploreIcon fontSize="large" />
       </IconButton>
-      <SuperSearchDialog open={open} setOpen={setOpen} confirm={showCreate} />
-      <SuperSearchConfirm open={confirm} confirm={create} option={option} />
+      {open && <SuperSearchDialog open={open} setOpen={setOpen} confirm={showCreate} />}
+      {confirm && <SuperSearchConfirm open={confirm} confirm={create} option={option} />}
     </>
   );
 }
