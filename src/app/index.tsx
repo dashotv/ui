@@ -23,6 +23,7 @@ import HomePage from 'pages/HomePage';
 import DownloadsShowPage from 'pages/HomePage/DownloadsShowPage';
 import JobsPage from 'pages/HomePage/JobsPage';
 import RecentPage from 'pages/HomePage/RecentPage';
+import RequestsPage from 'pages/HomePage/RequestsPage';
 import UpcomingPage from 'pages/HomePage/UpcomingPage';
 import MoviesPage from 'pages/MoviesPage';
 import MoviesIndex from 'pages/MoviesPage/MoviesIndex';
@@ -107,6 +108,14 @@ export function App() {
               element={
                 <ClerkWrapper>
                   <JobsPage />
+                </ClerkWrapper>
+              }
+            />
+            <Route
+              path="requests"
+              element={
+                <ClerkWrapper>
+                  <RequestsPage />
                 </ClerkWrapper>
               }
             />
