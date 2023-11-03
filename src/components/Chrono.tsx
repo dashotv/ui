@@ -15,11 +15,11 @@ interface DateProps {
 }
 export default function Chrono({ fromNow, format = 'YYYY-MM-DD', special, children }: DateProps) {
   const raw = dayjs(children).utc();
+  const today = dayjs().startOf('day').utc();
+  const diff = raw.diff(today, 'days', true);
 
   const process = () => {
     if (special !== undefined || special) {
-      const today = dayjs().startOf('day').utc();
-      const diff = raw.diff(today, 'days', true);
       // console.log('today: ', today.toString(), 'raw: ', raw.toString(), 'diff: ', diff);
       if (diff > -2 && diff <= -1) {
         return 'Yesterday';
@@ -31,7 +31,9 @@ export default function Chrono({ fromNow, format = 'YYYY-MM-DD', special, childr
         return 'Tomorrow';
       }
       if (diff > 1 && diff <= 7) {
-        return raw.weekday(diff + 1).format('dddd');
+        return dayjs()
+          .weekday(today.weekday() + diff)
+          .format('dddd');
       }
       return raw.format(format);
     }
@@ -44,7 +46,7 @@ export default function Chrono({ fromNow, format = 'YYYY-MM-DD', special, childr
   };
 
   return (
-    <span className="dashotv-date" title={`${raw}`}>
+    <span className="dashotv-date" title={`${raw} diff:${diff}`}>
       {process()}
     </span>
   );
