@@ -25,6 +25,7 @@ import JobsPage from 'pages/HomePage/JobsPage';
 import RecentPage from 'pages/HomePage/RecentPage';
 import RequestsPage from 'pages/HomePage/RequestsPage';
 import UpcomingPage from 'pages/HomePage/UpcomingPage';
+import UsersPage from 'pages/HomePage/UsersPage';
 import MoviesPage from 'pages/MoviesPage';
 import MoviesIndex from 'pages/MoviesPage/MoviesIndex';
 import MoviesShow from 'pages/MoviesPage/MoviesShow';
@@ -116,6 +117,14 @@ export function App() {
               element={
                 <ClerkWrapper>
                   <RequestsPage />
+                </ClerkWrapper>
+              }
+            />
+            <Route
+              path="users"
+              element={
+                <ClerkWrapper>
+                  <UsersPage />
                 </ClerkWrapper>
               }
             />

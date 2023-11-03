@@ -13,6 +13,7 @@ export default function HomePage() {
     { name: 'Recent', path: '/recent' },
     { name: 'Jobs', path: '/jobs' },
     { name: 'Requests', path: '/requests' },
+    { name: 'Users', path: '/users' },
   ];
   return (
     <>
