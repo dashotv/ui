@@ -40,6 +40,25 @@ export function RequestStatus({ status }) {
   }
 }
 
+export function RequestLink({ source, source_id, target, color, underline }) {
+  switch (source) {
+    case 'tmdb':
+      return (
+        <Link href={`http://themoviedb.org/movie/${source_id}`} {...{ target, color, underline }}>
+          {source}:{source_id}
+        </Link>
+      );
+    case 'tvdb':
+      return (
+        <Link href={`https://thetvdb.com/search?query=${source_id}`} {...{ target, color, underline }}>
+          {source}:{source_id}
+        </Link>
+      );
+    default:
+      return null;
+  }
+}
+
 export function RequestRow({ id, title, user, source, source_id, status, created_at, updated_at }: Request) {
   return (
     <>
@@ -49,9 +68,7 @@ export function RequestRow({ id, title, user, source, source_id, status, created
         </td>
         <td>{title}</td>
         <td className="actions">
-          <Link color="primary" underline="none">
-            {source}:{source_id}
-          </Link>
+          <RequestLink {...{ source, source_id }} target="_window" color="primary" underline="none" />
         </td>
         <td className="actions">{user}</td>
         <td className="actions" align="right">

@@ -22,7 +22,7 @@ function PopularList({ data, type }) {
       {data?.map((row, index) => (
         <div key={index} className="entry">
           <span className="title">
-            <Link href={`${url}${row.name}`} target="_window">
+            <Link href={`${url}${row.name}${row.year > 0 ? `+y:${row.year}` : ''}`} target="_window">
               {row.name}
               {row.year > 0 && ` (${row.year})`}
             </Link>
