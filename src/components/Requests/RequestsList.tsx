@@ -1,9 +1,15 @@
+import { useState } from 'react';
+
+import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
 import ErrorIcon from '@mui/icons-material/Error';
 import PendingIcon from '@mui/icons-material/Pending';
+import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 
 import Chrono from 'components/Chrono';
+import { useRequestsStatusMutation } from 'query/requests';
 import { Request } from 'types/request';
 
 export function RequestsList({ requests }: { requests: Request[] }) {
@@ -20,6 +26,9 @@ export function RequestsList({ requests }: { requests: Request[] }) {
               <td className="actions" align="right">
                 Created
               </td>
+              <td className="actions" align="right">
+                Actions
+              </td>
             </tr>
           </thead>
           <tbody>{requests && requests.map((request: Request) => <RequestRow key={request.id} {...request} />)}</tbody>
@@ -31,8 +40,12 @@ export function RequestsList({ requests }: { requests: Request[] }) {
 
 export function RequestStatus({ status }) {
   switch (status) {
+    case 'approved':
+      return <CheckCircleIcon fontSize="small" color="secondary" />;
     case 'completed':
       return <CheckCircleIcon fontSize="small" color="success" />;
+    case 'denied':
+      return <CancelIcon fontSize="small" color="warning" />;
     case 'failed':
       return <ErrorIcon fontSize="small" color="error" />;
     default:
@@ -59,7 +72,14 @@ export function RequestLink({ source, source_id, target, color, underline }) {
   }
 }
 
-export function RequestRow({ id, title, user, source, source_id, status, created_at, updated_at }: Request) {
+export function RequestRow(r: Request) {
+  const [request, setRequest] = useState<Request>(r);
+  const { id, title, user, source, source_id, status, created_at, updated_at } = request;
+  const mutation = useRequestsStatusMutation();
+  const handleStatus = (status: string) => {
+    setRequest({ ...request, status: status });
+    mutation.mutate(request);
+  };
   return (
     <>
       <tr key={id}>
@@ -73,6 +93,14 @@ export function RequestRow({ id, title, user, source, source_id, status, created
         <td className="actions">{user}</td>
         <td className="actions" align="right">
           <Chrono fromNow>{created_at.toString()}</Chrono>
+        </td>
+        <td className="actions" align="right">
+          <IconButton aria-label="delete" size="small" onClick={() => handleStatus('approved')}>
+            <CheckCircleIcon fontSize="small" color="primary" />
+          </IconButton>
+          <IconButton aria-label="delete" size="small" onClick={() => handleStatus('denied')}>
+            <CancelIcon fontSize="small" color="primary" />
+          </IconButton>
         </td>
       </tr>
     </>
