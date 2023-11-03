@@ -4,6 +4,7 @@ export interface Request {
   title: string;
   source: string;
   source_id: string;
+  status: string;
   created_at: string;
   updated_at: string;
 }
