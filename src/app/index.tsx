@@ -19,13 +19,14 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
 
 import NavBar from 'components/NavBar';
+import AdminPage from 'pages/AdminPage';
+import JobsPage from 'pages/AdminPage/JobsPage';
+import RequestsPage from 'pages/AdminPage/RequestsPage';
+import UsersPage from 'pages/AdminPage/UsersPage';
 import HomePage from 'pages/HomePage';
 import DownloadsShowPage from 'pages/HomePage/DownloadsShowPage';
-import JobsPage from 'pages/HomePage/JobsPage';
 import RecentPage from 'pages/HomePage/RecentPage';
-import RequestsPage from 'pages/HomePage/RequestsPage';
 import UpcomingPage from 'pages/HomePage/UpcomingPage';
-import UsersPage from 'pages/HomePage/UsersPage';
 import MoviesPage from 'pages/MoviesPage';
 import MoviesIndex from 'pages/MoviesPage/MoviesIndex';
 import MoviesShow from 'pages/MoviesPage/MoviesShow';
@@ -104,8 +105,27 @@ export function App() {
                 </ClerkWrapper>
               }
             />
+            <Route path="downloads">
+              <Route
+                path=":id"
+                element={
+                  <ClerkWrapper>
+                    <DownloadsShowPage />
+                  </ClerkWrapper>
+                }
+              />
+            </Route>
+          </Route>
+          <Route
+            path="/admin"
+            element={
+              <ClerkWrapper>
+                <AdminPage />
+              </ClerkWrapper>
+            }
+          >
             <Route
-              path="jobs"
+              path=""
               element={
                 <ClerkWrapper>
                   <JobsPage />
@@ -128,16 +148,6 @@ export function App() {
                 </ClerkWrapper>
               }
             />
-            <Route path="downloads">
-              <Route
-                path=":id"
-                element={
-                  <ClerkWrapper>
-                    <DownloadsShowPage />
-                  </ClerkWrapper>
-                }
-              />
-            </Route>
           </Route>
           <Route
             path="series"

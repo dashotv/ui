@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useCallback, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -151,6 +152,13 @@ const NavBar = () => {
             ))}
           </Box>
 
+          <Box sx={{ flexGrow: 0, mr: 1 }}>
+            <Link to="/admin">
+              <IconButton aria-label="admin panel">
+                <AdminPanelSettingsOutlinedIcon fontSize="large" color="primary" />
+              </IconButton>
+            </Link>
+          </Box>
           <Box sx={{ flexGrow: 0, mr: 1 }}>
             <SuperSearch />
           </Box>

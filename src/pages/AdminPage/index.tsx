@@ -9,8 +9,9 @@ import SubNav from 'components/SubNav';
 
 export default function HomePage() {
   const items = [
-    { name: 'Upcoming', path: '/', exact: true },
-    { name: 'Recent', path: '/recent' },
+    { name: 'Jobs', path: '/admin', exact: true },
+    { name: 'Requests', path: '/admin/requests' },
+    { name: 'Users', path: '/admin/users' },
   ];
   return (
     <>

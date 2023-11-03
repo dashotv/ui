@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDebounce } from 'usehooks-ts';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import FindInPageOutlinedIcon from '@mui/icons-material/FindInPageOutlined';
 import HelpIcon from '@mui/icons-material/Help';
 import TheatersIcon from '@mui/icons-material/Theaters';
-import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import TvIcon from '@mui/icons-material/Tv';
 import { Link } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
@@ -91,7 +91,7 @@ export default function SuperSearch() {
   return (
     <>
       <IconButton onClick={() => setOpen(true)}>
-        <TravelExploreIcon fontSize="large" />
+        <FindInPageOutlinedIcon fontSize="large" color="primary" />
       </IconButton>
       {open && <SuperSearchDialog open={open} setOpen={setOpen} confirm={showCreate} />}
       {confirm && <SuperSearchConfirm open={confirm} confirm={create} option={option} />}
