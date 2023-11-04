@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -72,14 +72,15 @@ export function RequestLink({ source, source_id, target, color, underline }) {
   }
 }
 
-export function RequestRow(r: Request) {
-  const [request, setRequest] = useState<Request>(r);
+export function RequestRow(initial: Request) {
+  const [request, setRequest] = useState<Request>(initial);
   const { id, title, user, source, source_id, status, created_at, updated_at } = request;
   const mutation = useRequestsStatusMutation();
-  const handleStatus = (status: string) => {
-    setRequest({ ...request, status: status });
-    mutation.mutate(request);
-  };
+  const handleStatus = useCallback((s: string) => {
+    const updated = { ...request, status: s };
+    setRequest(updated);
+    mutation.mutate(updated);
+  }, []);
   return (
     <>
       <tr key={id}>
