@@ -152,17 +152,17 @@ const NavBar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0, mr: 1 }}>
+          <Box sx={{ flexGrow: 0 }}>
             <Link to="/admin">
               <IconButton aria-label="admin panel">
                 <AdminPanelSettingsOutlinedIcon fontSize="large" color="primary" />
               </IconButton>
             </Link>
           </Box>
-          <Box sx={{ flexGrow: 0, mr: 1 }}>
+          <Box sx={{ flexGrow: 0 }}>
             <SuperSearch />
           </Box>
-          <Box sx={{ flexGrow: 0, mr: 1 }}>
+          <Box sx={{ flexGrow: 0, height: 51, width: 51, pt: 1.5, pl: 1 }}>
             <UserButton />
           </Box>
 

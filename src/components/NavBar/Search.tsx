@@ -37,6 +37,8 @@ export default function SuperSearch() {
   const movie = useMovieCreateMutation();
   const navigate = useNavigate();
 
+  useHotkeys('mod+k', () => setOpen(true), [open]);
+
   const showCreate = useCallback((option: Option) => {
     setConfirm(true);
     console.log('showCreate: ', option);
@@ -110,8 +112,6 @@ function SuperSearchDialog({ open, setOpen, confirm }: SuperSearchDialogProps) {
   const debouncedValue = useDebounce<string>(value, 400);
   const { data } = useSearchAllQuery(debouncedValue);
   const navigate = useNavigate();
-
-  useHotkeys('mod+k', () => setOpen(true), [open]);
 
   const handleClose = () => {
     setOpen(false);
