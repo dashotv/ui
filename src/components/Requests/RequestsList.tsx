@@ -22,11 +22,11 @@ export function RequestsList({ requests }: { requests: Request[] }) {
               <td className="number"></td>
               <td>Title</td>
               <td className="actions">Source</td>
-              <td className="actions">Requested By</td>
-              <td className="actions" align="right">
+              <td className="small">Requested</td>
+              <td className="date" align="right">
                 Created
               </td>
-              <td className="actions" align="right">
+              <td className="small" align="right">
                 Actions
               </td>
             </tr>
@@ -87,15 +87,15 @@ export function RequestRow(initial: Request) {
         <td>
           <RequestStatus status={status} />
         </td>
-        <td>{title}</td>
-        <td className="actions">
+        <td className="truncate">{title}</td>
+        <td>
           <RequestLink {...{ source, source_id }} target="_window" color="primary" underline="none" />
         </td>
-        <td className="actions">{user}</td>
-        <td className="actions" align="right">
+        <td>{user}</td>
+        <td align="right">
           <Chrono fromNow>{created_at.toString()}</Chrono>
         </td>
-        <td className="actions" align="right">
+        <td align="right">
           <IconButton aria-label="delete" size="small" onClick={() => handleStatus('approved')}>
             <CheckCircleIcon fontSize="small" color="primary" />
           </IconButton>
