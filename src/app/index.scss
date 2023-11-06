@@ -42,6 +42,12 @@ table.vertical-table {
   td.smaller {
     width: 75px;
   }
+  td.truncate {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   th.actions,
   td.actions {
