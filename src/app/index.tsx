@@ -21,6 +21,7 @@ import Box from '@mui/material/Box';
 import NavBar from 'components/NavBar';
 import AdminPage from 'pages/AdminPage';
 import JobsPage from 'pages/AdminPage/JobsPage';
+import LogsPage from 'pages/AdminPage/LogsPage';
 import RequestsPage from 'pages/AdminPage/RequestsPage';
 import UsersPage from 'pages/AdminPage/UsersPage';
 import HomePage from 'pages/HomePage';
@@ -126,6 +127,14 @@ export function App() {
           >
             <Route
               path=""
+              element={
+                <ClerkWrapper>
+                  <LogsPage />
+                </ClerkWrapper>
+              }
+            />
+            <Route
+              path="jobs"
               element={
                 <ClerkWrapper>
                   <JobsPage />

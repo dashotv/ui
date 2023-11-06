@@ -38,7 +38,7 @@ export function JobRow({ id, name, processed_at, error }: Job) {
         </td>
         <td>{name}</td>
         <td className="actions" align="right">
-          <Chrono fromNow>{processed_at.toString()}</Chrono>
+          {processed_at ? <Chrono fromNow>processed_at.toString()</Chrono> : 'Pending'}
         </td>
       </tr>
     </>

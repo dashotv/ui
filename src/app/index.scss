@@ -36,6 +36,12 @@ table.vertical-table {
   td.user {
     width: 125px;
   }
+  td.small {
+    width: 125px;
+  }
+  td.smaller {
+    width: 75px;
+  }
 
   th.actions,
   td.actions {
