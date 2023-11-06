@@ -31,7 +31,7 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
   const color = (level: string) => {
     switch (level) {
       case 'debug':
-        return 'text-gray-500';
+        return 'gray';
       case 'info':
         return 'info.main';
       case 'warn':
@@ -58,7 +58,9 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
             {level}
           </Typography>
         </td>
-        <td className="truncate">{message}</td>
+        <td className="truncate">
+          <Typography color={color(level)}>{message}</Typography>
+        </td>
       </tr>
     </>
   );
