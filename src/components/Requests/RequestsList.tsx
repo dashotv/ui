@@ -40,10 +40,10 @@ export function RequestsList({ requests }: { requests: Request[] }) {
 
 export function RequestStatus({ status }) {
   switch (status) {
-    case 'approved':
-      return <CheckCircleIcon fontSize="small" color="secondary" />;
     case 'completed':
       return <CheckCircleIcon fontSize="small" color="success" />;
+    case 'approved':
+      return <CheckCircleIcon fontSize="small" color="secondary" />;
     case 'denied':
       return <CancelIcon fontSize="small" color="warning" />;
     case 'failed':

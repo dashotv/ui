@@ -1,15 +1,7 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { useCallback, useState } from 'react';
-
 import Chrono from 'components/Chrono';
-import { useSubscription } from 'components/Nats/useSubscription';
 import { Log } from 'types/log';
 
-export function LogsList({ logs, page }: { logs: Log[]; page: number }) {
-  const queryClient = useQueryClient();
-  useSubscription('tower.logs', () => {
-    queryClient.invalidateQueries({ queryKey: ['logs', page] });
-  });
+export function LogsList({ logs }: { logs: Log[] }) {
   return (
     <>
       <div className="logs">
