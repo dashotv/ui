@@ -93,13 +93,11 @@ export default function Banner({
           <div className="titlebar">
             <div className="title">
               <span>{title}</span>
+            </div>
+            <div className="subtitle">
+              {subtitle && <span>{subtitle}</span>}
               {!tertiary && release_date !== undefined && <Chrono format="YYYY-MM-DD">{release_date}</Chrono>}
             </div>
-            {subtitle && (
-              <div className="subtitle">
-                <span>{subtitle}</span>
-              </div>
-            )}
             <div className="download">{tertiary}</div>
             <div className="actions">
               <Actions {...{ unwatched, buttons, active, completed, favorite }} />

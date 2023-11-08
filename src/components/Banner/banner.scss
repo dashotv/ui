@@ -36,6 +36,7 @@ $height: 120px;
           white-space: pre;
           overflow: hidden;
           text-overflow: ellipsis;
+          // text-shadow: black 1px 1px 1px;
         }
       }
 
@@ -45,7 +46,7 @@ $height: 120px;
         max-width: 100%;
         margin-left: 10px;
         span {
-          color: #cccccc;
+          // color: #cccccc;
           font-size: medium;
           flex: 1;
           white-space: pre;
@@ -103,7 +104,7 @@ $height: 120px;
     min-height: $height;
     max-height: $height;
     img {
-      //animation: MoveUpDown 120s linear infinite;
+      // animation: MoveUpDown 5s linear infinite;
       width: 100%;
       margin-top: -10%;
     }
@@ -113,7 +114,7 @@ $height: 120px;
     top: 0px;
     left: 0px;
     right: 0px;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 100;
     min-height: $height;
     max-height: $height;
@@ -123,9 +124,9 @@ $height: 120px;
 @keyframes MoveUpDown {
   0%,
   100% {
-    margin-top: -45%;
+    margin-top: -10%;
   }
   50% {
-    margin-top: 0px;
+    margin-top: -20%;
   }
 }
