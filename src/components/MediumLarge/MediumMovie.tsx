@@ -9,7 +9,7 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import StarIcon from '@mui/icons-material/Star';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-import Banner from 'components/Banner';
+import { Banner } from 'components/Banner';
 import Details from 'components/Tabs/Details';
 import { MediumTabs } from 'components/Tabs/MediumTabs';
 import Paths from 'components/Tabs/Paths';

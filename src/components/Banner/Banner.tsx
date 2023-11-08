@@ -8,11 +8,12 @@ import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
-import ButtonMap from 'components/ButtonMap';
+import { ButtonMap } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
 
-import './banner.scss';
+import './Banner.scss';
 
+// TODO: generalize this?
 function Unwatched({ count }: { count?: number }) {
   if (count === undefined || count === 0) {
     return <></>;
@@ -20,45 +21,44 @@ function Unwatched({ count }: { count?: number }) {
   return <Chip label={count > 9 ? '9+' : count} variant="filled" size="small" />;
 }
 
-type IconsProps = {
+export type IconsProps = {
   active?: boolean;
   completed?: boolean;
   favorite?: boolean;
-  unwatched?: number;
 };
-function Icons({ unwatched, active, completed, favorite }: IconsProps) {
+export function BannerIcons({ active, completed, favorite }: IconsProps) {
   return (
     <div className="icons">
       {active && <StarsIcon fontSize="small" />}
       {completed && <CheckCircleIcon fontSize="small" />}
       {favorite && <RecommendIcon fontSize="small" />}
-      <Unwatched count={unwatched} />
     </div>
   );
 }
 
-type ActionsProps = {
+export type BannerActionsProps = {
   active?: boolean;
   completed?: boolean;
   favorite?: boolean;
   unwatched?: number;
   buttons?: any[];
 };
-function Actions({ unwatched, buttons, active, favorite, completed }: ActionsProps) {
+export function BannerActions({ unwatched, buttons, active, favorite, completed }: BannerActionsProps) {
   return (
     <Stack spacing={1} direction="row">
       <ButtonMap size="small" buttons={buttons} />
-      <Icons {...{ active, favorite, completed, unwatched }} />
+      <BannerIcons {...{ active, favorite, completed }} />
+      <Unwatched count={unwatched} />
     </Stack>
   );
 }
 
-type BannerProps = {
+export type BannerProps = {
   id: string;
   title: string;
   subtitle?: string;
-  release_date?: string;
-  background: string;
+  release_date?: Date | string;
+  background?: string;
   cover?: string;
   tertiary?: React.ReactNode;
   downloadIcon?: React.ReactNode;
@@ -73,12 +73,13 @@ type BannerProps = {
   change?: any;
   buttons: any[];
 };
-export default function Banner({
+export function Banner({
   id,
   title,
   subtitle,
   release_date,
   background,
+  cover,
   tertiary,
   active,
   completed,
@@ -96,11 +97,13 @@ export default function Banner({
             </div>
             <div className="subtitle">
               {subtitle && <span>{subtitle}</span>}
-              {!tertiary && release_date !== undefined && <Chrono format="YYYY-MM-DD">{release_date}</Chrono>}
+              {!tertiary && release_date !== undefined && (
+                <Chrono format="YYYY-MM-DD">{release_date.toString()}</Chrono>
+              )}
             </div>
             <div className="download">{tertiary}</div>
             <div className="actions">
-              <Actions {...{ unwatched, buttons, active, completed, favorite }} />
+              <BannerActions {...{ unwatched, buttons, active, completed, favorite }} />
             </div>
           </div>
         </div>

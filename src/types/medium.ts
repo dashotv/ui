@@ -2,9 +2,9 @@ import { Path } from './path';
 import { SearchParams } from './search_params';
 
 export interface Medium {
-  id?: string;
+  id: string;
   series_id?: string;
-  type?: string;
+  type: string;
   kind?: string;
   source?: string;
   source_id?: string;
@@ -18,6 +18,7 @@ export interface Medium {
   search?: string;
   search_params?: SearchParams;
   active?: boolean;
+  favorite?: boolean;
   downloaded?: boolean;
   completed?: boolean;
   skipped?: boolean;

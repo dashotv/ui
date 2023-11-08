@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 
-import MediumBanner from 'components/MediumSmall/MediumBanner';
+import { MediumBanner } from 'components/Banner';
+import { Medium } from 'types/medium';
 
 export default function Media({ type, data }) {
-  const path = (type, id, series_id) => {
+  const path = (type: string, id: string, series_id: string | undefined) => {
     switch (type) {
       case 'Series':
         return `/series/${id}`;
@@ -15,53 +16,23 @@ export default function Media({ type, data }) {
       case 'Movie':
         return `/movies/${id}`;
       default:
-        return `/404`;
+        return `/${type}/404`;
     }
   };
   return (
     <>
       {data &&
-        data.map(
-          ({
-            id,
-            type,
-            series_id,
-            title,
-            display,
-            description,
-            cover,
-            background,
-            release_date,
-            active,
-            unwatched,
-            completed,
-            favorite,
-            broken,
-          }) => (
+        data.map((medium: Medium) => {
+          const { type, id, series_id } = medium;
+          return (
             <Grid item key={id} md={4} xs={12}>
               <Link to={path(type, id, series_id)}>
-                <MediumBanner
-                  {...{
-                    type,
-                    id,
-                    series_id,
-                    cover,
-                    background,
-                    title,
-                    display,
-                    release_date,
-                    description,
-                    unwatched,
-                    active,
-                    completed,
-                    favorite,
-                    broken,
-                  }}
-                />
+                <MediumBanner {...{ id, medium }} />
               </Link>
             </Grid>
-          ),
-        )}
+          );
+        })}
+      ;
     </>
   );
 }

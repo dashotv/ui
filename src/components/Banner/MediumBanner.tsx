@@ -1,47 +1,29 @@
-import Banner from 'components/Banner';
 import Chrono from 'components/Chrono';
+import { Medium } from 'types/medium';
 
-function Release({ date }: { date: string }) {
-  /* had to add day to deal with UTC time, not sure why tz prop doesn't work */
-  return (
-    <div className="header">
-      <div className="primary">
-        <Chrono special>{date}</Chrono>
-      </div>
-    </div>
-  );
-}
+import { Banner } from './Banner';
 
-type MediumBannerProps = {
+export type MediumBannerProps = {
   id: string;
-  type?: string;
-  cover: string;
-  background: string;
-  title: string;
-  display: string;
-  release_date: string;
-  description?: string;
-  unwatched: number;
-  completed?: boolean;
-  favorite: boolean;
-  broken: boolean;
-  active: boolean;
+  medium: Medium;
 };
 
-export default function MediumBanner({
+export function MediumBanner({
   id,
-  type,
-  cover,
-  background,
-  title,
-  display,
-  release_date,
-  description,
-  unwatched,
-  completed,
-  favorite,
-  broken,
-  active,
+  medium: {
+    type,
+    cover,
+    background,
+    title,
+    display,
+    release_date,
+    description,
+    unwatched,
+    completed,
+    favorite,
+    broken,
+    active,
+  },
 }: MediumBannerProps) {
   // const [activeCurrent, setActive] = useState(active);
   // const [favoriteCurrent, setFavorite] = useState(favorite);
@@ -127,7 +109,15 @@ export default function MediumBanner({
       //   change={change}
       buttons={buttons}
       unwatched={unwatched}
-      tertiary={<Release date={release_date} />}
+      tertiary={<Release date={release_date?.toString()} />}
     />
+  );
+}
+
+function Release({ date }: { date?: string }) {
+  return (
+    <div className="header">
+      <div className="primary">{date && <Chrono special>{date}</Chrono>}</div>
+    </div>
   );
 }

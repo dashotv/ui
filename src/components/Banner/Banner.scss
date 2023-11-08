@@ -15,10 +15,6 @@ $height: 120px;
     min-height: $height;
     position: relative;
 
-    time {
-      color: #cccccc;
-    }
-
     .titlebar {
       padding: 5px 5px;
 
@@ -73,25 +69,21 @@ $height: 120px;
 
     .actions {
       position: absolute;
-      bottom: 3px;
+      bottom: 8px;
       right: 8px;
       overflow: hidden;
-      height: 28px;
 
-      .buttonMap {
-        padding: 0;
-        float: right;
-        button {
-          padding: 0px 2px;
-        }
-      }
-      .icons {
-        float: right;
-        // height: 35px;
-        .MuiChip-root {
-          margin-left: 2px;
-        }
-      }
+      // .buttonMap {
+      //   padding: 0;
+      //   float: right;
+      // }
+      // .icons {
+      //   float: right;
+      //   // height: 35px;
+      //   .MuiChip-root {
+      //     margin-left: 2px;
+      //   }
+      // }
     }
   }
   .banner-background {

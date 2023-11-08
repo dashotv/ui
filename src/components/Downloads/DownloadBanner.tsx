@@ -21,7 +21,7 @@ import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-import Banner from 'components/Banner';
+import { Banner } from 'components/Banner';
 import Chrono from 'components/Chrono';
 
 export function DownloadBanner(props) {
