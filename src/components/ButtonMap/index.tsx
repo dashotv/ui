@@ -8,7 +8,7 @@ export default function ButtonMap({
   buttons,
   args,
 }: {
-  size: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large';
   buttons?: any[];
   args?: any;
 }) {
