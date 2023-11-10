@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 import ButtonMap from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
 
-import './banner.scss';
+import './Banner.scss';
 
 function Unwatched({ count }: { count?: number }) {
   if (count === undefined || count === 0) {

@@ -103,7 +103,7 @@ export function Gauges(props) {
     'flame.qbittorrents',
     useCallback(
       data => {
-        const download = (data.DownloadRate / 1000).toFixed(3);
+        const download = (data.DownloadRate / 1000).toFixed(1);
         setTorrents(download);
       },
       [setTorrents],
@@ -114,10 +114,10 @@ export function Gauges(props) {
     'flame.nzbs',
     useCallback(
       data => {
-        const download = (data.Status.DownloadRate / 1000).toFixed(3);
+        const download = (data.Status.DownloadRate / 1000).toFixed(1);
         setNzbs(download);
 
-        const free = (data.Status.FreeDiskSpaceMB / 1000).toFixed(3);
+        const free = (data.Status.FreeDiskSpaceMB / 1000).toFixed(1);
         setDiskFree(free);
       },
       [setNzbs, setDiskFree],
