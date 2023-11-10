@@ -128,7 +128,7 @@ export function Gauges(props) {
     <div className="gauges">
       <Stack spacing={2} direction="row">
         <CountdownGauge color="primary" />
-        <DiskGauge value={diskFree} color="primary" />
+        <DiskGauge value={diskFree} color={Number(diskFree) > 25.0 ? 'primary' : 'warning'} />
         <NzbsGauge value={nzbs} color="primary" />
         <TorrentsGauge value={torrents} color="primary" />
       </Stack>
