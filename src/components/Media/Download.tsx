@@ -125,7 +125,7 @@ export default function Download({
     };
   }, [season_number, source_id, processSearch]);
 
-  const deleteInfo = ev => {
+  const deleteInfo = () => {
     console.log('deleteInfo');
     download.release_id = '';
     download.url = '';
