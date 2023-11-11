@@ -58,13 +58,14 @@ const NavBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/*<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />*/}
-          <Box sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-            <img alt="logo" src={Logo} width="40" height="40" />
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <img alt="logo" src={Logo} width="40" height="40" />
-          </Box>
+          <Link to="/">
+            <Box sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
+              <img alt="logo" src={Logo} width="40" height="40" />
+            </Box>
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+              <img alt="logo" src={Logo} width="40" height="40" />
+            </Box>
+          </Link>
           <Typography
             variant="h6"
             noWrap
@@ -121,25 +122,6 @@ const NavBar = () => {
               ))}
             </Menu>
           </Box>
-          {/*<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />*/}
-          {/* <Link to="/#/">
-            <Typography
-              variant="h5"
-              noWrap
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              DASHOTV
-            </Typography>
-          </Link> */}
           <Box className="menu" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map(({ name, page, exact }) => (
               <Link key={name} to={page}>
@@ -167,36 +149,6 @@ const NavBar = () => {
           <Box sx={{ flexGrow: 0, height: 51, width: 51, pt: 1.5, pl: 1 }}>
             <UserButton />
           </Box>
-
-          {/*<Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Shawn" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map(setting => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box> */}
         </Toolbar>
       </Container>
     </AppBar>
