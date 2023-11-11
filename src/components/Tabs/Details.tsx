@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Chrono from 'components/Chrono';
-import ImageSmall from 'components/MediumLarge/ImageSmall';
+import { Image } from 'components/Media';
 
 export default function Details(props) {
   return (
@@ -50,8 +50,8 @@ export default function Details(props) {
             <th>Images</th>
             <td>
               <div className="images">
-                <ImageSmall class="cover-sm" alt="cover" src={props.cover} />
-                <ImageSmall class="background-sm" alt="background" src={props.background} />
+                <Image class="cover-sm" alt="cover" src={props.cover} />
+                <Image class="background-sm" alt="background" src={props.background} />
               </div>
             </td>
           </tr>

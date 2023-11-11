@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export default function ImageSmall(props) {
+export function Image(props) {
   function setDefaultSrc(ev) {
     ev.target.onerror = null;
     ev.target.src = '/blank.png';

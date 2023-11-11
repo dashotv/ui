@@ -14,7 +14,7 @@ export default function HomePage() {
   ];
   return (
     <>
-      <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container sx={{ pt: '5px', pb: '5px' }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container>
           <Grid item xs={12} md={6}>
             <SubNav items={items} />

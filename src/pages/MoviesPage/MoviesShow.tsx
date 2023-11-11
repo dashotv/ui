@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Container from '@mui/material/Container';
 
 import LoadingIndicator from 'components/Loading';
-import MediumMovie from 'components/MediumLarge/MediumMovie';
+import Movie from 'components/Media/Movie';
 import { useMovieQuery, useMovieSettingMutation } from 'query/movies';
 
 export default function MoviesShow() {
@@ -25,7 +25,7 @@ export default function MoviesShow() {
       </Helmet>
       <Container maxWidth="xl">
         {isFetching && <LoadingIndicator />}
-        {data && <MediumMovie id={data.id} type="movies" data={data} paths={data.paths} change={changeMovieSetting} />}
+        {data && <Movie id={data.id} type="movies" data={data} paths={data.paths} change={changeMovieSetting} />}
       </Container>
     </>
   );

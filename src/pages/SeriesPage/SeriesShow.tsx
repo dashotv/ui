@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Container from '@mui/material/Container';
 
 import LoadingIndicator from 'components/Loading';
-import MediumLarge from 'components/MediumLarge';
+import { Series } from 'components/Media';
 import {
   useEpisodeSettingMutation,
   useSeriesQuery,
@@ -51,7 +51,7 @@ export default function SeriesShow() {
       <Container maxWidth="xl">
         {(isFetching || episodesFetching) && <LoadingIndicator />}
         {series && (
-          <MediumLarge
+          <Series
             id={series.id}
             type="series"
             data={series}

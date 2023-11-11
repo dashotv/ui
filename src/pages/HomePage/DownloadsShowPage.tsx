@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Container from '@mui/material/Container';
 
 import LoadingIndicator from 'components/Loading';
-import MediumDownload from 'components/MediumLarge/MediumDownload';
+import Download from 'components/Media/Download';
 import { useReleases } from 'hooks/useReleases';
 import { useDownloadMediumQuery, useDownloadMutation, useDownloadQuery } from 'query/downloads';
 
@@ -48,11 +48,11 @@ export default function DownloadsShowPage(props) {
         <title>Series{download.data ? ` - ${download.data.medium.display}` : ''}</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container maxWidth="xl">
+      <Container sx={{ pt: '5px', pb: '5px' }} style={{ overflow: 'auto' }} maxWidth="xl">
         {download.isFetching && <LoadingIndicator />}
         {download.data && (
-          <MediumDownload
-            id={id}
+          <Download
+            id={id || 'unknown'}
             type={download.data.medium.type}
             download={download.data}
             files={download.data.download_files}

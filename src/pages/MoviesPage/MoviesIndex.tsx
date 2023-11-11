@@ -7,7 +7,7 @@ import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 
 import LoadingIndicator from 'components/Loading';
-import Media from 'components/Media';
+import { Media } from 'components/Media';
 import { useMoviesAllQuery } from 'query/movies';
 
 const pagesize = 42;

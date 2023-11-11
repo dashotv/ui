@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 
 import { DownloadList } from 'components/Downloads';
 import LoadingIndicator from 'components/Loading';
-import Media from 'components/Media';
+import { Media } from 'components/Media';
 import { useSubscription } from 'components/Nats/useSubscription';
 import { useDownloadsActiveQuery } from 'query/downloads';
 import { useUpcomingQuery } from 'query/upcoming';
@@ -43,7 +43,7 @@ export default function UpcomingPage() {
         <title>Home</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container maxWidth="xl">
+      <Container sx={{ pt: '5px', pb: '5px' }} style={{ overflow: 'auto' }} maxWidth="xl">
         {(downloads.isFetching || upcoming.isFetching) && <LoadingIndicator />}
         <Grid container spacing={1}>
           {downloads.data && <DownloadList downloads={downloads.data} />}

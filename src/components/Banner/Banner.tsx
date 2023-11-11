@@ -1,15 +1,14 @@
 import * as React from 'react';
 
+import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-// import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import RecommendIcon from '@mui/icons-material/Recommend';
 import StarsIcon from '@mui/icons-material/Stars';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
-import { ButtonMap } from 'components/ButtonMap';
-import Chrono from 'components/Chrono';
+import { ButtonMap, ButtonMapButton } from 'components/ButtonMap';
 
 import './Banner.scss';
 
@@ -18,36 +17,37 @@ function Unwatched({ count }: { count?: number }) {
   if (count === undefined || count === 0) {
     return <></>;
   }
-  return <Chip label={count > 9 ? '9+' : count} variant="filled" size="small" />;
+  return <Chip label={count > 9 ? '9+' : count} variant="filled" size="small" color="secondary" />;
 }
 
-export type IconsProps = {
+export type BannerIconsProps = {
   active?: boolean;
+  broken?: boolean;
   completed?: boolean;
   favorite?: boolean;
 };
-export function BannerIcons({ active, completed, favorite }: IconsProps) {
+export function BannerIcons({ active, broken, completed, favorite }: BannerIconsProps) {
   return (
-    <div className="icons">
-      {active && <StarsIcon fontSize="small" />}
-      {completed && <CheckCircleIcon fontSize="small" />}
-      {favorite && <RecommendIcon fontSize="small" />}
-    </div>
+    <Stack spacing={'2px'} direction="row">
+      {active && <StarsIcon fontSize="medium" color="action" />}
+      {broken && <BuildCircleIcon fontSize="medium" color="action" />}
+      {completed && <CheckCircleIcon fontSize="medium" color="action" />}
+      {favorite && <RecommendIcon fontSize="medium" color="action" />}
+    </Stack>
   );
 }
 
 export type BannerActionsProps = {
-  active?: boolean;
-  completed?: boolean;
-  favorite?: boolean;
   unwatched?: number;
-  buttons?: any[];
+  flags?: BannerIconsProps;
+  buttons?: ButtonMapButton[];
 };
-export function BannerActions({ unwatched, buttons, active, favorite, completed }: BannerActionsProps) {
+export function BannerActions({ unwatched, buttons, flags }: BannerActionsProps) {
+  const { active, broken, favorite, completed } = flags || {};
   return (
-    <Stack spacing={1} direction="row">
+    <Stack spacing={'2px'} direction="row">
       <ButtonMap size="small" buttons={buttons} />
-      <BannerIcons {...{ active, favorite, completed }} />
+      {flags && <BannerIcons {...{ active, favorite, completed }} />}
       <Unwatched count={unwatched} />
     </Stack>
   );
@@ -56,37 +56,23 @@ export function BannerActions({ unwatched, buttons, active, favorite, completed 
 export type BannerProps = {
   id: string;
   title: string;
+  extra?: string;
   subtitle?: string;
-  release_date?: Date | string;
-  background?: string;
-  cover?: string;
   tertiary?: React.ReactNode;
-  downloadIcon?: React.ReactNode;
-  queue?: number;
-  progress?: number;
-  eta?: Date | null;
-  favorite?: boolean;
-  broken?: boolean;
-  active?: boolean;
+  images?: string[];
+  buttons?: ButtonMapButton[];
+  flags?: BannerIconsProps;
   unwatched?: number;
-  completed?: boolean;
-  change?: any;
-  buttons: any[];
 };
-export function Banner({
-  id,
-  title,
-  subtitle,
-  release_date,
-  background,
-  cover,
-  tertiary,
-  active,
-  completed,
-  favorite,
-  unwatched,
-  buttons,
-}: BannerProps) {
+export function Banner({ id, title, extra, subtitle, tertiary, images, buttons, flags, unwatched }: BannerProps) {
+  const background = () => {
+    return images
+      ?.concat('/blank.png')
+      .map(i => {
+        return `url(${i})`;
+      })
+      .join(', ');
+  };
   return (
     <Paper elevation={5}>
       <div className="banner-container">
@@ -94,21 +80,22 @@ export function Banner({
           <div className="titlebar">
             <div className="title">
               <span>{title}</span>
+              {extra && <span className="extra">{extra}</span>}
             </div>
-            <div className="subtitle">
-              {subtitle && <span>{subtitle}</span>}
-              {!tertiary && release_date !== undefined && (
-                <Chrono format="YYYY-MM-DD">{release_date.toString()}</Chrono>
-              )}
-            </div>
+            <div className="subtitle">{subtitle && <span>{subtitle}</span>}</div>
             <div className="download">{tertiary}</div>
             <div className="actions">
-              <BannerActions {...{ unwatched, buttons, active, completed, favorite }} />
+              <BannerActions {...{ buttons, flags, unwatched }} />
             </div>
           </div>
         </div>
         <div className="banner-dimmer"></div>
-        <div className="banner-background">{background && <img alt="background" src={background} />}</div>
+        <div
+          className="banner-background"
+          style={{
+            backgroundImage: background(),
+          }}
+        />
       </div>
     </Paper>
   );

@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import { MediumBanner } from 'components/Banner';
 import { Medium } from 'types/medium';
 
-export default function Media({ type, data }) {
+export function Media({ type, data }) {
   const path = (type: string, id: string, series_id: string | undefined) => {
     switch (type) {
       case 'Series':

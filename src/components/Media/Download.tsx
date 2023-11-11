@@ -1,20 +1,50 @@
 import { useCallback } from 'react';
 import * as React from 'react';
 
-import { DownloadBanner, DownloadInfo } from 'components/Downloads';
+import { DownloadBanner } from 'components/Banner';
+import { DownloadInfo } from 'components/Downloads';
 import { useSubscription } from 'components/Nats/useSubscription';
 import { FilesWithSelector } from 'components/Tabs/FilesWithSelector';
 import { MediumTabs } from 'components/Tabs/MediumTabs';
 import { Nzbgeek } from 'components/Tabs/Nzbgeek';
 import { Torch } from 'components/Tabs/Torch';
 import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMutation } from 'query/downloads';
+import { Nzb, NzbResponseStatus } from 'types/Nzb';
+import { DownloadFile, Download as DownloadType } from 'types/download';
+import { Medium } from 'types/medium';
+import { Torrent } from 'types/torrents';
 
-import './large.scss';
+import './Media.scss';
 
-export default function MediumDownload(props) {
-  const { id, download } = props;
-  const { medium } = download;
-  const { source_id, search, kind, season_number, episode_number, absolute_number, search_params } = medium;
+export type DownloadProps = {
+  id: string;
+  download: DownloadType;
+  type: string;
+  torrent?: Torrent;
+  torrents?: Map<string, Torrent> | null;
+  nzbs?: Map<number, Nzb> | null;
+  nzbStatus?: NzbResponseStatus | null;
+  files?: DownloadFile[];
+  episodes?: Medium[];
+  torchSelector: any;
+  nzbSelector: any;
+};
+export default function Download({
+  id,
+  type,
+  download,
+  torrent,
+  torrents,
+  nzbs,
+  nzbStatus,
+  files,
+  episodes,
+  torchSelector,
+  nzbSelector,
+}: DownloadProps) {
+  const {
+    medium: { source_id, search, kind, season_number, episode_number, absolute_number, search_params },
+  } = download;
   const downloadUpdate = useDownloadMutation(id);
   const downloadSetting = useDownloadSettingMutation(id);
   const downloadSelection = useDownloadSelectionMutation(id);
@@ -39,7 +69,7 @@ export default function MediumDownload(props) {
           download.status = data.download.status;
           download.thash = data.download.thash;
           download.url = data.download.url;
-          download.releaseId = data.download.releaseId;
+          download.release_id = data.download.release_id;
         }
       },
       [id, download],
@@ -51,7 +81,7 @@ export default function MediumDownload(props) {
     let text = s[0];
     let minus = Number(s[1]);
     let episode = episode_number;
-    if (minus) {
+    if (minus && absolute_number) {
       episode = absolute_number - minus;
     }
     return { text, episode };
@@ -65,24 +95,24 @@ export default function MediumDownload(props) {
       year: '',
       season: kind !== 'anime' ? season_number : '',
       episode: episode,
-      group: search_params.group,
+      group: search_params?.group,
       author: '',
-      resolution: search_params.resolution,
-      source: search_params.source,
-      type: search_params.type,
-      exact: search_params.exact,
-      verified: search_params.verified,
+      resolution: search_params?.resolution,
+      source: search_params?.source,
+      type: search_params?.type,
+      exact: search_params?.exact,
+      verified: search_params?.verified,
     };
   }, [
     processSearch,
     kind,
     season_number,
-    search_params.exact,
-    search_params.group,
-    search_params.resolution,
-    search_params.source,
-    search_params.type,
-    search_params.verified,
+    search_params?.exact,
+    search_params?.group,
+    search_params?.resolution,
+    search_params?.source,
+    search_params?.type,
+    search_params?.verified,
   ]);
 
   const nzbForm = useCallback(() => {
@@ -102,24 +132,23 @@ export default function MediumDownload(props) {
   };
 
   const tabsMap = {
-    Files: (
-      <FilesWithSelector files={props.files} torrent={props.torrent} episodes={props.episodes} updater={selectMedium} />
-    ),
-    Torch: <Torch form={torchForm()} selector={props.torchSelector} />,
-    Nzbgeek: <Nzbgeek form={nzbForm()} selector={props.nzbSelector} />,
+    Files: <FilesWithSelector files={files} torrent={torrent} episodes={episodes} updater={selectMedium} />,
+    Torch: <Torch form={torchForm()} selector={torchSelector} />,
+    Nzbgeek: <Nzbgeek form={nzbForm()} selector={nzbSelector} />,
   };
 
   return (
     <div className="medium large">
       <DownloadBanner
         id={id}
-        download={props.download}
-        torrents={props.torrents}
-        nzbs={props.nzbs}
-        nzbStatus={props.nzbStatus}
+        variant="large"
+        download={download}
+        torrents={torrents}
+        nzbs={nzbs}
+        nzbStatus={nzbStatus}
         change={changeSetting}
       />
-      <DownloadInfo download={props.download} delete={deleteInfo} />
+      <DownloadInfo download={download} delete={deleteInfo} />
       <MediumTabs data={tabsMap} />
     </div>
   );

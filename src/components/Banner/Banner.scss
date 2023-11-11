@@ -19,8 +19,8 @@ $height: 120px;
       padding: 5px 5px;
 
       .title {
-        display: inline-flex;
-        flex-flow: row nowrap;
+        // display: inline-flex;
+        // flex-flow: row nowrap;
         max-width: 100%;
         margin-left: 8px;
         margin-right: 8px;
@@ -34,11 +34,17 @@ $height: 120px;
           text-overflow: ellipsis;
           // text-shadow: black 1px 1px 1px;
         }
+        .extra {
+          font-size: medium;
+          font-weight: normal;
+          color: #cccccc;
+          margin-left: 8px;
+        }
       }
 
       .subtitle {
-        display: inline-flex;
-        flex-flow: row nowrap;
+        // display: inline-flex;
+        // flex-flow: row nowrap;
         max-width: 100%;
         margin-left: 10px;
         span {
@@ -95,11 +101,8 @@ $height: 120px;
     overflow: hidden;
     min-height: $height;
     max-height: $height;
-    img {
-      // animation: MoveUpDown 5s linear infinite;
-      width: 100%;
-      margin-top: -10%;
-    }
+    background-position: center 20%;
+    background-size: cover;
   }
   .banner-dimmer {
     position: absolute;

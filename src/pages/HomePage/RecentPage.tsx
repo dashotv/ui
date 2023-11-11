@@ -26,10 +26,10 @@ export default function RecentPage() {
         <title>Home - Recent</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container sx={{ pt: '5px', pb: '5px' }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Pagination count={Math.ceil(recent?.data?.count ? recent.data.count / pagesize : 0)} onChange={handleChange} />
       </Container>
-      <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container sx={{ pt: '5px', pb: '5px' }} style={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container spacing={1}>
           {recent.isFetching && <LoadingIndicator />}
           {recent.data && <DownloadList downloads={recent.data?.results} />}

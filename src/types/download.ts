@@ -2,7 +2,7 @@ import { Medium } from './medium';
 
 export interface Download {
   id: string;
-  mediumId: string;
+  medium_id: string;
   medium: Medium;
   auto: boolean;
   multi: boolean;
@@ -14,6 +14,8 @@ export interface Download {
   selected: string;
   status: string;
   download_files: DownloadFile[];
+  updated_at: string;
+  created_at: string;
 }
 
 export interface DownloadTimestamps {

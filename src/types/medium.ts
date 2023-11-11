@@ -15,7 +15,7 @@ export interface Medium {
   text?: string;
   display?: string;
   directory?: string;
-  search?: string;
+  search: string;
   search_params?: SearchParams;
   active?: boolean;
   favorite?: boolean;
