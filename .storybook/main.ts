@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import { mergeConfig } from 'vite';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -31,6 +32,15 @@ const config: StorybookConfig = {
       // Filter out third-party props from node_modules except @mui packages
       propFilter: prop => (prop.parent ? !/node_modules\/(?!@mui)/.test(prop.parent.fileName) : true),
     },
+  },
+  async viteFinal(config) {
+    // Merge custom configuration into the default config
+    return mergeConfig(config, {
+      // Add dependencies to pre-optimization
+      optimizeDeps: {
+        include: ['storybook-dark-mode'],
+      },
+    });
   },
 };
 export default config;
