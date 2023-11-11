@@ -42,8 +42,13 @@ export function DownloadBanner({ variant, change: changer, download, torrents, n
   const [auto, setAuto] = useState(download.auto);
   const [multi, setMulti] = useState(download.multi);
   const [force, setForce] = useState(download.force);
-  const { id, medium, status, thash } = download;
-  const { cover, background, title, display, release_date, favorite, broken, active } = medium;
+  const {
+    id,
+    medium,
+    status,
+    thash,
+    medium: { cover, background, title, display },
+  } = download;
   const navigate = useNavigate();
 
   const large = variant === 'large';

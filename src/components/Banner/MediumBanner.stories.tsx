@@ -21,7 +21,7 @@ export default meta;
 
 type Story = StoryObj<typeof MediumBanner>;
 
-export const Small: Story = {
+export const MediumSmall: Story = {
   args: {
     id: 'blarg',
     medium: {
@@ -35,6 +35,7 @@ export const Small: Story = {
       title: 'Eminence in Shadow',
       name: 'Eminence in Shadow',
       display: '#5 blah blah blah',
+      search: 'eminence in shadow s2:25',
       release_date: new Date('2022-10-05'),
       unwatched: 3,
       completed: false,
@@ -87,7 +88,7 @@ const buttons = [
     title: 'delete',
   },
 ];
-export const Series: Story = {
+export const MediumSeries: Story = {
   args: {
     id: 'blarg',
     variant: 'large',
@@ -103,6 +104,7 @@ export const Series: Story = {
       title: 'Eminence in Shadow',
       name: 'Eminence in Shadow',
       display: 'tvdb (blah)',
+      search: 'eminence in shadow s2:25',
       release_date: new Date('2022-10-05'),
       unwatched: 3,
       completed: false,
