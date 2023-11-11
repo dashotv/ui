@@ -1,5 +1,6 @@
+import React from 'react';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Link from '@mui/material/Link';
 
 import Chrono from 'components/Chrono';
 import { User } from 'types/user';

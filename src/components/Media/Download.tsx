@@ -12,6 +12,7 @@ import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMu
 import { Nzb, NzbResponseStatus } from 'types/Nzb';
 import { DownloadFile, Download as DownloadType } from 'types/download';
 import { Medium } from 'types/medium';
+import { Release } from 'types/release';
 import { Torrent } from 'types/torrents';
 
 import './Media.scss';
@@ -26,12 +27,12 @@ export type DownloadProps = {
   nzbStatus?: NzbResponseStatus | null;
   files?: DownloadFile[];
   episodes?: Medium[];
-  torchSelector: any;
-  nzbSelector: any;
+  torchSelector: (release: Release) => void;
+  nzbSelector: (release: Release) => void;
 };
 export default function Download({
   id,
-  type,
+  // type,
   download,
   torrent,
   torrents,
@@ -77,9 +78,9 @@ export default function Download({
   );
 
   const processSearch = useCallback(() => {
-    let s = search.split(':');
-    let text = s[0];
-    let minus = Number(s[1]);
+    const s = search.split(':');
+    const text = s[0];
+    const minus = Number(s[1]);
     let episode = episode_number;
     if (minus && absolute_number) {
       episode = absolute_number - minus;

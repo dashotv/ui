@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Container from '@mui/material/Container';
@@ -8,7 +8,7 @@ import LoadingIndicator from 'components/Loading';
 import { useJobsQuery } from 'query/jobs';
 
 export default function JobsPage() {
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const jobs = useJobsQuery(page);
 
   return (

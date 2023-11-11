@@ -1,7 +1,9 @@
+import { useDebounce } from 'usehooks-ts';
+
+import React from 'react';
 import { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate } from 'react-router-dom';
-import { useDebounce } from 'usehooks-ts';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FindInPageOutlinedIcon from '@mui/icons-material/FindInPageOutlined';
@@ -150,9 +152,9 @@ function SuperSearchDialog({ open, setOpen, confirm }: SuperSearchDialogProps) {
         {data?.Media?.Error || data?.Tvdb?.Error || data?.Tmdb?.Error ? (
           <Alert severity="error">{data?.Media?.Error || data?.Tvdb?.Error || data?.Tmdb?.Error}</Alert>
         ) : null}
-        <SuperSearchAccordion name="Dasho.TV" data={data && data.Media.Results} select={select} link={true} />
-        <SuperSearchAccordion name="TVDB" type="series" data={data && data.Tvdb.Results} select={create} link={false} />
-        <SuperSearchAccordion name="TMDB" type="movie" data={data && data.Tmdb.Results} select={create} link={false} />
+        <SuperSearchAccordion name="Dasho.TV" data={data && data.Media.Results} select={select} />
+        <SuperSearchAccordion name="TVDB" type="series" data={data && data.Tvdb.Results} select={create} />
+        <SuperSearchAccordion name="TMDB" type="movie" data={data && data.Tmdb.Results} select={create} />
       </DialogContent>
     </Dialog>
   );
@@ -188,9 +190,8 @@ interface SuperSearchAccordionProps {
   data: Option[] | undefined;
   select: (option: Option) => void;
   type?: string;
-  link: boolean;
 }
-const SuperSearchAccordion = ({ name, data, select, type, link }: SuperSearchAccordionProps) => {
+const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordionProps) => {
   const [options, setOptions] = useState<Option[]>([]);
 
   useEffect(() => {

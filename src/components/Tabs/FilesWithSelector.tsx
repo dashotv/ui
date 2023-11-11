@@ -19,7 +19,7 @@ export function FilesWithSelector(props) {
   const [open, setOpen] = useState(false);
   const [dialogTitle, setDialogTitle] = useState('title');
   const [selected, setSelected] = useState(0);
-  const [tracking, setTracking] = useState<Map<String, Number>>(new Map<String, Number>());
+  const [tracking, setTracking] = useState<Map<string, number>>(new Map<string, number>());
 
   const getFile = useCallback(
     num => {
@@ -42,8 +42,8 @@ export function FilesWithSelector(props) {
 
   const selector = useCallback(
     id => {
-      let f = getFile(selected);
-      let ep = getEpisode(id);
+      const f = getFile(selected);
+      const ep = getEpisode(id);
       f.medium = ep;
       tracking.set(id, selected);
       setTracking(tracking);
@@ -64,7 +64,7 @@ export function FilesWithSelector(props) {
 
   const handleClickClear = useCallback(
     num => {
-      let f = getFile(num);
+      const f = getFile(num);
       f.medium = null;
       props.updater(null, num);
     },
@@ -80,7 +80,7 @@ export function FilesWithSelector(props) {
     if (!props.files) {
       return;
     }
-    let newTracking = new Map<string, number>();
+    const newTracking = new Map<string, number>();
     for (const f of props.files) {
       if (f.medium_id !== null && f.medium_id !== '000000000000000000000000') {
         newTracking.set(f.medium_id, f.num);

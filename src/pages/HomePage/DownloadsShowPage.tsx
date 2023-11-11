@@ -9,8 +9,8 @@ import Download from 'components/Media/Download';
 import { useReleases } from 'hooks/useReleases';
 import { useDownloadMediumQuery, useDownloadMutation, useDownloadQuery } from 'query/downloads';
 
-export default function DownloadsShowPage(props) {
-  let { id } = useParams();
+export default function DownloadsShowPage() {
+  const { id } = useParams();
   const download = useDownloadQuery(id);
   const episodes = useDownloadMediumQuery(id);
   const { torrents, nzbs, nzbStatus } = useReleases();
@@ -29,7 +29,7 @@ export default function DownloadsShowPage(props) {
         return;
       }
 
-      let n = download.data;
+      const n = download.data;
       n['status'] = 'loading';
       n['release_id'] = release;
       n['url'] = '';

@@ -1,9 +1,10 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+
+import { useQueryClient } from '@tanstack/react-query';
 
 import { DownloadList } from 'components/Downloads';
 import LoadingIndicator from 'components/Loading';
@@ -19,22 +20,16 @@ export default function UpcomingPage() {
 
   useSubscription(
     'seer.downloads',
-    useCallback(
-      data => {
-        queryClient.invalidateQueries({ queryKey: ['downloads', 'active'] });
-      },
-      [queryClient],
-    ),
+    useCallback(() => {
+      queryClient.invalidateQueries({ queryKey: ['downloads', 'active'] });
+    }, [queryClient]),
   );
 
   useSubscription(
     'seer.episodes',
-    useCallback(
-      data => {
-        queryClient.invalidateQueries({ queryKey: ['media', 'upcoming'] });
-      },
-      [queryClient],
-    ),
+    useCallback(() => {
+      queryClient.invalidateQueries({ queryKey: ['media', 'upcoming'] });
+    }, [queryClient]),
   );
 
   return (

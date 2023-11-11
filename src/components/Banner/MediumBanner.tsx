@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React from 'react';
 
 import { ButtonMapButton } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
@@ -18,11 +18,11 @@ export function MediumBanner({
   variant,
   buttons,
   medium: {
-    type,
+    // type,
     title,
     display,
     release_date,
-    description,
+    // description,
     cover,
     background,
     active,
@@ -35,7 +35,7 @@ export function MediumBanner({
   const large = variant === 'large';
 
   const images: () => string[] = () => {
-    let out: string[] = [];
+    const out: string[] = [];
     if (background) {
       out.push(background);
     }

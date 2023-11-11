@@ -20,7 +20,7 @@ export function DownloadInfo(props) {
   const { release_id, url, status, thash } = props.download;
 
   useEffect(() => {
-    let tmp = {
+    const tmp = {
       torch: release_id,
       url: url,
       status: status,

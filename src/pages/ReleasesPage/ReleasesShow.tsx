@@ -12,7 +12,7 @@ import LoadingIndicator from 'components/Loading';
 import { useReleaseQuery } from 'query/releases';
 
 export default function ReleasesShow(props) {
-  let { id } = useParams();
+  const { id } = useParams();
   const { isFetching, data, error } = useReleaseQuery(id);
 
   function resolution(r) {

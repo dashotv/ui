@@ -1,4 +1,5 @@
 import { Subscription } from 'nats.ws';
+
 import { useEffect } from 'react';
 
 import { useNats } from './usenats';

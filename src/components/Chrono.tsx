@@ -3,6 +3,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
 import weekday from 'dayjs/plugin/weekday';
 
+import React from 'react';
+
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(weekday);

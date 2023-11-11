@@ -9,7 +9,7 @@ export function useQueryString() {
 }
 
 export function objectToQueryString(obj) {
-  let str: any[] = [];
+  const str: any[] = [];
   for (const p in obj)
     if (obj.hasOwnProperty(p)) {
       str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));

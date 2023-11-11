@@ -1,10 +1,11 @@
-// YourComponent.stories.ts|tsx
-import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
-import { Banner, BannerActions } from './Banner';
+import type { Meta, StoryObj } from '@storybook/react';
+
+import { Banner } from './Banner';
 
 //👇 This default export determines where your story goes in the story list
 const meta: Meta<typeof Banner> = {

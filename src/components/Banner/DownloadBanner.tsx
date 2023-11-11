@@ -36,7 +36,7 @@ export type DownloadBannerProps = {
   torrents?: Map<string, Torrent> | null;
   nzbs?: Map<number, Nzb> | null;
   nzbStatus?: NzbResponseStatus | null;
-  change?: (key: string, value: any) => void;
+  change?: (key: string, value: boolean) => void;
 };
 export function DownloadBanner({ variant, change: changer, download, torrents, nzbs, nzbStatus }: DownloadBannerProps) {
   const [auto, setAuto] = useState(download.auto);
@@ -52,7 +52,7 @@ export function DownloadBanner({ variant, change: changer, download, torrents, n
   const navigate = useNavigate();
 
   const large = variant === 'large';
-  const change = (name: string, value: any) => {
+  const change = (name: string, value: boolean) => {
     if (changer) {
       changer(name, value);
     }
@@ -92,7 +92,7 @@ export function DownloadBanner({ variant, change: changer, download, torrents, n
     {
       icon: <ArrowCircleLeftIcon color="primary" />,
       // click: <Link to={`/${props.download?.media?.type}/${props.download?.media?.id}`} />,
-      click: ev => gotoMedia(),
+      click: () => gotoMedia(),
       title: 'Go to Media',
     },
     {
@@ -143,7 +143,7 @@ export function DownloadBanner({ variant, change: changer, download, torrents, n
     if (torrents != null) {
       const torrent = torrents.get(thash);
       if (torrent) {
-        return torrent.Progress;
+        return Number(torrent.Progress);
       }
     }
 
@@ -193,7 +193,7 @@ export function DownloadBanner({ variant, change: changer, download, torrents, n
       }
     }
 
-    return null;
+    return 0;
   }, [nzbs, torrents, thash]);
 
   function tertiary() {
@@ -202,13 +202,13 @@ export function DownloadBanner({ variant, change: changer, download, torrents, n
         <Icon status={status} />
         <Progress value={progress()} />
         <Eta eta={eta()} />
-        <Queue queue={queue()} />
+        <Queue queue={queue().toString()} />
         {status == 'done' && <Chrono fromNow>{download.updated_at}</Chrono>}
       </Stack>
     );
   }
   const images: () => string[] = () => {
-    let out: string[] = [];
+    const out: string[] = [];
     if (background) {
       out.push(background);
     }
@@ -229,28 +229,28 @@ export function DownloadBanner({ variant, change: changer, download, torrents, n
   );
 }
 
-function Queue({ queue }) {
-  if (!queue) {
+function Queue({ queue }: { queue?: string | null }) {
+  if (!queue || queue === '0') {
     return null;
   }
   return <Chip label={queue} size="small" />;
 }
 
-function Progress({ value }) {
+function Progress({ value }: { value?: number }) {
   if (value && value > 0) {
     return <span>{Number(value).toFixed(2)}%</span>;
   }
-  return null;
+  return <span></span>;
 }
 
-function Eta({ eta }) {
+function Eta({ eta }: { eta?: Date | null }) {
   if (!eta) {
     return null;
   }
-  return <Chrono fromNow>{eta}</Chrono>;
+  return <Chrono fromNow>{eta.toString()}</Chrono>;
 }
 
-function Icon({ status }) {
+function Icon({ status }: { status: string | undefined }) {
   switch (status) {
     case 'searching':
       return (

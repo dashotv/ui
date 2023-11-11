@@ -9,7 +9,7 @@ import Movie from 'components/Media/Movie';
 import { useMovieQuery, useMovieSettingMutation } from 'query/movies';
 
 export default function MoviesShow() {
-  let { id } = useParams();
+  const { id } = useParams();
   const { isFetching, data } = useMovieQuery(id);
   const movieSetting = useMovieSettingMutation(id);
 

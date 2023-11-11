@@ -14,7 +14,7 @@ import {
 } from 'query/series';
 
 export default function SeriesShow() {
-  let { id } = useParams();
+  const { id } = useParams();
   const { isFetching, data: series } = useSeriesQuery(id);
   const [currentSeason, setCurrentSeason] = useState(null);
   const { isFetching: episodesFetching, data: episodes } = useSeriesSeasonEpisodesQuery(id, currentSeason);

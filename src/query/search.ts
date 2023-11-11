@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+
+import { useQuery } from '@tanstack/react-query';
 
 import { objectToQueryString } from 'hooks/useQueryString';
 import { Medium } from 'types/medium';
-import { SearchAllResponse, SearchResponse, SearchResult } from 'types/search';
+import { SearchAllResponse } from 'types/search';
 
 export const getSearch = async (search: string) => {
   const qs = objectToQueryString({ name: `*${search}*`, limit: 10, type: 'series movie' });

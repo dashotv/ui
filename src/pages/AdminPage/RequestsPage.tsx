@@ -1,8 +1,9 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Container from '@mui/material/Container';
+
+import { useQueryClient } from '@tanstack/react-query';
 
 import LoadingIndicator from 'components/Loading';
 import { useSubscription } from 'components/Nats/useSubscription';
@@ -10,7 +11,7 @@ import { RequestsList } from 'components/Requests/RequestsList';
 import { useRequestsQuery } from 'query/requests';
 
 export default function RequestsPage() {
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const requests = useRequestsQuery(page);
   const queryClient = useQueryClient();
   useSubscription('tower.requests', () => {

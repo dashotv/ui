@@ -47,7 +47,7 @@ export function BannerActions({ unwatched, buttons, flags }: BannerActionsProps)
   return (
     <Stack spacing={'2px'} direction="row">
       <ButtonMap size="small" buttons={buttons} />
-      {flags && <BannerIcons {...{ active, favorite, completed }} />}
+      {flags && <BannerIcons {...{ active, broken, favorite, completed }} />}
       <Unwatched count={unwatched} />
     </Stack>
   );
@@ -64,7 +64,7 @@ export type BannerProps = {
   flags?: BannerIconsProps;
   unwatched?: number;
 };
-export function Banner({ id, title, extra, subtitle, tertiary, images, buttons, flags, unwatched }: BannerProps) {
+export function Banner({ title, extra, subtitle, tertiary, images, buttons, flags, unwatched }: BannerProps) {
   const background = () => {
     return images
       ?.concat('/blank.png')

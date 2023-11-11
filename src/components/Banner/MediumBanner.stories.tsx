@@ -1,5 +1,4 @@
-// YourComponent.stories.ts|tsx
-import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -8,6 +7,8 @@ import RecommendIcon from '@mui/icons-material/Recommend';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import StarsIcon from '@mui/icons-material/Stars';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { MediumBanner } from './MediumBanner';
 

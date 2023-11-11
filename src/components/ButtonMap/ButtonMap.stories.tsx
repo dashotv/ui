@@ -1,7 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { ButtonMap } from './ButtonMap';
 
@@ -16,15 +18,15 @@ const buttons = [
   {
     title: 'Click Me',
     icon: <DownloadForOfflineIcon color="primary" />,
-    click: (ev: any, args: any) => {
-      console.log('click', ev, args);
+    click: (ev: React.MouseEvent<HTMLElement>) => {
+      console.log('click', ev);
     },
   },
   {
     title: 'Click Me',
     icon: <VisibilityOffIcon color="primary" />,
-    click: (ev: any, args: any) => {
-      console.log('click', ev, args);
+    click: (ev: React.MouseEvent<HTMLElement>) => {
+      console.log('click', ev);
     },
   },
 ];

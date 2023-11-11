@@ -1,20 +1,22 @@
-import { ClerkProvider } from '@clerk/clerk-react';
-import { dark } from '@clerk/themes';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { App } from 'app';
 import { SnackbarProvider } from 'notistack';
-import { StrictMode } from 'react';
+// Use consistent styling
+import 'sanitize.css/sanitize.css';
+
+import React from 'react';
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 import * as ReactDOMClient from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from 'react-router-dom';
-// Use consistent styling
-import 'sanitize.css/sanitize.css';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+import { ClerkProvider } from '@clerk/clerk-react';
+import { dark } from '@clerk/themes';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { NatsProvider } from 'components/Nats/context';
 

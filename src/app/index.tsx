@@ -5,11 +5,7 @@
  * This component is the skeleton around the actual pages, and should only
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
-import { RedirectToSignIn, SignIn, SignUp, SignedIn, SignedOut } from '@clerk/clerk-react';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
@@ -17,6 +13,12 @@ import { Route, Routes } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
+
+import { RedirectToSignIn, SignIn, SignUp, SignedIn, SignedOut } from '@clerk/clerk-react';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 import NavBar from 'components/NavBar';
 import AdminPage from 'pages/AdminPage';
@@ -66,7 +68,7 @@ function fallbackRender({ error, resetErrorBoundary }) {
   );
 }
 
-export function ClerkWrapper({ children }) {
+export function ClerkWrapper({ children }: { children: React.ReactNode }) {
   return <SignedIn>{children}</SignedIn>;
 }
 

@@ -9,7 +9,7 @@ import LoadingIndicator from 'components/Loading';
 import { useFeedQuery } from 'query/feeds';
 
 export default function FeedsShow() {
-  let { id } = useParams();
+  const { id } = useParams();
   const { isFetching, data } = useFeedQuery(id);
 
   return (

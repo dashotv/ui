@@ -1,5 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Option } from 'query/option';
 import { Setting, SettingsArgs } from 'types/setting';

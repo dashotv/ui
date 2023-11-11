@@ -1,7 +1,7 @@
-import { UserButton } from '@clerk/clerk-react';
 import { useSnackbar } from 'notistack';
+
 import * as React from 'react';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
@@ -15,6 +15,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+
+import { UserButton } from '@clerk/clerk-react';
 
 import { useSubscription } from 'components/Nats/useSubscription';
 

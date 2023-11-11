@@ -1,10 +1,12 @@
-export function Notice(props) {
+import React from 'react';
+
+export function Notice({ data: { class: className, message } }: { data: { class: string; message: string } }) {
   return (
     <div className="notice">
       <div className="title">
-        <b>{props.data.class}</b>
+        <b>{className}</b>
       </div>
-      <div className="message">{props.data.message}</div>
+      <div className="message">{message}</div>
     </div>
   );
 }
