@@ -12,14 +12,23 @@ import Stack from '@mui/material/Stack';
 
 import { useSubscription } from 'components/Nats/useSubscription';
 import { useDownloadsLastQuery } from 'query/downloads';
+import { NzbResponse } from 'types/Nzb';
+import { TorrentsResponse } from 'types/torrents';
 
 import './gauges.scss';
 
-function BaseGauge({ icon, title, value, data, color }) {
+type GaugeProps = {
+  title?: string;
+  icon?: React.ReactElement;
+  value?: React.ReactElement | string | number;
+  color: 'error' | 'success' | 'default' | 'primary' | 'secondary' | 'info' | 'warning' | undefined;
+};
+
+function BaseGauge({ icon, value, color }: GaugeProps) {
   return <Chip icon={icon} label={value} color={color} size="small" />;
 }
 
-function Countdown({ eventTime, interval, last }) {
+function Countdown({ eventTime, interval, last }: { eventTime: number; interval: number; last: string }) {
   const [intervalValue] = useState<number>(interval);
   const [count, { startCountdown, resetCountdown }] = useCountdown({
     countStart: eventTime,
@@ -42,19 +51,11 @@ function Countdown({ eventTime, interval, last }) {
   return <div title={`${count}`}>{count > 0 ? count : 0}</div>;
 }
 
-function DiskGauge(props) {
-  return (
-    <BaseGauge
-      title="Root"
-      icon={<DownloadForOfflineIcon />}
-      value={props.value}
-      data={props.data}
-      color={props.color}
-    />
-  );
+function DiskGauge({ value, color }: GaugeProps) {
+  return <BaseGauge icon={<DownloadForOfflineIcon />} value={value} color={color} />;
 }
 
-function CountdownGauge(props) {
+function CountdownGauge({ color }: GaugeProps) {
   const [last, setLast] = useState('');
   const [event, setEvent] = useState(300);
   const initial = useDownloadsLastQuery();
@@ -69,9 +70,9 @@ function CountdownGauge(props) {
 
   useSubscription(
     'seer.notices',
-    useCallback(data => {
-      if (data.message === 'processing downloads') {
-        setLast(data.time);
+    useCallback(({ message, time }: { message: string; time: string }) => {
+      if (message === 'processing downloads') {
+        setLast(time);
         setEvent(300);
       }
     }, []),
@@ -82,21 +83,20 @@ function CountdownGauge(props) {
       title="Countdown"
       icon={<WatchLaterIcon />}
       value={<Countdown eventTime={event} interval={1000} last={last} />}
-      data={props.data}
-      color={initial.isFetching ? 'secondary' : props.color}
+      color={initial.isFetching ? 'secondary' : color}
     />
   );
 }
 
-function NzbsGauge(props) {
-  return <BaseGauge title="NZBGet" icon={<FeedIcon />} value={props.value} data={props.data} color={props.color} />;
+function NzbsGauge({ value, color }: GaugeProps) {
+  return <BaseGauge title="NZBGet" icon={<FeedIcon />} value={value} color={color} />;
 }
 
-function TorrentsGauge(props) {
-  return <BaseGauge title="Torrent" icon={<OpacityIcon />} value={props.value} data={props.data} color={props.color} />;
+function TorrentsGauge({ value, color }: GaugeProps) {
+  return <BaseGauge title="Torrent" icon={<OpacityIcon />} value={value} color={color} />;
 }
 
-export function Gauges(props) {
+export function Gauges() {
   const [nzbs, setNzbs] = useState('0.0');
   const [torrents, setTorrents] = useState('0.0');
   const [diskFree, setDiskFree] = useState('0.0');
@@ -104,7 +104,7 @@ export function Gauges(props) {
   useSubscription(
     'flame.qbittorrents',
     useCallback(
-      data => {
+      (data: TorrentsResponse) => {
         const download = (data.DownloadRate / 1000).toFixed(1);
         setTorrents(download);
       },
@@ -115,7 +115,7 @@ export function Gauges(props) {
   useSubscription(
     'flame.nzbs',
     useCallback(
-      data => {
+      (data: NzbResponse) => {
         const download = (data.Status.DownloadRate / 1000).toFixed(1);
         setNzbs(download);
 
