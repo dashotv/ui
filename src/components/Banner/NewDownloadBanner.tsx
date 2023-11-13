@@ -6,6 +6,7 @@ import Stack from '@mui/material/Stack';
 import { ButtonMapButton } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
 import { DownloadIcon } from 'components/Downloads';
+import { DownloadStatus } from 'types/download';
 
 import { Banner } from './Banner';
 
@@ -16,7 +17,7 @@ export type NewDownloadBannerProps = {
   subtitle?: string;
   cover?: string;
   background?: string;
-  status?: string;
+  status?: DownloadStatus;
   progress?: string;
   eta?: string;
   queue?: string;

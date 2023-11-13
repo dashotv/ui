@@ -13,7 +13,7 @@ export default function DownloadsShowPage() {
   const { id } = useParams();
   const download = useDownloadQuery(id);
   const episodes = useDownloadMediumQuery(id);
-  const { torrents, nzbs, nzbStatus } = useReleases();
+  const { torrents } = useReleases();
   const downloadUpdate = useDownloadMutation(id);
 
   const getTorrent = useCallback(() => {
@@ -58,9 +58,6 @@ export default function DownloadsShowPage() {
             files={download.data.download_files}
             episodes={episodes.data}
             torrent={getTorrent()}
-            torrents={torrents}
-            nzbs={nzbs}
-            nzbStatus={nzbStatus}
             torchSelector={torchSelector}
             nzbSelector={nzbSelector}
           />

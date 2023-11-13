@@ -8,6 +8,12 @@ import { NewDownloadBanner } from './NewDownloadBanner';
 const meta: Meta<typeof NewDownloadBanner> = {
   title: 'Components/Banner',
   component: NewDownloadBanner,
+  argTypes: {
+    status: {
+      control: 'select',
+      options: ['searching', 'loading', 'managing', 'reviewing', 'downloading', 'done', 'paused', 'deleted', 'held'],
+    },
+  },
 };
 
 export default meta;

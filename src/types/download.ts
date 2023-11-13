@@ -1,5 +1,15 @@
 import { Medium } from './medium';
 
+export type DownloadStatus =
+  | 'searching'
+  | 'loading'
+  | 'managing'
+  | 'reviewing'
+  | 'downloading'
+  | 'done'
+  | 'paused'
+  | 'deleted'
+  | 'held';
 export interface Download {
   id: string;
   medium_id: string;
@@ -12,7 +22,7 @@ export interface Download {
   thash: string;
   timestamps: DownloadTimestamps;
   selected: string;
-  status: string;
+  status: DownloadStatus;
   download_files: DownloadFile[];
   updated_at: string;
   created_at: string;

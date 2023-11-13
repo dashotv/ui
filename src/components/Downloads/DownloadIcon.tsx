@@ -10,9 +10,13 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 
-export const DownloadIcon = ({ status }: { status: string }) => {
+import { DownloadStatus } from 'types/download';
+
+export const DownloadIcon = ({ status }: { status: DownloadStatus }) => {
   const icon = () => {
     switch (status) {
+      case 'searching':
+        return SearchIcon;
       case 'loading':
         return YoutubeSearchedForIcon;
       case 'managing':
@@ -29,13 +33,11 @@ export const DownloadIcon = ({ status }: { status: string }) => {
         return RemoveCircleIcon;
       case 'held':
         return PendingIcon;
-      default:
-        return SearchIcon;
     }
   };
 
   return (
-    <div title={status} style={{ height: '24px', paddingTop: '2px' }}>
+    <div title={status} style={{ height: '24px' }}>
       {React.createElement(icon(), { fontSize: 'small' })}
     </div>
   );

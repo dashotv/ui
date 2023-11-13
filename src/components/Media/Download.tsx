@@ -1,15 +1,24 @@
-import { useCallback } from 'react';
 import * as React from 'react';
+import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { DownloadBanner } from 'components/Banner';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
+import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
+import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
+
+import { NewDownloadBanner } from 'components/Banner';
 import { DownloadInfo } from 'components/Downloads';
 import { useSubscription } from 'components/Nats/useSubscription';
 import { FilesWithSelector } from 'components/Tabs/FilesWithSelector';
 import { MediumTabs } from 'components/Tabs/MediumTabs';
 import { Nzbgeek } from 'components/Tabs/Nzbgeek';
 import { Torch } from 'components/Tabs/Torch';
+import { useReleases } from 'hooks/useReleases';
 import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMutation } from 'query/downloads';
-import { Nzb, NzbResponseStatus } from 'types/Nzb';
 import { DownloadFile, Download as DownloadType } from 'types/download';
 import { Medium } from 'types/medium';
 import { Release } from 'types/release';
@@ -20,11 +29,8 @@ import './Media.scss';
 export type DownloadProps = {
   id: string;
   download: DownloadType;
-  type: string;
   torrent?: Torrent;
-  torrents?: Map<string, Torrent> | null;
-  nzbs?: Map<number, Nzb> | null;
-  nzbStatus?: NzbResponseStatus | null;
+  type: string;
   files?: DownloadFile[];
   episodes?: Medium[];
   torchSelector: (release: Release) => void;
@@ -35,20 +41,39 @@ export default function Download({
   // type,
   download,
   torrent,
-  torrents,
-  nzbs,
-  nzbStatus,
   files,
   episodes,
   torchSelector,
   nzbSelector,
 }: DownloadProps) {
   const {
-    medium: { source_id, search, kind, season_number, episode_number, absolute_number, search_params },
+    medium,
+    status,
+    thash,
+    medium: {
+      // type,
+      kind,
+      // source,
+      source_id,
+      search_params,
+      search,
+      episode_number,
+      season_number,
+      absolute_number,
+      cover,
+      background,
+      title,
+      display,
+    },
   } = download;
+  const [auto, setAuto] = useState(download.auto);
+  const [multi, setMulti] = useState(download.multi);
+  const [force, setForce] = useState(download.force);
   const downloadUpdate = useDownloadMutation(id);
   const downloadSetting = useDownloadSettingMutation(id);
   const downloadSelection = useDownloadSelectionMutation(id);
+  const { progress, eta, queue } = useReleases();
+  const navigate = useNavigate();
 
   function changeSetting(setting, value) {
     downloadSetting.mutate({ setting: setting, value: value });
@@ -138,16 +163,100 @@ export default function Download({
     Nzbgeek: <Nzbgeek form={nzbForm()} selector={nzbSelector} />,
   };
 
+  // TODO: create general MediaLink component or something like that
+  const gotoMedia = useCallback(() => {
+    if (!medium) {
+      return;
+    }
+    let id = medium.id;
+    let type = 'series';
+    switch (medium.type) {
+      case 'Episode':
+        if (medium.series_id === undefined) {
+          navigate('/404');
+          return;
+        }
+        id = medium.series_id;
+        break;
+      case 'Series':
+        break;
+      case 'Movie':
+        type = 'movies';
+        break;
+    }
+
+    navigate('/' + type + '/' + id);
+  }, [medium, navigate]);
+
+  const complete = useCallback(ev => {
+    console.log('clicked complete');
+    ev.preventDefault(); // for the buttons inside the Link component
+  }, []);
+
+  const buttons = [
+    {
+      icon: <ArrowCircleLeftIcon color="primary" />,
+      // click: <Link to={`/${props.download?.media?.type}/${props.download?.media?.id}`} />,
+      click: () => gotoMedia(),
+      title: 'Go to Media',
+    },
+    {
+      icon: <CheckCircleIcon color="primary" />,
+      click: complete,
+      title: 'mark complete',
+    },
+    {
+      icon: <ChangeCircleIcon color="primary" />,
+      click: complete,
+      title: 'reset',
+    },
+    {
+      icon: <OfflineBoltIcon color={auto ? 'secondary' : 'action'} />,
+      click: ev => {
+        changeSetting('auto', !auto);
+        setAuto(!auto);
+        ev.preventDefault(); // for the buttons inside the Link component
+      },
+      title: 'toggle auto',
+    },
+    {
+      icon: <PlaylistAddCheckCircleIcon color={multi ? 'secondary' : 'action'} />,
+      click: ev => {
+        changeSetting('multi', !multi);
+        setMulti(!multi);
+        ev.preventDefault(); // for the buttons inside the Link component
+      },
+      title: 'toggle multi',
+    },
+    {
+      icon: <SwapHorizontalCircleIcon color={force ? 'secondary' : 'action'} />,
+      click: ev => {
+        changeSetting('force', !force);
+        setForce(!force);
+        ev.preventDefault(); // for the buttons inside the Link component
+      },
+      title: 'toggle force',
+    },
+    {
+      icon: <CancelIcon color="error" />,
+      click: complete,
+      title: 'delete',
+    },
+  ];
+
   return (
     <div className="medium large">
-      <DownloadBanner
+      <NewDownloadBanner
         id={id}
-        variant="large"
-        download={download}
-        torrents={torrents}
-        nzbs={nzbs}
-        nzbStatus={nzbStatus}
-        change={changeSetting}
+        title={title}
+        subtitle={display}
+        cover={cover}
+        background={background}
+        status={status}
+        progress={progress(thash)?.toString()}
+        queue={queue(thash)?.toString()}
+        eta={eta(thash)?.toString()}
+        buttons={buttons}
       />
       <DownloadInfo download={download} delete={deleteInfo} />
       <MediumTabs data={tabsMap} />
