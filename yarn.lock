@@ -6759,7 +6759,7 @@ __metadata:
     husky: "npm:^8.0.3"
     jsdom: "npm:22.1.0"
     lint-staged: "npm:15.0.2"
-    nats.ws: "npm:1.18.0"
+    nats.ws: "npm:^1.19.1"
     notistack: "npm:3.0.1"
     prettier: "npm:3.0.3"
     react: "npm:18.2.0"
@@ -10711,15 +10711,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nats.ws@npm:1.18.0":
-  version: 1.18.0
-  resolution: "nats.ws@npm:1.18.0"
+"nats.ws@npm:^1.19.1":
+  version: 1.19.1
+  resolution: "nats.ws@npm:1.19.1"
   dependencies:
     nkeys.js: "npm:1.0.5"
   dependenciesMeta:
     nkeys.js:
       optional: true
-  checksum: f29fd6a44c3d4d5b1257d9d17f8d5be018d882ef17d5fc750d3c67ceb292b6eb0d3a28926de5743b33afb775530d7b0ad8129493c1df92e74962e46f606bbe59
+  checksum: 8ff6b2f35e0d19e47e714a1dc850e9f746481ba7c23bf673acd057f2273cd3dd5af159c3648633a5656d6d2a82adc5e11433978a78a375f21273abf9750a7e48
   languageName: node
   linkType: hard
 
