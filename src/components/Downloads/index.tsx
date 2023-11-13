@@ -1,4 +1,3 @@
-import { DownloadInfo } from './DownloadInfo';
-import { DownloadList } from './DownloadList';
-
-export { DownloadList, DownloadInfo };
+export * from './DownloadInfo';
+export * from './DownloadList';
+export * from './DownloadIcon';
