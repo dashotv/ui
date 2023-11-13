@@ -1,7 +1,6 @@
 import { useCountdown } from 'usehooks-ts';
 
-import React from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import FeedIcon from '@mui/icons-material/Feed';
@@ -11,7 +10,6 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
 import { useSubscription } from 'components/Nats/useSubscription';
-import { useTopic } from 'components/Nats/useTopic';
 import { useDownloadsLastQuery } from 'query/downloads';
 import { NzbResponse } from 'types/Nzb';
 import { TorrentsResponse } from 'types/torrents';
@@ -102,31 +100,18 @@ export function Gauges() {
   const [torrents, setTorrents] = useState('0.0');
   const [diskFree, setDiskFree] = useState('0.0');
 
-  // useSubscription(
-  //   'flame.qbittorrents',
-  //   useCallback(
-  //     (data: TorrentsResponse) => {
-  //       const download = (data.DownloadRate / 1000).toFixed(1);
-  //       setTorrents(download);
-  //     },
-  //     [setTorrents],
-  //   ),
-  // );
-
-  useTopic(
+  useSubscription(
     'flame.qbittorrents',
     useCallback((data: TorrentsResponse) => {
       const download = (data.DownloadRate / 1000).toFixed(1);
-      console.log('useTopic', 'flame.qbittorrents', download);
       setTorrents(download);
     }, []),
   );
 
-  useTopic(
+  useSubscription(
     'flame.nzbs',
     useCallback((data: NzbResponse) => {
       const download = (data.Status.DownloadRate / 1000).toFixed(1);
-      console.log('useTopic', 'flame.nzbs', download);
       setNzbs(download);
 
       const free = (data.Status.FreeDiskSpaceMB / 1000).toFixed(1);

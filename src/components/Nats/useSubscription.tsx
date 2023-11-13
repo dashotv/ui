@@ -1,10 +1,15 @@
-import { Subscription } from 'nats.ws';
-
 import { useEffect } from 'react';
 
-import { useTopic } from './useTopic';
 import { useNats } from './usenats';
 
-export function useSubscription(topic, func) {
-  useTopic(topic, func);
+export function useSubscription(topic: string, func: (data) => void) {
+  const { add, remove } = useNats();
+  useEffect(() => {
+    console.log('useTopic:', topic);
+    add(topic, func);
+
+    return () => {
+      remove(topic, func);
+    };
+  }, [add, remove]);
 }
