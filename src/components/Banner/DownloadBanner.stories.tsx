@@ -1,26 +1,21 @@
 import React from 'react';
 
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
+import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
+import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
+
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { NewDownloadBanner } from './NewDownloadBanner';
+import { DownloadBanner } from './DownloadBanner';
 
 //👇 This default export determines where your story goes in the story list
-const meta: Meta<typeof NewDownloadBanner> = {
+const meta: Meta<typeof DownloadBanner> = {
   title: 'Components/Banner',
-  component: NewDownloadBanner,
-  argTypes: {
-    status: {
-      control: 'select',
-      options: ['searching', 'loading', 'managing', 'reviewing', 'downloading', 'done', 'paused', 'deleted', 'held'],
-    },
-  },
-};
-
-export default meta;
-
-type Story = StoryObj<typeof NewDownloadBanner>;
-
-export const Download: Story = {
+  component: DownloadBanner,
   args: {
     id: 'blarg',
     title: 'Eminence in Shadow',
@@ -32,5 +27,62 @@ export const Download: Story = {
     eta: new Date().toString(),
     queue: '1',
   },
-  render: args => <NewDownloadBanner {...args} />,
+  argTypes: {
+    status: {
+      control: 'select',
+      options: ['searching', 'loading', 'managing', 'reviewing', 'downloading', 'done', 'paused', 'deleted', 'held'],
+    },
+  },
+};
+
+export default meta;
+
+type Story = StoryObj<typeof DownloadBanner>;
+
+const buttons = [
+  {
+    icon: <ArrowCircleLeftIcon color="primary" />,
+    // click: <Link to={`/${props.download?.media?.type}/${props.download?.media?.id}`} />,
+    title: 'Go to Media',
+  },
+  {
+    icon: <CheckCircleIcon color="primary" />,
+    title: 'mark complete',
+  },
+  {
+    icon: <ChangeCircleIcon color="primary" />,
+    title: 'reset',
+  },
+  {
+    icon: <OfflineBoltIcon color={'secondary'} />,
+    click: ev => {
+      ev.preventDefault(); // for the buttons inside the Link component
+    },
+    title: 'toggle auto',
+  },
+  {
+    icon: <PlaylistAddCheckCircleIcon color={'action'} />,
+    click: ev => {
+      ev.preventDefault(); // for the buttons inside the Link component
+    },
+    title: 'toggle multi',
+  },
+  {
+    icon: <SwapHorizontalCircleIcon color={'action'} />,
+    click: ev => {
+      ev.preventDefault(); // for the buttons inside the Link component
+    },
+    title: 'toggle force',
+  },
+  {
+    icon: <CancelIcon color="error" />,
+    title: 'delete',
+  },
+];
+export const DownloadSmall: Story = {
+  render: args => <DownloadBanner {...args} />,
+};
+
+export const DownloadLarge: Story = {
+  render: args => <DownloadBanner {...args} buttons={buttons} />,
 };

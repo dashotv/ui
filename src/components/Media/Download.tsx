@@ -10,7 +10,7 @@ import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
-import { NewDownloadBanner } from 'components/Banner';
+import { DownloadBanner } from 'components/Banner';
 import { DownloadInfo } from 'components/Downloads';
 import { useSubscription } from 'components/Nats/useSubscription';
 import { FilesWithSelector } from 'components/Tabs/FilesWithSelector';
@@ -246,7 +246,7 @@ export default function Download({
 
   return (
     <div className="medium large">
-      <NewDownloadBanner
+      <DownloadBanner
         id={id}
         title={title}
         subtitle={display}
