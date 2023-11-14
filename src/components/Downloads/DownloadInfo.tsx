@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
+import { Download } from 'types/download';
+
 // const statuses = [
 //   { label: 'searching', value: 'searching' },
 //   { label: 'loading', value: 'loading' },
@@ -15,9 +17,14 @@ import Stack from '@mui/material/Stack';
 //   { label: 'hold', value: 'hold' },
 // ];
 
-export function DownloadInfo(props) {
+export function DownloadInfo({
+  download: { release_id, url, status, thash },
+  deleter,
+}: {
+  download: Download;
+  deleter: () => void;
+}) {
   const [data, setData] = useState({ torch: '', url: '', status: '', hash: '' });
-  const { release_id, url, status, thash } = props.download;
 
   useEffect(() => {
     const tmp = {
@@ -35,13 +42,29 @@ export function DownloadInfo(props) {
   // };
 
   return (
-    <Stack direction="row" sx={{ float: 'right' }}>
-      {data.hash && <Chip label={`Hash: ${data.hash}`} variant="outlined" size="small" color="primary" />}
+    <Stack padding={1} direction="row">
+      {data.hash && (
+        <Chip sx={{ maxWidth: '350px' }} label={`Hash: ${data.hash}`} variant="outlined" size="small" color="primary" />
+      )}
       {data.url && (
-        <Chip label={`URL: ${data.url}`} onDelete={props.delete} variant="outlined" size="small" color="primary" />
+        <Chip
+          sx={{ maxWidth: '225px' }}
+          label={`URL: ${data.url}`}
+          onDelete={() => deleter()}
+          variant="outlined"
+          size="small"
+          color="primary"
+        />
       )}
       {data.torch && (
-        <Chip label={`Torch: ${data.torch}`} onDelete={props.delete} variant="outlined" size="small" color="primary" />
+        <Chip
+          sx={{ maxWidth: '225px' }}
+          label={`Torch: ${data.torch}`}
+          onDelete={() => deleter()}
+          variant="outlined"
+          size="small"
+          color="primary"
+        />
       )}
     </Stack>
   );

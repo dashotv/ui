@@ -258,7 +258,7 @@ export default function Download({
         eta={eta(thash)?.toString()}
         buttons={buttons}
       />
-      <DownloadInfo download={download} delete={deleteInfo} />
+      <DownloadInfo download={download} deleter={deleteInfo} />
       <MediumTabs data={tabsMap} />
     </div>
   );
