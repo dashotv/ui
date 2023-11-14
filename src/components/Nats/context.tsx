@@ -14,10 +14,10 @@ interface ISocketProvider {
   children: ReactNode;
 }
 const add = (t: string, f: (data: unknown) => void) => {
-  console.log('add', t, f);
+  console.error('wrong add function', t, f);
 };
 const remove = (t: string, f: (data: unknown) => void) => {
-  console.log('remove', t, f);
+  console.error('wrong remove function', t, f);
 };
 export const NatsContext = createContext({ ws, jc, sc, add, remove });
 
