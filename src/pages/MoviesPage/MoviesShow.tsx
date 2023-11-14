@@ -25,7 +25,7 @@ export default function MoviesShow() {
       </Helmet>
       <Container maxWidth="xl">
         {isFetching && <LoadingIndicator />}
-        {data && <Movie id={data.id} type="movies" data={data} paths={data.paths} change={changeMovieSetting} />}
+        {data && <Movie id={data.id} movie={data} change={changeMovieSetting} />}
       </Container>
     </>
   );

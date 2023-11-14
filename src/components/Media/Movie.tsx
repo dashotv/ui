@@ -11,16 +11,42 @@ import { MediumBanner } from 'components/Banner';
 import Details from 'components/Tabs/Details';
 import { MediumTabs } from 'components/Tabs/MediumTabs';
 import Paths from 'components/Tabs/Paths';
+import { Movie as MovieType } from 'types/medium';
 
 import './Media.scss';
 
+export type MovieProps = {
+  id: string;
+  movie: MovieType;
+  change: (id: string, key: string, value) => void;
+};
 // TODO: watches
-export default function Movie({ id, type, data, paths, change }) {
-  const { cover, background, active, broken, favorite, completed } = data;
-  const [activeCurrent, setActive] = useState(active);
-  const [favoriteCurrent, setFavorite] = useState(favorite);
+export default function Movie({
+  id,
+  movie,
+  movie: {
+    cover,
+    background,
+    paths,
+    broken,
+    downloaded,
+    completed,
+    display,
+    search,
+    directory,
+    title,
+    description,
+    release_date,
+    source,
+    source_id,
+    created_at,
+    updated_at,
+  },
+  change,
+}: MovieProps) {
   const [brokenCurrent, setBroken] = useState(broken);
   const [completedCurrent, setCompleted] = useState(completed);
+  const [downloadedCurrent, setDownloaded] = useState(downloaded);
   // TODO: handle downloaded, completed
 
   const complete = useCallback(ev => {
@@ -48,6 +74,14 @@ export default function Movie({ id, type, data, paths, change }) {
       title: 'broken',
     },
     {
+      icon: <DownloadForOfflineIcon color={downloadedCurrent ? 'secondary' : 'action'} />,
+      click: () => {
+        change(id, 'downloaded', !downloadedCurrent);
+        setDownloaded(!downloadedCurrent);
+      },
+      title: 'downloaded',
+    },
+    {
       icon: <CheckCircleIcon color={completedCurrent ? 'secondary' : 'action'} />,
       click: () => {
         change(id, 'completed', !completedCurrent);
@@ -65,12 +99,30 @@ export default function Movie({ id, type, data, paths, change }) {
   const tabsMap = {
     Paths: <Paths paths={paths} />,
     Downloads: <div>downloads</div>,
-    Details: <Details data={data} cover={cover} background={background} />,
+    Watches: <div>watches</div>,
+    Details: (
+      <Details
+        {...{
+          cover,
+          background,
+          display,
+          search,
+          directory,
+          title,
+          description,
+          release_date,
+          source,
+          source_id,
+          created_at,
+          updated_at,
+        }}
+      />
+    ),
   };
 
   return (
     <div className="medium large">
-      <MediumBanner id={id} variant="large" medium={data} buttons={buttons} />
+      <MediumBanner id={id} variant="large" medium={movie} buttons={buttons} />
       <MediumTabs data={tabsMap} />
     </div>
   );

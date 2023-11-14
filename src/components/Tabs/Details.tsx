@@ -4,8 +4,8 @@ import Chrono from 'components/Chrono';
 import { Image } from 'components/Media';
 
 export type DetailsProps = {
-  cover: string;
-  background: string;
+  cover?: string;
+  background?: string;
   display?: string;
   search?: string;
   directory?: string;
