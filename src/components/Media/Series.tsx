@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react';
 import * as React from 'react';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import RecommendIcon from '@mui/icons-material/Recommend';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
@@ -16,27 +15,51 @@ import { MediumTabs } from 'components/Tabs/MediumTabs';
 import Paths from 'components/Tabs/Paths';
 import Seasons from 'components/Tabs/Seasons';
 import Watches from 'components/Tabs/Watches';
+import { Episode, Series as SeriesType } from 'types/medium';
 
 import './Media.scss';
 
+export type SeriesProps = {
+  id: string;
+  series: SeriesType;
+  currentSeason: number;
+  episodes: Episode[];
+  changeSeason: (season: number) => void;
+  changeEpisode: (id: string, key: string, value) => void;
+  change: (id: string, key: string, value) => void;
+};
 export function Series({
   id,
-  type,
-  data,
-  paths,
-  seasons,
-  currentSeason,
+  series,
+  series: {
+    cover,
+    background,
+    active,
+    broken,
+    favorite,
+    seasons,
+    watches,
+    paths,
+    display,
+    search,
+    directory,
+    title,
+    description,
+    release_date,
+    source,
+    source_id,
+    created_at,
+    updated_at,
+  },
   episodes,
+  currentSeason,
   changeSeason,
   changeEpisode,
   change,
-  watches,
-}) {
-  const { cover, background, active, broken, favorite, completed } = data;
+}: SeriesProps) {
   const [activeCurrent, setActive] = useState(active);
   const [favoriteCurrent, setFavorite] = useState(favorite);
   const [brokenCurrent, setBroken] = useState(broken);
-  const [completedCurrent, setCompleted] = useState(completed);
 
   const tabsMap = {
     Episodes: (
@@ -48,7 +71,24 @@ export function Series({
     Paths: <Paths paths={paths} />,
     Downloads: <div>downloads</div>,
     Watches: <Watches data={watches} />,
-    Details: <Details data={data} cover={cover} background={background} />,
+    Details: (
+      <Details
+        {...{
+          cover,
+          background,
+          display,
+          search,
+          directory,
+          title,
+          description,
+          release_date,
+          source,
+          source_id,
+          created_at,
+          updated_at,
+        }}
+      />
+    ),
   };
 
   const complete = useCallback(ev => {
@@ -76,14 +116,6 @@ export function Series({
       title: 'broken',
     },
     {
-      icon: <CheckCircleIcon color={completedCurrent ? 'secondary' : 'action'} />,
-      click: () => {
-        change(id, 'completed', !completedCurrent);
-        setCompleted(!completedCurrent);
-      },
-      title: 'completed',
-    },
-    {
       icon: <RecommendIcon color={favoriteCurrent ? 'secondary' : 'action'} />,
       click: () => {
         change(id, 'favorite', !favoriteCurrent);
@@ -108,7 +140,7 @@ export function Series({
 
   return (
     <div className="medium large">
-      <MediumBanner id={id} variant="large" medium={data} buttons={buttons} />
+      <MediumBanner id={id} variant="large" medium={series} buttons={buttons} />
       <MediumTabs data={tabsMap} />
     </div>
   );

@@ -16,14 +16,13 @@ import {
 export default function SeriesShow() {
   const { id } = useParams();
   const { isFetching, data: series } = useSeriesQuery(id);
-  const [currentSeason, setCurrentSeason] = useState(null);
+  const [currentSeason, setCurrentSeason] = useState(1);
   const { isFetching: episodesFetching, data: episodes } = useSeriesSeasonEpisodesQuery(id, currentSeason);
 
   const seriesSetting = useSeriesSettingMutation(id);
   const episodeSetting = useEpisodeSettingMutation();
 
   function changeSeason(season) {
-    console.log(`changeSeason: ${season}`);
     setCurrentSeason(season);
   }
 
@@ -31,7 +30,7 @@ export default function SeriesShow() {
     episodeSetting.mutate({ id: id, setting: { setting: key, value: value } });
   }
 
-  function changeSeriesSetting(id: string, key: string, value: any) {
+  function changeSeriesSetting(id: string, key: string, value) {
     seriesSetting.mutate({ setting: key, value: value });
   }
 
@@ -53,16 +52,12 @@ export default function SeriesShow() {
         {series && (
           <Series
             id={series.id}
-            type="series"
-            data={series}
-            paths={series.paths}
-            seasons={series.seasons}
+            series={series}
             currentSeason={currentSeason}
             episodes={episodes}
             changeSeason={changeSeason}
             changeEpisode={changeEpisodeSetting}
             change={changeSeriesSetting}
-            watches={series.watches}
           />
         )}
       </Container>

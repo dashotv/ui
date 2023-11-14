@@ -13,10 +13,11 @@ interface DateProps {
   fromNow?: boolean;
   format?: string;
   special?: boolean;
-  children: string;
+  children?: string;
+  stamp?: string;
 }
-export default function Chrono({ fromNow, format = 'YYYY-MM-DD', special, children }: DateProps) {
-  const raw = dayjs(children).utc();
+export default function Chrono({ fromNow, format = 'YYYY-MM-DD', special, stamp, children }: DateProps) {
+  const raw = dayjs(stamp || children).utc();
 
   const process = () => {
     if (special !== undefined || special) {
