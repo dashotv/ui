@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
@@ -11,137 +11,10 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 
-import { Download } from 'types/download';
-
-// export function DownloadInfo({
-//   download: { release_id, url, status, thash },
-//   deleter,
-// }: {
-//   download: Download;
-//   deleter: () => void;
-// }) {
-//   const [data, setData] = useState({ torch: '', url: '', status: '', hash: '' });
-//
-//   useEffect(() => {
-//     const tmp = {
-//       torch: release_id,
-//       url: url,
-//       status: status,
-//       hash: thash,
-//     };
-//     setData(tmp);
-//   }, [release_id, url, status, thash]);
-
-// const handleChange = ev => {
-//   setData({ ...data, [ev.target.name]: ev.target.value });
-//   console.log('handleChange:', data);
-// };
-
-// return (
-//   <Stack padding={1} direction="row">
-//     {data.hash && (
-//       <Chip sx={{ maxWidth: '350px' }} label={`Hash: ${data.hash}`} variant="outlined" size="small" color="primary" />
-//     )}
-//     {data.url && (
-//       <Chip
-//         sx={{ maxWidth: '225px' }}
-//         label={`URL: ${data.url}`}
-//         onDelete={() => deleter()}
-//         variant="outlined"
-//         size="small"
-//         color="primary"
-//       />
-//     )}
-//     {data.torch && (
-//       <Chip
-//         sx={{ maxWidth: '225px' }}
-//         label={`Torch: ${data.torch}`}
-//         onDelete={() => deleter()}
-//         variant="outlined"
-//         size="small"
-//         color="primary"
-//       />
-//     )}
-//   </Stack>
-// );
-
-// return (
-//   <Box component="form" noValidate autoComplete="off">
-//     <TextField
-//       sx={{ m: 1, width: '125px' }}
-//       id="status"
-//       name="status"
-//       select
-//       label="Status"
-//       variant="standard"
-//       margin="none"
-//       size="small"
-//       value={data.status}
-//       onChange={handleChange}
-//     >
-//       {statuses.map(option => (
-//         <MenuItem key={option.value} value={option.value}>
-//           {option.label}
-//         </MenuItem>
-//       ))}
-//     </TextField>
-//     <TextField
-//       sx={{ m: 1, width: '300px' }}
-//       id="torch"
-//       name="torch"
-//       label="Torch"
-//       variant="standard"
-//       margin="none"
-//       size="small"
-//       value={data.torch}
-//       onChange={handleChange}
-//     />
-//     <TextField
-//       sx={{ m: 1, width: '300px' }}
-//       id="url"
-//       name="url"
-//       label="URL"
-//       variant="standard"
-//       margin="none"
-//       size="small"
-//       value={data.url}
-//       onChange={handleChange}
-//     />
-//     <TextField
-//       sx={{ m: 1, width: '300px' }}
-//       id="hash"
-//       name="hash"
-//       label="Infohash"
-//       variant="standard"
-//       margin="none"
-//       size="small"
-//       value={data.hash}
-//       onChange={handleChange}
-//     />
-//   </Box>
-// );
-// }
-
-// const statuses: string[] = [
-//   'searching',
-//   'loading',
-//   'managing',
-//   'reviewing',
-//   'downloading',
-//   'done',
-//   'paused',
-//   'deleted',
-//   'held',
-// ];
 const statuses = [
   { label: <SearchIcon fontSize="small" />, value: 'searching' },
   { label: <YoutubeSearchedForIcon fontSize="small" />, value: 'loading' },
