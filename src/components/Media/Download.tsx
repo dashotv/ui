@@ -81,6 +81,10 @@ export default function Download({
     downloadSetting.mutate({ setting: setting, value: value });
   }
 
+  function change(name, value) {
+    downloadUpdate.mutate({ ...download, [name]: value });
+  }
+
   function selectMedium(eid, num) {
     downloadSelection.mutate({ mediumId: eid, num: num });
   }
@@ -256,7 +260,7 @@ export default function Download({
         eta={eta(thash)?.toString()}
         buttons={buttons}
       />
-      <DownloadInfo {...{ status, thash, release_id, url }} changer={changeSetting} />
+      <DownloadInfo {...{ status, thash, release_id, url }} changer={change} />
       <MediumTabs data={tabsMap} />
     </div>
   );

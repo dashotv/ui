@@ -203,7 +203,10 @@ export const DownloadInfo = ({ release_id, url, status, thash, changer }: Downlo
             >
               {statuses.map(option => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                  <Stack spacing={1} direction="row">
+                    <span>{option.label}</span>
+                    <span style={{ width: '125px', overflow: 'hidden' }}>{option.value}</span>
+                  </Stack>
                 </MenuItem>
               ))}
             </TextField>
