@@ -16,7 +16,7 @@ import { ButtonMap, ButtonMapButton } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
 import LoadingIndicator from 'components/Loading';
 import { useQueryString } from 'hooks/useQueryString';
-import { Nzbgeek } from 'types/nzbgeek';
+import { Nzbgeek as NzbgeekType } from 'types/nzbgeek';
 
 const pagesize = 25;
 export interface NzbgeekForm {
@@ -27,7 +27,7 @@ export interface NzbgeekForm {
 export function Nzbgeek({ form: initial }: { form: NzbgeekForm }) {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(initial);
-  const [nzbs, setNzbs] = useState<Nzbgeek[]>([]);
+  const [nzbs, setNzbs] = useState<NzbgeekType[]>([]);
 
   const { enqueueSnackbar } = useSnackbar();
   const { queryString } = useQueryString();
@@ -42,7 +42,7 @@ export function Nzbgeek({ form: initial }: { form: NzbgeekForm }) {
         .get(`/api/scry/nzbs/${t}?limit=${pagesize}&${qs}`)
         .then(response => {
           console.log(response.data);
-          setNzbs(response.data as Nzbgeek[]);
+          setNzbs(response.data as NzbgeekType[]);
           setLoading(false);
         })
         .catch(err => {
@@ -143,7 +143,7 @@ function Nzbsearch({
   );
 }
 
-function NzbList({ data, actions }: { data: Nzbgeek[]; actions: ButtonMapButton[] }) {
+function NzbList({ data, actions }: { data: NzbgeekType[]; actions: ButtonMapButton[] }) {
   return (
     <div className="releases">
       <table className="vertical-table">
@@ -162,13 +162,7 @@ function NzbList({ data, actions }: { data: Nzbgeek[]; actions: ButtonMapButton[
         <tbody>
           {data &&
             data.map(row => (
-              <NzbListRow
-                key={row.guid}
-                id={row.guid}
-                title={row.title}
-                published={row.published}
-                actions={actions}
-              />
+              <NzbListRow key={row.guid} id={row.guid} title={row.title} published={row.published} actions={actions} />
             ))}
         </tbody>
       </table>
