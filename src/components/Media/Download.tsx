@@ -50,6 +50,8 @@ export default function Download({
     medium,
     status,
     thash,
+    release_id,
+    url,
     medium: {
       // type,
       kind,
@@ -103,6 +105,9 @@ export default function Download({
   );
 
   const processSearch = useCallback(() => {
+    if (!search) {
+      return { text: display, episode: episode_number };
+    }
     const s = search.split(':');
     const text = s[0];
     const minus = Number(s[1]);
@@ -149,13 +154,6 @@ export default function Download({
       episode: episode,
     };
   }, [season_number, source_id, processSearch]);
-
-  const deleteInfo = () => {
-    console.log('deleteInfo');
-    download.release_id = '';
-    download.url = '';
-    downloadUpdate.mutate(download);
-  };
 
   const tabsMap = {
     Files: <FilesWithSelector files={files} torrent={torrent} episodes={episodes} updater={selectMedium} />,
@@ -258,7 +256,7 @@ export default function Download({
         eta={eta(thash)?.toString()}
         buttons={buttons}
       />
-      <DownloadInfo download={download} deleter={deleteInfo} />
+      <DownloadInfo {...{ status, thash, release_id, url }} changer={changeSetting} />
       <MediumTabs data={tabsMap} />
     </div>
   );

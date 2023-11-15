@@ -33,7 +33,7 @@ const formDefaults = {
   exact: false,
   verified: false,
 };
-
+// TODO: useForm and @hookform/devtools, see: https://www.youtube.com/watch?v=sD9fZxMO1us
 export default function ReleasesSearch() {
   const [searchParams] = useSearchParams();
   const [form, setForm] = useState(
