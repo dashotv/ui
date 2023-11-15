@@ -16,27 +16,29 @@ import { ReleasesList } from 'components/Releases/ReleasesList';
 import { Search } from 'components/Search';
 import { useQueryString } from 'hooks/useQueryString';
 import { useReleasesQuery } from 'query/releases';
+import { SearchForm } from 'types/search_form';
 
 import './releases.scss';
 
 const pagesize = 25;
-const formDefaults = {
+const formDefaults: SearchForm = {
   text: '',
   year: '',
-  season: '',
-  episode: '',
+  season: undefined,
+  episode: undefined,
   group: '',
   author: '',
-  resolution: '',
+  resolution: undefined,
   source: '',
   type: '',
   exact: false,
   verified: false,
 };
+
 // TODO: useForm and @hookform/devtools, see: https://www.youtube.com/watch?v=sD9fZxMO1us
 export default function ReleasesSearch() {
   const [searchParams] = useSearchParams();
-  const [form, setForm] = useState(
+  const [form, setForm] = useState<SearchForm>(
     Object.assign(formDefaults, {
       text: searchParams.get('text') || '',
       type: searchParams.get('type') || '',
@@ -90,7 +92,7 @@ export default function ReleasesSearch() {
         {isFetching && <LoadingIndicator />}
         <Grid container>
           <Grid item xs={12} md={9}>
-            <Search form={form} setForm={setForm} defaults={formDefaults} />
+            <Search form={form} setForm={setForm} />
           </Grid>
           <Grid item xs={12} md={3} sx={{ pt: 3 }}>
             <Pagination

@@ -12,22 +12,11 @@ import LoadingIndicator from 'components/Loading';
 import { ReleasesList } from 'components/Releases/ReleasesList';
 import { Search } from 'components/Search';
 import { useQueryString } from 'hooks/useQueryString';
+import { SearchForm } from 'types/search_form';
 
 const pagesize = 25;
-export interface TorchForm {
-  text?: string;
-  year: string;
-  season?: number;
-  episode?: number;
-  group: string;
-  author: string;
-  resolution: string;
-  source: string;
-  type: string;
-  exact: boolean;
-  verified: boolean;
-}
-export function Torch({ form: initial, selector }: { form: TorchForm; selector: (id: string) => void }) {
+
+export function Torch({ form: initial, selector }: { form: SearchForm; selector: (id: string) => void }) {
   const [loading, setLoading] = useState(false);
   const [releases, setReleases] = useState([]);
   const [form, setForm] = useState(initial);

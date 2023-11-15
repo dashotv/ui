@@ -21,6 +21,7 @@ import { useReleases } from 'hooks/useReleases';
 import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMutation } from 'query/downloads';
 import { DownloadFile, Download as DownloadType } from 'types/download';
 import { Medium } from 'types/medium';
+import { SearchForm } from 'types/search_form';
 import { Torrent } from 'types/torrents';
 
 import './Media.scss';
@@ -124,10 +125,10 @@ export default function Download({
   const torchForm = useCallback(() => {
     const { text, episode } = processSearch();
 
-    return {
+    const data: SearchForm = {
       text: text,
       year: '',
-      season: kind !== 'anime' ? season_number : '',
+      season: kind !== 'anime' ? season_number : undefined,
       episode: episode,
       group: search_params?.group,
       author: '',
@@ -137,6 +138,7 @@ export default function Download({
       exact: search_params?.exact,
       verified: search_params?.verified,
     };
+    return data;
   }, [
     processSearch,
     kind,

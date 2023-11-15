@@ -33,7 +33,7 @@ export const useReleasesQuery = (start, pagesize, queryString) =>
   useQuery({
     queryKey: ['releases', start, pagesize, queryString],
     queryFn: () => getReleasesPage(start, pagesize, queryString),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 

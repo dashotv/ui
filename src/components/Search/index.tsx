@@ -43,9 +43,17 @@ const sources = [
   { label: 'yify', value: 'yify' },
 ];
 
-export function Search(props) {
-  const [data, setData] = useState<SearchForm>(props.form);
-  const [defaults] = useState(props.defaults);
+export function Search({
+  form,
+  defaults: initialDefaults,
+  setForm,
+}: {
+  form: SearchForm;
+  defaults?: SearchForm;
+  setForm: React.Dispatch<React.SetStateAction<SearchForm>>;
+}) {
+  const [data, setData] = useState<SearchForm>(form);
+  const [defaults] = useState<SearchForm>(initialDefaults || form);
 
   const handleChange = ev => {
     setData({ ...data, [ev.target.name]: ev.target.value });
@@ -53,11 +61,11 @@ export function Search(props) {
   const handleChangeCheckbox = ev => {
     setData({ ...data, [ev.target.name]: ev.target.checked });
   };
-  const handleSubmit = ev => {
+  const handleSubmit = () => {
     console.log('form:', data);
-    props.setForm(data);
+    setForm(data);
   };
-  const handleReset = ev => {
+  const handleReset = () => {
     setData(defaults);
   };
   return (

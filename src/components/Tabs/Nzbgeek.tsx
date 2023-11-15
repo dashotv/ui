@@ -20,11 +20,11 @@ import { Nzbgeek as NzbgeekType } from 'types/nzbgeek';
 
 const pagesize = 25;
 export interface NzbgeekForm {
-  tvdbid: string;
-  season: string;
-  episode: string;
+  tvdbid?: string;
+  season?: number;
+  episode?: number;
 }
-export function Nzbgeek({ form: initial }: { form: NzbgeekForm }) {
+export function Nzbgeek({ form: initial, selector }: { form: NzbgeekForm; selector: (id: string) => void }) {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(initial);
   const [nzbs, setNzbs] = useState<NzbgeekType[]>([]);
@@ -57,6 +57,10 @@ export function Nzbgeek({ form: initial }: { form: NzbgeekForm }) {
     console.log('click');
   }, []);
 
+  const select = ev => {
+    selector(ev.currentTarget.id);
+  };
+
   const actions = [
     {
       icon: <OutboundRoundedIcon fontSize="small" color="primary" />,
@@ -65,7 +69,7 @@ export function Nzbgeek({ form: initial }: { form: NzbgeekForm }) {
     },
     {
       icon: <CheckCircleIcon fontSize="small" color="primary" />,
-      click: click,
+      click: select,
       title: 'select',
     },
   ];
