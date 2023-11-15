@@ -14,7 +14,7 @@ export interface ButtonMapProps {
   buttons?: ButtonMapButton[];
 }
 
-export function ButtonMap({ size, buttons }: ButtonMapProps) {
+export function ButtonMap({ size = 'medium', buttons }: ButtonMapProps) {
   return (
     <Stack spacing={'2px'} direction="row">
       {buttons &&
