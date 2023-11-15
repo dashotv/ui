@@ -9,12 +9,5 @@ export function useQueryString() {
 }
 
 export function objectToQueryString(obj) {
-  const str: any[] = [];
-  for (const p in obj)
-    if (obj.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-    }
-
-  const qs = str.join('&');
-  return qs;
+  return new URLSearchParams(obj).toString();
 }

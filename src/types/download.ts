@@ -1,4 +1,5 @@
 import { Medium } from './medium';
+import { TorrentFile } from './torrents';
 
 export type DownloadStatus =
   | 'searching'
@@ -40,6 +41,8 @@ export interface DownloadFile {
   id: string;
   medium_id: string;
   num: number;
+  torrent_file?: TorrentFile;
+  medium?: Medium;
 }
 
 export interface DownloadEvent {

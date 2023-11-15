@@ -1,6 +1,6 @@
 export interface Setting {
   setting: string;
-  value: any;
+  value: boolean;
 }
 
 export interface SettingsArgs {

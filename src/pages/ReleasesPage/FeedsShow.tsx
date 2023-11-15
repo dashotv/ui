@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import Chrono from 'components/Chrono';
 import LoadingIndicator from 'components/Loading';
 import { useFeedQuery } from 'query/feeds';
+import { Feed } from 'types/Feed';
 
 export default function FeedsShow() {
   const { id } = useParams();
@@ -20,39 +21,39 @@ export default function FeedsShow() {
       </Helmet>
       <Container maxWidth="xl">
         {isFetching && <LoadingIndicator />}
-        {data && <FeedShow data={data} />}
+        {data && <FeedShow {...data} />}
       </Container>
     </>
   );
 }
 
-function FeedShow(props) {
+function FeedShow({ name, active, source, type, url, processed }: Feed) {
   return (
     <div className="details">
       <table className="horizontal-table" aria-label="a dense table">
         <tbody>
           <tr>
             <th>Name</th>
-            <td>{props.data.name}</td>
+            <td>{name}</td>
           </tr>
           <tr>
             <th>Active</th>
-            <td>{props.data.active ? 'TRUE' : 'FALSE'}</td>
+            <td>{active ? 'TRUE' : 'FALSE'}</td>
           </tr>
           <tr>
             <th>Source:Type</th>
             <td>
-              {props.data.source}:{props.data.type}
+              {source}:{type}
             </td>
           </tr>
           <tr>
             <th>URL</th>
-            <td>{props.data.url}</td>
+            <td>{url}</td>
           </tr>
           <tr>
             <th>Processed</th>
             <td>
-              <Chrono fromNow>{props.data.processed}</Chrono>
+              <Chrono fromNow>{processed}</Chrono>
             </td>
           </tr>
         </tbody>

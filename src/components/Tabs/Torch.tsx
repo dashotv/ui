@@ -14,14 +14,27 @@ import { Search } from 'components/Search';
 import { useQueryString } from 'hooks/useQueryString';
 
 const pagesize = 25;
-export function Torch(props) {
+export interface TorchForm {
+  text?: string;
+  year: string;
+  season?: number;
+  episode?: number;
+  group: string;
+  author: string;
+  resolution: string;
+  source: string;
+  type: string;
+  exact: boolean;
+  verified: boolean;
+}
+export function Torch({ form: initial, selector }: { form: TorchForm; selector: (id: string) => void }) {
   const [loading, setLoading] = useState(false);
   const [releases, setReleases] = useState([]);
-  const [form, setForm] = useState(props.form);
+  const [form, setForm] = useState(initial);
   const { enqueueSnackbar } = useSnackbar();
   const { queryString } = useQueryString();
-  const { selector } = props;
 
+  // TODO: change to react query
   useEffect(() => {
     const getReleases = () => {
       setLoading(true);
@@ -41,13 +54,12 @@ export function Torch(props) {
     getReleases();
   }, [form, queryString, enqueueSnackbar]);
 
-  const click = useCallback(ev => {
+  const click = useCallback(() => {
     console.log('click');
   }, []);
 
   const handleSelect = useCallback(
-    (ev, id) => {
-      console.log('handleSelect:', ev, 'args:', id);
+    id => {
       selector(id);
     },
     [selector],
@@ -59,7 +71,7 @@ export function Torch(props) {
         <IconButton size="small" onClick={click} title="view source">
           <OutboundRoundedIcon fontSize="small" color="primary" />
         </IconButton>
-        <IconButton size="small" onClick={ev => handleSelect(ev, row.id)} title="select">
+        <IconButton size="small" onClick={() => handleSelect(row.id)} title="select">
           <CheckCircleIcon fontSize="small" color="primary" />
         </IconButton>
       </ButtonGroup>

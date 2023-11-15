@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 
 import './SubNav.scss';
 
-export default function Subnav({ items }) {
+export default function Subnav({ items }: { items: { name: string; path: string; exact?: boolean }[] }) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const location = useLocation();
 
@@ -75,7 +75,7 @@ export default function Subnav({ items }) {
           }}
         >
           {items &&
-            items.map(({ name, path, exact }) => (
+            items.map(({ name, path }) => (
               <Link key={name} to={path}>
                 <MenuItem key={name} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{name}</Typography>

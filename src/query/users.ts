@@ -13,6 +13,6 @@ export const useUsersQuery = () =>
   useQuery({
     queryKey: ['users'],
     queryFn: () => getUsers(),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });

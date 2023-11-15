@@ -12,8 +12,9 @@ import Chrono from 'components/Chrono';
 import { useReleaseGroup } from 'hooks/useReleaseGroup';
 import { useReleaseResolution } from 'hooks/useReleaseResolution';
 import { useReleaseSettingMutation } from 'query/releases';
+import { Release } from 'types/release';
 
-export function ReleasesList({ data, actions }) {
+export function ReleasesList({ data, actions }: { data: Release[]; actions?: (row: Release) => JSX.Element }) {
   const { resolution } = useReleaseResolution();
   const { group } = useReleaseGroup();
   const releaseUpdate = useReleaseSettingMutation();
@@ -41,10 +42,10 @@ export function ReleasesList({ data, actions }) {
         </thead>
         <tbody>
           {data &&
-            data.map(row => (
+            data.map((row: Release) => (
               <tr key={row.id}>
                 <td>
-                  <IconButton size="small" onClick={ev => toggleVerified(row)} title="verified">
+                  <IconButton size="small" onClick={() => toggleVerified(row)} title="verified">
                     <CheckCircleIcon color={row.verified ? 'secondary' : 'action'} fontSize="small" />
                   </IconButton>
                 </td>
@@ -59,7 +60,7 @@ export function ReleasesList({ data, actions }) {
                     <Link to={row.id} title={row.raw}>
                       <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '525px' }}>
                         <Typography variant="subtitle1" noWrap color="primary">
-                          {row.display}
+                          {row.name}
                         </Typography>
                       </div>
                     </Link>

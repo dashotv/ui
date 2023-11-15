@@ -16,7 +16,7 @@ export const useFeedsAllQuery = () =>
   useQuery({
     queryKey: ['feeds', 'all'],
     queryFn: () => getFeedsAll(),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 
@@ -24,6 +24,6 @@ export const useFeedQuery = id =>
   useQuery({
     queryKey: ['feeds', id],
     queryFn: () => getFeed(id),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });

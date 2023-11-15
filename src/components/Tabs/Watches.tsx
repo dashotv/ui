@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 import Chrono from 'components/Chrono';
+import { Watch } from 'types/medium';
 
-export default function Watches(props) {
+export default function Watches({ data }: { data: Watch[] }) {
   return (
     <div className="watches">
       <table
@@ -17,25 +18,22 @@ export default function Watches(props) {
             <td>Media</td>
           </tr>
         </thead>
-        <tbody>
-          {props.data.map(({ id, username, player, watched_at, medium }) => (
-            <WatchRow key={id} id={id} date={watched_at} user={username} player={player} medium={medium} />
-          ))}
-        </tbody>
+        <tbody>{data?.map(watch => <WatchRow key={watch.id} {...watch} />)}</tbody>
       </table>
     </div>
   );
 }
 
-function WatchRow(props) {
+function WatchRow({ id, username, watched_at, medium }: Watch) {
+  const { season_number, episode_number, title } = medium || {};
   return (
-    <tr>
+    <tr key={id}>
       <td className="date">
-        <Chrono format="YYYY-MM-DD">{props.date}</Chrono>
+        <Chrono format="YYYY-MM-DD">{watched_at.toString()}</Chrono>
       </td>
-      <td className="user">{props.user}</td>
+      <td className="user">{username}</td>
       <td>
-        {props.medium.season_number}x{props.medium.episode_number} {props.medium.title}
+        {season_number}x{episode_number} {title}
       </td>
     </tr>
   );

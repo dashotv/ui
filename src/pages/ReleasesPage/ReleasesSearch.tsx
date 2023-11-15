@@ -54,7 +54,7 @@ export default function ReleasesSearch() {
     setPage(value);
   }, []);
 
-  const click = useCallback(ev => {
+  const click = useCallback(() => {
     console.log('click');
   }, []);
 
@@ -63,7 +63,7 @@ export default function ReleasesSearch() {
     setQs(queryString(form));
   }, [form, queryString]);
 
-  const renderActions = row => {
+  const renderActions = () => {
     return (
       <ButtonGroup>
         <IconButton size="small" onClick={click} title="edit">

@@ -13,9 +13,23 @@ import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import { DownloadFile } from 'types/download';
+import { Medium } from 'types/medium';
+import { Torrent } from 'types/torrents';
+
 import Files from './Files';
 
-export function FilesWithSelector(props) {
+export function FilesWithSelector({
+  files,
+  episodes,
+  torrent,
+  updater,
+}: {
+  files?: DownloadFile[];
+  episodes?: Medium[];
+  torrent?: Torrent;
+  updater: (id: string | null, num: number) => void;
+}) {
   const [open, setOpen] = useState(false);
   const [dialogTitle, setDialogTitle] = useState('title');
   const [selected, setSelected] = useState(0);
@@ -23,34 +37,37 @@ export function FilesWithSelector(props) {
 
   const getFile = useCallback(
     num => {
-      return props.files.filter(e => {
+      return files?.filter(e => {
         return e.num === num;
       })[0];
     },
-    [props.files],
+    [files],
   );
 
   const getEpisode = useCallback(
     id => {
-      return props.episodes.filter(e => {
+      return episodes?.filter(e => {
         // console.log('episode: ', id, e.id === id);
         return e.id === id;
       })[0];
     },
-    [props.episodes],
+    [episodes],
   );
 
   const selector = useCallback(
     id => {
       const f = getFile(selected);
       const ep = getEpisode(id);
+      if (!f || !ep) {
+        return;
+      }
       f.medium = ep;
       tracking.set(id, selected);
       setTracking(tracking);
       // console.log(tracking);
-      props.updater(id, selected);
+      updater(id, selected);
     },
-    [getEpisode, setTracking, tracking, props, selected, getFile],
+    [getEpisode, setTracking, tracking, selected, getFile],
   );
 
   const handleClickOpen = useCallback(
@@ -65,10 +82,13 @@ export function FilesWithSelector(props) {
   const handleClickClear = useCallback(
     num => {
       const f = getFile(num);
-      f.medium = null;
-      props.updater(null, num);
+      if (!f) {
+        return;
+      }
+      f.medium = undefined;
+      updater(null, num);
     },
-    [getFile, props],
+    [getFile, updater],
   );
 
   const handleDialogClose = useCallback(() => {
@@ -77,22 +97,22 @@ export function FilesWithSelector(props) {
 
   useEffect(() => {
     // console.log('useEffect update tracking');
-    if (!props.files) {
+    if (!files) {
       return;
     }
     const newTracking = new Map<string, number>();
-    for (const f of props.files) {
+    for (const f of files) {
       if (f.medium_id !== null && f.medium_id !== '000000000000000000000000') {
         newTracking.set(f.medium_id, f.num);
       }
     }
     setTracking(newTracking);
     // console.log(newTracking);
-  }, [setTracking, props.files]);
+  }, [setTracking, files]);
 
   return (
     <>
-      <Files files={props.files} torrent={props.torrent} open={handleClickOpen} clear={handleClickClear} />
+      <Files files={files} torrent={torrent} open={handleClickOpen} clear={handleClickClear} />
       <Dialog
         open={open}
         onClose={handleDialogClose}
@@ -105,8 +125,8 @@ export function FilesWithSelector(props) {
         </DialogTitle>
         <DialogContent>
           <List>
-            {props.episodes &&
-              props.episodes.map((e, i) => (
+            {episodes &&
+              episodes.map((e, i) => (
                 <ListItem key={i} disablePadding>
                   <ListItemButton
                     id={e.id}
@@ -139,41 +159,3 @@ export function FilesWithSelector(props) {
     </>
   );
 }
-
-// function SelectPopover(props) {
-//   return (
-//     <Popover
-//       id={pid}
-//       open={open}
-//       anchorEl={anchorEl}
-//       onClose={handleClose}
-//       keepMounted
-//       anchorOrigin={{
-//         vertical: 'center',
-//         horizontal: 'left',
-//       }}
-//       transformOrigin={{
-//         vertical: 'center',
-//         horizontal: 'right',
-//       }}
-//       sx={{ maxHeight: '400px;' }}
-//     >
-//       <List>
-//         {props.episodes &&
-//           props.episodes.map((e, i) => (
-//             <ListItem key={i} disablePadding>
-//               <ListItemButton
-//                 id={e.id}
-//                 onClick={ev => {
-//                   selector(ev.currentTarget.id);
-//                   handleClose();
-//                 }}
-//               >
-//                 <ListItemText primary={`${e.season_number}x${e.episode_number} ${e.title}`} />
-//               </ListItemButton>
-//             </ListItem>
-//           ))}
-//       </List>
-//     </Popover>
-//   );
-// }

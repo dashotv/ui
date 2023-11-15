@@ -9,8 +9,9 @@ import MovieIcon from '@mui/icons-material/Movie';
 import IconButton from '@mui/material/IconButton';
 
 import Chrono from 'components/Chrono';
+import { Path } from 'types/path';
 
-export default function Paths(props) {
+export default function Paths({ paths }: { paths: Path[] }) {
   return (
     <div className="files">
       <table
@@ -31,16 +32,9 @@ export default function Paths(props) {
           </tr>
         </thead>
         <tbody>
-          {props.paths &&
-            props.paths.map((row, i) => (
-              <PathsRow
-                key={i}
-                id={i}
-                type={row.type}
-                local={row.local}
-                extension={row.extension}
-                updated={row.updated_at}
-              />
+          {paths &&
+            paths.map(({ extension, local, type, updated_at }, i) => (
+              <PathsRow key={i} i={i} {...{ extension, local, type, updated_at }} />
             ))}
         </tbody>
       </table>
@@ -48,9 +42,9 @@ export default function Paths(props) {
   );
 }
 
-function PathsRow({ id, extension, local, type, updated }) {
+function PathsRow({ i, extension, local, type, updated_at }: { i: number } & Path) {
   return (
-    <tr key={id}>
+    <tr key={i}>
       <th scope="row">
         {extension === 'jpg' && <ImageIcon />}
         {type === 'video' && <MovieIcon />}
@@ -60,7 +54,7 @@ function PathsRow({ id, extension, local, type, updated }) {
         {local}.{extension}
       </td>
       <td align="right">
-        <Chrono fromNow>{updated}</Chrono>
+        <Chrono fromNow>{updated_at?.toString()}</Chrono>
       </td>
 
       <td align="right">

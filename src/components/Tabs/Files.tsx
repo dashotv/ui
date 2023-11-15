@@ -7,18 +7,31 @@ import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import StarsIcon from '@mui/icons-material/Stars';
 import IconButton from '@mui/material/IconButton';
 
-export default function Files(props) {
+import { DownloadFile } from 'types/download';
+import { Torrent } from 'types/torrents';
+
+export default function Files({
+  files,
+  torrent,
+  open,
+  clear,
+}: {
+  files?: DownloadFile[];
+  torrent?: Torrent;
+  open: (num: number, name: string | undefined) => void;
+  clear: (num: number) => void;
+}) {
   // console.log('files:', props.files);
   // console.log('torrent:', props.torrent);
-  const sortedFiles = useCallback((files, torrent) => {
+  const sortedFiles = useCallback((files?: DownloadFile[], torrent?: Torrent) => {
     if (!files) {
       return [];
     }
     if (torrent) {
       for (let i = 0; i < files.length; i++) {
-        files[i].torrentFile = torrent.Files[files[i].num];
+        files[i].torrent_file = torrent.Files[files[i].num];
       }
-      return files.sort((a, b) => a.torrentFile.name.localeCompare(b.torrentFile.name));
+      return files.sort((a, b) => a.torrent_file!.name.localeCompare(b.torrent_file!.name));
     }
     return files.sort((a, b) => a.num - b.num);
   }, []);
@@ -42,18 +55,8 @@ export default function Files(props) {
           </tr>
         </thead>
         <tbody>
-          {sortedFiles(props.files, props.torrent).map(row => (
-            <FilesRow
-              key={row.num}
-              id={row.id}
-              num={row.num}
-              medium={row.medium}
-              mediumid={row.medium_id}
-              downloadFile={row}
-              torrentFile={row.torrentFile}
-              open={props.open}
-              clear={props.clear}
-            />
+          {sortedFiles(files, torrent).map(row => (
+            <FilesRow key={row.num} file={row} open={open} clear={clear} />
           ))}
         </tbody>
       </table>
@@ -61,22 +64,31 @@ export default function Files(props) {
   );
 }
 
-function FilesRow(props) {
-  function size(raw) {
+function FilesRow({
+  open,
+  clear,
+  file: { num, torrent_file, medium },
+}: {
+  open: (num: number, name: string | undefined) => void;
+  clear: (num: number) => void;
+  file: DownloadFile;
+}) {
+  const { season_number, episode_number, title, display } = medium || {};
+  function size(raw: number | undefined) {
     if (raw === undefined) {
       return;
     }
     return Number(raw / 1000000).toFixed(2) + 'mb';
   }
 
-  function progress(raw) {
+  function progress(raw: number | undefined) {
     if (raw === undefined) {
       return;
     }
     return Number(raw).toFixed(2) + '%';
   }
 
-  function name(raw) {
+  function name(raw: string | undefined) {
     if (raw === undefined) {
       return;
     }
@@ -85,23 +97,23 @@ function FilesRow(props) {
 
   return (
     <tr>
-      <th scope="row">{props.num + 1}</th>
+      <th scope="row">{num + 1}</th>
       <td className="name">
-        <div title={props.torrentFile?.name}>{name(props.torrentFile?.name)}</div>
-        {props.medium && (
+        <div title={torrent_file?.name}>{name(torrent_file?.name)}</div>
+        {medium && (
           <div className="media">
-            {props.medium?.season_number}x{props.medium?.episode_number} {props.medium?.title} {props.medium?.display}
+            {season_number}x{episode_number} {title} {display}
           </div>
         )}
       </td>
-      <td align="right">{size(props.torrentFile?.size)}</td>
-      <td align="right">{progress(props.torrentFile?.progress)}</td>
+      <td align="right">{size(torrent_file?.size)}</td>
+      <td align="right">{progress(torrent_file?.progress)}</td>
 
       <td align="right">
         <IconButton
           size="small"
           onClick={() => {
-            props.clear(props.num);
+            clear(num);
           }}
         >
           <CancelIcon />
@@ -109,16 +121,16 @@ function FilesRow(props) {
         <IconButton
           size="small"
           onClick={() => {
-            props.open(props.num, name(props.torrentFile?.name));
+            open(num, name(torrent_file?.name));
           }}
         >
-          <PlaylistAddCircleIcon color={props.medium ? 'secondary' : 'action'} />
+          <PlaylistAddCircleIcon color={medium ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton size="small">
-          <CheckCircleIcon color={props.medium?.downloaded ? 'secondary' : 'action'} />
+          <CheckCircleIcon color={medium?.downloaded ? 'secondary' : 'action'} />
         </IconButton>
         <IconButton size="small">
-          <StarsIcon color={props.torrentFile?.priority > 0 ? 'secondary' : 'action'} />
+          <StarsIcon color={torrent_file?.priority && torrent_file.priority > 0 ? 'secondary' : 'action'} />
         </IconButton>
       </td>
     </tr>

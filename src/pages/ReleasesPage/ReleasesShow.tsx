@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import LoadingIndicator from 'components/Loading';
 import { useReleaseQuery } from 'query/releases';
 
-export default function ReleasesShow(props) {
+export default function ReleasesShow() {
   const { id } = useParams();
   const { isFetching, data, error } = useReleaseQuery(id);
 

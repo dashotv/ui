@@ -29,7 +29,7 @@ export const useSeriesAllQuery = page =>
   useQuery({
     queryKey: ['series', 'all', page],
     queryFn: () => getSeriesAll(page),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 
@@ -37,7 +37,7 @@ export const useSeriesQuery = id =>
   useQuery({
     queryKey: ['series', id],
     queryFn: () => getSeries(id),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 
@@ -45,7 +45,7 @@ export const useSeriesSeasonEpisodesQuery = (id, season) =>
   useQuery({
     queryKey: ['series', id, 'season', season],
     queryFn: () => getSeriesSeasonEpisodes(id, season),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
     enabled: season !== null && season !== undefined,
   });

@@ -46,6 +46,7 @@ import { GlobalStyle } from 'styles/global-styles';
 
 import './index.scss';
 
+
 function fallbackRender({ error, resetErrorBoundary }) {
   return (
     <>

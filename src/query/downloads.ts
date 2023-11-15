@@ -34,7 +34,7 @@ export const useDownloadsActiveQuery = () =>
   useQuery({
     queryKey: ['downloads', 'active'],
     queryFn: () => getDownloadsActive(),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 
@@ -42,7 +42,7 @@ export const useDownloadsLastQuery = () =>
   useQuery({
     queryKey: ['downloads', 'last'],
     queryFn: () => getDownloadsLast(),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 
@@ -50,7 +50,7 @@ export const useDownloadsRecentQuery = page =>
   useQuery({
     queryKey: ['downloads', 'recent', page],
     queryFn: () => getDownloadsRecent(page),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 
@@ -58,7 +58,7 @@ export const useDownloadQuery = id =>
   useQuery({
     queryKey: ['downloads', id],
     queryFn: () => getDownload(id),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 
@@ -66,7 +66,7 @@ export const useDownloadMediumQuery = id =>
   useQuery({
     queryKey: ['downloads', 'medium', id],
     queryFn: () => getDownloadMedium(id),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 

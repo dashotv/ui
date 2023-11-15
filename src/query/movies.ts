@@ -25,7 +25,7 @@ export const useMoviesAllQuery = page =>
   useQuery({
     queryKey: ['movies', 'all', page],
     queryFn: () => getMoviesAll(page),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 
@@ -33,7 +33,7 @@ export const useMovieQuery = id =>
   useQuery({
     queryKey: ['movies', id],
     queryFn: () => getMovie(id),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 

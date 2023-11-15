@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
@@ -12,8 +12,9 @@ import Typography from '@mui/material/Typography';
 import Chrono from 'components/Chrono';
 import LoadingIndicator from 'components/Loading';
 import { useFeedsAllQuery } from 'query/feeds';
+import { Feed } from 'types/Feed';
 
-export default function FeedsIndex(props) {
+export default function FeedsIndex() {
   const { isFetching, data } = useFeedsAllQuery();
 
   return (
@@ -24,46 +25,13 @@ export default function FeedsIndex(props) {
       </Helmet>
       <Container maxWidth="xl">
         {isFetching && <LoadingIndicator />}
-        {data && <Feeds data={data} />}
+        {data && <FeedsList data={data} />}
       </Container>
     </>
   );
 }
 
-function Feeds(props) {
-  const renderRow = useCallback(row => {
-    return (
-      <tr key={row.id}>
-        <td>
-          <IconButton size="small">
-            <CheckCircleIcon color={row.active ? 'secondary' : 'action'} fontSize="small" />
-          </IconButton>
-        </td>
-        <td>
-          <Typography variant="caption">
-            {row.source}:{row.type}
-          </Typography>
-        </td>
-        <td>
-          <span title={row.url}>
-            <Link to={row.id}>{row.name}</Link>
-          </span>
-        </td>
-        <td align="right">
-          <Chrono fromNow>{row.processed}</Chrono>
-        </td>
-        <td align="right">
-          <IconButton size="small">
-            <EditIcon fontSize="small" color="primary" />
-          </IconButton>
-          <IconButton size="small">
-            <DeleteForeverIcon fontSize="small" color="error" />
-          </IconButton>
-        </td>
-      </tr>
-    );
-  }, []);
-
+function FeedsList({ data }: { data: Feed[] }) {
   return (
     <div className="feeds">
       <table className="vertical-table">
@@ -80,8 +48,41 @@ function Feeds(props) {
             </td>
           </tr>
         </thead>
-        <tbody>{props.data && props.data.map(row => renderRow(row))}</tbody>
+        <tbody>{data?.map(row => <FeedsRow key={row.id} {...row} />)}</tbody>
       </table>
     </div>
+  );
+}
+
+function FeedsRow({ id, active, source, type, url, name, processed }: Feed) {
+  return (
+    <tr key={id}>
+      <td>
+        <IconButton size="small">
+          <CheckCircleIcon color={active ? 'secondary' : 'action'} fontSize="small" />
+        </IconButton>
+      </td>
+      <td>
+        <Typography variant="caption">
+          {source}:{type}
+        </Typography>
+      </td>
+      <td>
+        <span title={url}>
+          <Link to={id}>{name}</Link>
+        </span>
+      </td>
+      <td align="right">
+        <Chrono fromNow>{processed}</Chrono>
+      </td>
+      <td align="right">
+        <IconButton size="small">
+          <EditIcon fontSize="small" color="primary" />
+        </IconButton>
+        <IconButton size="small">
+          <DeleteForeverIcon fontSize="small" color="error" />
+        </IconButton>
+      </td>
+    </tr>
   );
 }

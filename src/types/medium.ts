@@ -111,10 +111,12 @@ export interface Movie {
   updated_at: string;
 }
 export interface Watch {
+  id: string;
   username: string;
   player: string;
   watched_at: Date;
   medium_id: string;
+  medium?: Medium;
   created_at: string;
   updated_at: string;
 }

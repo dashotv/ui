@@ -21,7 +21,6 @@ import { useReleases } from 'hooks/useReleases';
 import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMutation } from 'query/downloads';
 import { DownloadFile, Download as DownloadType } from 'types/download';
 import { Medium } from 'types/medium';
-import { Release } from 'types/release';
 import { Torrent } from 'types/torrents';
 
 import './Media.scss';
@@ -33,8 +32,8 @@ export type DownloadProps = {
   type: string;
   files?: DownloadFile[];
   episodes?: Medium[];
-  torchSelector: (release: Release) => void;
-  nzbSelector: (release: Release) => void;
+  torchSelector: (id: string) => void;
+  nzbSelector: (id: string) => void;
 };
 export default function Download({
   id,

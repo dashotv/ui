@@ -9,8 +9,15 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IconButton } from '@mui/material';
 
 import Chrono from 'components/Chrono';
+import { Episode } from 'types/medium';
 
-export default function Episodes(props) {
+export default function Episodes({
+  episodes,
+  changeEpisode,
+}: {
+  episodes: Episode[];
+  changeEpisode: (id: string, field: string, value: boolean) => void;
+}) {
   return (
     <div className="episodes">
       <table
@@ -31,38 +38,30 @@ export default function Episodes(props) {
           </tr>
         </thead>
         <tbody>
-          {props.episodes &&
-            props.episodes.map(row => (
-              <EpisodeRow
-                key={row.id}
-                id={row.id}
-                number={row.episode_number}
-                title={row.title}
-                release={row.release_date}
-                skipped={row.skipped}
-                downloaded={row.downloaded}
-                completed={row.completed}
-                watched={row.watched}
-                changeEpisode={props.changeEpisode}
-              />
-            ))}
+          {episodes && episodes.map(row => <EpisodeRow key={row.id} episode={row} changeEpisode={changeEpisode} />)}
         </tbody>
       </table>
     </div>
   );
 }
 
-function EpisodeRow(props) {
-  const [skipped, setSkipped] = useState(props.skipped);
-  const [watched, setWatched] = useState(props.watched);
-  const [completed, setCompleted] = useState(props.completed);
-  const [downloaded, setDownloaded] = useState(props.downloaded);
+function EpisodeRow({
+  episode: { id, title, episode_number: number, release_date: release, ...episode },
+  changeEpisode,
+}: {
+  episode: Episode;
+  changeEpisode: (id: string, field: string, value: boolean) => void;
+}) {
+  const [skipped, setSkipped] = useState(episode.skipped);
+  const [watched, setWatched] = useState(false);
+  const [completed, setCompleted] = useState(episode.completed);
+  const [downloaded, setDownloaded] = useState(episode.downloaded);
   return (
     <tr>
-      <th scope="row">{props.number}</th>
-      <td>{props.title}</td>
+      <th scope="row">{number}</th>
+      <td>{title}</td>
       <td align="right">
-        <Chrono format="YYYY-MM-DD">{props.release}</Chrono>
+        <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
       </td>
       <td style={{ width: '225px' }} align="right">
         <IconButton size="small">
@@ -70,8 +69,8 @@ function EpisodeRow(props) {
         </IconButton>
         <IconButton
           size="small"
-          onClick={ev => {
-            props.changeEpisode(props.id, 'skipped', !skipped);
+          onClick={() => {
+            changeEpisode(id, 'skipped', !skipped);
             setSkipped(!skipped);
           }}
         >
@@ -79,8 +78,8 @@ function EpisodeRow(props) {
         </IconButton>
         <IconButton
           size="small"
-          onClick={ev => {
-            props.changeEpisode(props.id, 'downloaded', !downloaded);
+          onClick={() => {
+            changeEpisode(id, 'downloaded', !downloaded);
             setDownloaded(!downloaded);
           }}
         >
@@ -88,8 +87,8 @@ function EpisodeRow(props) {
         </IconButton>
         <IconButton
           size="small"
-          onClick={ev => {
-            props.changeEpisode(props.id, 'completed', !completed);
+          onClick={() => {
+            changeEpisode(id, 'completed', !completed);
             setCompleted(!completed);
           }}
         >
@@ -97,8 +96,8 @@ function EpisodeRow(props) {
         </IconButton>
         <IconButton
           size="small"
-          onClick={ev => {
-            props.changeEpisode(props.id, 'watched', !watched);
+          onClick={() => {
+            changeEpisode(id, 'watched', !watched);
             setWatched(!watched);
           }}
         >

@@ -1,4 +1,5 @@
 export interface Feed {
+  id: string;
   active: boolean;
   source: string;
   type: string;

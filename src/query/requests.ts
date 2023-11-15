@@ -18,7 +18,7 @@ export const useRequestsQuery = (page: number) =>
   useQuery({
     queryKey: ['requests', page],
     queryFn: () => getRequests(page),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 

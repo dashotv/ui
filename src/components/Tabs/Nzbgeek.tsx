@@ -12,20 +12,27 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap } from 'components/ButtonMap';
+import { ButtonMap, ButtonMapButton } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
 import LoadingIndicator from 'components/Loading';
 import { useQueryString } from 'hooks/useQueryString';
+import { Nzbgeek } from 'types/nzbgeek';
 
 const pagesize = 25;
-export function Nzbgeek(props) {
+export interface NzbgeekForm {
+  tvdbid: string;
+  season: string;
+  episode: string;
+}
+export function Nzbgeek({ form: initial }: { form: NzbgeekForm }) {
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState(props.form);
-  const [nzbs, setNzbs] = useState([]);
+  const [form, setForm] = useState(initial);
+  const [nzbs, setNzbs] = useState<Nzbgeek[]>([]);
 
   const { enqueueSnackbar } = useSnackbar();
   const { queryString } = useQueryString();
 
+  // TODO: change to react query
   useEffect(() => {
     const getNzbs = () => {
       setLoading(true);
@@ -35,7 +42,7 @@ export function Nzbgeek(props) {
         .get(`/api/scry/nzbs/${t}?limit=${pagesize}&${qs}`)
         .then(response => {
           console.log(response.data);
-          setNzbs(response.data);
+          setNzbs(response.data as Nzbgeek[]);
           setLoading(false);
         })
         .catch(err => {
@@ -46,7 +53,7 @@ export function Nzbgeek(props) {
     getNzbs();
   }, [form, queryString, enqueueSnackbar]);
 
-  const click = useCallback(ev => {
+  const click = useCallback(() => {
     console.log('click');
   }, []);
 
@@ -72,13 +79,19 @@ export function Nzbgeek(props) {
   );
 }
 
-function Nzbsearch({ form, setForm }) {
+function Nzbsearch({
+  form,
+  setForm,
+}: {
+  form: NzbgeekForm;
+  setForm: React.Dispatch<React.SetStateAction<NzbgeekForm>>;
+}) {
   const [data, setData] = useState(form);
 
   const handleChange = ev => {
     setData({ ...form, [ev.target.name]: ev.target.value });
   };
-  const handleSubmit = ev => {
+  const handleSubmit = () => {
     setForm(data);
   };
   return (
@@ -130,7 +143,7 @@ function Nzbsearch({ form, setForm }) {
   );
 }
 
-function NzbList(props) {
+function NzbList({ data, actions }: { data: Nzbgeek[]; actions: ButtonMapButton[] }) {
   return (
     <div className="releases">
       <table className="vertical-table">
@@ -147,14 +160,14 @@ function NzbList(props) {
           </tr>
         </thead>
         <tbody>
-          {props.data &&
-            props.data.map(row => (
+          {data &&
+            data.map(row => (
               <NzbListRow
-                key={row.Guid}
-                id={row.Guid}
+                key={row.guid}
+                id={row.guid}
                 title={row.title}
-                published={row.pubDate}
-                actions={props.actions}
+                published={row.published}
+                actions={actions}
               />
             ))}
         </tbody>
@@ -163,22 +176,32 @@ function NzbList(props) {
   );
 }
 
-function NzbListRow(props) {
+function NzbListRow({
+  id,
+  published,
+  title,
+  actions,
+}: {
+  id: string;
+  published: string;
+  title: string;
+  actions: ButtonMapButton[];
+}) {
   return (
     <tr>
       <td>
         <ArticleIcon fontSize="small" />
       </td>
       <td>
-        <Link to={props.id} title={props.raw}>
-          <Typography variant="subtitle1">{props.title}</Typography>
+        <Link to={id} title={title}>
+          <Typography variant="subtitle1">{title}</Typography>
         </Link>
       </td>
       <td align="right">
-        <Chrono fromNow>{props.published}</Chrono>
+        <Chrono fromNow>{published}</Chrono>
       </td>
       <td align="right">
-        <ButtonMap buttons={props.actions} />
+        <ButtonMap buttons={actions} />
       </td>
     </tr>
   );

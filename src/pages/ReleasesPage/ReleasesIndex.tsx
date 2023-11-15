@@ -12,23 +12,29 @@ import { usePopularQuery } from 'query/releases';
 
 import './releases.scss';
 
-function PopularList({ data, type }) {
+interface Popular {
+  name: string;
+  count: number;
+  year?: number;
+  type: string;
+}
+function PopularList({ data, type }: { data: Popular[]; type: string }) {
   const url =
     type !== 'anime' ? `http://themoviedb.org/search?query=` : 'https://myanimelist.net/anime.php?cat=anime&q=';
 
   return (
     <div className="popular">
       <div className="header">{type}</div>
-      {data?.map((row, index) => (
+      {data?.map(({ name, count, year = 0 }, index) => (
         <div key={index} className="entry">
           <span className="title">
-            <Link href={`${url}${row.name}${row.year > 0 ? `+y:${row.year}` : ''}`} target="_window">
-              {row.name}
-              {row.year > 0 && ` (${row.year})`}
+            <Link href={`${url}${name}${year > 0 ? `+y:${year}` : ''}`} target="_window">
+              {name}
+              {year > 0 && ` (${year})`}
             </Link>
           </span>
           <span className="number">
-            <Link href={SearchURL(row.name, row.type)}>{row.count}</Link>
+            <Link href={SearchURL(name, type)}>{count}</Link>
           </span>
         </div>
       ))}

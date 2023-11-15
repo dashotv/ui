@@ -37,7 +37,7 @@ export function RequestsList({ requests }: { requests: Request[] }) {
   );
 }
 
-export function RequestStatus({ status }) {
+export function RequestStatus({ status }: { status: string }) {
   switch (status) {
     case 'completed':
       return <CheckCircleIcon fontSize="small" color="success" />;
@@ -52,7 +52,19 @@ export function RequestStatus({ status }) {
   }
 }
 
-export function RequestLink({ source, source_id, target, color, underline }) {
+export function RequestLink({
+  source,
+  source_id,
+  target,
+  color,
+  underline,
+}: {
+  source: string;
+  source_id: string;
+  target: string;
+  color: string;
+  underline?: 'none' | 'always' | 'hover';
+}) {
   switch (source) {
     case 'tmdb':
       return (
@@ -73,7 +85,7 @@ export function RequestLink({ source, source_id, target, color, underline }) {
 
 export function RequestRow(initial: Request) {
   const [request, setRequest] = useState<Request>(initial);
-  const { id, title, user, source, source_id, status, created_at, updated_at } = request;
+  const { id, title, user, source, source_id, status, created_at } = request;
   const mutation = useRequestsStatusMutation();
   const handleStatus = useCallback((s: string) => {
     const updated = { ...request, status: s };

@@ -6,7 +6,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import Chrono from 'components/Chrono';
 import { Job } from 'types/job';
 
-export function JobsList({ jobs }) {
+export function JobsList({ jobs }: { jobs: Job[] }) {
   return (
     <>
       <div className="releases">

@@ -22,7 +22,7 @@ export const useSearchQuery = (search: string) =>
   useQuery({
     queryKey: ['search', search],
     queryFn: () => getSearch(search),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
 
@@ -30,6 +30,6 @@ export const useSearchAllQuery = (search: string) =>
   useQuery({
     queryKey: ['search', 'all', search],
     queryFn: () => getSearchAll(search),
-    placeholderData: (previousData, previousQuery) => previousData,
+    placeholderData: previousData => previousData,
     retry: false,
   });
