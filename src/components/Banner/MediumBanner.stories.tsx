@@ -16,13 +16,6 @@ import { MediumBanner } from './MediumBanner';
 const meta: Meta<typeof MediumBanner> = {
   title: 'Components/Banner',
   component: MediumBanner,
-};
-
-export default meta;
-
-type Story = StoryObj<typeof MediumBanner>;
-
-export const MediumSmall: Story = {
   args: {
     id: 'blarg',
     medium: {
@@ -37,14 +30,24 @@ export const MediumSmall: Story = {
       name: 'Eminence in Shadow',
       display: '#5 blah blah blah',
       search: 'eminence in shadow s2:25',
-      release_date: new Date('2022-10-05'),
+      release_date: new Date('2022-10-05').toString(),
       unwatched: 3,
       completed: false,
       favorite: false,
       broken: false,
       active: true,
+      created_at: new Date().toString(),
+      updated_at: new Date().toString(),
     },
   },
+};
+
+export default meta;
+
+type Story = StoryObj<typeof MediumBanner>;
+
+export const MediumSmall: Story = {
+  args: {},
   render: args => <MediumBanner {...args} />,
 };
 
@@ -90,29 +93,5 @@ const buttons = [
   },
 ];
 export const MediumSeries: Story = {
-  args: {
-    id: 'blarg',
-    variant: 'large',
-    buttons: buttons,
-    medium: {
-      id: 'blarg',
-      type: 'Episode',
-      source: 'tvdb',
-      source_id: 'blah',
-      description: 'blah blah blah',
-      cover: 'http://localhost:3000/media-images/series-61b6f1383359bb870c54116a/cover.jpg',
-      background: 'http://localhost:3000/media-images/series-61b6f1383359bb870c54116a/background.jpg',
-      title: 'Eminence in Shadow',
-      name: 'Eminence in Shadow',
-      display: 'tvdb (blah)',
-      search: 'eminence in shadow s2:25',
-      release_date: new Date('2022-10-05'),
-      unwatched: 3,
-      completed: false,
-      favorite: false,
-      broken: false,
-      active: true,
-    },
-  },
-  render: args => <MediumBanner {...args} />,
+  render: args => <MediumBanner {...args} buttons={buttons} />,
 };
