@@ -16,20 +16,18 @@ $height: 120px;
     position: relative;
 
     .titlebar {
-      padding: 5px 5px;
-
       .title {
         // display: inline-flex;
         // flex-flow: row nowrap;
+        display: flex;
         max-width: 100%;
+        min-width: 0;
         margin-left: 8px;
         margin-right: 8px;
         span {
           font-size: x-large;
           font-weight: bolder;
-          margin-right: 12px;
-          flex: 1;
-          white-space: pre;
+          white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           // text-shadow: black 1px 1px 1px;
