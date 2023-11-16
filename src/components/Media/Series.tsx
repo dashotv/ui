@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import * as React from 'react';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
@@ -59,10 +59,6 @@ export function Series({
   refresh,
   change,
 }: SeriesProps) {
-  const [activeCurrent, setActive] = useState(active);
-  const [favoriteCurrent, setFavorite] = useState(favorite);
-  const [brokenCurrent, setBroken] = useState(broken);
-
   const tabsMap = {
     Episodes: (
       <>
@@ -112,26 +108,23 @@ export function Series({
       title: 'refresh',
     },
     {
-      icon: <BuildCircleIcon color={brokenCurrent ? 'secondary' : 'action'} />,
+      icon: <BuildCircleIcon color={broken ? 'secondary' : 'action'} />,
       click: () => {
-        change(id, 'broken', !brokenCurrent);
-        setBroken(!brokenCurrent);
+        change(id, 'broken', !broken);
       },
       title: 'broken',
     },
     {
-      icon: <RecommendIcon color={favoriteCurrent ? 'secondary' : 'action'} />,
+      icon: <RecommendIcon color={favorite ? 'secondary' : 'action'} />,
       click: () => {
-        change(id, 'favorite', !favoriteCurrent);
-        setFavorite(!favoriteCurrent);
+        change(id, 'favorite', !favorite);
       },
       title: 'favorite',
     },
     {
-      icon: <StarsIcon color={activeCurrent ? 'secondary' : 'action'} />,
+      icon: <StarsIcon color={active ? 'secondary' : 'action'} />,
       click: () => {
-        change(id, 'active', !activeCurrent);
-        setActive(!activeCurrent);
+        change(id, 'active', !active);
       },
       title: 'active',
     },

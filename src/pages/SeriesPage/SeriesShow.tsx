@@ -4,8 +4,11 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import LoadingIndicator from 'components/Loading';
 import { Series } from 'components/Media';
+import { useSubscription } from 'components/Nats/useSubscription';
 import {
   putSeriesRefresh,
   useEpisodeSettingMutation,
@@ -19,7 +22,7 @@ export default function SeriesShow() {
   const { isFetching, data: series } = useSeriesQuery(id);
   const [currentSeason, setCurrentSeason] = useState(1);
   const { isFetching: episodesFetching, data: episodes } = useSeriesSeasonEpisodesQuery(id, currentSeason);
-
+  const queryClient = useQueryClient();
   const seriesSetting = useSeriesSettingMutation(id);
   const episodeSetting = useEpisodeSettingMutation();
   const refresh = () => {
@@ -47,6 +50,13 @@ export default function SeriesShow() {
     }
     setCurrentSeason(series.currentSeason);
   }, [series, series?.currentSeason]);
+
+  useSubscription('tower.series', data => {
+    if (data.ID !== id) {
+      return;
+    }
+    queryClient.invalidateQueries({ queryKey: ['series', id] });
+  });
 
   return (
     <>
