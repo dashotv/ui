@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import CancelIcon from '@mui/icons-material/Cancel';
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
@@ -207,11 +206,6 @@ export default function Download({
       icon: <CheckCircleIcon color="primary" />,
       click: complete,
       title: 'mark complete',
-    },
-    {
-      icon: <ChangeCircleIcon color="primary" />,
-      click: complete,
-      title: 'reset',
     },
     {
       icon: <OfflineBoltIcon color={auto ? 'secondary' : 'action'} />,
