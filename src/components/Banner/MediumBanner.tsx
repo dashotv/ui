@@ -18,8 +18,10 @@ export function MediumBanner({
   variant,
   buttons,
   medium: {
-    // type,
+    type,
     title,
+    source,
+    source_id,
     display,
     release_date,
     // description,
@@ -48,8 +50,8 @@ export function MediumBanner({
   return (
     <Banner
       id={id}
-      title={title}
-      subtitle={display}
+      title={type == 'Episode' ? title : display || title}
+      subtitle={type == 'Episode' ? display : `${source}:${source_id}`}
       tertiary={release_date && <Chrono special>{release_date.toString()}</Chrono>}
       images={images()}
       flags={!large ? { active, broken, completed, favorite } : undefined}
