@@ -8,19 +8,27 @@ type TopicFunc = (data: unknown) => void;
 
 export function useTopicManager() {
   const topics: string[] = [
+    'flame.nzbs',
+    'flame.qbittorrents',
+    'seer.downloads',
     'seer.episodes',
     'seer.notices',
-    'seer.downloads',
-    'flame.qbittorrents',
-    'flame.nzbs',
+    'tower.episodes',
     'tower.logs',
+    'tower.movies',
     'tower.requests',
+    'tower.series',
   ];
   const [functions, setFunctions] = useState<Map<string, TopicFunc[]>>(new Map<string, TopicFunc[]>());
   const [subscriptions, setSubscriptions] = useState<Map<string, Subscription>>(new Map<string, Subscription>());
   const { ws, jc, sc } = useNats();
 
   const addFunction = (topic: string, func: TopicFunc) => {
+    const sub = subscriptions.get(topic);
+    if (!sub) {
+      console.error('setFunction: topic not found?', topic);
+      return;
+    }
     setFunctions(prev => {
       const list = prev.get(topic) || [];
       prev.set(topic, [...list!, func]);
@@ -28,8 +36,8 @@ export function useTopicManager() {
     });
   };
   const removeFunction = (topic: string, func: TopicFunc) => {
-    const list = functions.get(topic);
-    if (!list) {
+    const sub = subscriptions.get(topic);
+    if (!sub) {
       console.error('setFunction: topic not found?', topic);
       return;
     }
