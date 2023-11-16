@@ -25,6 +25,11 @@ export const getSeriesSeasonEpisodes = async (id, season) => {
   return response.data;
 };
 
+export const putSeriesRefresh = async (id: string) => {
+  const response = await axios.put(`/api/tower/series/${id}/refresh`);
+  return response.data;
+};
+
 export const useSeriesAllQuery = page =>
   useQuery({
     queryKey: ['series', 'all', page],

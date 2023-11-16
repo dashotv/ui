@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import LoadingIndicator from 'components/Loading';
 import { Series } from 'components/Media';
 import {
+  putSeriesRefresh,
   useEpisodeSettingMutation,
   useSeriesQuery,
   useSeriesSeasonEpisodesQuery,
@@ -21,6 +22,12 @@ export default function SeriesShow() {
 
   const seriesSetting = useSeriesSettingMutation(id);
   const episodeSetting = useEpisodeSettingMutation();
+  const refresh = () => {
+    if (!id) {
+      return;
+    }
+    putSeriesRefresh(id);
+  };
 
   function changeSeason(season) {
     setCurrentSeason(season);
@@ -58,6 +65,7 @@ export default function SeriesShow() {
             changeSeason={changeSeason}
             changeEpisode={changeEpisodeSetting}
             change={changeSeriesSetting}
+            refresh={refresh}
           />
         )}
       </Container>

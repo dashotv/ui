@@ -27,6 +27,7 @@ export type SeriesProps = {
   changeSeason: (season: number) => void;
   changeEpisode: (id: string, key: string, value) => void;
   change: (id: string, key: string, value) => void;
+  refresh: () => void;
 };
 export function Series({
   id,
@@ -55,6 +56,7 @@ export function Series({
   currentSeason,
   changeSeason,
   changeEpisode,
+  refresh,
   change,
 }: SeriesProps) {
   const [activeCurrent, setActive] = useState(active);
@@ -104,7 +106,9 @@ export function Series({
     },
     {
       icon: <ReplayCircleFilledIcon color="primary" />,
-      click: complete,
+      click: () => {
+        refresh();
+      },
       title: 'refresh',
     },
     {
