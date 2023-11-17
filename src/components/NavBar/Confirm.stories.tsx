@@ -49,7 +49,7 @@ export const ConfirmMovie: Story = {
       Date: '2023-11-08',
       Source: 'tmdb',
       Image: 'https://image.tmdb.org/t/p/original/Ag3D9qXjhJ2FUkrlJ0Cv1pgxqYQ.jpg',
-      Kind: 'movie',
+      Kind: 'movies',
     },
   },
 };

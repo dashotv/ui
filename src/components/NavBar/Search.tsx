@@ -197,7 +197,12 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
       { label: 'Ecchi', value: 'ecchi' },
       { label: 'News', value: 'news' },
     ],
-    movie: [{ label: 'Movie', value: 'movie' }],
+    movie: [
+      { label: 'Movies', value: 'movies' },
+      { label: 'Movies 4K', value: 'movies4k' },
+      { label: 'Movies 3D', value: 'movies3d' },
+      { label: 'Kids', value: 'kids' },
+    ],
   };
 
   if (!option.Kind) {
