@@ -20,6 +20,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import MenuItem from '@mui/material/MenuItem';
@@ -147,7 +148,8 @@ function SuperSearchDialog({ open, setOpen, confirm }: SuperSearchDialogProps) {
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setValue(event.target.value);
           }}
-          variant="outlined"
+          variant="standard"
+          size="small"
         />
       </DialogTitle>
       <DialogContent sx={{ height: '430px' }}>
@@ -250,6 +252,8 @@ const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordion
   }, [data]);
 
   return (
+    // Accordion matches dialog sx={{ backgroundColor: '#343434' }}
+    // sx={{ backgroundColor: '#242424' }}
     <Accordion defaultExpanded disableGutters expanded={options.length > 0}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
         <Chip sx={{ mr: 2 }} color="primary" size="small" label={options.length} />
@@ -258,28 +262,47 @@ const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordion
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        {options.map((option: Option) => (
-          <Link key={option.ID} underline="none" color="inherit" onClick={() => select(option)}>
-            <Stack className="searchItem" direction="row" spacing={2}>
-              <SuperSearchIcon type={type || option.Type} />
-              <Typography component="span">{option.Title}</Typography>
-              <Typography sx={{ whiteSpace: 'nowrap' }}>{option.Date}</Typography>
-            </Stack>
-          </Link>
-        ))}
+        <Grid container spacing={2}>
+          {options.map((option: Option) => (
+            <Grid item key={option.ID}>
+              <Link underline="none" color="inherit" onClick={() => select(option)}>
+                <SuperSearchCover {...{ option, type }} />
+              </Link>
+            </Grid>
+          ))}
+        </Grid>
       </AccordionDetails>
     </Accordion>
+  );
+};
+
+const SuperSearchCover = ({ option, type }: { option: Option; type?: string }) => {
+  return (
+    <div className="searchCover">
+      <div className="image">
+        <object data={option.Image}>
+          <img src="/blank.png" />
+        </object>
+      </div>
+      <div className="title">{option.Title}</div>
+      <div className="description">{option.Description}</div>
+      <div className="release">
+        <Stack direction="row" spacing={1}>
+          <SuperSearchIcon type={type || option.Type} />
+          <span>{option.Date}</span>
+        </Stack>
+      </div>
+    </div>
   );
 };
 
 const SuperSearchIcon = ({ type }: { type?: string }) => {
   switch (type) {
     case 'series':
-      return <TvIcon color="primary" fontSize="small" />;
+      return <TvIcon sx={{ pt: '2px' }} color="primary" fontSize="small" />;
     case 'movie':
-      return <TheatersIcon color="primary" fontSize="small" />;
+      return <TheatersIcon sx={{ pt: '2px' }} color="primary" fontSize="small" />;
     default:
-      return <HelpIcon color="primary" fontSize="small" />;
+      return <HelpIcon sx={{ pt: '2px' }} color="primary" fontSize="small" />;
   }
-  return null;
 };
