@@ -25,6 +25,7 @@ export default function Movie({
   id,
   movie,
   movie: {
+    kind,
     cover,
     background,
     paths,
@@ -103,6 +104,7 @@ export default function Movie({
     Details: (
       <Details
         {...{
+          kind,
           cover,
           background,
           display,
