@@ -1,6 +1,9 @@
 import * as React from 'react';
 
 import Box from '@mui/material/Box';
+import Checkbox from '@mui/material/Checkbox';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -9,6 +12,7 @@ import Typography from '@mui/material/Typography';
 
 import Chrono from 'components/Chrono';
 import { MediaCoverImage } from 'components/Media';
+import { Medium } from 'types/medium';
 
 const kinds = {
   Series: [
@@ -28,138 +32,281 @@ const sources = [
   { label: 'TVDB', value: 'tvdb' },
   { label: 'TMDB', value: 'tmdb' },
 ];
+const resolutions = [
+  { label: '', value: '' },
+  { label: '2160p', value: 2160 },
+  { label: '1080p', value: 1080 },
+  { label: '720p', value: 720 },
+];
+const releaseSources = [
+  '',
+  'anidex',
+  'extratorrent',
+  'eztv',
+  'geek',
+  'hiddenbay',
+  'horrible',
+  'kickass',
+  'lime',
+  'monova',
+  'nyaa',
+  'piratebay',
+  'rarbg',
+  'shana',
+  'showrss',
+  'yify',
+];
+const types = ['', 'tv', 'anime', 'movies'];
 export type DetailsProps = {
-  type: string;
-  kind?: string;
-  cover?: string;
-  background?: string;
-  display?: string;
-  search?: string;
-  directory?: string;
-  title?: string;
-  description?: string;
-  release_date?: string;
-  source: string;
-  source_id: string;
-  created_at: string;
-  updated_at: string;
+  medium: Medium;
 };
 export default function Details({
-  type,
-  kind,
-  cover,
-  background,
-  display,
-  search,
-  directory,
-  title,
-  description,
-  release_date,
-  source,
-  source_id,
-  created_at,
-  updated_at,
+  medium: {
+    type,
+    kind,
+    cover,
+    background,
+    display,
+    search,
+    search_params,
+    directory,
+    title,
+    description,
+    release_date,
+    source,
+    source_id,
+    created_at,
+    updated_at,
+  },
 }: DetailsProps) {
-  const handleChange = ev => {};
+  const handleChange = ev => {
+    console.log('handleChange:', ev.target.name, ev.target.value);
+  };
   return (
     <>
-      <Stack sx={{ width: '100%' }} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-        <Stack sx={{ minWidth: '200px' }} direction="column" spacing={1}>
-          <TextField
-            sx={{ m: 1 }}
-            id="display"
-            name="display"
-            label="Display"
-            variant="standard"
-            value={display}
-            autoComplete="off"
-            onChange={handleChange}
-          />
-          <TextField
-            sx={{ m: 1 }}
-            id="search"
-            name="search"
-            label="Search"
-            variant="standard"
-            value={search}
-            autoComplete="off"
-            onChange={handleChange}
-          />
-          <TextField
-            sx={{ m: 1 }}
-            id="directory"
-            name="directory"
-            label="Directory"
-            variant="standard"
-            value={directory}
-            autoComplete="off"
-            onChange={handleChange}
-          />
-          <TextField
-            sx={{ m: 1 }}
-            id="kind"
-            name="kind"
-            select
-            label="Kind"
-            variant="standard"
-            value={kind}
-            onChange={handleChange}
-          >
-            {kinds[type].map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            sx={{ m: 1 }}
-            id="source"
-            name="source"
-            select
-            label="Source"
-            variant="standard"
-            value={source}
-            onChange={handleChange}
-          >
-            {sources.map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-          <TextField
-            sx={{ m: 1 }}
-            id="source_id"
-            name="source_id"
-            label="Source ID"
-            variant="standard"
-            value={source_id}
-            autoComplete="off"
-            onChange={handleChange}
-          />
-        </Stack>
-        <Stack direction="column" spacing={1}>
+      <Stack sx={{ width: '100%' }} direction="column" spacing={2}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
           <Paper sx={{ p: 2, width: '100%' }}>
+            <Typography noWrap variant="h6" color="primary">
+              Common
+            </Typography>
             <Stack direction="column" spacing={1}>
-              <Typography noWrap variant="h4" color="primary">
+              <TextField
+                sx={{ m: 1 }}
+                id="display"
+                name="display"
+                label="Display"
+                variant="standard"
+                value={display}
+                autoComplete="off"
+                onChange={handleChange}
+              />
+              <TextField
+                sx={{ m: 1 }}
+                id="directory"
+                name="directory"
+                label="Directory"
+                variant="standard"
+                value={directory}
+                autoComplete="off"
+                onChange={handleChange}
+              />
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <TextField
+                  fullWidth
+                  sx={{ m: 1 }}
+                  id="kind"
+                  name="kind"
+                  select
+                  label="Kind"
+                  variant="standard"
+                  value={kind}
+                  onChange={handleChange}
+                >
+                  {kinds[type].map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  fullWidth
+                  sx={{ m: 1 }}
+                  id="source"
+                  name="source"
+                  select
+                  label="Source"
+                  variant="standard"
+                  value={source}
+                  onChange={handleChange}
+                >
+                  {sources.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <TextField
+                  fullWidth
+                  sx={{ m: 1 }}
+                  id="source_id"
+                  name="source_id"
+                  label="Source ID"
+                  variant="standard"
+                  value={source_id}
+                  autoComplete="off"
+                  onChange={handleChange}
+                />
+              </Stack>
+            </Stack>
+          </Paper>
+          <Paper sx={{ p: 2, width: '100%' }}>
+            <Typography noWrap variant="h6" color="primary">
+              Search
+            </Typography>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <Stack sx={{ width: '100%' }} direction="column" spacing={1}>
+                <TextField
+                  fullWidth
+                  sx={{ m: 1 }}
+                  id="search"
+                  name="search"
+                  label="Search"
+                  variant="standard"
+                  value={search}
+                  autoComplete="off"
+                  onChange={handleChange}
+                />
+                {search_params && (
+                  <>
+                    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                      <TextField
+                        fullWidth
+                        sx={{ m: 1 }}
+                        id="group"
+                        name="group"
+                        label="Group"
+                        variant="standard"
+                        value={search_params?.group || ''}
+                        autoComplete="off"
+                        onChange={handleChange}
+                      />
+                      <TextField
+                        fullWidth
+                        sx={{ m: 1 }}
+                        id="author"
+                        name="author"
+                        label="Author"
+                        variant="standard"
+                        value={search_params?.author || ''}
+                        autoComplete="off"
+                        onChange={handleChange}
+                      />
+                    </Stack>
+                    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                      <TextField
+                        fullWidth
+                        sx={{ m: 1 }}
+                        id="resolution"
+                        name="resolution"
+                        select
+                        label="Resolution"
+                        variant="standard"
+                        value={search_params?.resolution}
+                        onChange={handleChange}
+                      >
+                        {resolutions.map(option => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                      <TextField
+                        fullWidth
+                        sx={{ m: 1 }}
+                        id="source"
+                        name="source"
+                        select
+                        label="Source"
+                        variant="standard"
+                        value={search_params?.source}
+                        onChange={handleChange}
+                      >
+                        {releaseSources.map(option => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                      <TextField
+                        fullWidth
+                        sx={{ m: 1 }}
+                        id="type"
+                        name="type"
+                        select
+                        label="type"
+                        variant="standard"
+                        value={search_params.type}
+                        onChange={handleChange}
+                      >
+                        {types.map(option => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Stack>
+                  </>
+                )}
+              </Stack>
+              <Stack sx={{ minWidth: '200px' }} direction="column" spacing={1}>
+                <FormControl sx={{ height: '48px' }}>
+                  <FormControlLabel
+                    control={<Checkbox checked={search_params?.verified} onChange={handleChange} />}
+                    label="Verified"
+                  />
+                </FormControl>
+                <FormControl sx={{ height: '48px' }}>
+                  <FormControlLabel
+                    control={<Checkbox checked={search_params?.uncensored} onChange={handleChange} />}
+                    label="Uncensored"
+                  />
+                </FormControl>
+                <FormControl sx={{ height: '48px' }}>
+                  <FormControlLabel
+                    control={<Checkbox checked={search_params?.bluray} onChange={handleChange} />}
+                    label="BD (Bluray)"
+                  />
+                </FormControl>
+              </Stack>
+            </Stack>
+          </Paper>
+        </Stack>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+          <Paper sx={{ p: 2, width: '100%' }}>
+            <Typography noWrap variant="h6" color="primary">
+              Source
+            </Typography>
+            <Stack direction="column" spacing={1}>
+              <Typography noWrap variant="h6">
                 {title}
               </Typography>
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <Detail name="Release" value={<Chrono format="YYYY-MM-DD">{release_date}</Chrono>} />
-                <Detail name="Created" value={<Chrono fromNow>{created_at}</Chrono>} />
-                <Detail name="Updated" value={<Chrono fromNow>{updated_at}</Chrono>} />
+                <Detail color="gray" name="Release" value={<Chrono format="YYYY-MM-DD">{release_date}</Chrono>} />
+                <Detail color="gray" name="Created" value={<Chrono fromNow>{created_at}</Chrono>} />
+                <Detail color="gray" name="Updated" value={<Chrono fromNow>{updated_at}</Chrono>} />
               </Stack>
               <Typography>{description}</Typography>
             </Stack>
           </Paper>
-        </Stack>
-        <Stack direction="column" spacing={1}>
-          <div className="mediaCover">
-            <MediaCoverImage image={cover} />
-          </div>
-          <div className="mediaCover">
-            <MediaCoverImage image={background} background={true} />
-          </div>
+          <Stack direction="column" spacing={1}>
+            <div className="mediaCover">
+              <MediaCoverImage image={cover} />
+            </div>
+            <div className="mediaCover">
+              <MediaCoverImage image={background} background={true} />
+            </div>
+          </Stack>
         </Stack>
       </Stack>
     </>
@@ -169,38 +316,45 @@ export default function Details({
 const Detail = ({
   name,
   value,
-  color = 'primary',
+  color = 'primary.main',
   variant = 'row',
+  icon,
 }: {
   name: string;
   value: React.ReactElement | string;
   color?: string;
   variant?: 'row' | 'column';
+  icon?: React.ReactElement;
 }) => {
   const display = variant == 'row' ? 'flex' : 'block';
   return (
     <Box component="div" sx={{ display: display }}>
       <Box
         sx={{
-          backgroundColor: `${color}.main`,
+          backgroundColor: color,
           border: '1px solid',
-          borderColor: `${color}.main`,
+          borderColor: color,
           borderRadius: '5px 0 0 5px',
-          p: '3px 5px',
+          // p: '3px 5px',
+          pr: 1,
+          pl: 1,
         }}
       >
+        {icon && icon}
         <Typography variant="button" color="black">
           {name}
         </Typography>
       </Box>
       <Box
         sx={{
-          color: `${color}.main`,
+          color: color,
           backgroundColor: '#363636',
           border: '1px solid',
-          borderColor: `${color}.main`,
+          borderColor: color,
           borderRadius: '0 5px 5px 0',
-          p: '3px 5px',
+          // p: '3px 5px',
+          pr: 1,
+          pl: 1,
         }}
       >
         {value}

@@ -32,28 +32,7 @@ export type SeriesProps = {
 export function Series({
   id,
   series,
-  series: {
-    type,
-    kind,
-    cover,
-    background,
-    active,
-    broken,
-    favorite,
-    seasons,
-    watches,
-    paths,
-    display,
-    search,
-    directory,
-    title,
-    description,
-    release_date,
-    source,
-    source_id,
-    created_at,
-    updated_at,
-  },
+  series: { active, broken, favorite, seasons, watches, paths },
   episodes,
   currentSeason,
   changeSeason,
@@ -71,26 +50,7 @@ export function Series({
     Paths: <Paths paths={paths} />,
     Downloads: <div>downloads</div>,
     Watches: <Watches data={watches} />,
-    Details: (
-      <Details
-        {...{
-          type,
-          kind,
-          cover,
-          background,
-          display,
-          search,
-          directory,
-          title,
-          description,
-          release_date,
-          source,
-          source_id,
-          created_at,
-          updated_at,
-        }}
-      />
-    ),
+    Details: <Details medium={series} />,
   };
 
   const complete = useCallback(ev => {

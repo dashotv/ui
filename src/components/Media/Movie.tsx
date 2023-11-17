@@ -21,31 +21,7 @@ export type MovieProps = {
   change: (id: string, key: string, value) => void;
 };
 // TODO: watches
-export default function Movie({
-  id,
-  movie,
-  movie: {
-    type,
-    kind,
-    cover,
-    background,
-    paths,
-    broken,
-    downloaded,
-    completed,
-    display,
-    search,
-    directory,
-    title,
-    description,
-    release_date,
-    source,
-    source_id,
-    created_at,
-    updated_at,
-  },
-  change,
-}: MovieProps) {
+export default function Movie({ id, movie, movie: { paths, broken, downloaded, completed }, change }: MovieProps) {
   const [brokenCurrent, setBroken] = useState(broken);
   const [completedCurrent, setCompleted] = useState(completed);
   const [downloadedCurrent, setDownloaded] = useState(downloaded);
@@ -102,26 +78,7 @@ export default function Movie({
     Paths: <Paths paths={paths} />,
     Downloads: <div>downloads</div>,
     Watches: <div>watches</div>,
-    Details: (
-      <Details
-        {...{
-          type,
-          kind,
-          cover,
-          background,
-          display,
-          search,
-          directory,
-          title,
-          description,
-          release_date,
-          source,
-          source_id,
-          created_at,
-          updated_at,
-        }}
-      />
-    ),
+    Details: <Details medium={movie} />,
   };
 
   return (
