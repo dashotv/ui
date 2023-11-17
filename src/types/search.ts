@@ -12,7 +12,10 @@ export interface SearchResponse {
 export interface SearchResult {
   ID: string;
   Title: string;
+  Description: string;
   Type: string;
+  Kind: string;
+  Image: string;
   Date: string;
   Source: string;
 }

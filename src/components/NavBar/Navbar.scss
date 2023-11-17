@@ -24,7 +24,7 @@ a:active {
   --width: 136px;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 410px) {
   :root {
     --height: 150px;
     --width: 100px;
@@ -35,8 +35,10 @@ a:active {
   position: relative;
   height: var(--height);
   width: var(--width);
+  min-width: var(--width);
   margin: 5px;
   display: flex;
+  cursor: pointer;
   .image {
     position: absolute;
     top: 0px;

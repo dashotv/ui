@@ -33,6 +33,7 @@ import { useMovieCreateMutation } from 'query/movies';
 import { Option } from 'query/option';
 import { useSearchAllQuery } from 'query/search';
 import { useSeriesCreateMutation } from 'query/series';
+import { SearchAllResponse } from 'types/search';
 
 export default function SuperSearch() {
   const [open, setOpen] = useState(false);
@@ -45,9 +46,8 @@ export default function SuperSearch() {
   useHotkeys('mod+k', () => setOpen(true), [open]);
 
   const showCreate = useCallback((option: Option) => {
-    setConfirm(true);
-    console.log('showCreate: ', option);
     setOption(option);
+    setConfirm(true);
   }, []);
 
   const createSeries = useCallback((option: Option) => {
@@ -57,7 +57,6 @@ export default function SuperSearch() {
           console.error('error: ', data.error);
           return;
         }
-        console.log('onSuccess: ', data);
         navigate(`/series/${data.series.id}`);
       },
     });
@@ -70,7 +69,6 @@ export default function SuperSearch() {
           console.error('error: ', data.error);
           return;
         }
-        console.log('onSuccess: ', data);
         navigate(`/movies/${data.movie.id}`);
       },
     });
@@ -78,6 +76,10 @@ export default function SuperSearch() {
 
   const create = useCallback((option: Option | null) => {
     setConfirm(false);
+    if (!option) {
+      setOpen(true);
+      return;
+    }
     console.log('create: ', option);
     if (option) {
       switch (option.Type) {
@@ -100,27 +102,22 @@ export default function SuperSearch() {
       <IconButton onClick={() => setOpen(true)}>
         <FindInPageOutlinedIcon fontSize="large" color="primary" />
       </IconButton>
-      {open && <SuperSearchDialog open={open} setOpen={setOpen} confirm={showCreate} />}
+      {open && <SuperSearchController open={open} setOpen={setOpen} confirm={showCreate} />}
       {confirm && <SuperSearchConfirm open={confirm} confirm={create} option={option} />}
     </>
   );
 }
 
-interface SuperSearchDialogProps {
+export interface SuperSearchControllerProps {
   open: boolean;
   setOpen: (value: SetStateAction<boolean>) => void;
   confirm: (option: Option) => void;
 }
-
-function SuperSearchDialog({ open, setOpen, confirm }: SuperSearchDialogProps) {
+export function SuperSearchController({ open, setOpen, confirm }: SuperSearchControllerProps) {
   const [value, setValue] = useState('');
   const debouncedValue = useDebounce<string>(value, 400);
   const { data } = useSearchAllQuery(debouncedValue);
   const navigate = useNavigate();
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const select = useCallback((option: Option) => {
     setValue('');
@@ -128,10 +125,26 @@ function SuperSearchDialog({ open, setOpen, confirm }: SuperSearchDialogProps) {
     navigate(`/${option.Type == 'movie' ? 'movies' : option.Type}/${option.ID}`);
   }, []);
 
-  const create = useCallback((option: Option) => {
-    setValue('');
+  return <SuperSearchDialog {...{ open, setOpen, confirm, value, setValue, select, data }} />;
+}
+
+export interface SuperSearchDialogProps {
+  open: boolean;
+  setOpen: (value: SetStateAction<boolean>) => void;
+  confirm: (option: Option) => void;
+  data?: SearchAllResponse;
+  select: (option: Option) => void;
+  value: string;
+  setValue: (value: SetStateAction<string>) => void;
+}
+
+export function SuperSearchDialog({ open, setOpen, confirm, select, value, setValue, data }: SuperSearchDialogProps) {
+  const handleClose = () => {
     setOpen(false);
-    console.log('create: ', option);
+  };
+
+  const create = useCallback((option: Option) => {
+    setOpen(false);
     confirm(option);
   }, []);
 
@@ -145,6 +158,7 @@ function SuperSearchDialog({ open, setOpen, confirm }: SuperSearchDialogProps) {
           placeholder="Search for existing or new media"
           fullWidth
           hiddenLabel
+          value={value}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setValue(event.target.value);
           }}
@@ -198,15 +212,18 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
     <Dialog open={open} onClose={() => confirm(null)} maxWidth="md">
       <DialogTitle>Create {option.Type}?</DialogTitle>
       <DialogContent>
-        <Typography noWrap variant="h5" color="primary">
-          {option.Title}
-        </Typography>
-        <Typography variant="body2" color="action">
-          {option.Date}
-        </Typography>
-        <Typography sx={{ pt: 2 }} variant="body1">
-          {option.Description}
-        </Typography>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+          <SuperSearchCover {...{ option }} />
+          <Stack direction="column" spacing={1}>
+            <Typography noWrap variant="h5" color="primary">
+              {option.Title}
+            </Typography>
+            <Typography variant="body2" color="action">
+              {option.Date}
+            </Typography>
+            <Typography variant="body1">{option.Description}</Typography>
+          </Stack>
+        </Stack>
       </DialogContent>
       <DialogActions>
         <Select
@@ -266,7 +283,7 @@ const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordion
           {options.map((option: Option) => (
             <Grid item key={option.ID}>
               <Link underline="none" color="inherit" onClick={() => select(option)}>
-                <SuperSearchCover {...{ option, type }} />
+                <SuperSearchCover {...{ option, type }} imageOnly={true} />
               </Link>
             </Grid>
           ))}
@@ -276,7 +293,15 @@ const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordion
   );
 };
 
-const SuperSearchCover = ({ option, type }: { option: Option; type?: string }) => {
+const SuperSearchCover = ({
+  option,
+  type,
+  imageOnly = false,
+}: {
+  option: Option;
+  type?: string;
+  imageOnly?: boolean;
+}) => {
   return (
     <div className="searchCover">
       <div className="image">
@@ -284,14 +309,18 @@ const SuperSearchCover = ({ option, type }: { option: Option; type?: string }) =
           <img src="/blank.png" />
         </object>
       </div>
-      <div className="title">{option.Title}</div>
-      <div className="description">{option.Description}</div>
-      <div className="release">
-        <Stack direction="row" spacing={1}>
-          <SuperSearchIcon type={type || option.Type} />
-          <span>{option.Date}</span>
-        </Stack>
-      </div>
+      {imageOnly && (
+        <>
+          <div className="title">{option.Title}</div>
+          <div className="description">{option.Description}</div>
+          <div className="release">
+            <Stack direction="row" spacing={1}>
+              <SuperSearchIcon type={type || option.Type} />
+              <span>{option.Date}</span>
+            </Stack>
+          </div>
+        </>
+      )}
     </div>
   );
 };
