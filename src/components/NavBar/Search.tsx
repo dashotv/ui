@@ -10,7 +10,6 @@ import FindInPageOutlinedIcon from '@mui/icons-material/FindInPageOutlined';
 import HelpIcon from '@mui/icons-material/Help';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import TvIcon from '@mui/icons-material/Tv';
-import { Link } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -22,6 +21,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -160,22 +162,66 @@ function SuperSearchDialog({ open, setOpen, confirm }: SuperSearchDialogProps) {
   );
 }
 
-interface SuperSearchConfirmProps {
+export interface SuperSearchConfirmProps {
   open: boolean;
   confirm: (option: Option | null) => void;
   option: Option | null;
 }
 
-function SuperSearchConfirm({ open, confirm, option }: SuperSearchConfirmProps) {
-  if (!option) return null;
+export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSearchConfirmProps) {
+  if (!initial) {
+    return null;
+  }
+  const [option, setOption] = useState<Option>(initial);
+
+  const kinds = {
+    series: [
+      { label: 'TV', value: 'tv' },
+      { label: 'Anime', value: 'anime' },
+      { label: 'Ecchi', value: 'ecchi' },
+      { label: 'News', value: 'news' },
+    ],
+    movie: [{ label: 'Movie', value: 'movie' }],
+  };
+
+  if (!option.Kind) {
+    setOption({ ...option, Kind: kinds[option.Type][0].value });
+  }
+
+  const handleChange = ev => {
+    setOption({ ...option, Kind: ev.target.value });
+  };
 
   return (
     <Dialog open={open} onClose={() => confirm(null)} maxWidth="md">
-      <DialogTitle>Confirm</DialogTitle>
+      <DialogTitle>Create {option.Type}?</DialogTitle>
       <DialogContent>
-        Create {option.Type} {option.Title} ({option.Date})?
+        <Typography noWrap variant="h5" color="primary">
+          {option.Title}
+        </Typography>
+        <Typography variant="body2" color="action">
+          {option.Date}
+        </Typography>
+        <Typography sx={{ pt: 2 }} variant="body1">
+          {option.Description}
+        </Typography>
       </DialogContent>
       <DialogActions>
+        <Select
+          sx={{ m: 1, width: '125px' }}
+          id="kind"
+          name="kind"
+          variant="standard"
+          size="small"
+          value={option.Kind}
+          onChange={handleChange}
+        >
+          {kinds[option.Type].map(option => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
         <Button onClick={() => confirm(null)}>Cancel</Button>
         <Button autoFocus onClick={() => confirm(option)}>
           Ok
@@ -226,7 +272,7 @@ const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordion
   );
 };
 
-const SuperSearchIcon = ({ type }: { type: string | undefined }) => {
+const SuperSearchIcon = ({ type }: { type?: string }) => {
   switch (type) {
     case 'series':
       return <TvIcon color="primary" fontSize="small" />;
