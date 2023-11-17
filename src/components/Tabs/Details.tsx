@@ -166,20 +166,20 @@ export default function Details({
             </Typography>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <Stack sx={{ width: '100%' }} direction="column" spacing={1}>
-                <TextField
-                  fullWidth
-                  sx={{ m: 1 }}
-                  id="search"
-                  name="search"
-                  label="Search"
-                  variant="standard"
-                  value={search}
-                  autoComplete="off"
-                  onChange={handleChange}
-                />
                 {search_params && (
                   <>
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                      <TextField
+                        fullWidth
+                        sx={{ m: 1 }}
+                        id="search"
+                        name="search"
+                        label="Search"
+                        variant="standard"
+                        value={search}
+                        autoComplete="off"
+                        onChange={handleChange}
+                      />
                       <TextField
                         fullWidth
                         sx={{ m: 1 }}
@@ -256,28 +256,28 @@ export default function Details({
                         ))}
                       </TextField>
                     </Stack>
+                    <Stack sx={{ minWidth: '200px' }} direction="row" spacing={1}>
+                      <FormControl>
+                        <FormControlLabel
+                          control={<Checkbox checked={search_params?.verified} onChange={handleChange} />}
+                          label="Verified"
+                        />
+                      </FormControl>
+                      <FormControl>
+                        <FormControlLabel
+                          control={<Checkbox checked={search_params?.uncensored} onChange={handleChange} />}
+                          label="Uncensored"
+                        />
+                      </FormControl>
+                      <FormControl>
+                        <FormControlLabel
+                          control={<Checkbox checked={search_params?.bluray} onChange={handleChange} />}
+                          label="BD"
+                        />
+                      </FormControl>
+                    </Stack>
                   </>
                 )}
-              </Stack>
-              <Stack sx={{ minWidth: '200px' }} direction="column" spacing={1}>
-                <FormControl sx={{ height: '48px' }}>
-                  <FormControlLabel
-                    control={<Checkbox checked={search_params?.verified} onChange={handleChange} />}
-                    label="Verified"
-                  />
-                </FormControl>
-                <FormControl sx={{ height: '48px' }}>
-                  <FormControlLabel
-                    control={<Checkbox checked={search_params?.uncensored} onChange={handleChange} />}
-                    label="Uncensored"
-                  />
-                </FormControl>
-                <FormControl sx={{ height: '48px' }}>
-                  <FormControlLabel
-                    control={<Checkbox checked={search_params?.bluray} onChange={handleChange} />}
-                    label="BD (Bluray)"
-                  />
-                </FormControl>
               </Stack>
             </Stack>
           </Paper>
