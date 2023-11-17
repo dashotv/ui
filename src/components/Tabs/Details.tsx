@@ -282,11 +282,11 @@ export default function Details({
             </Stack>
           </Paper>
         </Stack>
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
-          <Paper sx={{ p: 2, width: '100%' }}>
-            <Typography noWrap variant="h6" color="primary">
-              Source
-            </Typography>
+        <Paper sx={{ p: 2, width: '100%' }}>
+          <Typography noWrap variant="h6" color="primary">
+            Source
+          </Typography>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
             <Stack direction="column" spacing={1}>
               <Typography noWrap variant="h6">
                 {title}
@@ -298,16 +298,16 @@ export default function Details({
               </Stack>
               <Typography>{description}</Typography>
             </Stack>
-          </Paper>
-          <Stack direction="column" spacing={1}>
-            <div className="mediaCover">
-              <MediaCoverImage image={cover} />
-            </div>
-            <div className="mediaCover">
-              <MediaCoverImage image={background} background={true} />
-            </div>
+            <Stack direction="column" spacing={1}>
+              <div className="mediaCover">
+                <MediaCoverImage image={cover} />
+              </div>
+              <div className="mediaCover">
+                <MediaCoverImage image={background} background={true} />
+              </div>
+            </Stack>
           </Stack>
-        </Stack>
+        </Paper>
       </Stack>
     </>
   );
