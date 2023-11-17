@@ -60,3 +60,98 @@
 .seasons {
   padding-bottom: 8px;
 }
+
+:root {
+  --height: 200px;
+  --width: 136px;
+  --backgroundHeight: 77px;
+}
+
+@media (max-width: 410px) {
+  :root {
+    --height: 150px;
+    --width: 100px;
+    --backgroundHeight: 56px;
+  }
+}
+
+.mediaCover:has(div.image-background) {
+  height: var(--backgroundHeight);
+}
+
+.mediaCover {
+  position: relative;
+  overflow: hidden;
+  height: var(--height);
+  width: var(--width);
+  min-width: var(--width);
+  margin: 5px;
+  cursor: pointer;
+  .image {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 99;
+    object,
+    img {
+      height: var(--height);
+      width: var(--width);
+    }
+  }
+  .image-background {
+    object,
+    img {
+      height: var(--backgroundHeight);
+      width: var(--width);
+    }
+  }
+  .title {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    padding: 2px;
+  }
+  .release {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    padding: 2px;
+    span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-weight: bold;
+    }
+  }
+  .description {
+    position: absolute;
+    display: none;
+    top: 28px;
+    bottom: 28px;
+    right: 0px;
+    left: 0px;
+    z-index: 102;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    overflow: hidden;
+    padding: 2px;
+  }
+}
+.mediaCover:hover {
+  .description {
+    display: block;
+  }
+}

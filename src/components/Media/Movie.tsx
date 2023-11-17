@@ -25,6 +25,7 @@ export default function Movie({
   id,
   movie,
   movie: {
+    type,
     kind,
     cover,
     background,
@@ -104,6 +105,7 @@ export default function Movie({
     Details: (
       <Details
         {...{
+          type,
           kind,
           cover,
           background,

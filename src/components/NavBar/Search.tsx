@@ -7,9 +7,6 @@ import { useNavigate } from 'react-router-dom';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FindInPageOutlinedIcon from '@mui/icons-material/FindInPageOutlined';
-import HelpIcon from '@mui/icons-material/Help';
-import TheatersIcon from '@mui/icons-material/Theaters';
-import TvIcon from '@mui/icons-material/Tv';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -29,6 +26,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
+import { MediaCover } from 'components/Media';
 import { useMovieCreateMutation } from 'query/movies';
 import { Option } from 'query/option';
 import { useSearchAllQuery } from 'query/search';
@@ -205,6 +203,7 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
     ],
   };
 
+  console.log('option: ', option);
   if (!option.Kind) {
     setOption({ ...option, Kind: kinds[option.Type][0].value });
   }
@@ -218,7 +217,7 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
       <DialogTitle>Create {option.Type}?</DialogTitle>
       <DialogContent>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <SuperSearchCover {...{ option }} />
+          <MediaCover {...{ option }} imageOnly={true} />
           <Stack direction="column" spacing={1}>
             <Typography noWrap variant="h5" color="primary">
               {option.Title}
@@ -288,7 +287,7 @@ const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordion
           {options.map((option: Option) => (
             <Grid item key={option.ID}>
               <Link underline="none" color="inherit" onClick={() => select(option)}>
-                <SuperSearchCover {...{ option, type }} imageOnly={true} />
+                <MediaCover {...{ option, type }} />
               </Link>
             </Grid>
           ))}
@@ -296,47 +295,4 @@ const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordion
       </AccordionDetails>
     </Accordion>
   );
-};
-
-const SuperSearchCover = ({
-  option,
-  type,
-  imageOnly = false,
-}: {
-  option: Option;
-  type?: string;
-  imageOnly?: boolean;
-}) => {
-  return (
-    <div className="searchCover">
-      <div className="image">
-        <object data={option.Image}>
-          <img src="/blank.png" />
-        </object>
-      </div>
-      {imageOnly && (
-        <>
-          <div className="title">{option.Title}</div>
-          <div className="description">{option.Description}</div>
-          <div className="release">
-            <Stack direction="row" spacing={1}>
-              <SuperSearchIcon type={type || option.Type} />
-              <span>{option.Date}</span>
-            </Stack>
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
-
-const SuperSearchIcon = ({ type }: { type?: string }) => {
-  switch (type) {
-    case 'series':
-      return <TvIcon sx={{ pt: '2px' }} color="primary" fontSize="small" />;
-    case 'movie':
-      return <TheatersIcon sx={{ pt: '2px' }} color="primary" fontSize="small" />;
-    default:
-      return <HelpIcon sx={{ pt: '2px' }} color="primary" fontSize="small" />;
-  }
 };

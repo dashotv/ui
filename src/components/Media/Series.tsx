@@ -33,6 +33,7 @@ export function Series({
   id,
   series,
   series: {
+    type,
     kind,
     cover,
     background,
@@ -73,6 +74,7 @@ export function Series({
     Details: (
       <Details
         {...{
+          type,
           kind,
           cover,
           background,
