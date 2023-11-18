@@ -1,18 +1,13 @@
 import { useCountdown } from 'usehooks-ts';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
-import ChatIcon from '@mui/icons-material/Chat';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import FeedIcon from '@mui/icons-material/Feed';
 import OpacityIcon from '@mui/icons-material/Opacity';
-import TrafficIcon from '@mui/icons-material/Traffic';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-
-import { useNats } from '@quara-dev/react-nats-context';
 
 import { useSub } from 'hooks/useSub';
 import { useDownloadsLastQuery } from 'query/downloads';
@@ -101,29 +96,6 @@ function TorrentsGauge({ value, color }: GaugeProps) {
   return <BaseGauge title="Torrent" icon={<OpacityIcon />} value={value} color={color} />;
 }
 
-function NatsGauge() {
-  const { reconnecting, connecting, connected } = useNats();
-  let color: GaugeColor = 'error';
-  if (connected) {
-    color = 'success';
-  } else if (connecting || reconnecting) {
-    color = 'warning';
-  }
-  return <TrafficIcon color={color} />;
-}
-
-function MessagesGauge() {
-  const [color, setColor] = useState<GaugeColor>('primary');
-  const location = useLocation();
-  const cb = useCallback(() => {
-    setColor('warning');
-  }, []);
-  if (location.pathname !== '/admin') {
-    useSub('tower.logs', cb);
-  }
-  return <ChatIcon color={color} />;
-}
-
 export function Gauges() {
   const [nzbs, setNzbs] = useState('0.0');
   const [torrents, setTorrents] = useState('0.0');
@@ -155,8 +127,6 @@ export function Gauges() {
         <DiskGauge value={diskFree} color={Number(diskFree) > 25.0 ? 'primary' : 'warning'} />
         <NzbsGauge value={nzbs} color="primary" />
         <TorrentsGauge value={torrents} color="primary" />
-        <MessagesGauge />
-        <NatsGauge />
       </Stack>
     </div>
   );

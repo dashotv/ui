@@ -1,11 +1,12 @@
 import { useSnackbar } from 'notistack';
 
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useCallback, useState } from 'react';
+import { IoFileTrayFull } from 'react-icons/io5';
 import { Link, useLocation } from 'react-router-dom';
 
-import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
+import TrafficIcon from '@mui/icons-material/Traffic';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -13,10 +14,12 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import SvgIcon from '@mui/material/SvgIcon';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 import { UserButton } from '@clerk/clerk-react';
+import { useNats } from '@quara-dev/react-nats-context';
 
 import { useSub } from 'hooks/useSub';
 
@@ -31,6 +34,31 @@ const pages = [
   { name: 'Movies', page: '/movies' },
   { name: 'Releases', page: '/releases' },
 ];
+
+function MessagesIcon() {
+  const [color, setColor] = useState<'primary' | 'warning'>('primary');
+  const location = useLocation();
+  const cb = useCallback(() => {
+    setColor('warning');
+  }, []);
+  if (location.pathname !== '/admin') {
+    useSub('tower.logs', cb);
+  }
+  return <SvgIcon component={IoFileTrayFull} inheritViewBox fontSize="large" color={color} />;
+}
+
+function NatsIcon() {
+  const { reconnecting, connecting, connected } = useNats();
+  const [color, setColor] = useState<'primary' | 'warning' | 'error'>('primary');
+  useEffect(() => {
+    if (!connected) {
+      setColor('error');
+    } else if (reconnecting || connecting) {
+      setColor('warning');
+    }
+  }, [connected, reconnecting, connecting]);
+  return <TrafficIcon color={color} fontSize="large" />;
+}
 
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -136,15 +164,22 @@ const NavBar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, height: 51, width: 51, pt: '2px' }}>
+            <SuperSearch />
+          </Box>
+          <Box sx={{ flexGrow: 0, height: 51, width: 51, pt: '2px' }}>
             <Link to="/admin">
               <IconButton aria-label="admin panel">
-                <AdminPanelSettingsOutlinedIcon fontSize="large" color="primary" />
+                <MessagesIcon />
               </IconButton>
             </Link>
           </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <SuperSearch />
+          <Box sx={{ flexGrow: 0, height: 51, width: 51, pt: '2px' }}>
+            <Link to="/admin">
+              <IconButton aria-label="admin panel">
+                <NatsIcon />
+              </IconButton>
+            </Link>
           </Box>
           <Box sx={{ flexGrow: 0, height: 51, width: 51, pt: 1.5, pl: 1 }}>
             <UserButton />

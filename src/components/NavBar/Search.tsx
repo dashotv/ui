@@ -3,10 +3,10 @@ import { useDebounce } from 'usehooks-ts';
 import React from 'react';
 import { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { IoSearchCircle } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import FindInPageOutlinedIcon from '@mui/icons-material/FindInPageOutlined';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -23,6 +23,7 @@ import Link from '@mui/material/Link';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
+import SvgIcon from '@mui/material/SvgIcon';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
@@ -98,7 +99,7 @@ export default function SuperSearch() {
   return (
     <>
       <IconButton onClick={() => setOpen(true)}>
-        <FindInPageOutlinedIcon fontSize="large" color="primary" />
+        <SvgIcon component={IoSearchCircle} inheritViewBox fontSize="large" color="primary" />
       </IconButton>
       {open && <SuperSearchController open={open} setOpen={setOpen} confirm={showCreate} />}
       {confirm && <SuperSearchConfirm open={confirm} confirm={create} option={option} />}
