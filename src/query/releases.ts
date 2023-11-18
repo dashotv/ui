@@ -19,6 +19,11 @@ export const getReleasesPage = async (page, pagesize, qs) => {
   return response.data as ReleasesResponse;
 };
 
+export const torrentRemove = async (hash: string) => {
+  const response = await axios.get(`/api/flame/qbittorrents/remove?hash=${hash}`);
+  return response.data;
+};
+
 export const getRelease = async id => {
   const response = await axios.get(`/api/tower/releases/${id}`);
   return response.data;
@@ -66,5 +71,11 @@ export const useReleaseSettingMutation = () => {
     onSuccess: async (data, args) => {
       await queryClient.invalidateQueries({ queryKey: ['releases', args.id] });
     },
+  });
+};
+
+export const useTorrentRemoveMutation = () => {
+  return useMutation({
+    mutationFn: (hash: string) => torrentRemove(hash),
   });
 };

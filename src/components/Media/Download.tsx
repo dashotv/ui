@@ -18,6 +18,7 @@ import { Torch } from 'components/Tabs/Torch';
 import { useReleases } from 'hooks/useReleases';
 import { useSub } from 'hooks/useSub';
 import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMutation } from 'query/downloads';
+import { useTorrentRemoveMutation } from 'query/releases';
 import { DownloadFile, Download as DownloadType } from 'types/download';
 import { Medium } from 'types/medium';
 import { SearchForm } from 'types/search_form';
@@ -73,6 +74,7 @@ export default function Download({
   const downloadUpdate = useDownloadMutation(id);
   const downloadSetting = useDownloadSettingMutation(id);
   const downloadSelection = useDownloadSelectionMutation(id);
+  const torrentRemove = useTorrentRemoveMutation();
   const { progress, eta, queue } = useReleases();
   const navigate = useNavigate();
 
@@ -195,9 +197,17 @@ export default function Download({
     navigate('/' + type + '/' + id);
   }, [medium, navigate]);
 
-  const complete = useCallback(() => {
-    console.log('clicked complete');
-    changeSetting('status', 'done');
+  const remove = useCallback(() => {
+    console.log('clicked remove');
+    torrentRemove.mutate(thash, {
+      onSuccess: data => {
+        if (data.error) {
+          console.error('error: ', data.error);
+          return;
+        }
+        change('status', 'deleted');
+      },
+    });
   }, []);
 
   const buttons = [
@@ -241,7 +251,7 @@ export default function Download({
     },
     {
       icon: <CancelIcon color="error" />,
-      click: complete,
+      click: remove,
       title: 'delete',
     },
   ];

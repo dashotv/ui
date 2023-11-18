@@ -1,8 +1,9 @@
-import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
-import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
+
+import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   // depending on your application, base can also be "/"
@@ -37,6 +38,13 @@ export default defineConfig({
         secure: false,
         ws: true,
         rewrite: path => path.replace(/^\/api\/tower/, ''),
+      },
+      '/api/flame': {
+        target: 'http://localhost:9001',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        rewrite: path => path.replace(/^\/api\/flame/, ''),
       },
       '/api/scry': {
         target: 'http://localhost:10080',
