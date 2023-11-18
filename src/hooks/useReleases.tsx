@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { useSubscription } from 'components/Nats/useSubscription';
+import { useSub } from 'hooks/useSub';
 import { Nzb, NzbResponseStatus } from 'types/Nzb';
 import { Torrent } from 'types/torrents';
 
@@ -62,7 +62,7 @@ export function useReleases() {
     }
   };
 
-  useSubscription(
+  useSub(
     'flame.qbittorrents',
     useCallback(
       data => {
@@ -78,7 +78,7 @@ export function useReleases() {
     ),
   );
 
-  useSubscription(
+  useSub(
     'flame.nzbs',
     useCallback(
       data => {

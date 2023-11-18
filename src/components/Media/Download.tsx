@@ -11,12 +11,12 @@ import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
 import { DownloadBanner } from 'components/Banner';
 import { DownloadInfo } from 'components/Downloads';
-import { useSubscription } from 'components/Nats/useSubscription';
 import { FilesWithSelector } from 'components/Tabs/FilesWithSelector';
 import { MediumTabs } from 'components/Tabs/MediumTabs';
 import { Nzbgeek } from 'components/Tabs/Nzbgeek';
 import { Torch } from 'components/Tabs/Torch';
 import { useReleases } from 'hooks/useReleases';
+import { useSub } from 'hooks/useSub';
 import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMutation } from 'query/downloads';
 import { DownloadFile, Download as DownloadType } from 'types/download';
 import { Medium } from 'types/medium';
@@ -88,7 +88,7 @@ export default function Download({
     downloadSelection.mutate({ mediumId: eid, num: num });
   }
 
-  useSubscription(
+  useSub(
     'seer.downloads',
     useCallback(
       data => {

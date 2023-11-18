@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 
 import { UserButton } from '@clerk/clerk-react';
 
-import { useSubscription } from 'components/Nats/useSubscription';
+import { useSub } from 'hooks/useSub';
 
 import './Navbar.scss';
 import { Notice } from './Notice';
@@ -52,7 +52,7 @@ const NavBar = () => {
     setAnchorElNav(null);
   };
 
-  useSubscription('seer.notices', data => enqueueSnackbar(<Notice data={data} />, { variant: data.level }));
+  useSub('seer.notices', data => enqueueSnackbar(<Notice data={data} />, { variant: data.level }));
 
   return (
     <AppBar position="static">

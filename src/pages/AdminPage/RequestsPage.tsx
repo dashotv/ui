@@ -6,15 +6,15 @@ import Container from '@mui/material/Container';
 import { useQueryClient } from '@tanstack/react-query';
 
 import LoadingIndicator from 'components/Loading';
-import { useSubscription } from 'components/Nats/useSubscription';
 import { RequestsList } from 'components/Requests/RequestsList';
+import { useSub } from 'hooks/useSub';
 import { useRequestsQuery } from 'query/requests';
 
 export default function RequestsPage() {
   const [page] = useState(1);
   const requests = useRequestsQuery(page);
   const queryClient = useQueryClient();
-  useSubscription('tower.requests', () => {
+  useSub('tower.requests', () => {
     console.log('tower.requests');
     queryClient.invalidateQueries({ queryKey: ['requests', page] });
   });

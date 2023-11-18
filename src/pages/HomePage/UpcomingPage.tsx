@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { DownloadList } from 'components/Downloads';
 import LoadingIndicator from 'components/Loading';
 import { Media } from 'components/Media';
-import { useSubscription } from 'components/Nats/useSubscription';
+import { useSub } from 'hooks/useSub';
 import { useDownloadsActiveQuery } from 'query/downloads';
 import { useUpcomingQuery } from 'query/upcoming';
 
@@ -18,14 +18,14 @@ export default function UpcomingPage() {
   const downloads = useDownloadsActiveQuery();
   const upcoming = useUpcomingQuery();
 
-  useSubscription(
+  useSub(
     'seer.downloads',
     useCallback(() => {
       queryClient.invalidateQueries({ queryKey: ['downloads', 'active'] });
     }, [queryClient]),
   );
 
-  useSubscription(
+  useSub(
     'seer.episodes',
     useCallback(() => {
       queryClient.invalidateQueries({ queryKey: ['media', 'upcoming'] });

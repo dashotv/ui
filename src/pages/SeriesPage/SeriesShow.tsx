@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import LoadingIndicator from 'components/Loading';
 import { Series } from 'components/Media';
-import { useSubscription } from 'components/Nats/useSubscription';
+import { useSub } from 'hooks/useSub';
 import {
   putSeriesRefresh,
   useEpisodeSettingMutation,
@@ -51,7 +51,7 @@ export default function SeriesShow() {
     setCurrentSeason(series.currentSeason);
   }, [series, series?.currentSeason]);
 
-  useSubscription('tower.series', data => {
+  useSub('tower.series', data => {
     if (data.ID !== id) {
       return;
     }

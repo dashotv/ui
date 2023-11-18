@@ -15,11 +15,11 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { ClerkProvider } from '@clerk/clerk-react';
 import { dark } from '@clerk/themes';
+import { NatsProvider } from '@quara-dev/react-nats-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { NatsProvider } from 'components/Nats/context';
-
+const nats = import.meta.env.PROD ? 'wss://www.dasho.tv:9222/' : 'ws://localhost:9222/';
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
 const darkTheme = createTheme({
@@ -58,7 +58,7 @@ ReactDOMClient.createRoot(MOUNT_NODE!).render(
         TransitionProps={{ direction: 'down' }}
         dense={true}
       >
-        <NatsProvider>
+        <NatsProvider maxReconnectAttempts={1000} servers={[nats]}>
           <Router>
             <CssBaseline />
             <HelmetProvider>

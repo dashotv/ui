@@ -7,14 +7,14 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import LoadingIndicator from 'components/Loading';
 import { LogsList } from 'components/Logs/LogsList';
-import { useSubscription } from 'components/Nats/useSubscription';
+import { useSub } from 'hooks/useSub';
 import { useLogsQuery } from 'query/logs';
 
 export default function JobsPage() {
   const [page] = useState(1);
   const logs = useLogsQuery(page);
   const queryClient = useQueryClient();
-  useSubscription('tower.logs', () => {
+  useSub('tower.logs', () => {
     queryClient.invalidateQueries({ queryKey: ['logs', page] });
   });
 
