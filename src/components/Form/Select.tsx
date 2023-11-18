@@ -10,8 +10,14 @@ import { InputProps, Option } from './types';
 
 export interface SelectProps {
   options: Option[];
+  render?: (option: Option) => React.ReactNode;
 }
-export const Select = ({ name, label, disabled, options, control, sx }: InputProps & SelectProps) => {
+export const Select = ({ name, label, disabled, options, control, sx, render, onChange }: InputProps & SelectProps) => {
+  const renderDefault = option => (
+    <MenuItem key={option.value} value={option.value}>
+      <span>{render ? render(option) : option.label}</span>
+    </MenuItem>
+  );
   return (
     <Controller
       name={name}
@@ -26,12 +32,9 @@ export const Select = ({ name, label, disabled, options, control, sx }: InputPro
           label={title(label || name)}
           variant="standard"
           fullWidth
+          onChange={onChange}
         >
-          {options.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              <span>{option.label}</span>
-            </MenuItem>
-          ))}
+          {options.map(renderDefault)}
         </TextField>
       )}
     />

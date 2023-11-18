@@ -1,3 +1,4 @@
+import React from 'react';
 import { Control } from 'react-hook-form';
 
 import { SxProps } from '@mui/system';
@@ -9,9 +10,10 @@ export interface InputProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any>;
   sx?: SxProps;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface Option {
   value: string | number;
-  label: string;
+  label: string | number | React.ReactElement;
 }

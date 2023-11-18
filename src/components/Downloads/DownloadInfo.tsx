@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
@@ -11,9 +11,11 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
+import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
+
+import { Select, Text } from 'components/Form';
+import { Option } from 'components/Form';
 
 const statuses = [
   { label: <SearchIcon fontSize="small" />, value: 'searching' },
@@ -41,7 +43,6 @@ export type DownloadInfoProps = {
 };
 export const DownloadInfo = ({ release_id, url, status, thash, changer }: DownloadInfoProps) => {
   const {
-    register,
     handleSubmit,
     control,
     // formState: { errors },
@@ -53,66 +54,29 @@ export const DownloadInfo = ({ release_id, url, status, thash, changer }: Downlo
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     changer(ev.target.name, ev.target.value);
   };
-  console.log('status:', status);
+  const renderOption = (option: Option) => (
+    <Stack spacing={1} direction="row">
+      <span>{option.label}</span>
+      <span style={{ width: '125px', overflow: 'hidden' }}>{option.value}</span>
+    </Stack>
+  );
   return (
-    <>
+    <Paper sx={{ mt: 2, p: 2, width: '100%' }}>
       <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(data => console.log(data))}>
-        <Controller
-          name="status"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              select
-              sx={{ mt: 2, mr: 1, width: '75px' }}
-              id="status"
-              label="Status"
-              margin="none"
-              size="small"
-              inputProps={register('status', {
-                required: 'status',
-              })}
-              onChange={handleChange}
-            >
-              {statuses.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  <Stack spacing={1} direction="row">
-                    <span>{option.label}</span>
-                    <span style={{ width: '125px', overflow: 'hidden' }}>{option.value}</span>
-                  </Stack>
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-        />
-        <TextField
-          sx={{ mt: 2, mr: 1, width: { xs: '75px', sm: '360px' } }}
-          id="hash"
-          label="Hash"
-          margin="none"
-          size="small"
-          autoComplete="off"
-          {...register('thash', { required: true, onChange: handleChange })}
-        />
-        <TextField
-          sx={{ mt: 2, mr: 1, width: { xs: '75px', sm: '360px' } }}
-          id="release"
-          label="Release"
-          margin="none"
-          size="small"
-          autoComplete="off"
-          {...register('release_id', { required: true, onChange: handleChange })}
-        />
-        <TextField
-          sx={{ mt: 2, mr: 1, width: { xs: '75px', sm: '360px' } }}
-          id="url"
-          label="URL"
-          margin="none"
-          size="small"
-          autoComplete="off"
-          {...register('url', { required: true, onChange: handleChange })}
-        />
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+          <Select
+            sx={{ width: { sm: '150px' } }}
+            name="status"
+            control={control}
+            options={statuses}
+            render={renderOption}
+            onChange={handleChange}
+          />
+          <Text name="thash" control={control} onChange={handleChange} />
+          <Text name="release_id" label="release" control={control} onChange={handleChange} />
+          <Text name="url" control={control} onChange={handleChange} />
+        </Stack>
       </Box>
-    </>
+    </Paper>
   );
 };
