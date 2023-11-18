@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Option } from 'query/option';
+import { Medium } from 'types/medium';
 import { Setting, SettingsArgs } from 'types/setting';
 
 export const createSeries = async (r: Option) => {
@@ -27,6 +28,11 @@ export const getSeriesSeasonEpisodes = async (id, season) => {
 
 export const putSeriesRefresh = async (id: string) => {
   const response = await axios.put(`/api/tower/series/${id}/refresh`);
+  return response.data;
+};
+
+export const putSeries = async (id: string, data: Medium) => {
+  const response = await axios.put(`/api/tower/series/${id}`, data);
   return response.data;
 };
 
@@ -78,6 +84,18 @@ export const useSeriesCreateMutation = () => {
   return useMutation({
     mutationFn: (n: Option) => {
       return createSeries(n);
+    },
+  });
+};
+
+export const useSeriesUpdateMutation = (id: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: Medium) => {
+      return putSeries(id, data);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['series', id] });
     },
   });
 };

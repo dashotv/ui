@@ -8,6 +8,6 @@ export interface InputProps {
 }
 
 interface Option {
-  value: string;
+  value: string | number;
   label: string;
 }

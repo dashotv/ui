@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
 import SportsBarIcon from '@mui/icons-material/SportsBar';
 import SportsBarOutlinedIcon from '@mui/icons-material/SportsBarOutlined';
@@ -16,6 +17,7 @@ import Typography from '@mui/material/Typography';
 import Chrono from 'components/Chrono';
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
+import { useSeriesUpdateMutation } from 'query/series';
 import { Medium } from 'types/medium';
 
 const kinds = {
@@ -38,9 +40,9 @@ const sources = [
 ];
 const resolutions = [
   { label: '', value: '' },
-  { label: '2160p', value: '2160' },
-  { label: '1080p', value: '1080' },
-  { label: '720p', value: '720' },
+  { label: '2160p', value: 2160 },
+  { label: '1080p', value: 1080 },
+  { label: '720p', value: 720 },
 ];
 const releaseSources = [
   '',
@@ -68,10 +70,17 @@ export default function Details({
   medium,
   medium: { type, cover, background, search_params, title, description, release_date, created_at, updated_at },
 }: DetailsProps) {
+  const { id } = useParams();
+  if (!id) {
+    return <></>;
+  }
+
   const { handleSubmit, control } = useForm({ values: medium });
+  const series = useSeriesUpdateMutation(id);
 
   const submit = (data: Medium) => {
     console.log('data:', data);
+    series.mutate(data);
   };
 
   return (
