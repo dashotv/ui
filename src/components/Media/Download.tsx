@@ -195,9 +195,9 @@ export default function Download({
     navigate('/' + type + '/' + id);
   }, [medium, navigate]);
 
-  const complete = useCallback(ev => {
+  const complete = useCallback(() => {
     console.log('clicked complete');
-    ev.preventDefault(); // for the buttons inside the Link component
+    changeSetting('status', 'done');
   }, []);
 
   const buttons = [
@@ -209,7 +209,7 @@ export default function Download({
     },
     {
       icon: <CheckCircleIcon color="primary" />,
-      click: complete,
+      click: () => change('status', 'done'),
       title: 'mark complete',
     },
     {
