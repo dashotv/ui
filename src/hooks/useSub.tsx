@@ -10,7 +10,6 @@ export const useSub = (topic: string, callback: (data) => void) => {
   const jc = JSONCodec();
   const cb = useCallback(
     (err: NatsError | null, msg: Msg) => {
-      // console.log('useSub:', topic, err, msg);
       if (err) {
         console.error('useSubscription:(callback)', topic, err);
         return;

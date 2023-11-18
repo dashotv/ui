@@ -38,12 +38,15 @@ const pages = [
 function MessagesIcon() {
   const [color, setColor] = useState<'primary' | 'warning'>('primary');
   const location = useLocation();
-  const cb = useCallback(() => {
+  const cb = () => {
     setColor('warning');
-  }, []);
-  if (location.pathname !== '/admin') {
-    useSub('tower.logs', cb);
-  }
+  };
+  useEffect(() => {
+    if (location.pathname === '/admin') {
+      setColor('primary');
+    }
+  }, [color, location.pathname]);
+  useSub('tower.logs', cb);
   return <SvgIcon component={IoFileTrayFull} inheritViewBox fontSize="large" color={color} />;
 }
 
