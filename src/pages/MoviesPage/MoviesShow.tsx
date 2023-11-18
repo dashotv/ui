@@ -4,18 +4,36 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import LoadingIndicator from 'components/Loading';
 import Movie from 'components/Media/Movie';
-import { useMovieQuery, useMovieSettingMutation } from 'query/movies';
+import { useSub } from 'hooks/useSub';
+import { putMovieRefresh, useMovieQuery, useMovieSettingMutation } from 'query/movies';
 
 export default function MoviesShow() {
   const { id } = useParams();
   const { isFetching, data } = useMovieQuery(id);
+  const queryClient = useQueryClient();
   const movieSetting = useMovieSettingMutation(id);
 
   function changeMovieSetting(id, setting, value) {
     movieSetting.mutate({ setting: setting, value: value });
   }
+
+  const refresh = () => {
+    if (!id) {
+      return;
+    }
+    putMovieRefresh(id);
+  };
+
+  useSub('tower.movies', data => {
+    if (data.ID !== id) {
+      return;
+    }
+    queryClient.invalidateQueries({ queryKey: ['movies', id] });
+  });
 
   return (
     <>
@@ -25,7 +43,7 @@ export default function MoviesShow() {
       </Helmet>
       <Container maxWidth="xl">
         {isFetching && <LoadingIndicator />}
-        {data && <Movie id={data.id} movie={data} change={changeMovieSetting} />}
+        {data && <Movie id={data.id} movie={data} change={changeMovieSetting} refresh={refresh} />}
       </Container>
     </>
   );

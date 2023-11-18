@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import * as React from 'react';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
@@ -19,14 +19,16 @@ export type MovieProps = {
   id: string;
   movie: MovieType;
   change: (id: string, key: string, value) => void;
+  refresh: () => void;
 };
 // TODO: watches
-export default function Movie({ id, movie, movie: { paths, broken, downloaded, completed }, change }: MovieProps) {
-  const [brokenCurrent, setBroken] = useState(broken);
-  const [completedCurrent, setCompleted] = useState(completed);
-  const [downloadedCurrent, setDownloaded] = useState(downloaded);
-  // TODO: handle downloaded, completed
-
+export default function Movie({
+  id,
+  movie,
+  movie: { paths, broken, downloaded, completed },
+  change,
+  refresh,
+}: MovieProps) {
   const complete = useCallback(ev => {
     console.log('clicked complete');
     ev.preventDefault(); // for the buttons inside the Link component
@@ -40,30 +42,29 @@ export default function Movie({ id, movie, movie: { paths, broken, downloaded, c
     },
     {
       icon: <ReplayCircleFilledIcon color="primary" />,
-      click: complete,
+      click: () => {
+        refresh();
+      },
       title: 'refresh',
     },
     {
-      icon: <BuildCircleIcon color={brokenCurrent ? 'secondary' : 'action'} />,
+      icon: <BuildCircleIcon color={broken ? 'secondary' : 'action'} />,
       click: () => {
-        change(id, 'broken', !brokenCurrent);
-        setBroken(!brokenCurrent);
+        change(id, 'broken', !broken);
       },
       title: 'broken',
     },
     {
-      icon: <DownloadForOfflineIcon color={downloadedCurrent ? 'secondary' : 'action'} />,
+      icon: <DownloadForOfflineIcon color={downloaded ? 'secondary' : 'action'} />,
       click: () => {
-        change(id, 'downloaded', !downloadedCurrent);
-        setDownloaded(!downloadedCurrent);
+        change(id, 'downloaded', !downloaded);
       },
       title: 'downloaded',
     },
     {
-      icon: <CheckCircleIcon color={completedCurrent ? 'secondary' : 'action'} />,
+      icon: <CheckCircleIcon color={completed ? 'secondary' : 'action'} />,
       click: () => {
-        change(id, 'completed', !completedCurrent);
-        setCompleted(!completedCurrent);
+        change(id, 'completed', !completed);
       },
       title: 'completed',
     },

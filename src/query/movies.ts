@@ -27,6 +27,11 @@ export const putMovie = async (id: string, data: Medium) => {
   return response.data;
 };
 
+export const putMovieRefresh = async (id: string) => {
+  const response = await axios.put(`/api/tower/movies/${id}/refresh`);
+  return response.data;
+};
+
 export const useMoviesAllQuery = page =>
   useQuery({
     queryKey: ['movies', 'all', page],
