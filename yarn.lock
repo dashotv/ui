@@ -6775,6 +6775,7 @@ __metadata:
     nats.ws: "npm:^1.19.1"
     notistack: "npm:3.0.1"
     prettier: "npm:3.0.3"
+    radash: "npm:^11.0.0"
     react: "npm:18.2.0"
     react-app-polyfill: "npm:3.0.0"
     react-dom: "npm:18.2.0"
@@ -11788,6 +11789,13 @@ __metadata:
   version: 5.1.1
   resolution: "quick-lru@npm:5.1.1"
   checksum: a24cba5da8cec30d70d2484be37622580f64765fb6390a928b17f60cd69e8dbd32a954b3ff9176fa1b86d86ff2ba05252fae55dc4d40d0291c60412b0ad096da
+  languageName: node
+  linkType: hard
+
+"radash@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "radash@npm:11.0.0"
+  checksum: 5bfb5c44b9cb12b6242a51d93facf32fac217e0e2c86f229ae11a5d12b33e558c3d771e81415f08b88790c2384ed297e3b83d2735bc631f858312ca9c9323afa
   languageName: node
   linkType: hard
 

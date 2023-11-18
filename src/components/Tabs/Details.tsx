@@ -1,16 +1,14 @@
 import * as React from 'react';
+import { useForm } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import Chrono from 'components/Chrono';
+import { Checkbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
 import { Medium } from 'types/medium';
 
@@ -34,9 +32,9 @@ const sources = [
 ];
 const resolutions = [
   { label: '', value: '' },
-  { label: '2160p', value: 2160 },
-  { label: '1080p', value: 1080 },
-  { label: '720p', value: 720 },
+  { label: '2160p', value: '2160' },
+  { label: '1080p', value: '1080' },
+  { label: '720p', value: '720' },
 ];
 const releaseSources = [
   '',
@@ -55,35 +53,26 @@ const releaseSources = [
   'shana',
   'showrss',
   'yify',
-];
-const types = ['', 'tv', 'anime', 'movies'];
+].map(v => ({ label: v, value: v }));
+const types = ['', 'tv', 'anime', 'movies'].map(v => ({ label: v, value: v }));
 export type DetailsProps = {
   medium: Medium;
 };
 export default function Details({
-  medium: {
-    type,
-    kind,
-    cover,
-    background,
-    display,
-    search,
-    search_params,
-    directory,
-    title,
-    description,
-    release_date,
-    source,
-    source_id,
-    created_at,
-    updated_at,
-  },
+  medium,
+  medium: { type, cover, background, search_params, title, description, release_date, created_at, updated_at },
 }: DetailsProps) {
-  const handleChange = ev => {
-    console.log('handleChange:', ev.target.name, ev.target.value);
+  const { handleSubmit, control } = useForm({ values: medium });
+
+  const submit = (data: Medium) => {
+    console.log('data:', data);
   };
+
   return (
-    <>
+    <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(submit)}>
+      <Button variant="contained" color="primary" type="submit">
+        Submit
+      </Button>
       <Stack sx={{ width: '100%' }} direction="column" spacing={2}>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
           <Paper sx={{ p: 2, width: '100%' }}>
@@ -91,72 +80,12 @@ export default function Details({
               Common
             </Typography>
             <Stack direction="column" spacing={1}>
-              <TextField
-                sx={{ m: 1 }}
-                id="display"
-                name="display"
-                label="Display"
-                variant="standard"
-                value={display}
-                autoComplete="off"
-                onChange={handleChange}
-              />
-              <TextField
-                sx={{ m: 1 }}
-                id="directory"
-                name="directory"
-                label="Directory"
-                variant="standard"
-                value={directory}
-                autoComplete="off"
-                onChange={handleChange}
-              />
+              <Text name="display" control={control} />
+              <Text name="directory" control={control} />
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <TextField
-                  fullWidth
-                  sx={{ m: 1 }}
-                  id="kind"
-                  name="kind"
-                  select
-                  label="Kind"
-                  variant="standard"
-                  value={kind}
-                  onChange={handleChange}
-                >
-                  {kinds[type].map(option => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <TextField
-                  fullWidth
-                  sx={{ m: 1 }}
-                  id="source"
-                  name="source"
-                  select
-                  label="Source"
-                  variant="standard"
-                  value={source}
-                  onChange={handleChange}
-                >
-                  {sources.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <TextField
-                  fullWidth
-                  sx={{ m: 1 }}
-                  id="source_id"
-                  name="source_id"
-                  label="Source ID"
-                  variant="standard"
-                  value={source_id}
-                  autoComplete="off"
-                  onChange={handleChange}
-                />
+                <Select name="kind" options={kinds[type]} control={control} />
+                <Select name="source" options={sources} control={control} />
+                <Text name="source_id" control={control} />
               </Stack>
             </Stack>
           </Paper>
@@ -169,112 +98,24 @@ export default function Details({
                 {search_params && (
                   <>
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                      <TextField
-                        fullWidth
-                        sx={{ m: 1 }}
-                        id="search"
-                        name="search"
-                        label="Search"
-                        variant="standard"
-                        value={search}
-                        autoComplete="off"
-                        onChange={handleChange}
-                      />
-                      <TextField
-                        fullWidth
-                        sx={{ m: 1 }}
-                        id="group"
-                        name="group"
-                        label="Group"
-                        variant="standard"
-                        value={search_params?.group || ''}
-                        autoComplete="off"
-                        onChange={handleChange}
-                      />
-                      <TextField
-                        fullWidth
-                        sx={{ m: 1 }}
-                        id="author"
-                        name="author"
-                        label="Author"
-                        variant="standard"
-                        value={search_params?.author || ''}
-                        autoComplete="off"
-                        onChange={handleChange}
-                      />
+                      <Text name="search" control={control} />
+                      <Text name="search_params.group" label="group" control={control} />
+                      <Text name="search_params.author" label="author" control={control} />
                     </Stack>
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                      <TextField
-                        fullWidth
-                        sx={{ m: 1 }}
-                        id="resolution"
-                        name="resolution"
-                        select
-                        label="Resolution"
-                        variant="standard"
-                        value={search_params?.resolution}
-                        onChange={handleChange}
-                      >
-                        {resolutions.map(option => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                      <TextField
-                        fullWidth
-                        sx={{ m: 1 }}
-                        id="source"
-                        name="source"
-                        select
-                        label="Source"
-                        variant="standard"
-                        value={search_params?.source}
-                        onChange={handleChange}
-                      >
-                        {releaseSources.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                      <TextField
-                        fullWidth
-                        sx={{ m: 1 }}
-                        id="type"
-                        name="type"
-                        select
-                        label="type"
-                        variant="standard"
-                        value={search_params.type}
-                        onChange={handleChange}
-                      >
-                        {types.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </TextField>
+                      <Select
+                        name="search_params.resolution"
+                        label="resolution"
+                        options={resolutions}
+                        control={control}
+                      />
+                      <Select name="search_params.source" label="source" options={releaseSources} control={control} />
+                      <Select name="search_params.type" label="type" options={types} control={control} />
                     </Stack>
                     <Stack sx={{ minWidth: '200px' }} direction="row" spacing={1}>
-                      <FormControl>
-                        <FormControlLabel
-                          control={<Checkbox checked={search_params?.verified} onChange={handleChange} />}
-                          label="Verified"
-                        />
-                      </FormControl>
-                      <FormControl>
-                        <FormControlLabel
-                          control={<Checkbox checked={search_params?.uncensored} onChange={handleChange} />}
-                          label="Uncensored"
-                        />
-                      </FormControl>
-                      <FormControl>
-                        <FormControlLabel
-                          control={<Checkbox checked={search_params?.bluray} onChange={handleChange} />}
-                          label="BD"
-                        />
-                      </FormControl>
+                      <Checkbox name="search_params.verified" label="verified" control={control} />
+                      <Checkbox name="search_params.uncensored" label="uncensored" control={control} />
+                      <Checkbox name="search_params.bluray" label="bluray" control={control} />
                     </Stack>
                   </>
                 )}
@@ -309,7 +150,7 @@ export default function Details({
           </Stack>
         </Paper>
       </Stack>
-    </>
+    </Box>
   );
 }
 
