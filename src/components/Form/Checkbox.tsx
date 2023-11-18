@@ -27,3 +27,26 @@ export const Checkbox = ({ name, label, control }: InputProps) => {
     />
   );
 };
+export interface IconCheckboxProps {
+  icon: React.ReactNode;
+  checkedIcon: React.ReactNode;
+}
+export const IconCheckbox = ({ name, label, icon, checkedIcon, control }: InputProps & IconCheckboxProps) => {
+  //   error={!!errors[name]}
+  //   helperText={errors[name]?.message}
+  return (
+    <Controller
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <FormControl variant="standard">
+          <FormControlLabel
+            control={<MUICheckbox {...field} icon={icon} checkedIcon={checkedIcon} checked={field.value} id={name} />}
+            label=""
+            title={title(label || name)}
+          />
+        </FormControl>
+      )}
+    />
+  );
+};

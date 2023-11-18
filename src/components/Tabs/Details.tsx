@@ -1,6 +1,12 @@
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 
+import SportsBarIcon from '@mui/icons-material/SportsBar';
+import SportsBarOutlinedIcon from '@mui/icons-material/SportsBarOutlined';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
+import VideocamIcon from '@mui/icons-material/Videocam';
+import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -8,7 +14,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import Chrono from 'components/Chrono';
-import { Checkbox, Select, Text } from 'components/Form';
+import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
 import { Medium } from 'types/medium';
 
@@ -70,9 +76,6 @@ export default function Details({
 
   return (
     <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(submit)}>
-      <Button variant="contained" color="primary" type="submit">
-        Submit
-      </Button>
       <Stack sx={{ width: '100%' }} direction="column" spacing={2}>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
           <Paper sx={{ p: 2, width: '100%' }}>
@@ -112,10 +115,37 @@ export default function Details({
                       <Select name="search_params.source" label="source" options={releaseSources} control={control} />
                       <Select name="search_params.type" label="type" options={types} control={control} />
                     </Stack>
-                    <Stack sx={{ minWidth: '200px' }} direction="row" spacing={1}>
-                      <Checkbox name="search_params.verified" label="verified" control={control} />
-                      <Checkbox name="search_params.uncensored" label="uncensored" control={control} />
-                      <Checkbox name="search_params.bluray" label="bluray" control={control} />
+                    <Stack
+                      sx={{ width: '100%', justifyContent: 'space-between' }}
+                      direction={{ xs: 'column', sm: 'row' }}
+                      spacing={1}
+                    >
+                      <Stack sx={{ minWidth: '200px' }} direction="row" spacing={1}>
+                        <IconCheckbox
+                          icon={<VerifiedOutlinedIcon />}
+                          checkedIcon={<VerifiedIcon />}
+                          name="search_params.verified"
+                          label="verified"
+                          control={control}
+                        />
+                        <IconCheckbox
+                          icon={<SportsBarOutlinedIcon />}
+                          checkedIcon={<SportsBarIcon />}
+                          name="search_params.uncensored"
+                          label="uncensored"
+                          control={control}
+                        />
+                        <IconCheckbox
+                          icon={<VideocamOutlinedIcon />}
+                          checkedIcon={<VideocamIcon />}
+                          name="search_params.bluray"
+                          label="bluray"
+                          control={control}
+                        />
+                      </Stack>
+                      <Button variant="contained" color="primary" type="submit">
+                        Submit
+                      </Button>
                     </Stack>
                   </>
                 )}
