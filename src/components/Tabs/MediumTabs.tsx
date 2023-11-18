@@ -20,7 +20,7 @@ export function MediumTabs({ data }: { data: MediumTabMap }) {
     <div className="tabs">
       <Box maxWidth="xl">
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="scrollable">
             {Object.keys(data).map((k, i) => {
               return <Tab key={i} label={k} id={`simple-tabs-${i}`} />;
             })}
