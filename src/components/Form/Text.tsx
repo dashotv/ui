@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 
 import { InputProps } from './types.d';
 
-export const Text = ({ name, label, control }: InputProps) => {
+export const Text = ({ name, label, disabled, control }: InputProps) => {
   //   error={!!errors[name]}
   //   helperText={errors[name]?.message}
   return (
@@ -15,7 +15,7 @@ export const Text = ({ name, label, control }: InputProps) => {
       name={name}
       control={control}
       render={({ field }) => (
-        <TextField {...field} id={name} label={title(label || name)} variant="standard" fullWidth />
+        <TextField {...field} id={name} disabled={disabled} label={title(label || name)} variant="standard" fullWidth />
       )}
     />
   );

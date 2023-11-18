@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 import Chrono from 'components/Chrono';
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
+import { useMovieUpdateMutation } from 'query/movies';
 import { useSeriesUpdateMutation } from 'query/series';
 import { Medium } from 'types/medium';
 
@@ -77,10 +78,18 @@ export default function Details({
 
   const { handleSubmit, control } = useForm({ values: medium });
   const series = useSeriesUpdateMutation(id);
+  const movie = useMovieUpdateMutation(id);
 
   const submit = (data: Medium) => {
     console.log('data:', data);
-    series.mutate(data);
+    switch (type) {
+      case 'Series':
+        series.mutate(data);
+        break;
+      case 'Movie':
+        movie.mutate(data);
+        break;
+    }
   };
 
   return (
@@ -111,18 +120,31 @@ export default function Details({
                   <>
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                       <Text name="search" control={control} />
-                      <Text name="search_params.group" label="group" control={control} />
-                      <Text name="search_params.author" label="author" control={control} />
+                      <Text name="search_params.group" disabled={type != 'Series'} label="group" control={control} />
+                      <Text name="search_params.author" disabled={type != 'Series'} label="author" control={control} />
                     </Stack>
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                       <Select
                         name="search_params.resolution"
                         label="resolution"
+                        disabled={type != 'Series'}
                         options={resolutions}
                         control={control}
                       />
-                      <Select name="search_params.source" label="source" options={releaseSources} control={control} />
-                      <Select name="search_params.type" label="type" options={types} control={control} />
+                      <Select
+                        name="search_params.source"
+                        disabled={type != 'Series'}
+                        label="source"
+                        options={releaseSources}
+                        control={control}
+                      />
+                      <Select
+                        name="search_params.type"
+                        disabled={type != 'Series'}
+                        label="type"
+                        options={types}
+                        control={control}
+                      />
                     </Stack>
                     <Stack
                       sx={{ width: '100%', justifyContent: 'space-between' }}
@@ -135,6 +157,7 @@ export default function Details({
                           checkedIcon={<VerifiedIcon />}
                           name="search_params.verified"
                           label="verified"
+                          disabled={type != 'Series'}
                           control={control}
                         />
                         <IconCheckbox
@@ -142,6 +165,7 @@ export default function Details({
                           checkedIcon={<SportsBarIcon />}
                           name="search_params.uncensored"
                           label="uncensored"
+                          disabled={type != 'Series'}
                           control={control}
                         />
                         <IconCheckbox
@@ -149,6 +173,7 @@ export default function Details({
                           checkedIcon={<VideocamIcon />}
                           name="search_params.bluray"
                           label="bluray"
+                          disabled={type != 'Series'}
                           control={control}
                         />
                       </Stack>
