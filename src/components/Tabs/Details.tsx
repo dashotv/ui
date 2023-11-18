@@ -19,51 +19,9 @@ import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
 import { useMovieUpdateMutation } from 'query/movies';
 import { useSeriesUpdateMutation } from 'query/series';
+import { Kinds, ReleaseSources, ReleaseTypes, Resolutions, Sources } from 'types/constants';
 import { Medium } from 'types/medium';
 
-const kinds = {
-  Series: [
-    { label: 'TV', value: 'tv' },
-    { label: 'Anime', value: 'anime' },
-    { label: 'Ecchi', value: 'ecchi' },
-    { label: 'News', value: 'news' },
-  ],
-  Movie: [
-    { label: 'Movies', value: 'movies' },
-    { label: 'Movies 4K', value: 'movies4k' },
-    { label: 'Movies 3D', value: 'movies3d' },
-    { label: 'Kids', value: 'kids' },
-  ],
-};
-const sources = [
-  { label: 'TVDB', value: 'tvdb' },
-  { label: 'TMDB', value: 'tmdb' },
-];
-const resolutions = [
-  { label: '', value: '' },
-  { label: '2160p', value: 2160 },
-  { label: '1080p', value: 1080 },
-  { label: '720p', value: 720 },
-];
-const releaseSources = [
-  '',
-  'anidex',
-  'extratorrent',
-  'eztv',
-  'geek',
-  'hiddenbay',
-  'horrible',
-  'kickass',
-  'lime',
-  'monova',
-  'nyaa',
-  'piratebay',
-  'rarbg',
-  'shana',
-  'showrss',
-  'yify',
-].map(v => ({ label: v, value: v }));
-const types = ['', 'tv', 'anime', 'movies'].map(v => ({ label: v, value: v }));
 export type DetailsProps = {
   medium: Medium;
 };
@@ -104,8 +62,8 @@ export default function Details({
               <Text name="display" control={control} />
               <Text name="directory" control={control} />
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <Select name="kind" options={kinds[type]} control={control} />
-                <Select name="source" options={sources} control={control} />
+                <Select name="kind" options={Kinds[type]} control={control} />
+                <Select name="source" options={Sources} control={control} />
                 <Text name="source_id" control={control} />
               </Stack>
             </Stack>
@@ -124,21 +82,21 @@ export default function Details({
                         name="search_params.resolution"
                         label="resolution"
                         disabled={type != 'Series'}
-                        options={resolutions}
+                        options={Resolutions}
                         control={control}
                       />
                       <Select
                         name="search_params.source"
                         disabled={type != 'Series'}
                         label="source"
-                        options={releaseSources}
+                        options={ReleaseSources}
                         control={control}
                       />
                       <Select
                         name="search_params.type"
                         disabled={type != 'Series'}
                         label="type"
-                        options={types}
+                        options={ReleaseTypes}
                         control={control}
                       />
                     </Stack>

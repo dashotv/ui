@@ -10,38 +10,8 @@ import Checkbox from '@mui/material/Checkbox';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 
+import { ReleaseSources, ReleaseTypes, Resolutions } from 'types/constants';
 import { SearchForm } from 'types/search_form';
-
-const resolutions = [
-  { label: '', value: '' },
-  { label: '2160p', value: 2160 },
-  { label: '1080p', value: 1080 },
-  { label: '720p', value: 720 },
-];
-const types = [
-  { label: '', value: '' },
-  { label: 'tv', value: 'tv' },
-  { label: 'anime', value: 'anime' },
-  { label: 'movies', value: 'movies' },
-];
-const sources = [
-  { label: '', value: '' },
-  { label: 'anidex', value: 'anidex' },
-  { label: 'extratorrent', value: 'extratorrent' },
-  { label: 'eztv', value: 'eztv' },
-  { label: 'geek', value: 'geek' },
-  { label: 'hiddenbay', value: 'hiddenbay' },
-  { label: 'horrible', value: 'horrible' },
-  { label: 'kickass', value: 'kickass' },
-  { label: 'lime', value: 'lime' },
-  { label: 'monova', value: 'monova' },
-  { label: 'nyaa', value: 'nyaa' },
-  { label: 'piratebay', value: 'piratebay' },
-  { label: 'rarbg', value: 'rarbg' },
-  { label: 'shana', value: 'shana' },
-  { label: 'showrss', value: 'showrss' },
-  { label: 'yify', value: 'yify' },
-];
 
 export function Search({
   form,
@@ -157,7 +127,7 @@ export function Search({
           value={data.resolution}
           onChange={handleChange}
         >
-          {resolutions.map(option => (
+          {Resolutions.map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
@@ -175,7 +145,7 @@ export function Search({
           value={data.source}
           onChange={handleChange}
         >
-          {sources.map(option => (
+          {ReleaseSources.map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
@@ -193,7 +163,7 @@ export function Search({
           value={data.type}
           onChange={handleChange}
         >
-          {types.map(option => (
+          {ReleaseTypes.map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
