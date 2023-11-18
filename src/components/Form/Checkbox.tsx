@@ -9,7 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { InputProps } from './types';
 
-export const Checkbox = ({ name, label, disabled, control }: InputProps) => {
+export const Checkbox = ({ name, label, disabled, control, sx }: InputProps) => {
   //   error={!!errors[name]}
   //   helperText={errors[name]?.message}
   return (
@@ -19,6 +19,7 @@ export const Checkbox = ({ name, label, disabled, control }: InputProps) => {
       render={({ field }) => (
         <FormControl variant="standard" fullWidth>
           <FormControlLabel
+            sx={sx}
             control={<MUICheckbox {...field} disabled={disabled} checked={field.value} id={name} />}
             label={title(label || name)}
           />
@@ -31,7 +32,15 @@ export interface IconCheckboxProps {
   icon: React.ReactNode;
   checkedIcon: React.ReactNode;
 }
-export const IconCheckbox = ({ name, label, icon, disabled, checkedIcon, control }: InputProps & IconCheckboxProps) => {
+export const IconCheckbox = ({
+  name,
+  label,
+  icon,
+  disabled,
+  checkedIcon,
+  control,
+  sx,
+}: InputProps & IconCheckboxProps) => {
   //   error={!!errors[name]}
   //   helperText={errors[name]?.message}
   return (
@@ -41,6 +50,7 @@ export const IconCheckbox = ({ name, label, icon, disabled, checkedIcon, control
       render={({ field }) => (
         <FormControl variant="standard">
           <FormControlLabel
+            sx={sx}
             control={
               <MUICheckbox
                 {...field}

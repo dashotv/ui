@@ -1,196 +1,83 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import CircleIcon from '@mui/icons-material/Circle';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
+import CrisisAlertIcon from '@mui/icons-material/CrisisAlert';
+import SportsBarIcon from '@mui/icons-material/SportsBar';
+import SportsBarOutlinedIcon from '@mui/icons-material/SportsBarOutlined';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
+import VideocamIcon from '@mui/icons-material/Videocam';
+import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
 
+import { IconCheckbox, Select, Text } from 'components/Form';
 import { ReleaseSources, ReleaseTypes, Resolutions } from 'types/constants';
 import { SearchForm } from 'types/search_form';
 
 export function Search({
   form,
-  defaults: initialDefaults,
   setForm,
 }: {
   form: SearchForm;
   defaults?: SearchForm;
   setForm: React.Dispatch<React.SetStateAction<SearchForm>>;
 }) {
-  const [data, setData] = useState<SearchForm>(form);
-  const [defaults] = useState<SearchForm>(initialDefaults || form);
-
-  const handleChange = ev => {
-    setData({ ...data, [ev.target.name]: ev.target.value });
-  };
-  const handleChangeCheckbox = ev => {
-    setData({ ...data, [ev.target.name]: ev.target.checked });
-  };
-  const handleSubmit = () => {
-    console.log('form:', data);
+  const { handleSubmit, control } = useForm({ values: form });
+  const submit = (data: SearchForm) => {
+    console.log('data:', data);
     setForm(data);
-  };
-  const handleReset = () => {
-    setData(defaults);
   };
   return (
     <>
-      <Box
-        component="form"
-        // sx={{
-        //   '& > :not(style)': { m: 1 },
-        // }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          sx={{ m: 1, width: '75px' }}
-          id="search"
-          name="text"
-          label="Name"
-          variant="standard"
-          margin="none"
-          size="small"
-          value={data.text}
-          autoComplete="off"
-          onChange={handleChange}
-        />
-        <TextField
-          sx={{ m: 1, width: '50px' }}
-          id="year"
-          name="year"
-          label="Year"
-          variant="standard"
-          margin="none"
-          size="small"
-          value={data.year}
-          onChange={handleChange}
-        />
-        <TextField
-          sx={{ m: 1, width: '50px' }}
-          id="season"
-          name="season"
-          label="Season"
-          variant="standard"
-          margin="none"
-          size="small"
-          value={data.season}
-          onChange={handleChange}
-        />
-        <TextField
-          sx={{ m: 1, width: '50px' }}
-          id="episode"
-          name="episode"
-          label="Episode"
-          variant="standard"
-          margin="none"
-          size="small"
-          value={data.episode}
-          onChange={handleChange}
-        />
-        <TextField
-          sx={{ m: 1, width: '50px' }}
-          id="group"
-          name="group"
-          label="Group"
-          variant="standard"
-          margin="none"
-          size="small"
-          value={data.group}
-          onChange={handleChange}
-        />
-        <TextField
-          sx={{ m: 1, width: '50px' }}
-          id="author"
-          name="author"
-          label="Author"
-          variant="standard"
-          margin="none"
-          size="small"
-          value={data.author}
-          onChange={handleChange}
-        />
-        <TextField
-          sx={{ m: 1, width: '75px' }}
-          id="resolution"
-          name="resolution"
-          select
-          label="Res"
-          variant="standard"
-          margin="none"
-          size="small"
-          value={data.resolution}
-          onChange={handleChange}
-        >
-          {Resolutions.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          sx={{ m: 1, width: '75px' }}
-          id="source"
-          name="source"
-          select
-          label="Source"
-          variant="standard"
-          margin="none"
-          size="small"
-          value={data.source}
-          onChange={handleChange}
-        >
-          {ReleaseSources.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          sx={{ m: 1, width: '75px' }}
-          id="type"
-          name="type"
-          select
-          label="Type"
-          variant="standard"
-          margin="none"
-          size="small"
-          value={data.type}
-          onChange={handleChange}
-        >
-          {ReleaseTypes.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        <Checkbox
-          sx={{ mt: 2 }}
-          name="exact"
-          icon={<CircleOutlinedIcon />}
-          checkedIcon={<CircleIcon />}
-          checked={data.exact}
-          onChange={handleChangeCheckbox}
-        />
-        <Checkbox
-          sx={{ mt: 2 }}
-          name="verified"
-          icon={<CheckCircleOutlineIcon />}
-          checkedIcon={<CheckCircleIcon />}
-          checked={data.verified}
-          onChange={handleChangeCheckbox}
-        />
-        <Button sx={{ mt: 2 }} onClick={handleSubmit}>
-          Go
-        </Button>
-        <Button sx={{ mt: 2 }} onClick={handleReset}>
-          Reset
-        </Button>
+      <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(submit)}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+          <Text sx={{ minWidth: '125px' }} name="text" label="search" control={control} />
+          <Text name="year" control={control} />
+          <Text name="season" control={control} />
+          <Text name="episode" control={control} />
+          <Text name="group" control={control} />
+          <Text name="author" control={control} />
+          <Select name="resolution" label="Rez" control={control} options={Resolutions} />
+          <Select name="source" control={control} options={ReleaseSources} />
+          <Select name="type" control={control} options={ReleaseTypes} />
+          <Stack sx={{ pt: 1, pl: 2 }} direction="row" spacing={1}>
+            <IconCheckbox
+              name="exact"
+              sx={{ mr: 0 }}
+              icon={<CircleOutlinedIcon />}
+              checkedIcon={<CrisisAlertIcon />}
+              control={control}
+            />
+            <IconCheckbox
+              name="verified"
+              sx={{ mr: 0 }}
+              icon={<VerifiedOutlinedIcon />}
+              checkedIcon={<VerifiedIcon />}
+              control={control}
+            />
+            <IconCheckbox
+              name="bluray"
+              sx={{ mr: 0 }}
+              icon={<VideocamOutlinedIcon />}
+              checkedIcon={<VideocamIcon />}
+              control={control}
+            />
+            <IconCheckbox
+              name="uncensored"
+              sx={{ mr: 0 }}
+              icon={<SportsBarOutlinedIcon />}
+              checkedIcon={<SportsBarIcon />}
+              control={control}
+            />
+            <Button variant="contained" type="submit">
+              Go
+            </Button>
+            <Button variant="contained">Reset</Button>
+          </Stack>
+        </Stack>
       </Box>
     </>
   );

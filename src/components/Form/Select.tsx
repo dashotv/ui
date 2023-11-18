@@ -11,7 +11,7 @@ import { InputProps, Option } from './types';
 export interface SelectProps {
   options: Option[];
 }
-export const Select = ({ name, label, disabled, options, control }: InputProps & SelectProps) => {
+export const Select = ({ name, label, disabled, options, control, sx }: InputProps & SelectProps) => {
   return (
     <Controller
       name={name}
@@ -20,6 +20,7 @@ export const Select = ({ name, label, disabled, options, control }: InputProps &
         <TextField
           {...field}
           select
+          sx={sx}
           id={name}
           disabled={disabled}
           label={title(label || name)}

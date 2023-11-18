@@ -7,6 +7,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
 
 import LoadingIndicator from 'components/Loading';
 import { ReleasesList } from 'components/Releases/ReleasesList';
@@ -70,7 +71,9 @@ export function Torch({ form: initial, selector }: { form: SearchForm; selector:
   return (
     <>
       {loading && <LoadingIndicator />}
-      <Search form={form} setForm={setForm} />
+      <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
+        <Search form={form} setForm={setForm} />
+      </Paper>
       <ReleasesList data={releases} actions={renderActions} />
     </>
   );

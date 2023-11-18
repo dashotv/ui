@@ -1,8 +1,8 @@
 export interface SearchForm {
   text?: string;
   year?: string;
-  season?: number;
-  episode?: number;
+  season?: number | string;
+  episode?: number | string;
   group?: string;
   author?: string;
   resolution?: number;
@@ -10,4 +10,6 @@ export interface SearchForm {
   type?: string;
   exact?: boolean;
   verified?: boolean;
+  uncensored?: boolean;
+  bluray?: boolean;
 }

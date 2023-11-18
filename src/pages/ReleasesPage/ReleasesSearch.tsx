@@ -5,9 +5,9 @@ import { useSearchParams } from 'react-router-dom';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { Paper } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Pagination from '@mui/material/Pagination';
 
@@ -89,21 +89,20 @@ export default function ReleasesSearch() {
       </Helmet>
 
       <Container style={{ overflow: 'hidden' }} maxWidth="xl">
-        {isFetching && <LoadingIndicator />}
-        <Grid container>
-          <Grid item xs={12} md={9}>
-            <Search form={form} setForm={setForm} />
-          </Grid>
-          <Grid item xs={12} md={3} sx={{ pt: 3 }}>
-            <Pagination
-              siblingCount={1}
-              boundaryCount={0}
-              page={page}
-              count={Math.ceil((data?.Total || 0) / pagesize)}
-              onChange={handleChange}
-            />
-          </Grid>
-        </Grid>
+        <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
+          {isFetching && <LoadingIndicator />}
+          <Search form={form} setForm={setForm} />
+        </Paper>
+      </Container>
+      <Container style={{ overflow: 'hidden' }} maxWidth="xl">
+        <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
+          <Pagination
+            boundaryCount={0}
+            page={page}
+            count={Math.ceil((data?.Total || 0) / pagesize)}
+            onChange={handleChange}
+          />
+        </Paper>
       </Container>
       <Container style={{ overflow: 'hidden' }} maxWidth="xl">
         {data && <ReleasesList data={data.Releases} actions={renderActions} />}

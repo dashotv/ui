@@ -1,6 +1,7 @@
 export interface Release {
   id: string;
   name?: string;
+  display?: string;
   type?: string;
   source?: string;
   season?: string;

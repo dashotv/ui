@@ -127,8 +127,8 @@ export default function Download({
     const data: SearchForm = {
       text: text,
       year: '',
-      season: kind !== 'anime' ? season_number : undefined,
-      episode: episode,
+      season: kind !== 'anime' ? season_number : '',
+      episode: episode || '',
       group: search_params?.group,
       author: '',
       resolution: search_params?.resolution,
@@ -136,6 +136,8 @@ export default function Download({
       type: search_params?.type,
       exact: search_params?.exact,
       verified: search_params?.verified,
+      uncensored: search_params?.uncensored,
+      bluray: search_params?.bluray,
     };
     return data;
   }, [
@@ -148,6 +150,8 @@ export default function Download({
     search_params?.source,
     search_params?.type,
     search_params?.verified,
+    search_params?.uncensored,
+    search_params?.bluray,
   ]);
 
   const nzbForm = useCallback(() => {
