@@ -118,11 +118,7 @@ export default function Details({
               <Stack sx={{ width: '100%' }} direction="column" spacing={1}>
                 {search_params && (
                   <>
-                    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                      <Text name="search" control={control} />
-                      <Text name="search_params.group" disabled={type != 'Series'} label="group" control={control} />
-                      <Text name="search_params.author" disabled={type != 'Series'} label="author" control={control} />
-                    </Stack>
+                    <Text name="search" control={control} />
                     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                       <Select
                         name="search_params.resolution"
@@ -146,12 +142,17 @@ export default function Details({
                         control={control}
                       />
                     </Stack>
-                    <Stack
-                      sx={{ width: '100%', justifyContent: 'space-between' }}
-                      direction={{ xs: 'column', sm: 'row' }}
-                      spacing={1}
-                    >
-                      <Stack sx={{ minWidth: '200px' }} direction="row" spacing={1}>
+                    <Stack sx={{ width: '100%' }} direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+                      <Stack direction="row" spacing={1}>
+                        <Text name="search_params.group" disabled={type != 'Series'} label="group" control={control} />
+                        <Text
+                          name="search_params.author"
+                          disabled={type != 'Series'}
+                          label="author"
+                          control={control}
+                        />
+                      </Stack>
+                      <Stack direction="row" spacing={1}>
                         <IconCheckbox
                           icon={<VerifiedOutlinedIcon />}
                           checkedIcon={<VerifiedIcon />}
