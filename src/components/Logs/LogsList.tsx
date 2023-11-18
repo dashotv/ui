@@ -30,6 +30,9 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
     const a = facility.split('::');
     return a[a.length - 1];
   };
+  const levelName = (level: string) => {
+    return level == 'warning' ? 'warn' : level;
+  };
   const color = (level: string) => {
     switch (level) {
       case 'debug':
@@ -37,6 +40,8 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
       case 'info':
         return 'info.main';
       case 'warn':
+        return 'warning.main';
+      case 'warning':
         return 'warning.main';
       case 'error':
         return 'error.main';
@@ -48,16 +53,18 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
     <>
       <tr key={id}>
         <td title={created_at}>
-          <Chrono fromNow>{created_at}</Chrono>
+          <Typography color="gray" noWrap>
+            <Chrono fromNow>{created_at}</Chrono>
+          </Typography>
         </td>
         <td title={facility}>
-          <Typography variant="button" color="secondary">
+          <Typography variant="button" color="secondary" noWrap>
             {name(facility)}
           </Typography>
         </td>
         <td title={level}>
           <Typography variant="button" color={color(level)}>
-            {level}
+            {levelName(level)}
           </Typography>
         </td>
         <td className="truncate">
