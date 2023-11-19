@@ -32,7 +32,10 @@ export const Select = ({ name, label, disabled, options, control, sx, render, on
           label={title(label || name)}
           variant="standard"
           fullWidth
-          onChange={onChange}
+          onChange={e => {
+            onChange && onChange(e);
+            field.onChange(e);
+          }}
         >
           {options.map(renderDefault)}
         </TextField>

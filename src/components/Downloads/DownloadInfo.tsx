@@ -51,7 +51,7 @@ export const DownloadInfo = ({ release_id, url, status, thash, changer }: Downlo
     defaultValues: { thash: '', status: 'searching', release_id: '', url: '' },
   });
   // const [data, setData] = useState<DownloadInfoValues>(values);
-  const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (ev: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     changer(ev.target.name, ev.target.value);
   };
   const renderOption = (option: Option) => (

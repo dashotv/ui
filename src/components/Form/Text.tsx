@@ -23,7 +23,10 @@ export const Text = ({ name, label, disabled, control, sx, onChange }: InputProp
           label={title(label || name)}
           variant="standard"
           fullWidth
-          onChange={onChange}
+          onChange={e => {
+            onChange && onChange(e);
+            field.onChange(e);
+          }}
         />
       )}
     />

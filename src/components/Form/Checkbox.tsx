@@ -20,7 +20,18 @@ export const Checkbox = ({ name, label, disabled, control, sx, onChange }: Input
         <FormControl variant="standard" fullWidth>
           <FormControlLabel
             sx={sx}
-            control={<MUICheckbox {...field} onChange={onChange} disabled={disabled} checked={field.value} id={name} />}
+            control={
+              <MUICheckbox
+                {...field}
+                id={name}
+                disabled={disabled}
+                checked={field.value}
+                onChange={e => {
+                  onChange && onChange(e);
+                  field.onChange(e);
+                }}
+              />
+            }
             label={title(label || name)}
           />
         </FormControl>
