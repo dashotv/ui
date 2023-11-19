@@ -58,6 +58,8 @@ export interface Episode {
   paths?: Path[];
   created_at: string;
   updated_at: string;
+  // convenience
+  watched?: boolean;
 }
 
 export interface Series {

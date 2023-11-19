@@ -53,7 +53,7 @@ function EpisodeRow({
   changeEpisode: (id: string, field: string, value: boolean) => void;
 }) {
   const [skipped, setSkipped] = useState(episode.skipped);
-  const [watched, setWatched] = useState(false);
+  const [watched, setWatched] = useState(episode.watched);
   const [completed, setCompleted] = useState(episode.completed);
   const [downloaded, setDownloaded] = useState(episode.downloaded);
   return (
