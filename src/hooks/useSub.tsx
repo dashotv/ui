@@ -16,6 +16,7 @@ export const useSub = (topic: string, callback: (data) => void) => {
       }
       try {
         const data = jc.decode(msg.data);
+        // console.log('useSub:', topic, data);
         callback(data);
       } catch (e) {
         console.error('useSubscription:', topic, e);

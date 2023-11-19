@@ -86,7 +86,6 @@ export default function Download({
   }
 
   function change(name, value) {
-    console.log('download:', name, value);
     downloadUpdate.mutate({ ...download, [name]: value });
   }
 
