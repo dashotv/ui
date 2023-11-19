@@ -20,7 +20,7 @@ export const getReleasesPage = async (page, pagesize, qs) => {
 };
 
 export const torrentRemove = async (hash: string) => {
-  const response = await axios.get(`/api/flame/qbittorrents/remove?hash=${hash}`);
+  const response = await axios.get(`/api/flame/qbittorrents/remove?infohash=${hash}`);
   return response.data;
 };
 

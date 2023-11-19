@@ -194,7 +194,7 @@ export default function Download({
     navigate('/' + type + '/' + id);
   }, [medium, navigate]);
 
-  const remove = useCallback(() => {
+  const remove = useCallback((status: string) => {
     console.log('clicked remove');
     torrentRemove.mutate(thash, {
       onSuccess: data => {
@@ -202,7 +202,7 @@ export default function Download({
           console.error('error: ', data.error);
           return;
         }
-        change('status', 'deleted');
+        change('status', status);
       },
     });
   }, []);
@@ -216,7 +216,7 @@ export default function Download({
     },
     {
       icon: <CheckCircleIcon color="primary" />,
-      click: () => change('status', 'done'),
+      click: () => remove('done'),
       title: 'mark complete',
     },
     {
@@ -248,7 +248,7 @@ export default function Download({
     },
     {
       icon: <CancelIcon color="error" />,
-      click: remove,
+      click: () => remove('deleted'),
       title: 'delete',
     },
   ];
