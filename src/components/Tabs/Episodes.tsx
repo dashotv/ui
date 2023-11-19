@@ -46,14 +46,13 @@ export default function Episodes({
 }
 
 function EpisodeRow({
-  episode: { id, title, episode_number: number, release_date: release, ...episode },
+  episode: { id, title, watched, episode_number: number, release_date: release, ...episode },
   changeEpisode,
 }: {
   episode: Episode;
   changeEpisode: (id: string, field: string, value: boolean) => void;
 }) {
   const [skipped, setSkipped] = useState(episode.skipped);
-  const [watched, setWatched] = useState(episode.watched);
   const [completed, setCompleted] = useState(episode.completed);
   const [downloaded, setDownloaded] = useState(episode.downloaded);
   return (
@@ -97,8 +96,7 @@ function EpisodeRow({
         <IconButton
           size="small"
           onClick={() => {
-            changeEpisode(id, 'watched', !watched);
-            setWatched(!watched);
+            console.log("can't change watched yet");
           }}
         >
           <VisibilityIcon color={watched === true ? 'secondary' : 'action'} />
