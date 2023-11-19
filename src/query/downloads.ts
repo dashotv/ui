@@ -1,33 +1,52 @@
 import axios from 'axios';
+import { tower } from 'utils/axios';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Download, DownloadSelection } from 'types/download';
 import { Setting } from 'types/setting';
 
+axios.interceptors.request.use(config => {
+  config.timeout = 10000;
+  return config;
+});
+
 export const getDownloadsActive = async () => {
-  const response = await axios.get('/api/tower/downloads/');
+  const response = await tower.get('/downloads/');
   return response.data as Download[];
 };
 
 export const getDownloadsRecent = async page => {
-  const response = await axios.get(`/api/tower/downloads/recent?page=${page}`);
+  const response = await tower.get(`/downloads/recent?page=${page}`);
   return response.data;
 };
 
 export const getDownload = async id => {
-  const response = await axios.get(`/api/tower/downloads/${id}`);
+  const response = await tower.get(`/downloads/${id}`);
   return response.data as Download;
 };
 
 export const getDownloadMedium = async id => {
-  const response = await axios.get(`/api/tower/downloads/${id}/medium`);
+  const response = await tower.get(`/downloads/${id}/medium`);
   return response.data;
 };
 
 export const getDownloadsLast = async () => {
-  const response = await axios.get('/api/tower/downloads/last');
+  const response = await tower.get('/downloads/last');
   return response.data.last as number;
+};
+
+export const putDownload = async (id: string, download: Download) => {
+  const response = await tower.put(`/downloads/${id}`, download);
+  return response.data;
+};
+export const putDownloadSelect = async (id, data) => {
+  const response = await tower.put(`/downloads/${id}/select`, data);
+  return response.data as Download;
+};
+export const patchDownload = async (id, data) => {
+  const response = await tower.patch(`/downloads/${id}`, data);
+  return response.data as Download;
 };
 
 export const useDownloadsActiveQuery = () =>
@@ -70,10 +89,12 @@ export const useDownloadMediumQuery = id =>
     retry: false,
   });
 
-export const useDownloadMutation = id => {
+export const useDownloadMutation = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (download: Download) => axios.put(`/api/tower/downloads/${id}`, download),
+    mutationFn: (download: Download) => {
+      return putDownload(id, download);
+    },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['downloads', id] });
     },
@@ -83,8 +104,9 @@ export const useDownloadMutation = id => {
 export const useDownloadSettingMutation = id => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (setting: Setting) => axios.patch(`/api/tower/downloads/${id}`, setting),
+    mutationFn: (setting: Setting) => patchDownload(id, setting),
     onSuccess: async () => {
+      console.log('useDownloadSettingMutation:await');
       await queryClient.invalidateQueries({ queryKey: ['downloads', id] });
     },
   });
@@ -93,7 +115,7 @@ export const useDownloadSettingMutation = id => {
 export const useDownloadSelectionMutation = id => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (selection: DownloadSelection) => axios.put(`/api/tower/downloads/${id}/select`, selection),
+    mutationFn: (selection: DownloadSelection) => putDownloadSelect(id, selection),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['downloads', id] });
     },
