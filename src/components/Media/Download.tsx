@@ -9,6 +9,8 @@ import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { DownloadBanner } from 'components/Banner';
 import { DownloadInfo } from 'components/Downloads';
 import { FilesWithSelector } from 'components/Tabs/FilesWithSelector';
@@ -75,6 +77,7 @@ export default function Download({
   const downloadSetting = useDownloadSettingMutation(id);
   const downloadSelection = useDownloadSelectionMutation(id);
   const torrentRemove = useTorrentRemoveMutation();
+  const queryClient = useQueryClient();
   const { progress, eta, queue } = useReleases();
   const navigate = useNavigate();
 
@@ -91,24 +94,19 @@ export default function Download({
     downloadSelection.mutate({ mediumId: eid, num: num });
   }
 
-  useSub(
-    'seer.downloads',
-    useCallback(
-      data => {
-        if (download === null) {
-          return;
-        }
-
-        if (id === data.id) {
-          download.status = data.download.status;
-          download.thash = data.download.thash;
-          download.url = data.download.url;
-          download.release_id = data.download.release_id;
-        }
-      },
-      [id, download],
-    ),
+  const updateDownload = useCallback(
+    data => {
+      if (data.id !== id) {
+        return;
+      }
+      console.log('update download', data);
+      queryClient.setQueryData(['download', id], data);
+    },
+    [id, download],
   );
+
+  useSub('seer.downloads', updateDownload);
+  useSub('tower.downloads', updateDownload);
 
   const processSearch = useCallback(() => {
     if (!search) {
