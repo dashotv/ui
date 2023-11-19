@@ -11,6 +11,10 @@ import { useDownloadMediumQuery, useDownloadMutation, useDownloadQuery } from 'q
 
 export default function DownloadsShowPage() {
   const { id } = useParams();
+  if (!id) {
+    return <></>;
+  }
+
   const download = useDownloadQuery(id);
   const episodes = useDownloadMediumQuery(id);
   const { torrents } = useReleases();
