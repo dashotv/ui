@@ -18,22 +18,20 @@ export default function UpcomingPage() {
   const downloads = useDownloadsActiveQuery();
   const upcoming = useUpcomingQuery();
 
-  useSub(
-    'seer.downloads',
-    useCallback(
-      data => {
-        if (!downloads.data) {
-          queryClient.invalidateQueries({ queryKey: ['downloads', 'active'] });
-          return;
-        }
-        queryClient.setQueryData(
-          ['downloads', 'active'],
-          downloads.data.map(e => (e.id === data.id ? data : e)),
-        );
-      },
-      [queryClient],
-    ),
+  const updateDownloads = useCallback(
+    data => {
+      if (!downloads.data) {
+        return;
+      }
+      queryClient.setQueryData(
+        ['downloads', 'active'],
+        downloads.data.map(e => (e.id === data.id ? data : e)),
+      );
+    },
+    [queryClient],
   );
+  useSub('seer.downloads', updateDownloads);
+  useSub('tower.downloads', updateDownloads);
 
   const updateUpcoming = useCallback(
     data => {
