@@ -63,8 +63,19 @@ export type BannerProps = {
   buttons?: ButtonMapButton[];
   flags?: BannerIconsProps;
   unwatched?: number;
+  adornments?: React.ReactNode;
 };
-export function Banner({ title, extra, subtitle, tertiary, images, buttons, flags, unwatched }: BannerProps) {
+export function Banner({
+  title,
+  extra,
+  subtitle,
+  tertiary,
+  images,
+  buttons,
+  flags,
+  unwatched,
+  adornments,
+}: BannerProps) {
   const background = () => {
     return images
       ?.concat('/blank.png')
@@ -83,11 +94,12 @@ export function Banner({ title, extra, subtitle, tertiary, images, buttons, flag
               {extra && <span className="extra">{extra}</span>}
             </div>
             <div className="subtitle">{subtitle && <span>{subtitle}</span>}</div>
-            <div className="download">{tertiary}</div>
-            <div className="actions">
-              <BannerActions {...{ buttons, flags, unwatched }} />
-            </div>
           </div>
+          <div className="download">{tertiary}</div>
+          <div className="actions">
+            <BannerActions {...{ buttons, flags, unwatched }} />
+          </div>
+          {adornments && <div className="adornments">{adornments}</div>}
         </div>
         <div className="banner-dimmer"></div>
         <div

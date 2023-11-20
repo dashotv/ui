@@ -58,7 +58,7 @@ $height: 120px;
     }
     .download {
       position: absolute;
-      bottom: 4px;
+      bottom: 8px;
       left: 8px;
       text-align: left;
       font-weight: bold;
@@ -69,6 +69,42 @@ $height: 120px;
       bottom: 8px;
       right: 8px;
       overflow: hidden;
+    }
+    .progressbar {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      height: 4px;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 105;
+      overflow: auto;
+      .progress {
+        height: 4px;
+        width: 0%;
+        background-color: #ff0000;
+        z-index: 106;
+      }
+    }
+    .multibar {
+      position: absolute;
+      bottom: 5px;
+      height: 4px;
+      width: 0%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 106;
+      width: 100%;
+      display: flex;
+      overflow: auto;
+      .file {
+        height: 4px;
+        width: 100%;
+        background-color: #ff0000;
+      }
+      .active {
+        background-color: #00ff00;
+      }
     }
   }
   .banner-background {
