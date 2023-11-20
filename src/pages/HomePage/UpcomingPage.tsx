@@ -20,16 +20,40 @@ export default function UpcomingPage() {
 
   useSub(
     'seer.downloads',
-    useCallback(() => {
-      queryClient.invalidateQueries({ queryKey: ['downloads', 'active'] });
-    }, [queryClient]),
+    useCallback(
+      data => {
+        if (!downloads.data) {
+          queryClient.invalidateQueries({ queryKey: ['downloads', 'active'] });
+          return;
+        }
+        queryClient.setQueryData(
+          ['downloads', 'active'],
+          downloads.data.map(e => (e.id === data.id ? data : e)),
+        );
+      },
+      [queryClient],
+    ),
   );
 
   useSub(
     'seer.episodes',
-    useCallback(() => {
-      queryClient.invalidateQueries({ queryKey: ['media', 'upcoming'] });
-    }, [queryClient]),
+    useCallback(
+      data => {
+        if (!upcoming.data) {
+          queryClient.invalidateQueries({ queryKey: ['media', 'upcoming'] });
+          return;
+        }
+
+        const episode = upcoming.data.filter(e => e.id === data.id);
+        if (episode.length > 0) {
+          queryClient.setQueryData(
+            ['media', 'upcoming'],
+            upcoming.data.map(e => (e.id === data.id ? data : e)),
+          );
+        }
+      },
+      [queryClient],
+    ),
   );
 
   return (
