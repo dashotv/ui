@@ -8,28 +8,37 @@ import { useReleases } from 'hooks/useReleases';
 import { Download } from 'types/download';
 
 export function DownloadList({ downloads }: { downloads: Download[] }) {
-  const { progress, eta, queue } = useReleases();
+  const { progress, eta, queue, files } = useReleases();
 
   return (
     <>
       {downloads &&
-        downloads.map(({ id, thash, status, medium: { title, display, cover, background } }: Download) => (
-          <Grid item key={id} md={4} xs={12}>
-            <Link to={`/downloads/${id}`}>
-              <DownloadBanner
-                id={id}
-                title={title}
-                subtitle={display}
-                cover={cover}
-                background={background}
-                status={status}
-                progress={progress(thash)?.toString()}
-                queue={queue(thash)?.toString()}
-                eta={eta(thash)?.toString()}
-              />
-            </Link>
-          </Grid>
-        ))}
+        downloads.map(({ id, thash, status, multi, medium: { title, display, cover, background } }: Download) => {
+          const { files: f, total: t } = multi ? files(thash) : { files: 0, total: 0 };
+          const p = progress(thash)?.toFixed(1);
+          const q = queue(thash)?.toString();
+          const e = eta(thash)?.toString();
+          return (
+            <Grid item key={id} md={4} xs={12}>
+              <Link to={`/downloads/${id}`}>
+                <DownloadBanner
+                  id={id}
+                  title={title}
+                  subtitle={display}
+                  cover={cover}
+                  background={background}
+                  status={status}
+                  progress={p}
+                  queue={q}
+                  eta={e}
+                  multi={multi}
+                  files={f}
+                  total={t}
+                />
+              </Link>
+            </Grid>
+          );
+        })}
     </>
   );
 }
