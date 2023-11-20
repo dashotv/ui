@@ -35,26 +35,25 @@ export default function UpcomingPage() {
     ),
   );
 
-  useSub(
-    'seer.episodes',
-    useCallback(
-      data => {
-        if (!upcoming.data) {
-          queryClient.invalidateQueries({ queryKey: ['media', 'upcoming'] });
-          return;
-        }
+  const updateUpcoming = useCallback(
+    data => {
+      if (!upcoming.data) {
+        return;
+      }
 
-        const episode = upcoming.data.filter(e => e.id === data.id);
-        if (episode.length > 0) {
-          queryClient.setQueryData(
-            ['media', 'upcoming'],
-            upcoming.data.map(e => (e.id === data.id ? data : e)),
-          );
-        }
-      },
-      [queryClient],
-    ),
+      console.log('updateUpcoming: ', data);
+      const episode = upcoming.data.filter(e => e.id === data.id);
+      if (episode.length > 0) {
+        queryClient.setQueryData(
+          ['media', 'upcoming'],
+          upcoming.data.map(e => (e.id === data.id ? data : e)),
+        );
+      }
+    },
+    [queryClient],
   );
+  useSub('seer.episodes', updateUpcoming);
+  useSub('tower.episodes', updateUpcoming);
 
   return (
     <>
