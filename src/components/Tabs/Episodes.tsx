@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import * as React from 'react';
 
-import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { IconButton } from '@mui/material';
 
+import { ButtonMap } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
 import { Episode } from 'types/medium';
 
@@ -55,6 +55,46 @@ function EpisodeRow({
   const [skipped, setSkipped] = useState(episode.skipped);
   const [completed, setCompleted] = useState(episode.completed);
   const [downloaded, setDownloaded] = useState(episode.downloaded);
+
+  const buttons = [
+    {
+      icon: <CloudCircleIcon color="primary" />,
+      click: () => {},
+      title: 'create download',
+    },
+    {
+      icon: <NextPlanIcon color={skipped ? 'secondary' : 'action'} />,
+      click: () => {
+        changeEpisode(id, 'skipped', !skipped);
+        setSkipped(!skipped);
+      },
+      title: 'refresh',
+    },
+    {
+      icon: <DownloadForOfflineIcon color={downloaded ? 'secondary' : 'action'} />,
+      click: () => {
+        changeEpisode(id, 'downloaded', !downloaded);
+        setDownloaded(!downloaded);
+      },
+      title: 'broken',
+    },
+    {
+      icon: <CheckCircleIcon color={completed ? 'secondary' : 'action'} />,
+      click: () => {
+        changeEpisode(id, 'completed', !completed);
+        setCompleted(!completed);
+      },
+      title: 'favorite',
+    },
+    {
+      icon: <VisibilityIcon color={watched ? 'secondary' : 'action'} />,
+      click: () => {
+        console.log("can't change watched yet");
+      },
+      title: 'active',
+    },
+  ];
+
   return (
     <tr>
       <th scope="row">{number}</th>
@@ -62,45 +102,8 @@ function EpisodeRow({
       <td align="right">
         <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
       </td>
-      <td style={{ width: '225px' }} align="right">
-        <IconButton size="small">
-          <CloudCircleIcon color="primary" />
-        </IconButton>
-        <IconButton
-          size="small"
-          onClick={() => {
-            changeEpisode(id, 'skipped', !skipped);
-            setSkipped(!skipped);
-          }}
-        >
-          <NextPlanIcon color={skipped ? 'secondary' : 'action'} />
-        </IconButton>
-        <IconButton
-          size="small"
-          onClick={() => {
-            changeEpisode(id, 'downloaded', !downloaded);
-            setDownloaded(!downloaded);
-          }}
-        >
-          <ArrowDropDownCircleIcon color={downloaded ? 'secondary' : 'action'} />
-        </IconButton>
-        <IconButton
-          size="small"
-          onClick={() => {
-            changeEpisode(id, 'completed', !completed);
-            setCompleted(!completed);
-          }}
-        >
-          <CheckCircleIcon color={completed === true ? 'secondary' : 'action'} />
-        </IconButton>
-        <IconButton
-          size="small"
-          onClick={() => {
-            console.log("can't change watched yet");
-          }}
-        >
-          <VisibilityIcon color={watched === true ? 'secondary' : 'action'} />
-        </IconButton>
+      <td align="right">
+        <ButtonMap buttons={buttons} />
       </td>
     </tr>
   );

@@ -16,7 +16,7 @@ export interface ButtonMapProps {
 
 export function ButtonMap({ size = 'medium', buttons }: ButtonMapProps) {
   return (
-    <Stack spacing={'2px'} direction="row">
+    <Stack spacing={'2px'} direction="row" sx={{ justifyContent: 'end' }}>
       {buttons &&
         buttons.map(({ click, title, icon }, index) => (
           <IconButton
