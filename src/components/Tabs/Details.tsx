@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 import Chrono from 'components/Chrono';
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
+import { Pill } from 'components/Pill';
 import { useMovieUpdateMutation } from 'query/movies';
 import { useSeriesUpdateMutation } from 'query/series';
 import { Kinds, ReleaseSources, ReleaseTypes, Resolutions, Sources } from 'types/constants';
@@ -156,9 +157,9 @@ export default function Details({
                 {title}
               </Typography>
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <Detail color="gray" name="Release" value={<Chrono format="YYYY-MM-DD">{release_date}</Chrono>} />
-                <Detail color="gray" name="Created" value={<Chrono fromNow>{created_at}</Chrono>} />
-                <Detail color="gray" name="Updated" value={<Chrono fromNow>{updated_at}</Chrono>} />
+                <Pill color="gray" name="Release" value={<Chrono format="YYYY-MM-DD">{release_date}</Chrono>} />
+                <Pill color="gray" name="Created" value={<Chrono fromNow>{created_at}</Chrono>} />
+                <Pill color="gray" name="Updated" value={<Chrono fromNow>{updated_at}</Chrono>} />
               </Stack>
               <Typography>{description}</Typography>
             </Stack>
@@ -176,53 +177,3 @@ export default function Details({
     </Box>
   );
 }
-
-const Detail = ({
-  name,
-  value,
-  color = 'primary.main',
-  variant = 'row',
-  icon,
-}: {
-  name: string;
-  value: React.ReactElement | string;
-  color?: string;
-  variant?: 'row' | 'column';
-  icon?: React.ReactElement;
-}) => {
-  const display = variant == 'row' ? 'flex' : 'block';
-  return (
-    <Box component="div" sx={{ display: display }}>
-      <Box
-        sx={{
-          backgroundColor: color,
-          border: '1px solid',
-          borderColor: color,
-          borderRadius: '5px 0 0 5px',
-          // p: '3px 5px',
-          pr: 1,
-          pl: 1,
-        }}
-      >
-        {icon && icon}
-        <Typography variant="button" color="black">
-          {name}
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          color: color,
-          backgroundColor: '#363636',
-          border: '1px solid',
-          borderColor: color,
-          borderRadius: '0 5px 5px 0',
-          // p: '3px 5px',
-          pr: 1,
-          pl: 1,
-        }}
-      >
-        {value}
-      </Box>
-    </Box>
-  );
-};
