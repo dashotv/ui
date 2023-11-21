@@ -21,7 +21,13 @@ export default function Seasons({
     <div className="seasons">
       <ButtonGroup>
         {seasons.map(s => (
-          <Button variant={current === s ? 'contained' : 'outlined'} key={s} id={s.toString()} onClick={clickSeason}>
+          <Button
+            size="small"
+            variant={current === s ? 'contained' : 'outlined'}
+            key={s}
+            id={s.toString()}
+            onClick={clickSeason}
+          >
             {s}
           </Button>
         ))}
