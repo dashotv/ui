@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
 export default function Seasons({
@@ -35,7 +36,7 @@ export default function Seasons({
     }
   }
   return (
-    <div className="seasons">
+    <Paper className="seasons" sx={{ p: 1, mt: 1, mb: 1 }}>
       <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
         <IconButton
           aria-label="account of current user"
@@ -92,6 +93,6 @@ export default function Seasons({
           ))}
         </ButtonGroup>
       </Box>
-    </div>
+    </Paper>
   );
 }
