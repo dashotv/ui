@@ -32,10 +32,13 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
             <td className="number"></td>
             <td className="date">Type</td>
             <td>Title</td>
-            <td className="actions" align="right">
+            <td className="small" align="right">
+              Size
+            </td>
+            <td className="small" align="right">
               Published
             </td>
-            <td className="actions" align="right">
+            <td className="small" align="right">
               Actions
             </td>
           </tr>
@@ -68,6 +71,7 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
                     {group(row.group, row.author)}
                   </Stack>
                 </td>
+                <td align="right">{row.size}</td>
                 <td align="right">{row.published_at && <Chrono fromNow>{row.published_at}</Chrono>}</td>
                 <td align="right">{actions && actions(row)}</td>
               </tr>
