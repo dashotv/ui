@@ -18,21 +18,19 @@ export default function UpcomingPage() {
   const downloads = useDownloadsActiveQuery();
   const upcoming = useUpcomingQuery();
 
-  const updateDownloads = useCallback(
-    data => {
-      if (!downloads.data) {
-        return;
-      }
-      if (data.event === 'created' || data.event === 'destroyed') {
-        queryClient.invalidateQueries({ queryKey: ['downloads', 'active'] });
-      }
-      queryClient.setQueryData(
-        ['downloads', 'active'],
-        downloads.data.map(e => (e.id === data.id ? data : e)),
-      );
-    },
-    [queryClient],
-  );
+  const updateDownloads = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ['downloads', 'active'] });
+    // TODO: for now, just invalidate query. in the future, have tower proxy the
+    // seer messages and include medium in the object.
+    // if (data.event === 'created' || data.event === 'destroyed') {
+    //   console.log("invalidateQueries('downloads', 'active')");
+    //   queryClient.invalidateQueries({ queryKey: ['downloads', 'active'] });
+    //   return;
+    // }
+    // queryClient.setQueryData(['downloads', 'active'], (prev: Download[]) =>
+    //   prev.map(e => (e.id === data.id ? data : e)),
+    // );
+  }, [queryClient]);
   useSub('seer.downloads', updateDownloads);
   useSub('tower.downloads', updateDownloads);
 
