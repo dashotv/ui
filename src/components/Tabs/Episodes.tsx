@@ -6,7 +6,8 @@ import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Typography } from '@mui/material';
+import { Chip, Typography } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -23,7 +24,7 @@ export default function Episodes({
   changeEpisode: (id: string, field: string, value: boolean) => void;
 }) {
   return (
-    <Paper elevation={1} sx={{ p: 1 }}>
+    <Paper elevation={0}>
       {/* <table
         className="vertical-table"
         // size="small"
@@ -104,21 +105,28 @@ function EpisodeRow({
   ];
 
   return (
-    <Box key={number} sx={{ p: '2px', mb: '2px', width: '100%', overflow: 'hidden', borderBottom: '1px solid black' }}>
-      <Stack sx={{ width: '100%' }} direction={{ xs: 'column', sm: 'row' }}>
-        <Stack sx={{ width: '100%' }} direction="row" spacing={1}>
-          <Typography p="3px" pt="5px" width="32px" minWidth="32px" align="right" color="gray">
-            {number}
-          </Typography>
-          <Typography noWrap variant="h6" color="primary">
-            {title}
-          </Typography>
-        </Stack>
-        <Stack sx={{ minWidth: '235px', justifyContent: 'end', pr: '5px' }} direction="row" spacing={1}>
-          <Typography pt="4px" color="gray" variant="button" noWrap>
-            <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
-          </Typography>
-          <ButtonMap buttons={buttons} />
+    <Box key={number} sx={{ p: '3px', mb: '3px', width: '100%', overflow: 'hidden', backgroundColor: '#181818' }}>
+      <Stack sx={{ width: '100%' }} direction="row" spacing={0}>
+        <Box sx={{ pt: '8px', display: { sm: 'inherit', xs: 'none' } }}>
+          <Avatar sx={{ height: '36px', width: '36px' }}>{number}</Avatar>
+        </Box>
+        <Stack sx={{ width: '100%', ml: 2 }} direction={{ xs: 'column', sm: 'row' }}>
+          <Stack sx={{ width: '100%' }} direction="column">
+            <Typography noWrap variant="h6" color="primary">
+              {title}
+            </Typography>
+            <Stack direction="row" spacing={1} sx={{ width: '100%', justifyContent: 'space-between' }}>
+              <Stack direction="row" spacing={0}>
+                <Box sx={{ display: { sm: 'none', xs: 'inherit' }, mr: 1 }}>
+                  <Chip label={String(number).padStart(2, '0')} size="small" />
+                </Box>
+                <Typography color="gray" variant="button" noWrap>
+                  <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
+                </Typography>
+              </Stack>
+              <ButtonMap buttons={buttons} size="large" />
+            </Stack>
+          </Stack>
         </Stack>
       </Stack>
     </Box>
