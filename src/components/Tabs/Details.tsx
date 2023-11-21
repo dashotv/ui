@@ -116,7 +116,6 @@ export default function Details({
                           icon={<VerifiedOutlinedIcon />}
                           checkedIcon={<VerifiedIcon />}
                           name="search_params.verified"
-                          label="verified"
                           disabled={type != 'Series'}
                           control={control}
                         />
@@ -124,7 +123,6 @@ export default function Details({
                           icon={<SportsBarOutlinedIcon />}
                           checkedIcon={<SportsBarIcon />}
                           name="search_params.uncensored"
-                          label="uncensored"
                           disabled={type != 'Series'}
                           control={control}
                         />
@@ -132,7 +130,6 @@ export default function Details({
                           icon={<VideocamOutlinedIcon />}
                           checkedIcon={<VideocamIcon />}
                           name="search_params.bluray"
-                          label="bluray"
                           disabled={type != 'Series'}
                           control={control}
                         />
