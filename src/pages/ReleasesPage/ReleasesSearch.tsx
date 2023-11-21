@@ -24,19 +24,22 @@ const pagesize = 25;
 const formDefaults: SearchForm = {
   text: '',
   year: '',
-  season: undefined,
-  episode: undefined,
+  season: '',
+  episode: '',
   group: '',
   author: '',
-  resolution: undefined,
+  resolution: '',
   source: '',
   type: '',
-  exact: false,
+  uncensored: false,
+  bluray: false,
   verified: false,
+  exact: false,
 };
 
 // TODO: useForm and @hookform/devtools, see: https://www.youtube.com/watch?v=sD9fZxMO1us
 export default function ReleasesSearch() {
+  const { queryString } = useQueryString();
   const [searchParams] = useSearchParams();
   const [form, setForm] = useState<SearchForm>(
     Object.assign(formDefaults, {
@@ -45,9 +48,10 @@ export default function ReleasesSearch() {
       resolution: searchParams.get('resolution') || '',
       exact: searchParams.get('exact') === 'true',
       verified: searchParams.get('verified') === 'true',
+      uncensored: searchParams.get('uncensored') === 'true',
+      bluray: searchParams.get('bluray') === 'true',
     }),
   );
-  const { queryString } = useQueryString();
   const [page, setPage] = useState(1);
   const [qs, setQs] = useState(queryString(form));
   const { isFetching, data } = useReleasesQuery(page, pagesize, qs);

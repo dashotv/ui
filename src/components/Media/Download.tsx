@@ -125,19 +125,19 @@ export default function Download({
     const { text, episode } = processSearch();
 
     const data: SearchForm = {
-      text: text,
+      text: text || '',
       year: '',
-      season: kind !== 'anime' ? season_number : '',
+      season: kind !== 'anime' ? season_number || '' : '',
       episode: episode || '',
-      group: search_params?.group,
+      group: search_params?.group || '',
       author: '',
-      resolution: search_params?.resolution,
-      source: search_params?.source,
-      type: search_params?.type,
-      exact: search_params?.exact,
-      verified: search_params?.verified,
-      uncensored: search_params?.uncensored,
-      bluray: search_params?.bluray,
+      resolution: search_params?.resolution || '',
+      source: search_params?.source || '',
+      type: search_params?.type || '',
+      exact: search_params?.exact || false,
+      verified: search_params?.verified || false,
+      uncensored: search_params?.uncensored || false,
+      bluray: search_params?.bluray || false,
     };
     return data;
   }, [
