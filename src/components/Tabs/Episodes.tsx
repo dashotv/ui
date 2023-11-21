@@ -107,10 +107,10 @@ function EpisodeRow({
   return (
     <Box key={number} sx={{ p: '3px', mb: '3px', width: '100%', overflow: 'hidden', backgroundColor: '#181818' }}>
       <Stack sx={{ width: '100%' }} direction="row" spacing={0}>
-        <Box sx={{ pt: '8px', display: { sm: 'inherit', xs: 'none' } }}>
+        <Box sx={{ pt: '8px', mr: 2, display: { sm: 'inherit', xs: 'none' } }}>
           <Avatar sx={{ height: '36px', width: '36px' }}>{number}</Avatar>
         </Box>
-        <Stack sx={{ width: '100%', ml: 2 }} direction={{ xs: 'column', sm: 'row' }}>
+        <Stack sx={{ width: '100%' }} direction={{ xs: 'column', sm: 'row' }}>
           <Stack sx={{ width: '100%' }} direction="column">
             <Typography noWrap variant="h6" color="primary">
               {title}
