@@ -23,6 +23,9 @@ export default function UpcomingPage() {
       if (!downloads.data) {
         return;
       }
+      if (data.event === 'created' || data.event === 'destroyed') {
+        queryClient.invalidateQueries({ queryKey: ['downloads', 'active'] });
+      }
       queryClient.setQueryData(
         ['downloads', 'active'],
         downloads.data.map(e => (e.id === data.id ? data : e)),
