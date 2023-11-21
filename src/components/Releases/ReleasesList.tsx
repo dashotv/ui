@@ -62,7 +62,7 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
                   <Stack spacing={1} direction="row">
                     <Link to={row.id} title={row.raw}>
                       <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '525px' }}>
-                        <Typography variant="subtitle1" noWrap color="primary">
+                        <Typography variant="h6" noWrap color="primary">
                           {row.display || row.name}
                         </Typography>
                       </div>
