@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { RiEditCircleFill } from 'react-icons/ri';
 import { useSearchParams } from 'react-router-dom';
 
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { Paper } from '@mui/material';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Pagination from '@mui/material/Pagination';
+import Paper from '@mui/material/Paper';
+import SvgIcon from '@mui/material/SvgIcon';
 
+import { ButtonMap } from 'components/ButtonMap';
 import LoadingIndicator from 'components/Loading';
 import { ReleasesList } from 'components/Releases/ReleasesList';
 import { Search } from 'components/Search';
@@ -70,19 +71,28 @@ export default function ReleasesSearch() {
   }, [form, queryString]);
 
   const renderActions = () => {
-    return (
-      <ButtonGroup>
-        <IconButton size="small" onClick={click} title="edit">
-          <EditIcon fontSize="small" color="primary" />
-        </IconButton>
-        <IconButton size="small" onClick={click} title="re-process">
-          <RestartAltIcon fontSize="small" color="warning" />
-        </IconButton>
-        <IconButton size="small" onClick={click} title="delete">
-          <DeleteForeverIcon fontSize="small" color="error" />
-        </IconButton>
-      </ButtonGroup>
-    );
+    const buttons = [
+      {
+        icon: (
+          <IconButton size="small">
+            <SvgIcon component={RiEditCircleFill} inheritViewBox fontSize="small" color="primary" />
+          </IconButton>
+        ),
+        click: click,
+        title: 'edit',
+      },
+      {
+        icon: <ReplayCircleFilledIcon color="warning" />,
+        click: click,
+        title: 're-process',
+      },
+      {
+        icon: <CancelIcon color="error" />,
+        click: click,
+        title: 'delete',
+      },
+    ];
+    return <ButtonMap buttons={buttons} />;
   };
 
   return (

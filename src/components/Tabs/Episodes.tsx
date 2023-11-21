@@ -6,11 +6,12 @@ import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Chip, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 import { ButtonMap } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
@@ -25,27 +26,7 @@ export default function Episodes({
 }) {
   return (
     <Paper elevation={0}>
-      {/* <table
-        className="vertical-table"
-        // size="small"
-        aria-label="a dense table"
-      >
-        <thead>
-          <tr>
-            <td className="number">#</td>
-            <td>Title</td>
-            <td className="date" align="right">
-              Release
-            </td>
-            <td className="actions" align="right">
-              Actions
-            </td>
-          </tr>
-        </thead>
-        <tbody> */}
       {episodes && episodes.map(row => <EpisodeRow key={row.id} episode={row} changeEpisode={changeEpisode} />)}
-      {/* </tbody>
-      </table> */}
     </Paper>
   );
 }
