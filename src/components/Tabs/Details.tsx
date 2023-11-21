@@ -111,8 +111,9 @@ export default function Details({
                           control={control}
                         />
                       </Stack>
-                      <Stack direction="row" spacing={1}>
+                      <Stack sx={{ pt: 1, pl: 2 }} direction="row" spacing={1}>
                         <IconCheckbox
+                          sx={{ mr: 0 }}
                           icon={<VerifiedOutlinedIcon />}
                           checkedIcon={<VerifiedIcon />}
                           name="search_params.verified"
@@ -120,6 +121,7 @@ export default function Details({
                           control={control}
                         />
                         <IconCheckbox
+                          sx={{ mr: 0 }}
                           icon={<SportsBarOutlinedIcon />}
                           checkedIcon={<SportsBarIcon />}
                           name="search_params.uncensored"
@@ -127,6 +129,7 @@ export default function Details({
                           control={control}
                         />
                         <IconCheckbox
+                          sx={{ mr: 0 }}
                           icon={<VideocamOutlinedIcon />}
                           checkedIcon={<VideocamIcon />}
                           name="search_params.bluray"
