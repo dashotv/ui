@@ -20,10 +20,12 @@ import { SearchForm } from 'types/search_form';
 export function Search({
   form,
   setForm,
+  reset,
 }: {
   form: SearchForm;
   defaults?: SearchForm;
   setForm: React.Dispatch<React.SetStateAction<SearchForm>>;
+  reset?: () => void;
 }) {
   const { handleSubmit, control } = useForm({ values: form });
   const submit = (data: SearchForm) => {
@@ -75,7 +77,14 @@ export function Search({
             <Button variant="contained" type="submit">
               Go
             </Button>
-            <Button variant="contained">Reset</Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                reset && reset();
+              }}
+            >
+              Reset
+            </Button>
           </Stack>
         </Stack>
       </Box>

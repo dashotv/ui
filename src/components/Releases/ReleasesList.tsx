@@ -30,7 +30,7 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
         data.map((row: Release) => (
           <Paper elevation={1} key={row.id} sx={{ width: '100%', mb: 1 }}>
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
-              <Stack direction="row" spacing={1} sx={{ width: '100%' }} alignItems="center">
+              <Stack direction="row" spacing={1} maxWidth={{ xs: '100%', md: '900px' }} pr="3px" alignItems="center">
                 <Stack direction="row" alignItems="center">
                   <IconButton size="small" onClick={() => toggleVerified(row)} title="verified">
                     <CheckCircleIcon color={row.verified ? 'secondary' : 'action'} fontSize="small" />
@@ -77,60 +77,5 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
           </Paper>
         ))}
     </Paper>
-    // <div className="releases">
-    //   <table className="vertical-table">
-    //     <thead>
-    //       <tr>
-    //         <td className="number"></td>
-    //         <td className="number"></td>
-    //         <td className="date">Type</td>
-    //         <td>Title</td>
-    //         <td className="small" align="right">
-    //           Size
-    //         </td>
-    //         <td className="small" align="right">
-    //           Published
-    //         </td>
-    //         <td className="small" align="right">
-    //           Actions
-    //         </td>
-    //       </tr>
-    //     </thead>
-    //     <tbody>
-    //       {data &&
-    //         data.map((row: Release) => (
-    //           <tr key={row.id}>
-    //             <td>
-    //               <IconButton size="small" onClick={() => toggleVerified(row)} title="verified">
-    //                 <CheckCircleIcon color={row.verified ? 'secondary' : 'action'} fontSize="small" />
-    //               </IconButton>
-    //             </td>
-    //             <td>{row.nzb ? <ArticleIcon fontSize="small" /> : <WavesIcon fontSize="small" />}</td>
-    //             <td>
-    //               <Typography variant="overline">
-    //                 {row.source}:{row.type}
-    //               </Typography>
-    //             </td>
-    //             <td>
-    //               <Stack spacing={1} direction="row">
-    //                 <Link to={row.id} title={row.raw}>
-    //                   <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '525px' }}>
-    //                     <Typography variant="h6" noWrap color="primary">
-    //                       {row.display || row.name}
-    //                     </Typography>
-    //                   </div>
-    //                 </Link>
-    //                 {resolution(row.resolution)}
-    //                 {group(row.group, row.author)}
-    //               </Stack>
-    //             </td>
-    //             <td align="right">{row.size}</td>
-    //             <td align="right">{row.published_at && <Chrono fromNow>{row.published_at}</Chrono>}</td>
-    //             <td align="right">{actions && actions(row)}</td>
-    //           </tr>
-    //         ))}
-    //     </tbody>
-    //   </table>
-    // </div>
   );
 }

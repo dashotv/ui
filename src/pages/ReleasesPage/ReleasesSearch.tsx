@@ -5,10 +5,12 @@ import { useSearchParams } from 'react-router-dom';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Pagination from '@mui/material/Pagination';
 import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 
 import { ButtonMap } from 'components/ButtonMap';
@@ -61,6 +63,10 @@ export default function ReleasesSearch() {
     setPage(value);
   }, []);
 
+  const reset = () => {
+    setForm(formDefaults);
+  };
+
   const click = useCallback(() => {
     console.log('click');
   }, []);
@@ -105,17 +111,56 @@ export default function ReleasesSearch() {
       <Container style={{ overflow: 'hidden' }} maxWidth="xl">
         <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
           {isFetching && <LoadingIndicator />}
-          <Search form={form} setForm={setForm} />
+          <Search form={form} setForm={setForm} reset={reset} />
         </Paper>
       </Container>
       <Container style={{ overflow: 'hidden' }} maxWidth="xl">
         <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
-          <Pagination
-            boundaryCount={0}
-            page={page}
-            count={Math.ceil((data?.Total || 0) / pagesize)}
-            onChange={handleChange}
-          />
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            spacing={1}
+            alignItems="center"
+            sx={{ width: '100%', justifyContent: 'space-between' }}
+          >
+            <Stack direction="row" spacing={1}>
+              <Button
+                onClick={() => {
+                  setForm(() => {
+                    return { ...formDefaults, type: 'movies', resolution: 1080, verified: true };
+                  });
+                }}
+                variant="contained"
+              >
+                Movies
+              </Button>
+              <Button
+                onClick={() => {
+                  setForm(() => {
+                    return { ...formDefaults, verified: true, type: 'anime', uncensored: true };
+                  });
+                }}
+                variant="contained"
+              >
+                UN
+              </Button>
+              <Button
+                onClick={() => {
+                  setForm(() => {
+                    return { ...formDefaults, verified: true, type: 'anime', bluray: true };
+                  });
+                }}
+                variant="contained"
+              >
+                BD
+              </Button>
+            </Stack>
+            <Pagination
+              boundaryCount={0}
+              page={page}
+              count={Math.ceil((data?.Total || 0) / pagesize)}
+              onChange={handleChange}
+            />
+          </Stack>
         </Paper>
       </Container>
       <Container style={{ overflow: 'hidden' }} maxWidth="xl">
