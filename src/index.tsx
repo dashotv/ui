@@ -65,7 +65,7 @@ ReactDOMClient.createRoot(MOUNT_NODE!).render(
               {/*<React.StrictMode>*/}
               <QueryClientProvider client={queryClient}>
                 <App />
-                {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+                <ReactQueryDevtools initialIsOpen={false} />
               </QueryClientProvider>
               {/*</React.StrictMode>*/}
             </HelmetProvider>
