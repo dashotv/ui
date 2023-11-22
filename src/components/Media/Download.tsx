@@ -165,7 +165,7 @@ export default function Download({
 
   const tabsMap = {
     Files: <FilesWithSelector files={files} torrent={torrent} episodes={episodes} updater={selectMedium} />,
-    Torch: <Torch form={torchForm()} selector={torchSelector} />,
+    Torch: <Torch form={torchForm()} selector={torchSelector} selected={{ release_id, url }} />,
     Nzbgeek: <Nzbgeek form={nzbForm()} selector={nzbSelector} />,
   };
 

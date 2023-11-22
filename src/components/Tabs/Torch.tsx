@@ -17,7 +17,15 @@ import { SearchForm } from 'types/search_form';
 
 const pagesize = 25;
 
-export function Torch({ form: initial, selector }: { form: SearchForm; selector: (id: string) => void }) {
+export function Torch({
+  form: initial,
+  selector,
+  selected,
+}: {
+  form: SearchForm;
+  selector: (id: string) => void;
+  selected?: { release_id: string; url: string };
+}) {
   const [loading, setLoading] = useState(false);
   const [releases, setReleases] = useState([]);
   const [form, setForm] = useState(initial);
@@ -74,7 +82,7 @@ export function Torch({ form: initial, selector }: { form: SearchForm; selector:
       <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
         <Search form={form} setForm={setForm} />
       </Paper>
-      <ReleasesList data={releases} actions={renderActions} />
+      <ReleasesList data={releases} actions={renderActions} selected={selected} />
     </>
   );
 }

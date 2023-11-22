@@ -22,7 +22,15 @@ import { Release } from 'types/release';
 import { Group } from './Group';
 import { Resolution } from './Resolution';
 
-export function ReleasesList({ data, actions }: { data: Release[]; actions?: (row: Release) => JSX.Element }) {
+export function ReleasesList({
+  data,
+  actions,
+  selected,
+}: {
+  data: Release[];
+  actions?: (row: Release) => JSX.Element;
+  selected?: { release_id: string; url: string };
+}) {
   const releaseUpdate = useReleaseSettingMutation();
 
   const toggleVerified = row => {
@@ -30,18 +38,28 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
   };
 
   const [open, setOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState<Release | null>(null);
+  const [viewing, setViewing] = React.useState<Release | null>(null);
   const handleClose = () => setOpen(false);
-  const select = (row: Release) => {
-    setSelected(row);
+  const view = (row: Release) => {
+    setViewing(row);
     setOpen(true);
+  };
+  const isSelected = (row: Release) => {
+    if (!selected) {
+      return false;
+    }
+    return row.id === selected.release_id || row.download === selected.url;
   };
 
   return (
     <Paper elevation={0} sx={{ width: '100%' }}>
       {data &&
         data.map((row: Release) => (
-          <Paper elevation={1} key={row.id} sx={{ width: '100%', mb: 1 }}>
+          <Paper
+            elevation={1}
+            key={row.id}
+            sx={{ width: '100%', mb: 1, backgroundColor: isSelected(row) ? '#222266' : 'inherit' }}
+          >
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
               <Stack
                 direction="row"
@@ -65,7 +83,7 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
                   </IconButton>
                 </Stack>
                 <Typography variant="h6" noWrap color="primary" sx={{ '& a': { color: 'primary.main' } }}>
-                  <Link to="#" onClick={() => select(row)} title={row.raw}>
+                  <Link to="#" onClick={() => view(row)} title={row.raw}>
                     {row.display || row.name}
                   </Link>
                 </Typography>
@@ -122,7 +140,7 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
             </Stack>
           </Paper>
         ))}
-      {selected && <ReleaseDialog {...{ open, handleClose }} release={selected} actions={actions} />}
+      {viewing && <ReleaseDialog {...{ open, handleClose }} release={viewing} actions={actions} />}
     </Paper>
   );
 }
