@@ -4,11 +4,17 @@ import { Link } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Box from '@mui/material/Box';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Label from '@mui/material/FormLabel';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
 
 import Chrono from 'components/Chrono';
 import { useReleaseSettingMutation } from 'query/releases';
@@ -24,41 +30,51 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
     releaseUpdate.mutate({ id: row.id, setting: { setting: 'verified', value: !row.verified } });
   };
 
+  const [open, setOpen] = React.useState(false);
+  const [selected, setSelected] = React.useState<Release | null>(null);
+  const handleClose = () => setOpen(false);
+  const select = (row: Release) => {
+    setSelected(row);
+    setOpen(true);
+  };
+
   return (
     <Paper elevation={0} sx={{ width: '100%' }}>
       {data &&
         data.map((row: Release) => (
           <Paper elevation={1} key={row.id} sx={{ width: '100%', mb: 1 }}>
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
-              <Stack direction="row" spacing={1} maxWidth={{ xs: '100%', md: '900px' }} pr="3px" alignItems="center">
+              <Stack
+                direction="row"
+                spacing={1}
+                width="100%"
+                maxWidth={{ xs: '100%', md: '900px' }}
+                pr="3px"
+                alignItems="center"
+              >
                 <Stack direction="row" alignItems="center">
                   <IconButton size="small" onClick={() => toggleVerified(row)} title="verified">
                     <CheckCircleIcon color={row.verified ? 'secondary' : 'action'} fontSize="small" />
                   </IconButton>
                   <IconButton size="small">
                     <SvgIcon
-                      sx={{ width: '18px', height: '18px', mr: '3px' }}
+                      sx={{ width: '18px', height: '18px' }}
                       component={row.nzb ? SiApplenews : SiUtorrent}
                       inheritViewBox
                       fontSize="small"
                     />
                   </IconButton>
-                  <Typography
-                    variant="overline"
-                    noWrap
-                    color="textSecondary"
-                    sx={{ display: { xs: 'none', md: 'inherit' }, minWidth: '100px' }}
-                  >
-                    {row.source}:{row.type}
-                  </Typography>
                 </Stack>
                 <Typography variant="h6" noWrap color="primary" sx={{ '& a': { color: 'primary.main' } }}>
-                  <Link to={row.id} title={row.raw}>
+                  <Link to="#" onClick={() => select(row)} title={row.raw}>
                     {row.display || row.name}
                   </Link>
                 </Typography>
                 <Resolution resolution={row.resolution} variant="default" />
                 <Group group={row.group} author={row.author} variant="default" />
+                <Typography variant="subtitle2" noWrap color="textSecondary">
+                  {row.source}:{row.type}
+                </Typography>
               </Stack>
               <Stack direction="row" spacing={1} alignItems="center" sx={{ width: '100%', justifyContent: 'end' }}>
                 <Stack direction="row" spacing={1} alignItems="center">
@@ -76,6 +92,152 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
             </Stack>
           </Paper>
         ))}
+      {selected && <ReleaseDialog {...{ open, handleClose }} release={selected} />}
     </Paper>
   );
 }
+
+const ReleaseDialog = ({
+  open,
+  handleClose,
+  release: {
+    title,
+    display,
+    raw,
+    description,
+    published_at,
+    nzb,
+    source,
+    type,
+    group,
+    author,
+    resolution,
+    size,
+    verified,
+    view,
+    download,
+    infohash,
+    checksum,
+    created_at,
+    updated_at,
+    tags,
+  },
+}: {
+  open: boolean;
+  handleClose: () => void;
+  release: Release;
+}) => {
+  const theme = useTheme();
+  return (
+    <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
+      <DialogTitle>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Typography noWrap color="primary" variant="h6">
+            {display || title}
+          </Typography>
+        </Stack>
+        <Stack direction="row" alignItems="center">
+          <IconButton size="small" title="verified">
+            <CheckCircleIcon color={verified ? 'secondary' : 'action'} fontSize="small" />
+          </IconButton>
+          <IconButton size="small">
+            <SvgIcon
+              sx={{ width: '18px', height: '18px', mr: '3px' }}
+              component={nzb ? SiApplenews : SiUtorrent}
+              inheritViewBox
+              fontSize="small"
+            />
+          </IconButton>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Resolution resolution={resolution} variant="default" />
+            <Group group={group} author={author} variant="default" />
+            <Typography variant="subtitle2" color="textSecondary" pl="3px">
+              {source}:{type}
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary" pl="3px">
+              {size ? `${size}mb` : ''}
+            </Typography>
+          </Stack>
+        </Stack>
+      </DialogTitle>
+      <DialogContent>
+        <Typography variant="subtitle2" color="gray" pl="3px">
+          {published_at && <Chrono fromNow>{published_at}</Chrono>}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+          Title
+        </Typography>
+        <Typography minHeight="24px" variant="body1" color="primary">
+          {title}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+          Raw
+        </Typography>
+        <Typography minHeight="24px" variant="body1" color="primary">
+          {raw}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+          Description
+        </Typography>
+        <Typography minHeight="24px" variant="body1" color="primary">
+          {description}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+          Size
+        </Typography>
+        <Typography minHeight="24px" variant="body1" color="primary">
+          {size || '?'}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+          Links
+        </Typography>
+        <Typography minHeight="24px" variant="body1" color="primary">
+          <div>
+            {view && (
+              <Link style={{ color: theme.palette.primary.main }} to={view}>
+                View
+              </Link>
+            )}
+          </div>
+          <div>
+            {download && (
+              <Link style={{ color: theme.palette.primary.main }} to={download}>
+                Download
+              </Link>
+            )}
+          </div>
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+          Hash
+        </Typography>
+        <Typography minHeight="24px" variant="body1" color="primary">
+          {infohash}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+          Checksum
+        </Typography>
+        <Typography minHeight="24px" variant="body1" color="primary">
+          {checksum}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+          Tags
+        </Typography>
+        <Typography minHeight="24px" variant="body1" color="primary">
+          {tags}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+          Created
+        </Typography>
+        <Typography minHeight="24px" variant="body1" color="primary">
+          {created_at}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+          Updated
+        </Typography>
+        <Typography minHeight="24px" variant="body1" color="primary">
+          {updated_at}
+        </Typography>
+      </DialogContent>
+    </Dialog>
+  );
+};
