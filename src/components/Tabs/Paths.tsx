@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { RiEditCircleFill } from 'react-icons/ri';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -9,6 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ImageIcon from '@mui/icons-material/Image';
 import MovieIcon from '@mui/icons-material/Movie';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -20,12 +21,17 @@ import Chrono from 'components/Chrono';
 import { Path } from 'types/path';
 
 export default function Paths({ paths }: { paths: Path[] }) {
+  const [hidden, setHidden] = useState(true);
   return (
     <Paper elevation={0}>
       {paths &&
-        paths.map(({ extension, local, type, updated_at }, i) => (
-          <PathsRow key={i} i={i} {...{ extension, local, type, updated_at }} />
-        ))}
+        paths.map(({ extension, local, type, updated_at }, i) => {
+          if (hidden && extension === 'jpg') return null;
+          return <PathsRow key={i} i={i} {...{ extension, local, type, updated_at }} />;
+        })}
+      <Paper elevation={0} sx={{ width: '100%' }}>
+        <Button onClick={() => setHidden(!hidden)}>{hidden ? 'show' : 'hide'} images</Button>
+      </Paper>
     </Paper>
     // <div className="files">
     //   <table
