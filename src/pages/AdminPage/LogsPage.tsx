@@ -9,13 +9,16 @@ import LoadingIndicator from 'components/Loading';
 import { LogsList } from 'components/Logs/LogsList';
 import { useSub } from 'hooks/useSub';
 import { useLogsQuery } from 'query/logs';
+import { Log } from 'types/log';
 
 export default function JobsPage() {
   const [page] = useState(1);
   const logs = useLogsQuery(page);
   const queryClient = useQueryClient();
-  useSub('tower.logs', () => {
-    queryClient.invalidateQueries({ queryKey: ['logs', page] });
+  useSub('tower.logs', data => {
+    queryClient.setQueryData(['logs', page], (prev: Log[]) => {
+      return [data.Log, ...prev];
+    });
   });
 
   return (
