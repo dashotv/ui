@@ -1,18 +1,15 @@
-import axios from 'axios';
-import { useSnackbar } from 'notistack';
-
 import React, { useCallback, useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 
+import { ButtonMap } from 'components/ButtonMap';
 import LoadingIndicator from 'components/Loading';
 import { ReleasesList } from 'components/Releases/ReleasesList';
 import { Search } from 'components/Search';
 import { useQueryString } from 'hooks/useQueryString';
+import { useReleasesQuery } from 'query/releases';
 import { SearchForm } from 'types/search_form';
 
 const pagesize = 25;
@@ -26,31 +23,10 @@ export function Torch({
   selector: (id: string) => void;
   selected?: { release_id: string; url: string };
 }) {
-  const [loading, setLoading] = useState(false);
-  const [releases, setReleases] = useState([]);
-  const [form, setForm] = useState(initial);
-  const { enqueueSnackbar } = useSnackbar();
   const { queryString } = useQueryString();
-
-  // TODO: change to react query
-  useEffect(() => {
-    const getReleases = () => {
-      setLoading(true);
-      const qs = queryString(form);
-      axios
-        .get(`/api/scry/releases/?limit=${pagesize}&${qs}`)
-        .then(response => {
-          console.log(response.data);
-          setReleases(response.data.Releases);
-          setLoading(false);
-        })
-        .catch(err => {
-          enqueueSnackbar('error getting data', { variant: 'error' });
-          console.error(err);
-        });
-    };
-    getReleases();
-  }, [form, queryString, enqueueSnackbar]);
+  const [qs, setQs] = useState(queryString(initial));
+  const releases = useReleasesQuery(0, pagesize, qs);
+  const [form, setForm] = useState(initial);
 
   const click = useCallback(() => {
     console.log('click');
@@ -63,26 +39,37 @@ export function Torch({
     [selector],
   );
 
+  useEffect(() => {
+    setQs(queryString(form));
+  }, [form, setQs, queryString]);
+
   const renderActions = row => {
-    return (
-      <ButtonGroup>
-        <IconButton size="small" onClick={click} title="view source">
-          <OutboundRoundedIcon fontSize="small" color="primary" />
-        </IconButton>
-        <IconButton size="small" onClick={() => handleSelect(row.id)} title="select">
-          <CheckCircleIcon fontSize="small" color="primary" />
-        </IconButton>
-      </ButtonGroup>
-    );
+    const buttons = [
+      {
+        icon: <OutboundRoundedIcon fontSize="small" color="primary" />,
+        click: click,
+        title: 'edit',
+      },
+      {
+        icon: <CheckCircleIcon fontSize="small" color="primary" />,
+        click: () => handleSelect(row.id),
+        title: 're-process',
+      },
+    ];
+    return <ButtonMap buttons={buttons} />;
   };
+
+  if (!releases.data) {
+    return;
+  }
 
   return (
     <>
-      {loading && <LoadingIndicator />}
+      {releases.isFetching && <LoadingIndicator />}
       <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
-        <Search form={form} setForm={setForm} />
+        <Search form={form} setForm={setForm} reset={() => setForm(initial)} />
       </Paper>
-      <ReleasesList data={releases} actions={renderActions} selected={selected} />
+      <ReleasesList data={releases.data?.Releases} actions={renderActions} selected={selected} />
     </>
   );
 }
