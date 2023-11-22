@@ -8,7 +8,6 @@ import MovieIcon from '@mui/icons-material/Movie';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
@@ -101,7 +100,7 @@ function PathsRow({ i, extension, local, type, updated_at }: { i: number } & Pat
           <Typography variant="subtitle2" noWrap color="gray">
             <Chrono fromNow>{updated_at?.toString()}</Chrono>
           </Typography>
-          <ButtonMap buttons={buttons} />
+          <ButtonMap buttons={buttons} size="small" />
         </Stack>
       </Stack>
     </Paper>
