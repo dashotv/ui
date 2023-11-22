@@ -65,6 +65,7 @@ export default function ReleasesSearch() {
 
   const reset = () => {
     setForm(formDefaults);
+    setPage(1);
   };
 
   const click = useCallback(() => {
@@ -125,6 +126,7 @@ export default function ReleasesSearch() {
             <Stack direction="row" spacing={1}>
               <Button
                 onClick={() => {
+                  setPage(1);
                   setForm(() => {
                     return { ...formDefaults, type: 'movies', resolution: 1080, verified: true };
                   });
@@ -135,6 +137,7 @@ export default function ReleasesSearch() {
               </Button>
               <Button
                 onClick={() => {
+                  setPage(1);
                   setForm(() => {
                     return { ...formDefaults, verified: true, type: 'anime', uncensored: true };
                   });
@@ -145,6 +148,7 @@ export default function ReleasesSearch() {
               </Button>
               <Button
                 onClick={() => {
+                  setPage(1);
                   setForm(() => {
                     return { ...formDefaults, verified: true, type: 'anime', bluray: true };
                   });

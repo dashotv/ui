@@ -3,6 +3,7 @@ import { SiApplenews, SiUtorrent } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { DialogActions } from '@mui/material';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -68,29 +69,60 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
                     {row.display || row.name}
                   </Link>
                 </Typography>
-                <Resolution resolution={row.resolution} variant="default" />
-                <Group group={row.group} author={row.author} variant="default" />
-                <Typography variant="subtitle2" noWrap color="textSecondary">
-                  {row.source}:{row.type}
-                </Typography>
+                <Stack
+                  display={{ xs: 'none', md: 'inherit' }}
+                  direction="row"
+                  spacing={1}
+                  alignItems="center"
+                  sx={{ pl: 1 }}
+                >
+                  <Resolution resolution={row.resolution} variant="default" />
+                  <Group group={row.group} author={row.author} variant="default" />
+                  <Typography variant="subtitle2" noWrap color="textSecondary">
+                    {row.source}:{row.type}
+                  </Typography>
+                </Stack>
               </Stack>
-              <Stack direction="row" spacing={1} alignItems="center" sx={{ width: '100%', justifyContent: 'end' }}>
-                <Stack direction="row" spacing={1} alignItems="center">
+              <Stack
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                sx={{ width: '100%', justifyContent: { xs: 'start', md: 'end' } }}
+              >
+                <Stack
+                  display={{ xs: 'inherit', md: 'none' }}
+                  direction="row"
+                  spacing={1}
+                  alignItems="center"
+                  sx={{ pl: 1 }}
+                >
+                  <Resolution resolution={row.resolution} variant="default" />
+                  <Group group={row.group} author={row.author} variant="default" />
+                  <Typography variant="subtitle2" noWrap color="textSecondary">
+                    {row.source}:{row.type}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ pr: 1 }}>
                   {row.size && (
-                    <Typography variant="subtitle2" color="textSecondary" pl="3px">
+                    <Typography
+                      display={{ xs: 'none', md: 'inherit' }}
+                      variant="subtitle2"
+                      color="textSecondary"
+                      pl="3px"
+                    >
                       {row.size ? `${row.size}mb` : ''}
                     </Typography>
                   )}
                   <Typography noWrap variant="subtitle2" color="gray" pl="3px" width="100%">
                     {row.published_at && <Chrono fromNow>{row.published_at}</Chrono>}
                   </Typography>
+                  <Box display={{ xs: 'none', md: 'inherit' }}>{actions && actions(row)}</Box>
                 </Stack>
-                <Box>{actions && actions(row)}</Box>
               </Stack>
             </Stack>
           </Paper>
         ))}
-      {selected && <ReleaseDialog {...{ open, handleClose }} release={selected} />}
+      {selected && <ReleaseDialog {...{ open, handleClose }} release={selected} actions={actions} />}
     </Paper>
   );
 }
@@ -98,6 +130,8 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
 const ReleaseDialog = ({
   open,
   handleClose,
+  actions,
+  release,
   release: {
     title,
     display,
@@ -124,6 +158,7 @@ const ReleaseDialog = ({
   open: boolean;
   handleClose: () => void;
   release: Release;
+  actions?: (row: Release) => JSX.Element;
 }) => {
   const theme = useTheme();
   return (
@@ -238,6 +273,9 @@ const ReleaseDialog = ({
           <Box>{description && <div dangerouslySetInnerHTML={{ __html: description }} />}</Box>
         </Stack>
       </DialogContent>
+      <DialogActions>
+        <Box>{actions && actions(release)}</Box>
+      </DialogActions>
     </Dialog>
   );
 };
