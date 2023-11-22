@@ -86,30 +86,25 @@ function EpisodeRow({
   ];
 
   return (
-    <Box key={number} sx={{ p: '3px', mb: '3px', width: '100%', overflow: 'hidden', backgroundColor: '#181818' }}>
-      <Stack sx={{ width: '100%' }} direction="row" spacing={0}>
-        <Box sx={{ pt: '8px', mr: 2, display: { sm: 'inherit', xs: 'none' } }}>
-          <Avatar sx={{ height: '36px', width: '36px' }}>{number}</Avatar>
-        </Box>
-        <Stack sx={{ width: '100%' }} direction={{ xs: 'column', sm: 'row' }}>
-          <Stack sx={{ width: '100%' }} direction="column">
-            <Typography noWrap variant="h6" color="primary">
-              {title}
-            </Typography>
-            <Stack direction="row" spacing={1} sx={{ width: '100%', justifyContent: 'space-between' }}>
-              <Stack direction="row" spacing={0}>
-                <Box sx={{ display: { sm: 'none', xs: 'inherit' }, mr: 1 }}>
-                  <Chip label={String(number).padStart(2, '0')} size="small" />
-                </Box>
-                <Typography color="gray" variant="button" noWrap>
-                  <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
-                </Typography>
-              </Stack>
-              <ButtonMap buttons={buttons} size="large" />
-            </Stack>
-          </Stack>
+    <Paper elevation={1} sx={{ width: '100%', mb: 1, pr: 1, pl: 1, height: '32px' }}>
+      <Stack sx={{ width: '100%' }} direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
+        <Stack sx={{ width: '100%' }} direction="row" spacing={1} alignItems="center">
+          <Box>
+            <Avatar variant="rounded" sx={{ height: '20px', width: '32px' }}>
+              {number}
+            </Avatar>
+          </Box>
+          <Typography noWrap variant="h6" color="primary">
+            {title}
+          </Typography>
+        </Stack>
+        <Stack direction="row" spacing={1} sx={{ width: '100%', justifyContent: { md: 'end', xs: 'space-between' } }}>
+          <Typography color="gray" variant="button" noWrap>
+            <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
+          </Typography>
+          <ButtonMap buttons={buttons} size="large" />
         </Stack>
       </Stack>
-    </Box>
+    </Paper>
   );
 }
