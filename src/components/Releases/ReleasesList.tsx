@@ -164,84 +164,78 @@ const ReleaseDialog = ({
         </Stack>
       </DialogTitle>
       <DialogContent>
-        <Stack width="100%" direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="top">
-          <Stack width="100%" direction="column" spacing={1}>
-            <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
-              Title
-            </Typography>
-            <Typography minHeight="24px" variant="body1" color="primary">
-              {title}
-            </Typography>
-            <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
-              Raw
-            </Typography>
-            <Typography minHeight="24px" variant="body1" color="primary">
-              {raw}
-            </Typography>
-            <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
-              Size
-            </Typography>
-            <Typography minHeight="24px" variant="body1" color="primary">
-              {size || '?'}
-            </Typography>
-            <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
-              Links
-            </Typography>
-            <Typography minHeight="24px" variant="body1" color="primary">
-              <div>
-                {view && (
-                  <Link style={{ color: theme.palette.primary.main }} to={view}>
-                    View
-                  </Link>
-                )}
-              </div>
-              <div>
-                {download && (
-                  <Link style={{ color: theme.palette.primary.main }} to={download}>
-                    Download
-                  </Link>
-                )}
-              </div>
-            </Typography>
-            <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
-              Hash
-            </Typography>
-            <Typography minHeight="24px" variant="body1" color="primary">
-              {infohash}
-            </Typography>
-            <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
-              Checksum
-            </Typography>
-            <Typography minHeight="24px" variant="body1" color="primary">
-              {checksum}
-            </Typography>
-            <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
-              Tags
-            </Typography>
-            <Typography minHeight="24px" variant="body1" color="primary">
-              {tags}
-            </Typography>
-            <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
-              Created
-            </Typography>
-            <Typography minHeight="24px" variant="body1" color="primary">
-              {created_at}
-            </Typography>
-            <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
-              Updated
-            </Typography>
-            <Typography minHeight="24px" variant="body1" color="primary">
-              {updated_at}
-            </Typography>
-          </Stack>
-          <Stack width="100%" direction="column" spacing={1}>
-            <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
-              Description
-            </Typography>
-            <Paper elevation={2} sx={{ p: 1, overflow: 'hidden' }}>
-              {description && <div dangerouslySetInnerHTML={{ __html: description }} />}
-            </Paper>
-          </Stack>
+        <Stack width="100%" direction="column" spacing={1}>
+          <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+            Title
+          </Typography>
+          <Typography minHeight="24px" variant="body1" color="primary">
+            {title}
+          </Typography>
+          <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+            Raw
+          </Typography>
+          <Typography minHeight="24px" variant="body1" color="primary">
+            {raw}
+          </Typography>
+          <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+            Size
+          </Typography>
+          <Typography minHeight="24px" variant="body1" color="primary">
+            {size || '?'}
+          </Typography>
+          <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+            Links
+          </Typography>
+          <Typography minHeight="24px" variant="body1" color="primary">
+            <div>
+              {view && (
+                <Link style={{ color: theme.palette.primary.main }} to={view}>
+                  View
+                </Link>
+              )}
+            </div>
+            <div>
+              {download && (
+                <Link style={{ color: theme.palette.primary.main }} to={download}>
+                  Download
+                </Link>
+              )}
+            </div>
+          </Typography>
+          <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+            Hash
+          </Typography>
+          <Typography minHeight="24px" variant="body1" color="primary">
+            {infohash}
+          </Typography>
+          <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+            Checksum
+          </Typography>
+          <Typography minHeight="24px" variant="body1" color="primary">
+            {checksum}
+          </Typography>
+          <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+            Tags
+          </Typography>
+          <Typography minHeight="24px" variant="body1" color="primary">
+            {tags}
+          </Typography>
+          <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+            Created
+          </Typography>
+          <Typography minHeight="24px" variant="body1" color="primary">
+            {created_at}
+          </Typography>
+          <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+            Updated
+          </Typography>
+          <Typography minHeight="24px" variant="body1" color="primary">
+            {updated_at}
+          </Typography>
+          <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
+            Description
+          </Typography>
+          <Box>{description && <div dangerouslySetInnerHTML={{ __html: description }} />}</Box>
         </Stack>
       </DialogContent>
     </Dialog>
