@@ -3,12 +3,10 @@ import { RiEditCircleFill } from 'react-icons/ri';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import ClosedCaptionIcon from '@mui/icons-material/ClosedCaption';
-import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
 import ImageIcon from '@mui/icons-material/Image';
 import MovieIcon from '@mui/icons-material/Movie';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
@@ -63,14 +61,9 @@ export default function Paths({ paths }: { paths: Path[] }) {
 }
 
 function PathsRow({ i, extension, local, type, updated_at }: { i: number } & Path) {
-  const [t, dir, name] = local ? local.split('/') : ['', '', ''];
   const buttons = [
     {
-      icon: (
-        <IconButton size="small">
-          <SvgIcon component={RiEditCircleFill} inheritViewBox fontSize="small" color="primary" />
-        </IconButton>
-      ),
+      icon: <SvgIcon component={RiEditCircleFill} inheritViewBox fontSize="small" color="primary" />,
       click: () => console.log('edit'),
       title: 'edit',
     },
@@ -86,7 +79,7 @@ function PathsRow({ i, extension, local, type, updated_at }: { i: number } & Pat
     },
   ];
   return (
-    <Paper elevation={1} sx={{ mb: 1, p: 1 }}>
+    <Paper elevation={1} sx={{ mb: 1 }}>
       <Stack
         key={i}
         direction={{ xs: 'column', md: 'row' }}
@@ -94,17 +87,17 @@ function PathsRow({ i, extension, local, type, updated_at }: { i: number } & Pat
         alignItems="center"
         sx={{ justifyContent: 'space-between' }}
       >
-        <Stack sx={{ width: '100%' }} direction="row" spacing={1} alignItems="center">
-          <IconButton size="small">
-            {extension === 'jpg' && <ImageIcon color="primary" />}
-            {type === 'video' && <MovieIcon color="primary" />}
-            {type === 'subtitle' && <ClosedCaptionIcon color="primary" />}
-          </IconButton>
+        <Stack sx={{ width: '100%', pl: 1 }} direction="row" spacing={1} alignItems="center">
+          <Box sx={{ color: 'gray' }}>
+            {extension === 'jpg' && <ImageIcon fontSize="small" />}
+            {type === 'video' && <MovieIcon fontSize="small" />}
+            {type === 'subtitle' && <ClosedCaptionIcon fontSize="small" />}
+          </Box>
           <Typography variant="h6" noWrap color="primary">
             {local}.{extension}
           </Typography>
         </Stack>
-        <Stack sx={{ width: '100%', justifyContent: 'end' }} direction="row" spacing={1} alignItems="center">
+        <Stack sx={{ width: '100%', justifyContent: 'end', pr: 1 }} direction="row" spacing={1} alignItems="center">
           <Typography variant="subtitle2" noWrap color="gray">
             <Chrono fromNow>{updated_at?.toString()}</Chrono>
           </Typography>

@@ -36,7 +36,7 @@ export default function Seasons({
     }
   }
   return (
-    <Paper className="seasons" sx={{ p: 1, mt: 1, mb: 1 }}>
+    <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
       <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
         <IconButton
           aria-label="account of current user"

@@ -6,8 +6,6 @@ import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -47,12 +45,12 @@ function EpisodeRow({
 
   const buttons = [
     {
-      icon: <CloudCircleIcon color="primary" />,
+      icon: <CloudCircleIcon color="primary" fontSize="small" />,
       click: () => {},
       title: 'create download',
     },
     {
-      icon: <NextPlanIcon color={skipped ? 'secondary' : 'action'} />,
+      icon: <NextPlanIcon color={skipped ? 'secondary' : 'action'} fontSize="small" />,
       click: () => {
         changeEpisode(id, 'skipped', !skipped);
         setSkipped(!skipped);
@@ -60,7 +58,7 @@ function EpisodeRow({
       title: 'refresh',
     },
     {
-      icon: <DownloadForOfflineIcon color={downloaded ? 'secondary' : 'action'} />,
+      icon: <DownloadForOfflineIcon color={downloaded ? 'secondary' : 'action'} fontSize="small" />,
       click: () => {
         changeEpisode(id, 'downloaded', !downloaded);
         setDownloaded(!downloaded);
@@ -68,7 +66,7 @@ function EpisodeRow({
       title: 'broken',
     },
     {
-      icon: <CheckCircleIcon color={completed ? 'secondary' : 'action'} />,
+      icon: <CheckCircleIcon color={completed ? 'secondary' : 'action'} fontSize="small" />,
       click: () => {
         changeEpisode(id, 'completed', !completed);
         setCompleted(!completed);
@@ -76,7 +74,7 @@ function EpisodeRow({
       title: 'favorite',
     },
     {
-      icon: <VisibilityIcon color={watched ? 'secondary' : 'action'} />,
+      icon: <VisibilityIcon color={watched ? 'secondary' : 'action'} fontSize="small" />,
       click: () => {
         console.log("can't change watched yet");
       },
@@ -85,19 +83,21 @@ function EpisodeRow({
   ];
 
   return (
-    <Paper elevation={1} sx={{ width: '100%', mb: 1, p: 1, minHeight: '32px' }}>
+    <Paper elevation={1} sx={{ width: '100%', mb: 1 }}>
       <Stack sx={{ width: '100%' }} direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
-        <Stack sx={{ width: '100%' }} direction="row" spacing={1} alignItems="center">
-          <Box>
-            <Avatar variant="rounded" sx={{ height: '20px', width: '32px' }}>
-              {number}
-            </Avatar>
-          </Box>
+        <Stack sx={{ width: '100%', pl: 1 }} direction="row" spacing={2} alignItems="center">
+          <Typography noWrap variant="subtitle1" color="textSecondary" minWidth="28px" textAlign="right">
+            {number}
+          </Typography>
           <Typography noWrap variant="h6" color="primary">
             {title}
           </Typography>
         </Stack>
-        <Stack direction="row" spacing={1} sx={{ width: '100%', justifyContent: { md: 'end', xs: 'space-between' } }}>
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{ width: '100%', pr: 1, justifyContent: { md: 'end', xs: 'space-between' } }}
+        >
           <Typography color="gray" variant="button" noWrap>
             <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
           </Typography>

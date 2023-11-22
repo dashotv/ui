@@ -7,7 +7,6 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import IconButton from '@mui/material/IconButton';
 import Pagination from '@mui/material/Pagination';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -80,11 +79,7 @@ export default function ReleasesSearch() {
   const renderActions = () => {
     const buttons = [
       {
-        icon: (
-          <IconButton size="small">
-            <SvgIcon component={RiEditCircleFill} inheritViewBox fontSize="small" color="primary" />
-          </IconButton>
-        ),
+        icon: <SvgIcon component={RiEditCircleFill} inheritViewBox fontSize="small" color="primary" />,
         click: click,
         title: 'edit',
       },
@@ -131,6 +126,7 @@ export default function ReleasesSearch() {
                     return { ...formDefaults, type: 'movies', resolution: 1080, verified: true };
                   });
                 }}
+                size="small"
                 variant="contained"
               >
                 Movies
@@ -142,6 +138,7 @@ export default function ReleasesSearch() {
                     return { ...formDefaults, verified: true, type: 'anime', uncensored: true };
                   });
                 }}
+                size="small"
                 variant="contained"
               >
                 UN
@@ -153,6 +150,7 @@ export default function ReleasesSearch() {
                     return { ...formDefaults, verified: true, type: 'anime', bluray: true };
                   });
                 }}
+                size="small"
                 variant="contained"
               >
                 BD
