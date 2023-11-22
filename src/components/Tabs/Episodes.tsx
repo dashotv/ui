@@ -85,7 +85,7 @@ function EpisodeRow({
   ];
 
   return (
-    <Paper elevation={1} sx={{ width: '100%', mb: 1, pr: 1, pl: 1, height: '32px' }}>
+    <Paper elevation={1} sx={{ width: '100%', mb: 1, p: 1, minHeight: '32px' }}>
       <Stack sx={{ width: '100%' }} direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
         <Stack sx={{ width: '100%' }} direction="row" spacing={1} alignItems="center">
           <Box>
