@@ -151,8 +151,8 @@ export default function Details({
           <Typography noWrap variant="h6" color="primary">
             Source
           </Typography>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
-            <Stack direction="column" spacing={1}>
+          <Stack width="100%" direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+            <Stack width="100%" direction="column" spacing={1}>
               <Typography noWrap variant="h6">
                 {title}
               </Typography>
