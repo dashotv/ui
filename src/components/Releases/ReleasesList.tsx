@@ -11,14 +11,13 @@ import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
 import Chrono from 'components/Chrono';
-import { useReleaseGroup } from 'hooks/useReleaseGroup';
-import { useReleaseResolution } from 'hooks/useReleaseResolution';
 import { useReleaseSettingMutation } from 'query/releases';
 import { Release } from 'types/release';
 
+import { Group } from './Group';
+import { Resolution } from './Resolution';
+
 export function ReleasesList({ data, actions }: { data: Release[]; actions?: (row: Release) => JSX.Element }) {
-  const { resolution } = useReleaseResolution();
-  const { group } = useReleaseGroup();
   const releaseUpdate = useReleaseSettingMutation();
 
   const toggleVerified = row => {
@@ -47,6 +46,7 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
                   <Typography
                     variant="overline"
                     noWrap
+                    color="textSecondary"
                     sx={{ display: { xs: 'none', md: 'inherit' }, minWidth: '100px' }}
                   >
                     {row.source}:{row.type}
@@ -57,8 +57,8 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
                     {row.display || row.name}
                   </Link>
                 </Typography>
-                {resolution(row.resolution)}
-                {group(row.group, row.author)}
+                <Resolution resolution={row.resolution} variant="default" />
+                <Group group={row.group} author={row.author} variant="default" />
               </Stack>
               <Stack direction="row" spacing={1} alignItems="center" sx={{ width: '100%', justifyContent: 'end' }}>
                 <Stack direction="row" spacing={1} alignItems="center">
@@ -67,7 +67,7 @@ export function ReleasesList({ data, actions }: { data: Release[]; actions?: (ro
                       {row.size ? `${row.size}mb` : ''}
                     </Typography>
                   )}
-                  <Typography noWrap variant="subtitle2" color="gray" pl="3px" minWidth="125px" width="100%">
+                  <Typography noWrap variant="subtitle2" color="gray" pl="3px" width="100%">
                     {row.published_at && <Chrono fromNow>{row.published_at}</Chrono>}
                   </Typography>
                 </Stack>

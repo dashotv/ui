@@ -12,7 +12,7 @@ export const Pill = ({
   icon,
 }: {
   name: string;
-  value: React.ReactElement | string;
+  value: React.ReactElement | string | number;
   color?: string;
   variant?: 'row' | 'column';
   icon?: React.ReactElement;
