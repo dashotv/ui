@@ -86,6 +86,10 @@ export default function Download({
   }
 
   function change(name, value) {
+    if (name === 'status' && value === 'searching') {
+      downloadUpdate.mutate({ ...download, status: 'searching', release_id: '', url: '' });
+      return;
+    }
     downloadUpdate.mutate({ ...download, [name]: value });
   }
 
