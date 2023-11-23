@@ -21,17 +21,21 @@ export default function UpcomingPage() {
 
   const updateDownloads = useCallback(
     data => {
-      if (data.event === 'destroyed') {
-        queryClient.setQueryData(['downloads', 'active'], (prev: Download[]) => prev.filter(e => e.id !== data.id));
+      console.log('updateDownloads:', data);
+      if (data.Event === 'updated' && (data.Download.status === 'done' || data.Download.status === 'deleted')) {
+        console.log('updateDownloads: completed');
+        queryClient.setQueryData(['downloads', 'active'], (prev: Download[]) => prev.filter(e => e.id !== data.ID));
         return;
       }
-      if (data.event === 'created') {
-        queryClient.setQueryData(['downloads', 'active'], (prev: Download[]) => [...prev, data]);
+      if (data.Event === 'created' || data.Event === 'new') {
+        console.log('updateDownloads: created');
+        queryClient.setQueryData(['downloads', 'active'], (prev: Download[]) => [...prev, data.Download]);
         return;
       }
-      if (data.event === 'updated') {
+      if (data.Event === 'updated') {
+        console.log('updateDownloads: updated');
         queryClient.setQueryData(['downloads', 'active'], (prev: Download[]) =>
-          prev.map(e => (e.id === data.id ? data : e)),
+          prev.map(e => (e.id === data.ID ? data.Download : e)),
         );
         return;
       }
