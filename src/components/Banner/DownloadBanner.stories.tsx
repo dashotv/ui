@@ -95,7 +95,7 @@ export const DownloadSmall: Story = {
 };
 
 export const DownloadLarge: Story = {
-  render: args => <DownloadBanner {...args} buttons={buttons} />,
+  render: args => <DownloadBanner {...args} buttons={buttons} statusAction={() => {}} />,
 };
 
 export const DownloadMulti: Story = {

@@ -10,6 +10,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import SearchIcon from '@mui/icons-material/Search';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
+import IconButton from '@mui/material/IconButton';
 
 import { DownloadStatus } from 'types/download';
 
@@ -39,9 +40,16 @@ export const DownloadIcon = ({ status }: { status: DownloadStatus }) => {
     }
   };
 
+  return React.createElement(icon(), { fontSize: 'small' });
+};
+
+export const DownloadIconButton = ({ status, action }: { status: DownloadStatus; action?: () => void }) => {
+  if (!action) {
+    return <DownloadIcon status={status} />;
+  }
   return (
-    <div title={status} style={{ height: '24px' }}>
-      {React.createElement(icon(), { fontSize: 'small' })}
-    </div>
+    <IconButton onClick={action}>
+      <DownloadIcon status={status} />
+    </IconButton>
   );
 };

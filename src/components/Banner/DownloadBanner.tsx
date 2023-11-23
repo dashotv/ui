@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 
 import { ButtonMapButton } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
-import { DownloadIcon } from 'components/Downloads';
+import { DownloadIconButton } from 'components/Downloads';
 import { DownloadStatus } from 'types/download';
 
 import { Banner } from './Banner';
@@ -19,6 +19,7 @@ export type DownloadBannerProps = {
   cover?: string;
   background?: string;
   status?: DownloadStatus;
+  statusAction?: () => void;
   progress?: string;
   eta?: string;
   queue?: string;
@@ -38,6 +39,7 @@ export const DownloadBanner = ({
   background,
   buttons,
   status,
+  statusAction,
   progress,
   eta,
   queue,
@@ -51,7 +53,7 @@ export const DownloadBanner = ({
     return (
       <Stack spacing={1} direction="row" alignItems="center">
         {queue && <Chip label={queue} size="small" />}
-        {status && <DownloadIcon status={status} />}
+        {status && <DownloadIconButton status={status} action={statusAction} />}
         {progress && <span>{Number(progress).toFixed(1)}%</span>}
         {eta && <Chrono fromNow>{eta}</Chrono>}
       </Stack>

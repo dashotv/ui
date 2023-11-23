@@ -11,7 +11,10 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 
 import { Select, Text } from 'components/Form';
@@ -35,13 +38,15 @@ export type DownloadInfoValues = {
   url: string;
 };
 export type DownloadInfoProps = {
+  open: boolean;
+  setOpen: (open: boolean) => void;
   thash: string;
   status: string;
   release_id: string;
   url: string;
-  changer: (name, value) => void;
+  changer: (data: DownloadInfoValues) => void;
 };
-export const DownloadInfo = ({ release_id, url, status, thash, changer }: DownloadInfoProps) => {
+export const DownloadInfo = ({ open, setOpen, release_id, url, status, thash, changer }: DownloadInfoProps) => {
   const {
     handleSubmit,
     control,
@@ -51,8 +56,13 @@ export const DownloadInfo = ({ release_id, url, status, thash, changer }: Downlo
     defaultValues: { thash: '', status: 'searching', release_id: '', url: '' },
   });
   // const [data, setData] = useState<DownloadInfoValues>(values);
-  const handleChange = (ev: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    changer(ev.target.name, ev.target.value);
+  const submit = (data: DownloadInfoValues) => {
+    setOpen(false);
+    if (data.status === 'searching') {
+      data.release_id = '';
+      data.url = '';
+    }
+    changer(data);
   };
   const renderOption = (option: Option) => (
     <Stack spacing={1} direction="row">
@@ -61,22 +71,28 @@ export const DownloadInfo = ({ release_id, url, status, thash, changer }: Downlo
     </Stack>
   );
   return (
-    <Paper sx={{ mt: 2, p: 2, width: '100%' }}>
-      <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(data => console.log(data))}>
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
-          <Select
-            sx={{ width: { sm: '150px' } }}
-            name="status"
-            control={control}
-            options={statuses}
-            render={renderOption}
-            onChange={handleChange}
-          />
-          <Text name="thash" control={control} onChange={handleChange} />
-          <Text name="release_id" label="release" control={control} onChange={handleChange} />
-          <Text name="url" control={control} onChange={handleChange} />
-        </Stack>
-      </Box>
-    </Paper>
+    <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
+      <DialogTitle>Download Info</DialogTitle>
+      <DialogContent>
+        <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(submit)}>
+          <Stack direction="column" spacing={1}>
+            <Stack direction={{ xs: 'column', md: 'row' }} spacing={1}>
+              <Select name="status" control={control} options={statuses} render={renderOption} />
+              <Text name="thash" control={control} />
+            </Stack>
+            <Text name="release_id" label="release" control={control} />
+            <Text name="url" control={control} />
+          </Stack>
+          <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
+            <Button variant="contained" fullWidth onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="contained" fullWidth type="submit">
+              Ok
+            </Button>
+          </Stack>
+        </Box>
+      </DialogContent>
+    </Dialog>
   );
 };

@@ -20,9 +20,11 @@ export const Text = ({ name, label, disabled, control, sx, onChange }: InputProp
           id={name}
           sx={sx}
           disabled={disabled}
+          type="search"
           label={title(label || name)}
           variant="standard"
           fullWidth
+          autoComplete="off"
           onChange={e => {
             onChange && onChange(e);
             field.onChange(e);

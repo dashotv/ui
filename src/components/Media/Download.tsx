@@ -80,6 +80,7 @@ export default function Download({
   const queryClient = useQueryClient();
   const { progress, eta, queue } = useReleases();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   function changeSetting(setting, value) {
     downloadSetting.mutate({ setting: setting, value: value });
@@ -92,6 +93,11 @@ export default function Download({
     }
     downloadUpdate.mutate({ ...download, [name]: value });
   }
+
+  const updater = info => {
+    console.log('update: ', info);
+    downloadUpdate.mutate({ ...download, ...info });
+  };
 
   function selectMedium(eid, num) {
     downloadSelection.mutate({ mediumId: eid, num: num });
@@ -266,12 +272,15 @@ export default function Download({
         cover={cover}
         background={background}
         status={status}
+        statusAction={() => {
+          setOpen(true);
+        }}
         progress={progress(thash)?.toString()}
         queue={queue(thash)?.toString()}
         eta={eta(thash)?.toString()}
         buttons={buttons}
       />
-      <DownloadInfo {...{ status, thash, release_id, url }} changer={change} />
+      <DownloadInfo {...{ open, setOpen, status, thash, release_id, url }} changer={updater} />
       <MediumTabs data={tabsMap} />
     </div>
   );
