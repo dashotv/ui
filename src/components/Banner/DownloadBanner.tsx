@@ -49,7 +49,7 @@ export const DownloadBanner = ({
 }: DownloadBannerProps) => {
   function tertiary() {
     return (
-      <Stack spacing={1} direction="row">
+      <Stack spacing={1} direction="row" alignItems="center">
         {queue && <Chip label={queue} size="small" />}
         {status && <DownloadIcon status={status} />}
         {progress && <span>{Number(progress).toFixed(1)}%</span>}

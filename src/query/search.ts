@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { scry } from 'utils/axios';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -9,18 +9,18 @@ import { SearchAllResponse } from 'types/search';
 
 export const getSearch = async (search: string) => {
   const qs = objectToQueryString({ name: `*${search}*`, limit: 10, type: 'series movie' });
-  const response = await axios.get(`/api/scry/media/?${qs}`);
+  const response = await scry.get(`/media/?${qs}`);
   return response.data.Media as Medium[];
 };
 
 export const getSearchAll = async (search: string) => {
   const qs = objectToQueryString({ name: `*${search}*`, q: search, limit: 10, type: 'series movie' });
-  const response = await axios.get(`/api/scry/search/?${qs}`);
+  const response = await scry.get(`/search/?${qs}`);
   return response.data as SearchAllResponse;
 };
 
 export const nzbSearchTv = async (query: string) => {
-  const response = await axios.get(`/api/scry/nzbs/tv?${query}`);
+  const response = await scry.get(`/nzbs/tv?${query}`);
   return response.data as Nzbgeek[];
 };
 

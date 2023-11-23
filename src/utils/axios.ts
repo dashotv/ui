@@ -11,7 +11,7 @@ export const scry = axios.create({
   baseURL: '/api/scry',
 });
 scry.interceptors.request.use(config => {
-  config.timeout = 10000;
+  config.timeout = 30000;
   return config;
 });
 export const flame = axios.create({
