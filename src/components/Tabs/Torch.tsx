@@ -10,6 +10,7 @@ import { ReleasesList } from 'components/Releases/ReleasesList';
 import { Search } from 'components/Search';
 import { useQueryString } from 'hooks/useQueryString';
 import { useReleasesQuery } from 'query/releases';
+import { Release } from 'types/release';
 import { SearchForm } from 'types/search_form';
 
 const pagesize = 25;
@@ -20,21 +21,21 @@ export function Torch({
   selected,
 }: {
   form: SearchForm;
-  selector: (id: string) => void;
+  selector: (release: Release) => void;
   selected?: { release_id: string; url: string };
 }) {
   const { queryString } = useQueryString();
-  const [qs, setQs] = useState(queryString(initial));
-  const releases = useReleasesQuery(0, pagesize, qs);
   const [form, setForm] = useState(initial);
+  const [qs, setQs] = useState(queryString(form));
+  const releases = useReleasesQuery(0, pagesize, qs);
 
   const click = useCallback(() => {
     console.log('click');
   }, []);
 
   const handleSelect = useCallback(
-    id => {
-      selector(id);
+    (release: Release) => {
+      selector(release);
     },
     [selector],
   );
@@ -52,7 +53,7 @@ export function Torch({
       },
       {
         icon: <CheckCircleIcon fontSize="small" color="primary" />,
-        click: () => handleSelect(row.id),
+        click: () => handleSelect(row),
         title: 're-process',
       },
     ];

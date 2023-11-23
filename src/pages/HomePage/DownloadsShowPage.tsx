@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
@@ -8,6 +8,9 @@ import LoadingIndicator from 'components/Loading';
 import Download from 'components/Media/Download';
 import { useReleases } from 'hooks/useReleases';
 import { useDownloadMediumQuery, useDownloadMutation, useDownloadQuery } from 'query/downloads';
+import { Nzbgeek } from 'types/nzbgeek';
+import { Release } from 'types/release';
+import { Torrent } from 'types/torrents';
 
 export default function DownloadsShowPage() {
   const { id } = useParams();
@@ -15,55 +18,59 @@ export default function DownloadsShowPage() {
     return <></>;
   }
 
-  const download = useDownloadQuery(id);
-  const episodes = useDownloadMediumQuery(id);
+  const { isFetching: downloadFetching, data: download } = useDownloadQuery(id);
+  const { isFetching: mediaFetching, data: media } = useDownloadMediumQuery(id);
+  const [torrent, setTorrent] = useState<Torrent | undefined>(undefined);
   const { torrents } = useReleases();
   const downloadUpdate = useDownloadMutation(id);
 
-  const getTorrent = useCallback(() => {
-    if (!torrents || !download.data) {
+  useEffect(() => {
+    if (!torrents || !download || !download.thash) {
       return;
     }
-    return torrents.get(download.data.thash);
-  }, [torrents, download.data]);
+    const t = torrents.get(download.thash);
+    if (t) {
+      setTorrent(t);
+    }
+  }, [torrents, download]);
 
-  const torchSelector = useCallback(
-    release => {
-      if (!release || !download.data) {
+  const select = useCallback(
+    (selected: Release | Nzbgeek) => {
+      if (!download) {
         return;
       }
-
-      const n = download.data;
-      n['status'] = 'loading';
-      n['release_id'] = release;
-      n['url'] = '';
-      downloadUpdate.mutate(n);
+      console.log('select:', selected);
+      if ((selected as Release).id) {
+        console.log('release:', selected);
+        downloadUpdate.mutate({ ...download, status: 'loading', release_id: (selected as Release).id, url: '' });
+        return;
+      }
+      if ((selected as Nzbgeek).link) {
+        console.log('nzbgeek:', selected);
+        downloadUpdate.mutate({ ...download, status: 'loading', url: (selected as Nzbgeek).link, release_id: '' });
+        return;
+      }
     },
-    [download?.data, downloadUpdate],
+    [downloadUpdate],
   );
-
-  const nzbSelector = useCallback(release => {
-    console.log('nzb:', release);
-  }, []);
 
   return (
     <>
       <Helmet>
-        <title>Series{download.data ? ` - ${download.data.medium.display}` : ''}</title>
+        <title>Series{download ? ` - ${download.medium.display}` : ''}</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container sx={{ pt: '5px', pb: '5px' }} style={{ overflow: 'auto' }} maxWidth="xl">
-        {download.isFetching && <LoadingIndicator />}
-        {download.data && (
+        {(downloadFetching || mediaFetching) && <LoadingIndicator />}
+        {download && (
           <Download
-            id={id || 'unknown'}
-            type={download.data.medium.type}
-            download={download.data}
-            files={download.data.download_files}
-            episodes={episodes.data}
-            torrent={getTorrent()}
-            torchSelector={torchSelector}
-            nzbSelector={nzbSelector}
+            id={id}
+            type={download.medium.type}
+            download={download}
+            files={download.download_files}
+            episodes={media}
+            torrent={torrent}
+            select={select}
           />
         )}
       </Container>

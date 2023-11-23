@@ -29,7 +29,6 @@ export function Search({
 }) {
   const { handleSubmit, control } = useForm({ values: form });
   const submit = (data: SearchForm) => {
-    console.log('data:', data);
     setForm(data);
   };
   return (

@@ -23,6 +23,8 @@ import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMu
 import { useTorrentRemoveMutation } from 'query/releases';
 import { DownloadFile, Download as DownloadType } from 'types/download';
 import { Medium } from 'types/medium';
+import { Nzbgeek as NzbgeekType } from 'types/nzbgeek';
+import { Release } from 'types/release';
 import { SearchForm } from 'types/search_form';
 import { Torrent } from 'types/torrents';
 
@@ -35,8 +37,7 @@ export type DownloadProps = {
   type: string;
   files?: DownloadFile[];
   episodes?: Medium[];
-  torchSelector: (id: string) => void;
-  nzbSelector: (id: string) => void;
+  select: (selected: Release | NzbgeekType) => void;
 };
 export default function Download({
   id,
@@ -45,8 +46,7 @@ export default function Download({
   torrent,
   files,
   episodes,
-  torchSelector,
-  nzbSelector,
+  select,
 }: DownloadProps) {
   const {
     medium,
@@ -165,8 +165,8 @@ export default function Download({
 
   const tabsMap = {
     Files: <FilesWithSelector files={files} torrent={torrent} episodes={episodes} updater={selectMedium} />,
-    Torch: <Torch form={torchForm()} selector={torchSelector} selected={{ release_id, url }} />,
-    Nzbgeek: <Nzbgeek form={nzbForm()} selector={nzbSelector} />,
+    Torch: <Torch form={torchForm()} selector={select} selected={{ release_id, url }} />,
+    Nzbgeek: <Nzbgeek form={nzbForm()} selector={select} />,
   };
 
   // TODO: create general MediaLink component or something like that

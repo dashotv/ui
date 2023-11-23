@@ -3,11 +3,11 @@ export interface Nzbgeek {
   guid: string;
   link: string;
   comments: string;
-  published: string;
+  pubDate: string;
   category: string;
   description: string;
   enclosure: {
-    attributes: {
+    '@attributes': {
       url: string;
       length: string;
       type: string;
@@ -18,7 +18,7 @@ export interface Nzbgeek {
       name: string;
       value: string;
     };
-  };
+  }[];
 }
 /*
 	Title       string `json:"title"`

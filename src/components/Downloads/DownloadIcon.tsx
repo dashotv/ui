@@ -7,6 +7,7 @@ import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import SearchIcon from '@mui/icons-material/Search';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 
@@ -33,6 +34,8 @@ export const DownloadIcon = ({ status }: { status: DownloadStatus }) => {
         return RemoveCircleIcon;
       case 'held':
         return PendingIcon;
+      default:
+        return ReportProblemIcon;
     }
   };
 

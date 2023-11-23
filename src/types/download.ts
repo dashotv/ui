@@ -10,7 +10,8 @@ export type DownloadStatus =
   | 'done'
   | 'paused'
   | 'deleted'
-  | 'held';
+  | 'held'
+  | string;
 export interface Download {
   id: string;
   medium_id: string;

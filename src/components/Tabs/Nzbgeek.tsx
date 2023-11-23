@@ -12,11 +12,13 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap, ButtonMapButton } from 'components/ButtonMap';
-import Chrono from 'components/Chrono';
+import { ButtonMap } from 'components/ButtonMap';
 import LoadingIndicator from 'components/Loading';
+import { Megabytes } from 'components/Releases/Megabytes';
+import { Published } from 'components/Releases/Published';
 import { useQueryString } from 'hooks/useQueryString';
 import { Nzbgeek as NzbgeekType } from 'types/nzbgeek';
+import { Release } from 'types/release';
 
 const pagesize = 25;
 export interface NzbgeekForm {
@@ -24,13 +26,26 @@ export interface NzbgeekForm {
   season?: number;
   episode?: number;
 }
-export function Nzbgeek({ form: initial, selector }: { form: NzbgeekForm; selector: (id: string) => void }) {
+export function Nzbgeek({
+  form: initial,
+  selector,
+}: {
+  form: NzbgeekForm;
+  selector: (selected: Release | NzbgeekType) => void;
+}) {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(initial);
   const [nzbs, setNzbs] = useState<NzbgeekType[]>([]);
 
   const { enqueueSnackbar } = useSnackbar();
   const { queryString } = useQueryString();
+
+  const handleSelect = useCallback(
+    (selected: Release | NzbgeekType) => {
+      selector(selected);
+    },
+    [selector],
+  );
 
   // TODO: change to react query
   useEffect(() => {
@@ -57,28 +72,27 @@ export function Nzbgeek({ form: initial, selector }: { form: NzbgeekForm; select
     console.log('click');
   }, []);
 
-  const select = ev => {
-    selector(ev.currentTarget.id);
+  const renderActions = (row: NzbgeekType) => {
+    const buttons = [
+      {
+        icon: <OutboundRoundedIcon fontSize="small" color="primary" />,
+        click: click,
+        title: 'edit',
+      },
+      {
+        icon: <CheckCircleIcon fontSize="small" color="primary" />,
+        click: () => handleSelect(row),
+        title: 'select',
+      },
+    ];
+    return <ButtonMap buttons={buttons} />;
   };
-
-  const actions = [
-    {
-      icon: <OutboundRoundedIcon fontSize="small" color="primary" />,
-      click: click,
-      title: 'view source',
-    },
-    {
-      icon: <CheckCircleIcon fontSize="small" color="primary" />,
-      click: select,
-      title: 'select',
-    },
-  ];
 
   return (
     <>
       {loading && <LoadingIndicator />}
       <Nzbsearch form={form} setForm={setForm} />
-      <NzbList data={nzbs} actions={actions} />
+      <NzbList data={nzbs} actions={renderActions} />
     </>
   );
 }
@@ -147,7 +161,7 @@ function Nzbsearch({
   );
 }
 
-function NzbList({ data, actions }: { data: NzbgeekType[]; actions: ButtonMapButton[] }) {
+function NzbList({ data, actions }: { data: NzbgeekType[]; actions: (row: NzbgeekType) => React.ReactNode }) {
   return (
     <div className="releases">
       <table className="vertical-table">
@@ -156,51 +170,50 @@ function NzbList({ data, actions }: { data: NzbgeekType[]; actions: ButtonMapBut
             <td className="number"></td>
             <td>Title</td>
             <td className="actions" align="right">
-              Published
+              Size
             </td>
             <td className="actions" align="right">
+              Published
+            </td>
+            <td className="smaller" align="right">
               Actions
             </td>
           </tr>
         </thead>
-        <tbody>
-          {data &&
-            data.map(row => (
-              <NzbListRow key={row.guid} id={row.guid} title={row.title} published={row.published} actions={actions} />
-            ))}
-        </tbody>
+        <tbody>{data && data.map((row, index) => <NzbListRow key={index} {...{ row, actions }} />)}</tbody>
       </table>
     </div>
   );
 }
 
 function NzbListRow({
-  id,
-  published,
-  title,
+  row,
+  row: {
+    guid,
+    pubDate: published,
+    title,
+    enclosure: { '@attributes': attributes },
+  },
   actions,
 }: {
-  id: string;
-  published: string;
-  title: string;
-  actions: ButtonMapButton[];
+  row: NzbgeekType;
+  actions: (row: NzbgeekType) => React.ReactNode;
 }) {
   return (
-    <tr>
+    <tr key={guid}>
       <td>
         <ArticleIcon fontSize="small" />
       </td>
       <td>
-        <Link to={id} title={title}>
+        <Link to={guid} title={title}>
           <Typography variant="subtitle1">{title}</Typography>
         </Link>
       </td>
       <td align="right">
-        <Chrono fromNow>{published}</Chrono>
+        {attributes && attributes.length && <Megabytes value={Number(attributes.length)} ord="bytes" />}
       </td>
-      <td align="right">
-        <ButtonMap buttons={actions} />
-      </td>
+      <td align="right">{published && <Published date={published} />}</td>
+      <td align="right">{actions(row)}</td>
     </tr>
   );
 }
