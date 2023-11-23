@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
@@ -166,7 +166,7 @@ export default function Download({
   const tabsMap = {
     Files: <FilesWithSelector files={files} torrent={torrent} episodes={episodes} updater={selectMedium} />,
     Torch: <Torch form={torchForm()} selector={select} selected={{ release_id, url }} />,
-    Nzbgeek: <Nzbgeek form={nzbForm()} selector={select} />,
+    Nzbgeek: <Nzbgeek form={nzbForm()} selector={select} selected={{ release_id, url }} />,
   };
 
   // TODO: create general MediaLink component or something like that
@@ -209,7 +209,7 @@ export default function Download({
 
   const buttons = [
     {
-      icon: <CloudCircleIcon color="primary" />,
+      icon: <ArrowCircleLeftIcon color="primary" />,
       // click: <Link to={`/${props.download?.media?.type}/${props.download?.media?.id}`} />,
       click: () => gotoMedia(),
       title: 'Go to Media',

@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import * as React from 'react';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
-import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import RecommendIcon from '@mui/icons-material/Recommend';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
@@ -60,7 +60,7 @@ export function Series({
 
   const buttons = [
     {
-      icon: <DownloadForOfflineIcon color="primary" />,
+      icon: <CloudCircleIcon color="primary" />,
       click: complete,
       title: 'create download',
     },

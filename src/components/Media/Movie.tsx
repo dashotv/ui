@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
@@ -36,7 +37,7 @@ export default function Movie({
 
   const buttons = [
     {
-      icon: <DownloadForOfflineIcon color="primary" />,
+      icon: <CloudCircleIcon color="primary" />,
       click: complete,
       title: 'create download',
     },

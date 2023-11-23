@@ -6,7 +6,7 @@ import Chrono from 'components/Chrono';
 
 export const Published = ({ date }: { date: string }) => {
   return (
-    <Typography variant="subtitle2" color="gray" pl="3px">
+    <Typography variant="subtitle2" color="gray" pl="3px" noWrap>
       <Chrono fromNow>{date}</Chrono>
     </Typography>
   );

@@ -85,8 +85,14 @@ function EpisodeRow({
   return (
     <Paper elevation={1} sx={{ width: '100%', mb: 1 }}>
       <Stack sx={{ width: '100%' }} direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
-        <Stack sx={{ width: '100%', pl: 1 }} direction="row" spacing={2} alignItems="center">
-          <Typography noWrap variant="subtitle1" color="textSecondary" minWidth="28px" textAlign="right">
+        <Stack sx={{ width: '100%', pr: 1, pl: 1 }} direction="row" spacing={0} alignItems="center">
+          <Typography
+            display={{ xs: 'none', md: 'inherit' }}
+            noWrap
+            variant="subtitle1"
+            color="textSecondary"
+            minWidth="28px"
+          >
             {number}
           </Typography>
           <Typography noWrap variant="h6" color="primary">
@@ -96,11 +102,22 @@ function EpisodeRow({
         <Stack
           direction="row"
           spacing={1}
-          sx={{ width: '100%', pr: 1, justifyContent: { md: 'end', xs: 'space-between' } }}
+          sx={{ width: '100%', pr: 1, pl: 1, justifyContent: { md: 'end', xs: 'space-between' } }}
         >
-          <Typography color="gray" variant="button" noWrap>
-            <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
-          </Typography>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Typography
+              display={{ xs: 'inherit', md: 'none' }}
+              noWrap
+              variant="subtitle1"
+              color="textSecondary"
+              minWidth="28px"
+            >
+              {number}
+            </Typography>
+            <Typography color="gray" variant="button" noWrap>
+              <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
+            </Typography>
+          </Stack>
           <ButtonMap buttons={buttons} size="large" />
         </Stack>
       </Stack>

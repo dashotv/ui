@@ -27,3 +27,18 @@ export const Resolution = ({ resolution, variant }: ResolutionProps) => {
       );
   }
 };
+export const ResolutionTitle = ({ title, variant }: { title: string; variant?: 'default' | 'chip' | 'pill' }) => {
+  if (!title) {
+    return;
+  }
+  if (title.includes('2160') || title.includes('2160p') || title.includes('4k')) {
+    return <Resolution resolution={2160} variant={variant} />;
+  }
+  if (title.includes('1080') || title.includes('1080p') || title.includes('2k')) {
+    return <Resolution resolution={1080} variant={variant} />;
+  }
+  if (title.includes('720') || title.includes('720p')) {
+    return <Resolution resolution={720} variant={variant} />;
+  }
+  return '';
+};
