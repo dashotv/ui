@@ -1,11 +1,11 @@
-import axios from 'axios';
+import { tower } from 'utils/axios';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { Job } from 'types/job';
+import { Job } from './types';
 
 export const getJobs = async page => {
-  const response = await axios.get('/api/tower/jobs/?page=' + page);
+  const response = await tower.get(`/jobs/?page=${page}`);
   return response.data.jobs as Job[];
 };
 

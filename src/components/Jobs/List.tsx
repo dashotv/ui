@@ -4,7 +4,8 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 
 import Chrono from 'components/Chrono';
-import { Job } from 'types/job';
+
+import { Job } from './types';
 
 export function JobsList({ jobs }: { jobs: Job[] }) {
   return (
