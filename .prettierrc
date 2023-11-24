@@ -11,6 +11,7 @@
   ],
   "importOrder": [
     "^react",
+    "<THIRD_PARTY_MODULES>",
     "^@(mui|material-ui)/(.*)$",
     "^@(.*)",
     "^(app|types|query|styles|hooks|components|pages)/(.*)$",

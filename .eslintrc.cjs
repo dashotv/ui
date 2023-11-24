@@ -26,5 +26,18 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint', 'react'],
-  rules: {},
+  rules: {
+    'react/jsx-uses-react': 0, // ignore validation must include react scope in jsx/tsx
+    'react/react-in-jsx-scope': 0, // ignore validation must include react scope in jsx/tsx
+    'no-unused-vars': 'off', // disable default eslint unused variable
+    '@typescript-eslint/no-unused-vars': [
+      // ignore validation variable with prefix _
+      'warn',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+      },
+    ],
+  },
 };
