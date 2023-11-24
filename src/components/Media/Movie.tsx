@@ -10,8 +10,8 @@ import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
 import { MediumBanner } from 'components/Banner';
 import Details from 'components/Tabs/Details';
-import { MediumTabs } from 'components/Tabs/MediumTabs';
 import Paths from 'components/Tabs/Paths';
+import { MediumTabs } from 'components/Tabs/Tabs';
 import { Movie as MovieType } from 'types/medium';
 
 import './Media.scss';

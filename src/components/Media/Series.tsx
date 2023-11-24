@@ -11,9 +11,9 @@ import StarsIcon from '@mui/icons-material/Stars';
 import { MediumBanner } from 'components/Banner';
 import Details from 'components/Tabs/Details';
 import Episodes from 'components/Tabs/Episodes';
-import { MediumTabs } from 'components/Tabs/MediumTabs';
 import Paths from 'components/Tabs/Paths';
 import Seasons from 'components/Tabs/Seasons';
+import { MediumTabs } from 'components/Tabs/Tabs';
 import Watches from 'components/Tabs/Watches';
 import { Episode, Series as SeriesType } from 'types/medium';
 

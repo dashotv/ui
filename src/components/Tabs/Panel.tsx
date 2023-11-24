@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import Box from '@mui/material/Box';
 
@@ -8,7 +8,7 @@ interface TabPanelProps {
   value: number;
 }
 
-export default function TabPanel(props: TabPanelProps) {
+export function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (

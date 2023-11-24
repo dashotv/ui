@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
-import TabPanel from 'components/TabPanel';
+import { TabPanel } from '.';
 
 export interface MediumTabMap {
   [key: string]: JSX.Element;
