@@ -9,8 +9,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { LoadingIndicator } from 'components/Common';
 import { DownloadList, DownloadType, useDownloadsActiveQuery } from 'components/Downloads';
 import { Media } from 'components/Media';
+import { Episode } from 'components/Media';
 import { useSub } from 'hooks/useSub';
 import { useUpcomingQuery } from 'query/upcoming';
+import { EventDownload, EventEpisode } from 'types/events';
 
 export default function UpcomingPage() {
   const queryClient = useQueryClient();
@@ -18,18 +20,18 @@ export default function UpcomingPage() {
   const upcoming = useUpcomingQuery();
 
   const updateDownloads = useCallback(
-    data => {
-      if (data.Event === 'updated' && (data.Download.status === 'done' || data.Download.status === 'deleted')) {
-        queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) => prev.filter(e => e.id !== data.ID));
+    (data: EventDownload) => {
+      if (data.event === 'updated' && (data.download.status === 'done' || data.download.status === 'deleted')) {
+        queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) => prev.filter(e => e.id !== data.id));
         return;
       }
-      if (data.Event === 'created' || data.Event === 'new') {
-        queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) => [...prev, data.Download]);
+      if (data.event === 'created' || data.event === 'new') {
+        queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) => [...prev, data.download]);
         return;
       }
-      if (data.Event === 'updated') {
+      if (data.event === 'updated') {
         queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) =>
-          prev.map(e => (e.id === data.ID ? data.Download : e)),
+          prev.map(e => (e.id === data.id ? data.download : e)),
         );
         return;
       }
@@ -39,23 +41,15 @@ export default function UpcomingPage() {
   useSub('tower.downloads', updateDownloads);
 
   const updateUpcoming = useCallback(
-    data => {
-      if (!upcoming.data) {
-        return;
-      }
-
-      console.log('updateUpcoming: ', data);
-      const episode = upcoming.data.filter(e => e.id === data.id);
-      if (episode.length > 0) {
-        queryClient.setQueryData(
-          ['media', 'upcoming'],
-          upcoming.data.map(e => (e.id === data.id ? data : e)),
+    (data: EventEpisode) => {
+      if (data.event === 'updated') {
+        queryClient.setQueryData(['media', 'upcoming'], (prev: Episode[]) =>
+          prev.map(e => (e.id === data.id ? data.episode : e)),
         );
       }
     },
     [queryClient],
   );
-  useSub('seer.episodes', updateUpcoming);
   useSub('tower.episodes', updateUpcoming);
 
   return (

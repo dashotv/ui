@@ -16,6 +16,7 @@ import {
   useSeriesSettingMutation,
 } from 'components/Media';
 import { useSub } from 'hooks/useSub';
+import { EventSeries } from 'types/events';
 
 export default function SeriesShow() {
   const { id } = useParams();
@@ -51,8 +52,8 @@ export default function SeriesShow() {
     setCurrentSeason(series.currentSeason);
   }, [series, series?.currentSeason]);
 
-  useSub('tower.series', data => {
-    if (data.ID !== id) {
+  useSub('tower.series', (data: EventSeries) => {
+    if (data.id !== id) {
       return;
     }
     queryClient.invalidateQueries({ queryKey: ['series', id] });

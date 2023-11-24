@@ -8,15 +8,16 @@ import { useQueryClient } from '@tanstack/react-query';
 import { LoadingIndicator } from 'components/Common';
 import { Log, LogsList, useLogsQuery } from 'components/Logs';
 import { useSub } from 'hooks/useSub';
+import { EventLog } from 'types/events';
 
 export default function JobsPage() {
   const [page] = useState(1);
   const logs = useLogsQuery(page);
   const queryClient = useQueryClient();
 
-  useSub('tower.logs', data => {
+  useSub('tower.logs', (data: EventLog) => {
     queryClient.setQueryData(['logs', page], (prev: Log[]) => {
-      return [data.Log, ...prev];
+      return [data.log, ...prev];
     });
   });
 

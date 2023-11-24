@@ -69,7 +69,7 @@ function CountdownGauge({ color }: GaugeProps) {
   }, [initial.data]);
 
   useSub(
-    'seer.notices',
+    'tower.notices',
     useCallback(({ message, time }: { message: string; time: string }) => {
       if (message === 'processing downloads') {
         setLast(time);

@@ -10,6 +10,7 @@ import { LoadingIndicator } from 'components/Common';
 import Movie from 'components/Media/Movie';
 import { putMovieRefresh, useMovieQuery, useMovieSettingMutation } from 'components/Media/query';
 import { useSub } from 'hooks/useSub';
+import { EventMovie } from 'types/events';
 
 export default function MoviesShow() {
   const { id } = useParams();
@@ -28,8 +29,8 @@ export default function MoviesShow() {
     putMovieRefresh(id);
   };
 
-  useSub('tower.movies', data => {
-    if (data.ID !== id) {
+  useSub('tower.movies', (data: EventMovie) => {
+    if (data.id !== id) {
       return;
     }
     queryClient.invalidateQueries({ queryKey: ['movies', id] });

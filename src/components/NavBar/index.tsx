@@ -21,6 +21,7 @@ import { UserButton } from '@clerk/clerk-react';
 import { useNats } from '@quara-dev/react-nats-context';
 
 import { useSub } from 'hooks/useSub';
+import { EventNotice } from 'types/events';
 
 import './Navbar.scss';
 import { Notice } from './Notice';
@@ -84,7 +85,7 @@ const NavBar = () => {
     setAnchorElNav(null);
   };
 
-  useSub('seer.notices', data => enqueueSnackbar(<Notice data={data} />, { variant: data.level }));
+  useSub('tower.notices', (data: EventNotice) => enqueueSnackbar(<Notice data={data} />, { variant: data.level }));
 
   return (
     <AppBar position="static">
