@@ -11,9 +11,8 @@ import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import { DownloadBanner } from 'components/Banner';
 import { DownloadInfo } from 'components/Downloads';
 import { MediaGo } from 'components/Media';
-import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek/types';
-import { Release } from 'components/Releases/types';
-import { SearchForm } from 'components/Releases/types';
+import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
+import { Release } from 'components/Releases';
 import { FilesWithSelector } from 'components/Tabs/FilesWithSelector';
 import { MediumTabs } from 'components/Tabs/MediumTabs';
 import { Nzbgeek } from 'components/Tabs/Nzbgeek';
@@ -57,86 +56,16 @@ export default function Download({
     auto,
     force,
     medium,
-    medium: {
-      // type,
-      kind,
-      // source,
-      source_id,
-      search_params,
-      search,
-      episode_number,
-      season_number,
-      absolute_number,
-      cover,
-      background,
-      title,
-      display,
-    },
+    medium: { cover, background, title, display },
   } = download;
   const torrentRemove = useTorrentRemoveMutation();
   const { progress, eta, queue } = useReleases();
   const [open, setOpen] = useState(false);
 
-  const processSearch = useCallback(() => {
-    if (!search) {
-      return { text: display, episode: episode_number };
-    }
-    const s = search.split(':');
-    const text = s[0];
-    const minus = Number(s[1]);
-    let episode = episode_number;
-    if (minus && absolute_number) {
-      episode = absolute_number - minus;
-    }
-    return { text, episode };
-  }, [absolute_number, episode_number, search]);
-
-  const torchForm = useCallback(() => {
-    const { text, episode } = processSearch();
-
-    const data: SearchForm = {
-      text: text || '',
-      year: '',
-      season: kind !== 'anime' ? season_number || '' : '',
-      episode: episode || '',
-      group: search_params?.group || '',
-      author: '',
-      resolution: search_params?.resolution || '',
-      source: search_params?.source || '',
-      type: search_params?.type || '',
-      exact: search_params?.exact || false,
-      verified: search_params?.verified || false,
-      uncensored: search_params?.uncensored || false,
-      bluray: search_params?.bluray || false,
-    };
-    return data;
-  }, [
-    processSearch,
-    kind,
-    season_number,
-    search_params?.exact,
-    search_params?.group,
-    search_params?.resolution,
-    search_params?.source,
-    search_params?.type,
-    search_params?.verified,
-    search_params?.uncensored,
-    search_params?.bluray,
-  ]);
-
-  const nzbForm = useCallback(() => {
-    const { episode } = processSearch();
-    return {
-      tvdbid: source_id,
-      season: season_number,
-      episode: episode,
-    };
-  }, [season_number, source_id, processSearch]);
-
   const tabsMap = {
     Files: <FilesWithSelector files={files} torrent={torrent} episodes={episodes} updater={selectMedium} />,
-    Torch: <Torch form={torchForm()} selector={selectRelease} selected={{ release_id, url }} />,
-    Nzbgeek: <Nzbgeek form={nzbForm()} selector={selectRelease} selected={{ release_id, url }} />,
+    Torch: <Torch medium={medium} selector={selectRelease} selected={{ release_id, url }} />,
+    Nzbgeek: <Nzbgeek medium={medium} selector={selectRelease} selected={{ release_id, url }} />,
   };
 
   const remove = useCallback((status: string) => {

@@ -11,14 +11,25 @@ import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek/types';
 import { Release } from 'components/Releases/types';
 import { WrapErrorBoundary } from 'components/Util';
 import { useQueryString } from 'hooks/useQueryString';
+import { Medium } from 'types/medium';
+
+const formdata = (medium: Medium): NzbgeekForm => {
+  const { source_id, season_number, episode_number } = medium;
+  return {
+    tvdbid: source_id,
+    season: season_number,
+    episode: episode_number,
+  };
+};
 
 export type NzbgeekProps = {
-  form: NzbgeekForm;
+  medium: Medium;
   selector: (selected: Release | NzbgeekType) => void;
   selected?: { release_id: string; url: string };
 };
-export function Nzbgeek({ form: initial, selector, selected }: NzbgeekProps) {
+export function Nzbgeek({ medium, selector, selected }: NzbgeekProps) {
   const { queryString } = useQueryString();
+  const [initial] = useState<NzbgeekForm>(() => formdata(medium));
   const [form, setForm] = useState(initial);
   const [qs, setQs] = useState(queryString(form));
   const { isFetching, data: nzbs } = useNzbSearchTvQuery(qs);
