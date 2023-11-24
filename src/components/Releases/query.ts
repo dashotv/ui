@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Setting, SettingsArgs } from 'types/setting';
 
-import { Release, ReleasesResponse } from './types';
+import { PopularResponse, Release, ReleasesResponse } from './types';
 
 export const getReleasesPage = async (page, pagesize, qs) => {
   const start = (page - 1) * pagesize;
@@ -26,6 +26,11 @@ export const putRelease = async (id: string, release: Release) => {
 export const patchRelease = async (id: string, setting: Setting) => {
   const response = await tower.patch(`/releases/${id}`, setting);
   return response.data;
+};
+
+export const getPopular = async (interval: string) => {
+  const response = await tower.get(`/releases/popular/${interval}`);
+  return response.data as PopularResponse;
 };
 
 export const useReleasesQuery = (start, pagesize, queryString) =>
@@ -61,3 +66,9 @@ export const useReleaseSettingMutation = () => {
     },
   });
 };
+
+export const usePopularQuery = (interval: string) =>
+  useQuery({
+    queryKey: ['releases', 'popular', interval],
+    queryFn: () => getPopular(interval),
+  });

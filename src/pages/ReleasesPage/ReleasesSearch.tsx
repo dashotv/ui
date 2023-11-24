@@ -14,10 +14,8 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { ButtonMap } from 'components/ButtonMap';
 import LoadingIndicator from 'components/Loading';
 import { ReleasesForm, ReleasesList, ReleasesPresets, useReleasesQuery } from 'components/Releases';
-import { SearchForm } from 'components/Releases/types';
+import { SearchForm } from 'components/Releases';
 import { useQueryString } from 'hooks/useQueryString';
-
-import './releases.scss';
 
 const pagesize = 25;
 const formDefaults: SearchForm = {

@@ -4,57 +4,10 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
 
 import LoadingIndicator from 'components/Loading';
-import { useQueryString } from 'hooks/useQueryString';
-import { usePopularQuery } from 'query/releases';
-
-import './releases.scss';
-
-interface Popular {
-  name: string;
-  count: number;
-  year?: number;
-  type: string;
-}
-function PopularList({ data, type }: { data: Popular[]; type: string }) {
-  const url =
-    type !== 'anime' ? `http://themoviedb.org/search?query=` : 'https://myanimelist.net/anime.php?cat=anime&q=';
-
-  return (
-    <div className="popular">
-      <div className="header">{type}</div>
-      {data?.map(({ name, count, year = 0 }, index) => (
-        <div key={index} className="entry">
-          <span className="title">
-            <Link href={`${url}${name}${year > 0 ? `+y:${year}` : ''}`} target="_window">
-              {name}
-              {year > 0 && ` (${year})`}
-            </Link>
-          </span>
-          <span className="number">
-            <Link href={SearchURL(name, type)}>{count}</Link>
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function SearchURL(text, type) {
-  const { queryString } = useQueryString();
-  const base = '/releases/search?';
-  const settings = {
-    text: text,
-    type: type,
-    resolution: type === 'movies' ? '1080' : '',
-    exact: type === 'movies' ? false : true,
-    verified: true,
-  };
-
-  return base + queryString(settings);
-}
+import { PopularList } from 'components/Releases';
+import { usePopularQuery } from 'components/Releases/query';
 
 export default function ReleasesIndex() {
   const { interval } = useParams();

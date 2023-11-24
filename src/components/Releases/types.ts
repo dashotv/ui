@@ -5,6 +5,17 @@ export interface ReleasesResponse {
   Search: string;
 }
 
+export interface Popular {
+  name: string;
+  count: number;
+  year?: number;
+  type: string;
+}
+
+export interface PopularResponse {
+  [key: string]: Popular[];
+}
+
 export interface Release {
   id: string;
   name?: string;
