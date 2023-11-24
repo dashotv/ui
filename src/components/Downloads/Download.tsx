@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -8,7 +9,7 @@ import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCirc
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
 import { DownloadInfo } from 'components/Downloads';
-import { MediaGo, Medium } from 'components/Media';
+import { MediaTo, Medium } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
 import { Release } from 'components/Releases';
 import { FilesWithSelector, MediumTabs, Nzbgeek, Torch } from 'components/Tabs';
@@ -56,6 +57,7 @@ export function Download({
   const torrentRemove = useTorrentRemoveMutation();
   const { progress, eta, queue } = useReleases();
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const tabsMap = {
     Files: <FilesWithSelector files={files} torrent={torrent} episodes={episodes} updater={selectMedium} />,
@@ -80,7 +82,7 @@ export function Download({
     {
       icon: <ArrowCircleLeftIcon color="primary" />,
       // click: <Link to={`/${props.download?.media?.type}/${props.download?.media?.id}`} />,
-      click: () => MediaGo(medium.id, medium.type, medium.series_id),
+      click: () => navigate(MediaTo(medium.id, medium.type, medium.series_id)),
       title: 'Go to Media',
     },
     {
