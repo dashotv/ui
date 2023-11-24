@@ -1,12 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import { useForm } from 'react-hook-form';
 
 import ArticleIcon from '@mui/icons-material/Article';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -19,41 +16,18 @@ import LoadingIndicator from 'components/Loading';
 import { Megabytes } from 'components/Releases/Megabytes';
 import { Published } from 'components/Releases/Published';
 import { ResolutionTitle } from 'components/Releases/Resolution';
+import { WrapErrorBoundary } from 'components/Util';
 import { useQueryString } from 'hooks/useQueryString';
 import { useNzbSearchTvQuery } from 'query/search';
 import { Nzbgeek as NzbgeekType } from 'types/nzbgeek';
 import { Release } from 'types/release';
-
-export const Nzbgeek = ({
-  form,
-  selector,
-  selected,
-}: {
-  form: NzbgeekForm;
-  selector: (selected: Release | NzbgeekType) => void;
-  selected?: { release_id: string; url: string };
-}) => {
-  const fallbackRender = ({ error, resetErrorBoundary }): React.ReactNode => {
-    return (
-      <Alert severity="error" onClose={() => resetErrorBoundary()}>
-        <AlertTitle>Failure</AlertTitle>
-        <div role="alert">{error.message}</div>
-      </Alert>
-    );
-  };
-  return (
-    <ErrorBoundary fallbackRender={fallbackRender}>
-      <NzbgeekTab {...{ form, selector, selected }} />
-    </ErrorBoundary>
-  );
-};
 
 export interface NzbgeekForm {
   tvdbid?: string;
   season?: number;
   episode?: number;
 }
-export function NzbgeekTab({
+export function Nzbgeek({
   form: initial,
   selector,
   selected,
@@ -99,11 +73,11 @@ export function NzbgeekTab({
   };
 
   return (
-    <>
+    <WrapErrorBoundary>
       {isFetching && <LoadingIndicator />}
       <Nzbsearch form={form} setForm={setForm} />
       {nzbs && <NzbList data={nzbs} actions={renderActions} selected={selected} />}
-    </>
+    </WrapErrorBoundary>
   );
 }
 
