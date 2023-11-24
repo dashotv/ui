@@ -31,10 +31,6 @@ export const Default: Story = {
   render: args => <Banner {...args} />,
 };
 
-const complete = ev => {
-  console.log('clicked complete');
-  ev.preventDefault(); // for the buttons inside the Link component
-};
 export const Actions: Story = {
   args: {
     id: 'blarg',
@@ -50,13 +46,14 @@ export const Actions: Story = {
     flags: { active: true, completed: false, favorite: true },
     buttons: [
       {
-        icon: <DownloadForOfflineIcon color="primary" />,
-        click: complete,
+        Icon: DownloadForOfflineIcon,
+        color: 'primary',
+        click: () => {},
         title: 'create download',
       },
       {
-        icon: <ReplayCircleFilledIcon color="primary" />,
-        click: complete,
+        Icon: ReplayCircleFilledIcon,
+        color: 'primary',
         title: 'refresh',
       },
     ],

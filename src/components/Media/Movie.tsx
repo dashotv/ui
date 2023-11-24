@@ -8,6 +8,7 @@ import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
+import { ButtonMapButton } from 'components/Common';
 import { Details, MediumTabs, Paths } from 'components/Tabs';
 
 import { MediumBanner } from '.';
@@ -33,42 +34,48 @@ export default function Movie({
     ev.preventDefault(); // for the buttons inside the Link component
   }, []);
 
-  const buttons = [
+  const buttons: ButtonMapButton[] = [
     {
-      icon: <CloudCircleIcon color="primary" />,
+      Icon: CloudCircleIcon,
+      color: 'primary',
       click: complete,
       title: 'create download',
     },
     {
-      icon: <ReplayCircleFilledIcon color="primary" />,
+      Icon: ReplayCircleFilledIcon,
+      color: 'primary',
       click: () => {
         refresh();
       },
       title: 'refresh',
     },
     {
-      icon: <BuildCircleIcon color={broken ? 'secondary' : 'action'} />,
+      Icon: BuildCircleIcon,
+      color: broken ? 'secondary' : 'action',
       click: () => {
         change(id, 'broken', !broken);
       },
       title: 'broken',
     },
     {
-      icon: <DownloadForOfflineIcon color={downloaded ? 'secondary' : 'action'} />,
+      Icon: DownloadForOfflineIcon,
+      color: downloaded ? 'secondary' : 'action',
       click: () => {
         change(id, 'downloaded', !downloaded);
       },
       title: 'downloaded',
     },
     {
-      icon: <CheckCircleIcon color={completed ? 'secondary' : 'action'} />,
+      Icon: CheckCircleIcon,
+      color: completed ? 'secondary' : 'action',
       click: () => {
         change(id, 'completed', !completed);
       },
       title: 'completed',
     },
     {
-      icon: <RemoveCircleIcon color="error" />,
+      Icon: RemoveCircleIcon,
+      color: 'error',
       click: complete,
       title: 'delete',
     },

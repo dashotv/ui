@@ -4,7 +4,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 import Paper from '@mui/material/Paper';
 
-import { ButtonMap, LoadingIndicator } from 'components/Common';
+import { ButtonMap, ButtonMapButton, LoadingIndicator } from 'components/Common';
 import { Medium } from 'components/Media/types';
 import { Release, ReleasesForm, ReleasesList, SearchForm, useReleasesQuery } from 'components/Releases';
 import { useQueryString } from 'hooks/useQueryString';
@@ -78,19 +78,21 @@ export function Torch({
   }, [form, setQs, queryString]);
 
   const renderActions = row => {
-    const buttons = [
+    const buttons: ButtonMapButton[] = [
       {
-        icon: <OutboundRoundedIcon fontSize="small" color="primary" />,
+        Icon: OutboundRoundedIcon,
+        color: 'primary',
         click: click,
         title: 'edit',
       },
       {
-        icon: <CheckCircleIcon fontSize="small" color="primary" />,
+        Icon: CheckCircleIcon,
+        color: 'primary',
         click: () => handleSelect(row),
         title: 're-process',
       },
     ];
-    return <ButtonMap buttons={buttons} />;
+    return <ButtonMap buttons={buttons} size="small" />;
   };
 
   if (!releases.data) {

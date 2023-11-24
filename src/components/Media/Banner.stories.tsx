@@ -10,6 +10,8 @@ import StarsIcon from '@mui/icons-material/Stars';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { ButtonMapButton } from 'components/Common';
+
 import { MediumBanner } from './Banner';
 
 //👇 This default export determines where your story goes in the story list
@@ -54,39 +56,46 @@ const complete = ev => {
   console.log('clicked complete');
   ev.preventDefault(); // for the buttons inside the Link component
 };
-const buttons = [
+const buttons: ButtonMapButton[] = [
   {
-    icon: <DownloadForOfflineIcon color="primary" />,
+    Icon: DownloadForOfflineIcon,
+    color: 'primary',
     click: complete,
     title: 'create download',
   },
   {
-    icon: <ReplayCircleFilledIcon color="primary" />,
+    Icon: ReplayCircleFilledIcon,
+    color: 'primary',
     click: complete,
     title: 'refresh',
   },
   {
-    icon: <BuildCircleIcon color={'secondary'} />,
+    Icon: BuildCircleIcon,
+    color: 'secondary',
     click: complete,
     title: 'broken',
   },
   {
-    icon: <CheckCircleIcon color="action" />,
+    Icon: CheckCircleIcon,
+    color: 'action',
     click: complete,
     title: 'completed',
   },
   {
-    icon: <RecommendIcon color="action" />,
+    Icon: RecommendIcon,
+    color: 'action',
     click: complete,
     title: 'favorite',
   },
   {
-    icon: <StarsIcon color="action" />,
+    Icon: StarsIcon,
+    color: 'action',
     click: complete,
     title: 'active',
   },
   {
-    icon: <RemoveCircleIcon color="error" />,
+    Icon: RemoveCircleIcon,
+    color: 'error',
     click: complete,
     title: 'delete',
   },

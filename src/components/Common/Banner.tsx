@@ -45,7 +45,7 @@ export function BannerActions({ unwatched, buttons, flags }: BannerActionsProps)
   const { active, broken, favorite, completed } = flags || {};
   return (
     <Stack spacing={'2px'} direction="row">
-      <ButtonMap size="small" buttons={buttons} />
+      {buttons && <ButtonMap size="medium" buttons={buttons} />}
       {flags && <BannerIcons {...{ active, broken, favorite, completed }} />}
       <Unwatched count={unwatched} />
     </Stack>

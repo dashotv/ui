@@ -8,6 +8,7 @@ import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
+import { ButtonMapButton } from 'components/Common';
 import { DownloadInfo } from 'components/Downloads';
 import { MediaTo, Medium } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
@@ -78,35 +79,40 @@ export function Download({
     });
   }, []);
 
-  const buttons = [
+  const buttons: ButtonMapButton[] = [
     {
-      icon: <ArrowCircleLeftIcon color="primary" />,
-      // click: <Link to={`/${props.download?.media?.type}/${props.download?.media?.id}`} />,
+      Icon: ArrowCircleLeftIcon,
+      color: 'primary',
       click: () => navigate(MediaTo(medium.id, medium.type, medium.series_id)),
       title: 'Go to Media',
     },
     {
-      icon: <CheckCircleIcon color="primary" />,
+      Icon: CheckCircleIcon,
+      color: 'primary',
       click: () => remove('done'),
       title: 'mark complete',
     },
     {
-      icon: <OfflineBoltIcon color={auto ? 'secondary' : 'action'} />,
+      Icon: OfflineBoltIcon,
+      color: auto ? 'secondary' : 'action',
       click: () => changeSetting('auto', !auto),
       title: 'toggle auto',
     },
     {
-      icon: <PlaylistAddCheckCircleIcon color={multi ? 'secondary' : 'action'} />,
+      Icon: PlaylistAddCheckCircleIcon,
+      color: multi ? 'secondary' : 'action',
       click: () => changeSetting('multi', !multi),
       title: 'toggle multi',
     },
     {
-      icon: <SwapHorizontalCircleIcon color={force ? 'secondary' : 'action'} />,
+      Icon: SwapHorizontalCircleIcon,
+      color: force ? 'secondary' : 'action',
       click: () => changeSetting('force', !force),
       title: 'toggle force',
     },
     {
-      icon: <CancelIcon color="error" />,
+      Icon: CancelIcon,
+      color: 'error',
       click: () => remove('deleted'),
       title: 'delete',
     },

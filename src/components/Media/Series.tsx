@@ -8,6 +8,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import StarsIcon from '@mui/icons-material/Stars';
 
+import { ButtonMapButton } from 'components/Common';
 import { Details, Episodes, MediumTabs, Paths, Seasons, Watches } from 'components/Tabs';
 
 import { Episode, MediumBanner, SeriesType } from '.';
@@ -52,42 +53,48 @@ export function Series({
     ev.preventDefault(); // for the buttons inside the Link component
   }, []);
 
-  const buttons = [
+  const buttons: ButtonMapButton[] = [
     {
-      icon: <CloudCircleIcon color="primary" />,
+      Icon: CloudCircleIcon,
+      color: 'primary',
       click: complete,
       title: 'create download',
     },
     {
-      icon: <ReplayCircleFilledIcon color="primary" />,
+      Icon: ReplayCircleFilledIcon,
+      color: 'primary',
       click: () => {
         refresh();
       },
       title: 'refresh',
     },
     {
-      icon: <BuildCircleIcon color={broken ? 'secondary' : 'action'} />,
+      Icon: BuildCircleIcon,
+      color: broken ? 'secondary' : 'action',
       click: () => {
         change(id, 'broken', !broken);
       },
       title: 'broken',
     },
     {
-      icon: <RecommendIcon color={favorite ? 'secondary' : 'action'} />,
+      Icon: RecommendIcon,
+      color: favorite ? 'secondary' : 'action',
       click: () => {
         change(id, 'favorite', !favorite);
       },
       title: 'favorite',
     },
     {
-      icon: <StarsIcon color={active ? 'secondary' : 'action'} />,
+      Icon: StarsIcon,
+      color: active ? 'secondary' : 'action',
       click: () => {
         change(id, 'active', !active);
       },
       title: 'active',
     },
     {
-      icon: <RemoveCircleIcon color="error" />,
+      Icon: RemoveCircleIcon,
+      color: 'error',
       click: complete,
       title: 'delete',
     },

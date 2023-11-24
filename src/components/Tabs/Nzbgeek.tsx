@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 
-import { ButtonMap, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
+import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
 import { Medium } from 'components/Media/types';
 import { NzbgeekForm, NzbgeekResults, NzbgeekSearch } from 'components/Nzbgeek';
 import { Nzbgeek as NzbgeekType, useNzbSearchTvQuery } from 'components/Nzbgeek';
@@ -47,19 +47,21 @@ export function Nzbgeek({ medium, selector, selected }: NzbgeekProps) {
   }, []);
 
   const renderActions = (row: NzbgeekType) => {
-    const buttons = [
+    const buttons: ButtonMapButton[] = [
       {
-        icon: <OutboundRoundedIcon fontSize="small" color="primary" />,
+        Icon: OutboundRoundedIcon,
+        color: 'primary',
         click: click,
         title: 'edit',
       },
       {
-        icon: <CheckCircleIcon fontSize="small" color="primary" />,
+        Icon: CheckCircleIcon,
+        color: 'primary',
         click: () => handleSelect(row),
         title: 'select',
       },
     ];
-    return <ButtonMap buttons={buttons} />;
+    return <ButtonMap buttons={buttons} size="small" />;
   };
 
   return (

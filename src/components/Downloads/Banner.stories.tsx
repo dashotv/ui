@@ -11,6 +11,8 @@ import Grid2 from '@mui/material/Grid';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
+import type { ButtonMapButton } from 'components/Common/ButtonMap';
+
 import { DownloadBanner } from './Banner';
 
 //👇 This default export determines where your story goes in the story list
@@ -40,43 +42,50 @@ export default meta;
 
 type Story = StoryObj<typeof DownloadBanner>;
 
-const buttons = [
+const buttons: ButtonMapButton[] = [
   {
-    icon: <ArrowCircleLeftIcon color="primary" />,
+    Icon: ArrowCircleLeftIcon,
+    color: 'primary',
     // click: <Link to={`/${props.download?.media?.type}/${props.download?.media?.id}`} />,
     title: 'Go to Media',
   },
   {
-    icon: <CheckCircleIcon color="primary" />,
+    Icon: CheckCircleIcon,
+    color: 'primary',
     title: 'mark complete',
   },
   {
-    icon: <ChangeCircleIcon color="primary" />,
+    Icon: ChangeCircleIcon,
+    color: 'primary',
     title: 'reset',
   },
   {
-    icon: <OfflineBoltIcon color={'secondary'} />,
+    Icon: OfflineBoltIcon,
+    color: 'secondary',
     click: ev => {
       ev.preventDefault(); // for the buttons inside the Link component
     },
     title: 'toggle auto',
   },
   {
-    icon: <PlaylistAddCheckCircleIcon color={'action'} />,
+    Icon: PlaylistAddCheckCircleIcon,
+    color: 'action',
     click: ev => {
       ev.preventDefault(); // for the buttons inside the Link component
     },
     title: 'toggle multi',
   },
   {
-    icon: <SwapHorizontalCircleIcon color={'action'} />,
+    Icon: SwapHorizontalCircleIcon,
+    color: 'action',
     click: ev => {
       ev.preventDefault(); // for the buttons inside the Link component
     },
     title: 'toggle force',
   },
   {
-    icon: <CancelIcon color="error" />,
+    Icon: CancelIcon,
+    color: 'error',
     title: 'delete',
   },
 ];

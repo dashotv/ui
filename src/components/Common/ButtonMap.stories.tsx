@@ -13,14 +13,16 @@ const meta: Meta<typeof ButtonMap> = {
     buttons: [
       {
         title: 'Click Me',
-        icon: <DownloadForOfflineIcon color="primary" />,
+        Icon: DownloadForOfflineIcon,
+        color: 'primary',
         click: (ev: React.MouseEvent<HTMLElement>) => {
           console.log('click', ev);
         },
       },
       {
         title: 'Click Me',
-        icon: <VisibilityOffIcon color="primary" />,
+        Icon: VisibilityOffIcon,
+        color: 'disabled',
         click: (ev: React.MouseEvent<HTMLElement>) => {
           console.log('click', ev);
         },
@@ -32,14 +34,14 @@ const meta: Meta<typeof ButtonMap> = {
 export default meta;
 type Story = StoryObj<typeof ButtonMap>;
 
+export const Large: Story = {
+  render: args => <ButtonMap {...args} size="large" />,
+};
+
 export const Medium: Story = {
   render: args => <ButtonMap {...args} />,
 };
 
 export const Small: Story = {
   render: args => <ButtonMap {...args} size="small" />,
-};
-
-export const Large: Story = {
-  render: args => <ButtonMap {...args} size="large" />,
 };

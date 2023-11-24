@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap, Chrono } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Chrono } from 'components/Common';
 import { Episode } from 'components/Media/types';
 
 export function Episodes({
@@ -42,14 +42,16 @@ function EpisodeRow({
   const [completed, setCompleted] = useState(episode.completed);
   const [downloaded, setDownloaded] = useState(episode.downloaded);
 
-  const buttons = [
+  const buttons: ButtonMapButton[] = [
     {
-      icon: <CloudCircleIcon color="primary" fontSize="small" />,
+      Icon: CloudCircleIcon,
+      color: 'primary',
       click: () => {},
       title: 'create download',
     },
     {
-      icon: <NextPlanIcon color={skipped ? 'secondary' : 'action'} fontSize="small" />,
+      Icon: NextPlanIcon,
+      color: skipped ? 'secondary' : 'action',
       click: () => {
         changeEpisode(id, 'skipped', !skipped);
         setSkipped(!skipped);
@@ -57,7 +59,8 @@ function EpisodeRow({
       title: 'refresh',
     },
     {
-      icon: <DownloadForOfflineIcon color={downloaded ? 'secondary' : 'action'} fontSize="small" />,
+      Icon: DownloadForOfflineIcon,
+      color: downloaded ? 'secondary' : 'action',
       click: () => {
         changeEpisode(id, 'downloaded', !downloaded);
         setDownloaded(!downloaded);
@@ -65,7 +68,8 @@ function EpisodeRow({
       title: 'broken',
     },
     {
-      icon: <CheckCircleIcon color={completed ? 'secondary' : 'action'} fontSize="small" />,
+      Icon: CheckCircleIcon,
+      color: completed ? 'secondary' : 'action',
       click: () => {
         changeEpisode(id, 'completed', !completed);
         setCompleted(!completed);
@@ -73,7 +77,8 @@ function EpisodeRow({
       title: 'favorite',
     },
     {
-      icon: <VisibilityIcon color={watched ? 'secondary' : 'action'} fontSize="small" />,
+      Icon: VisibilityIcon,
+      color: watched ? 'secondary' : 'action',
       click: () => {
         console.log("can't change watched yet");
       },
@@ -117,7 +122,7 @@ function EpisodeRow({
               <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
             </Typography>
           </Stack>
-          <ButtonMap buttons={buttons} size="large" />
+          <ButtonMap buttons={buttons} size="small" />
         </Stack>
       </Stack>
     </Paper>

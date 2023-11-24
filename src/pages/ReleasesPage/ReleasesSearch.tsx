@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 
-import { ButtonMap, LoadingIndicator } from 'components/Common';
+import { ButtonMap, ButtonMapButton, LoadingIndicator } from 'components/Common';
 import { ReleasesForm, ReleasesList, ReleasesPresets, useReleasesQuery } from 'components/Releases';
 import { SearchForm } from 'components/Releases';
 import { useQueryString } from 'hooks/useQueryString';
@@ -70,24 +70,28 @@ export default function ReleasesSearchPage() {
   }, [form, queryString]);
 
   const renderActions = () => {
-    const buttons = [
+    const buttons: ButtonMapButton[] = [
       {
-        icon: <SvgIcon component={RiEditCircleFill} inheritViewBox fontSize="small" color="primary" />,
+        Icon: SvgIcon,
+        Component: RiEditCircleFill,
+        color: 'primary',
         click: click,
         title: 'edit',
       },
       {
-        icon: <ReplayCircleFilledIcon color="warning" />,
+        Icon: ReplayCircleFilledIcon,
+        color: 'warning',
         click: click,
         title: 're-process',
       },
       {
-        icon: <CancelIcon color="error" />,
+        Icon: CancelIcon,
+        color: 'error',
         click: click,
         title: 'delete',
       },
     ];
-    return <ButtonMap buttons={buttons} />;
+    return <ButtonMap buttons={buttons} size="small" />;
   };
 
   return (

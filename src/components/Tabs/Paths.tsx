@@ -13,7 +13,7 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap, Chrono } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Chrono } from 'components/Common';
 import { Path } from 'components/Media/types';
 
 export function Paths({ paths }: { paths: Path[] }) {
@@ -29,49 +29,27 @@ export function Paths({ paths }: { paths: Path[] }) {
         <Button onClick={() => setHidden(!hidden)}>{hidden ? 'show' : 'hide'} images</Button>
       </Paper>
     </Paper>
-    // <div className="files">
-    //   <table
-    //     className="vertical-table"
-    //     // size="small"
-    //     aria-label="a dense table"
-    //   >
-    //     <thead>
-    //       <tr>
-    //         <td className="number"></td>
-    //         <td>File</td>
-    //         <td className="date" align="right">
-    //           Updated
-    //         </td>
-    //         <td className="actions" align="right">
-    //           Actions
-    //         </td>
-    //       </tr>
-    //     </thead>
-    //     <tbody>
-    //       {paths &&
-    //         paths.map(({ extension, local, type, updated_at }, i) => (
-    //           <PathsRow key={i} i={i} {...{ extension, local, type, updated_at }} />
-    //         ))}
-    //     </tbody>
-    //   </table>
-    // </div>
   );
 }
 
 function PathsRow({ i, extension, local, type, updated_at }: { i: number } & Path) {
-  const buttons = [
+  const buttons: ButtonMapButton[] = [
     {
-      icon: <SvgIcon component={RiEditCircleFill} inheritViewBox fontSize="small" color="primary" />,
+      Icon: SvgIcon,
+      Component: RiEditCircleFill,
+      color: 'primary',
       click: () => console.log('edit'),
       title: 'edit',
     },
     {
-      icon: <RemoveCircleIcon fontSize="small" color="warning" />,
+      Icon: RemoveCircleIcon,
+      color: 'warning',
       click: () => console.log('delete'),
       title: 'delete',
     },
     {
-      icon: <CancelIcon fontSize="small" color="error" />,
+      Icon: CancelIcon,
+      color: 'error',
       click: () => console.log('delete forever'),
       title: 'delete forever',
     },
