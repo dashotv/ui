@@ -8,7 +8,6 @@ import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
-import { DownloadBanner } from 'components/Banner';
 import { DownloadInfo } from 'components/Downloads';
 import { MediaGo } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
@@ -19,7 +18,7 @@ import { useTorrentRemoveMutation } from 'query/releases';
 import { Medium } from 'types/medium';
 import { Torrent } from 'types/torrents';
 
-import { DownloadFile, DownloadType } from './types';
+import { DownloadBanner, DownloadFile, DownloadType } from '.';
 
 export type DownloadProps = {
   id: string;

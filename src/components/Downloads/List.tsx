@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 
-import { DownloadBanner } from 'components/Banner';
 import { useReleases } from 'hooks/useReleases';
 
-import { DownloadType } from './types';
+import { DownloadBanner, DownloadType } from '.';
 
 export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
   const { progress, eta, queue, files } = useReleases();

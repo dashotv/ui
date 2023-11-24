@@ -4,11 +4,10 @@ import { useTheme } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
+import { Banner } from 'components/Banner';
 import { ButtonMapButton } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
 import { DownloadIconButton, DownloadStatus } from 'components/Downloads';
-
-import { Banner } from './Banner';
 
 export type DownloadBannerProps = {
   id: string;

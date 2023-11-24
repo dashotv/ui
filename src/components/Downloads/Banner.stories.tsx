@@ -11,7 +11,7 @@ import Grid2 from '@mui/material/Grid';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { DownloadBanner } from './DownloadBanner';
+import { DownloadBanner } from './Banner';
 
 //👇 This default export determines where your story goes in the story list
 const meta: Meta<typeof DownloadBanner> = {
