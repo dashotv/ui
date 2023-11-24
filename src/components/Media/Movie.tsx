@@ -8,12 +8,12 @@ import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
-import { MediumBanner } from 'components/Banner';
 import Details from 'components/Tabs/Details';
 import Paths from 'components/Tabs/Paths';
 import { MediumTabs } from 'components/Tabs/Tabs';
 import { Movie as MovieType } from 'types/medium';
 
+import { MediumBanner } from '.';
 import './Media.scss';
 
 export type MovieProps = {

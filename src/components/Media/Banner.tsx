@@ -4,7 +4,7 @@ import { ButtonMapButton } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
 import { Medium } from 'types/medium';
 
-import { Banner } from './Banner';
+import { Banner } from '../Banner/Banner';
 
 export type MediumBannerProps = {
   id: string;

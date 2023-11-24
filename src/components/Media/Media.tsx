@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 
-import { MediumBanner } from 'components/Banner';
 import { Medium } from 'types/medium';
+
+import { MediumBanner } from '.';
 
 export function Media({ data }: { type: string; data: Medium[] }) {
   const path = (type: string, id: string, series_id: string | undefined) => {
