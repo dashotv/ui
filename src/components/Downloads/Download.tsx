@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -9,10 +8,9 @@ import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
-import { useQueryClient } from '@tanstack/react-query';
-
 import { DownloadBanner } from 'components/Banner';
 import { DownloadInfo } from 'components/Downloads';
+import { MediaGo } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek/types';
 import { Release } from 'components/Releases/types';
 import { SearchForm } from 'components/Releases/types';
@@ -21,14 +19,10 @@ import { MediumTabs } from 'components/Tabs/MediumTabs';
 import { Nzbgeek } from 'components/Tabs/Nzbgeek';
 import { Torch } from 'components/Tabs/Torch';
 import { useReleases } from 'hooks/useReleases';
-import { useSub } from 'hooks/useSub';
-import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMutation } from 'query/downloads';
 import { useTorrentRemoveMutation } from 'query/releases';
 import { DownloadFile, Download as DownloadType } from 'types/download';
 import { Medium } from 'types/medium';
 import { Torrent } from 'types/torrents';
-
-import './Media.scss';
 
 export type DownloadProps = {
   id: string;
@@ -37,7 +31,10 @@ export type DownloadProps = {
   type: string;
   files?: DownloadFile[];
   episodes?: Medium[];
-  select: (selected: Release | NzbgeekType) => void;
+  selectMedium: (eid: number | null, num: number) => void;
+  selectRelease: (selected: Release | NzbgeekType) => void;
+  changeSetting: (name: string, value: string | boolean) => void;
+  changeInfo: (info: Partial<DownloadType>) => void;
 };
 export default function Download({
   id,
@@ -46,14 +43,20 @@ export default function Download({
   torrent,
   files,
   episodes,
-  select,
+  selectRelease,
+  selectMedium,
+  changeSetting,
+  changeInfo,
 }: DownloadProps) {
   const {
-    medium,
     status,
     thash,
     release_id,
     url,
+    multi,
+    auto,
+    force,
+    medium,
     medium: {
       // type,
       kind,
@@ -70,52 +73,9 @@ export default function Download({
       display,
     },
   } = download;
-  const [auto, setAuto] = useState(download.auto);
-  const [multi, setMulti] = useState(download.multi);
-  const [force, setForce] = useState(download.force);
-  const downloadUpdate = useDownloadMutation(id);
-  const downloadSetting = useDownloadSettingMutation(id);
-  const downloadSelection = useDownloadSelectionMutation(id);
   const torrentRemove = useTorrentRemoveMutation();
-  const queryClient = useQueryClient();
   const { progress, eta, queue } = useReleases();
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-
-  function changeSetting(setting, value) {
-    downloadSetting.mutate({ setting: setting, value: value });
-  }
-
-  function change(name, value) {
-    if (name === 'status' && value === 'searching') {
-      downloadUpdate.mutate({ ...download, status: 'searching', release_id: '', url: '' });
-      return;
-    }
-    downloadUpdate.mutate({ ...download, [name]: value });
-  }
-
-  const updater = info => {
-    console.log('update: ', info);
-    downloadUpdate.mutate({ ...download, ...info });
-  };
-
-  function selectMedium(eid, num) {
-    downloadSelection.mutate({ mediumId: eid, num: num });
-  }
-
-  const updateDownload = useCallback(
-    data => {
-      if (data.id !== id) {
-        return;
-      }
-      console.log('update download', data);
-      queryClient.setQueryData(['download', id], data);
-    },
-    [id, download],
-  );
-
-  useSub('seer.downloads', updateDownload);
-  useSub('tower.downloads', updateDownload);
 
   const processSearch = useCallback(() => {
     if (!search) {
@@ -175,34 +135,9 @@ export default function Download({
 
   const tabsMap = {
     Files: <FilesWithSelector files={files} torrent={torrent} episodes={episodes} updater={selectMedium} />,
-    Torch: <Torch form={torchForm()} selector={select} selected={{ release_id, url }} />,
-    Nzbgeek: <Nzbgeek form={nzbForm()} selector={select} selected={{ release_id, url }} />,
+    Torch: <Torch form={torchForm()} selector={selectRelease} selected={{ release_id, url }} />,
+    Nzbgeek: <Nzbgeek form={nzbForm()} selector={selectRelease} selected={{ release_id, url }} />,
   };
-
-  // TODO: create general MediaLink component or something like that
-  const gotoMedia = useCallback(() => {
-    if (!medium) {
-      return;
-    }
-    let id = medium.id;
-    let type = 'series';
-    switch (medium.type) {
-      case 'Episode':
-        if (medium.series_id === undefined) {
-          navigate('/404');
-          return;
-        }
-        id = medium.series_id;
-        break;
-      case 'Series':
-        break;
-      case 'Movie':
-        type = 'movies';
-        break;
-    }
-
-    navigate('/' + type + '/' + id);
-  }, [medium, navigate]);
 
   const remove = useCallback((status: string) => {
     console.log('clicked remove');
@@ -212,7 +147,7 @@ export default function Download({
           console.error('error: ', data.error);
           return;
         }
-        change('status', status);
+        changeSetting('status', status);
       },
     });
   }, []);
@@ -221,7 +156,7 @@ export default function Download({
     {
       icon: <ArrowCircleLeftIcon color="primary" />,
       // click: <Link to={`/${props.download?.media?.type}/${props.download?.media?.id}`} />,
-      click: () => gotoMedia(),
+      click: () => MediaGo(medium.id, medium.type, medium.series_id),
       title: 'Go to Media',
     },
     {
@@ -231,29 +166,17 @@ export default function Download({
     },
     {
       icon: <OfflineBoltIcon color={auto ? 'secondary' : 'action'} />,
-      click: ev => {
-        changeSetting('auto', !auto);
-        setAuto(!auto);
-        ev.preventDefault(); // for the buttons inside the Link component
-      },
+      click: () => changeSetting('auto', !auto),
       title: 'toggle auto',
     },
     {
       icon: <PlaylistAddCheckCircleIcon color={multi ? 'secondary' : 'action'} />,
-      click: ev => {
-        changeSetting('multi', !multi);
-        setMulti(!multi);
-        ev.preventDefault(); // for the buttons inside the Link component
-      },
+      click: () => changeSetting('multi', !multi),
       title: 'toggle multi',
     },
     {
       icon: <SwapHorizontalCircleIcon color={force ? 'secondary' : 'action'} />,
-      click: ev => {
-        changeSetting('force', !force);
-        setForce(!force);
-        ev.preventDefault(); // for the buttons inside the Link component
-      },
+      click: () => changeSetting('force', !force),
       title: 'toggle force',
     },
     {
@@ -280,7 +203,7 @@ export default function Download({
         eta={eta(thash)?.toString()}
         buttons={buttons}
       />
-      <DownloadInfo {...{ open, setOpen, status, thash, release_id, url }} changer={updater} />
+      <DownloadInfo {...{ open, setOpen, status, thash, release_id, url }} changer={changeInfo} />
       <MediumTabs data={tabsMap} />
     </div>
   );

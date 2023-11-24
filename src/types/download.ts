@@ -53,6 +53,6 @@ export interface DownloadEvent {
 }
 
 export interface DownloadSelection {
-  mediumId: number;
+  mediumId: number | null;
   num: number;
 }

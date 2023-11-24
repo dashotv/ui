@@ -1,3 +1,3 @@
-export * from './DownloadInfo';
-export * from './DownloadList';
-export * from './DownloadIcon';
+export * from './Info';
+export * from './List';
+export * from './Icon';

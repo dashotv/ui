@@ -28,7 +28,7 @@ export function FilesWithSelector({
   files?: DownloadFile[];
   episodes?: Medium[];
   torrent?: Torrent;
-  updater: (id: string | null, num: number) => void;
+  updater: (id: number | null, num: number) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [dialogTitle, setDialogTitle] = useState('title');
