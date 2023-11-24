@@ -3,7 +3,8 @@ import React from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import { Chrono } from 'components/Common';
-import { User } from 'types/user';
+
+import { User } from './types';
 
 export function UsersList({ users }: { users: User[] }) {
   return (
