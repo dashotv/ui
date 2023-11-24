@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { Chrono } from 'components/Common';
-import { Watch } from 'types/medium';
+import { Watch } from 'components/Media/types';
 
 export function Watches({ data }: { data: Watch[] }) {
   return <Paper elevation={0}>{data?.map(watch => <WatchRow key={watch.id} {...watch} />)}</Paper>;

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Link from '@mui/material/Link';
 
-import { Medium } from 'types/medium';
+import { Medium } from './types';
 
 export const MediaLink = ({ title, medium: { id, series_id, type } }: { title: string; medium: Medium }) => {
   return (

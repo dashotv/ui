@@ -7,15 +7,15 @@ import Container from '@mui/material/Container';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { LoadingIndicator } from 'components/Common';
-import { Series } from 'components/Media';
-import { useSub } from 'hooks/useSub';
 import {
+  Series,
   putSeriesRefresh,
   useEpisodeSettingMutation,
   useSeriesQuery,
   useSeriesSeasonEpisodesQuery,
   useSeriesSettingMutation,
-} from 'query/series';
+} from 'components/Media';
+import { useSub } from 'hooks/useSub';
 
 export default function SeriesShow() {
   const { id } = useParams();

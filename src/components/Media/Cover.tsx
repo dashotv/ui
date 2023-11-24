@@ -2,10 +2,9 @@ import React from 'react';
 
 import Stack from '@mui/material/Stack';
 
-import { Option } from 'query/option';
-
 import { MediaIcon } from './Icon';
 import './Media.scss';
+import { Option } from './types';
 
 export const MediaCover = ({
   option,

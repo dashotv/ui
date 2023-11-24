@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Option } from 'query/option';
+import { Option } from 'components/Media/types';
 
 import './Navbar.scss';
 import { SuperSearchConfirm } from './Search';

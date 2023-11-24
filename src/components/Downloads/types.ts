@@ -1,4 +1,4 @@
-import { Medium } from 'types/medium';
+import { Medium } from 'components/Media/types';
 import { TorrentFile } from 'types/torrents';
 
 export type DownloadStatus =

@@ -14,7 +14,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
 import { ButtonMap, Chrono } from 'components/Common';
-import { Path } from 'types/path';
+import { Path } from 'components/Media/types';
 
 export function Paths({ paths }: { paths: Path[] }) {
   const [hidden, setHidden] = useState(true);

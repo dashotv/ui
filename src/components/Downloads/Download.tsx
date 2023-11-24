@@ -10,12 +10,12 @@ import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
 import { DownloadInfo } from 'components/Downloads';
 import { MediaGo } from 'components/Media';
+import { Medium } from 'components/Media/types';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
 import { Release } from 'components/Releases';
 import { FilesWithSelector, MediumTabs, Nzbgeek, Torch } from 'components/Tabs';
 import { useReleases } from 'hooks/useReleases';
 import { useTorrentRemoveMutation } from 'query/releases';
-import { Medium } from 'types/medium';
 import { Torrent } from 'types/torrents';
 
 import { DownloadBanner, DownloadFile, DownloadType } from '.';

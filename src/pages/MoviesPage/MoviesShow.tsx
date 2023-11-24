@@ -8,8 +8,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { LoadingIndicator } from 'components/Common';
 import Movie from 'components/Media/Movie';
+import { putMovieRefresh, useMovieQuery, useMovieSettingMutation } from 'components/Media/query';
 import { useSub } from 'hooks/useSub';
-import { putMovieRefresh, useMovieQuery, useMovieSettingMutation } from 'query/movies';
 
 export default function MoviesShow() {
   const { id } = useParams();

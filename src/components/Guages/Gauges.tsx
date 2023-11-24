@@ -10,8 +10,8 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
 import { useDownloadsLastQuery } from 'components/Downloads';
+import { NzbResponse } from 'components/Nzbgeek/types';
 import { useSub } from 'hooks/useSub';
-import { NzbResponse } from 'types/Nzb';
 import { TorrentsResponse } from 'types/torrents';
 
 import './gauges.scss';

@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { ButtonMap, Chrono } from 'components/Common';
-import { Episode } from 'types/medium';
+import { Episode } from 'components/Media/types';
 
 export function Episodes({
   episodes,

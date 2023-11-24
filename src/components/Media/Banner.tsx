@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { ButtonMapButton, Chrono } from 'components/Common';
-import { Medium } from 'types/medium';
 
 import { Banner } from '../Common/Banner';
+import { Medium } from './types';
 
 export type MediumBannerProps = {
   id: string;

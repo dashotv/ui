@@ -1,6 +1,13 @@
-import { Path } from './path';
-import { SearchParams } from './search_params';
-
+export interface Option {
+  ID: string;
+  Title: string;
+  Type: string;
+  Kind?: string;
+  Description?: string;
+  Date: string;
+  Source: string;
+  Image?: string;
+}
 export interface MediumEvent {
   event: string;
   id: string;
@@ -62,7 +69,7 @@ export interface Episode {
   watched?: boolean;
 }
 
-export interface Series {
+export interface SeriesType {
   id: string;
   type: string;
   kind: string;
@@ -121,4 +128,24 @@ export interface Watch {
   medium?: Medium;
   created_at: string;
   updated_at: string;
+}
+export interface Path {
+  id?: string;
+  type?: string;
+  remote?: string;
+  local?: string;
+  extension?: string;
+  size?: bigint;
+  updated_at?: Date;
+}
+export interface SearchParams {
+  type?: string;
+  verified?: boolean;
+  group?: string;
+  author?: string;
+  resolution?: number;
+  source?: string;
+  uncensored?: boolean;
+  bluray?: boolean;
+  exact?: boolean;
 }

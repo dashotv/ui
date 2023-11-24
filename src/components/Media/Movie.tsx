@@ -9,10 +9,10 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
 import { Details, MediumTabs, Paths } from 'components/Tabs';
-import { Movie as MovieType } from 'types/medium';
 
 import { MediumBanner } from '.';
 import './Media.scss';
+import { Movie as MovieType } from './types';
 
 export type MovieProps = {
   id: string;

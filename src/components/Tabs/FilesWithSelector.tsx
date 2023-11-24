@@ -14,7 +14,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { DownloadFile } from 'components/Downloads';
-import { Medium } from 'types/medium';
+import { Medium } from 'components/Media/types';
 import { Torrent } from 'types/torrents';
 
 import { Files } from './Files';

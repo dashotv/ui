@@ -4,11 +4,11 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 
 import { ButtonMap, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
+import { Medium } from 'components/Media/types';
 import { NzbgeekForm, NzbgeekResults, NzbgeekSearch } from 'components/Nzbgeek';
 import { Nzbgeek as NzbgeekType, useNzbSearchTvQuery } from 'components/Nzbgeek';
 import { Release } from 'components/Releases';
 import { useQueryString } from 'hooks/useQueryString';
-import { Medium } from 'types/medium';
 
 const formdata = (medium: Medium): NzbgeekForm => {
   const { source_id, season_number, episode_number } = medium;

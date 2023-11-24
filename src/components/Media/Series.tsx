@@ -9,9 +9,8 @@ import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import StarsIcon from '@mui/icons-material/Stars';
 
 import { Details, Episodes, MediumTabs, Paths, Seasons, Watches } from 'components/Tabs';
-import { Episode, Series as SeriesType } from 'types/medium';
 
-import { MediumBanner } from '.';
+import { Episode, MediumBanner, SeriesType } from '.';
 import './Media.scss';
 
 export type SeriesProps = {

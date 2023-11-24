@@ -5,9 +5,9 @@ import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 import Paper from '@mui/material/Paper';
 
 import { ButtonMap, LoadingIndicator } from 'components/Common';
+import { Medium } from 'components/Media/types';
 import { Release, ReleasesForm, ReleasesList, SearchForm, useReleasesQuery } from 'components/Releases';
 import { useQueryString } from 'hooks/useQueryString';
-import { Medium } from 'types/medium';
 
 const pagesize = 25;
 

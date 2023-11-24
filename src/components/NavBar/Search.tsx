@@ -28,10 +28,10 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import { MediaCover } from 'components/Media';
-import { useMovieCreateMutation } from 'query/movies';
-import { Option } from 'query/option';
+import { useSeriesCreateMutation } from 'components/Media/query';
+import { useMovieCreateMutation } from 'components/Media/query';
+import { Option } from 'components/Media/types';
 import { useSearchAllQuery } from 'query/search';
-import { useSeriesCreateMutation } from 'query/series';
 import { SearchAllResponse } from 'types/search';
 
 export default function SuperSearch() {
