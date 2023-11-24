@@ -1,6 +1,6 @@
-import { JSONCodec, NatsError } from 'nats.ws';
-
 import { useCallback } from 'react';
+
+import { JSONCodec, NatsError } from 'nats.ws';
 
 import { useSubscription } from '@quara-dev/react-nats-context';
 import { Msg } from '@quara-dev/react-nats-context';

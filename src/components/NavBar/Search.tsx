@@ -1,10 +1,9 @@
-import { useDebounce } from 'usehooks-ts';
-
-import React from 'react';
-import { SetStateAction, useCallback, useEffect, useState } from 'react';
+import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { IoSearchCircle } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+
+import { useDebounce } from 'usehooks-ts';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
@@ -27,10 +26,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { MediaCover } from 'components/Media';
-import { useSeriesCreateMutation } from 'components/Media/query';
-import { useMovieCreateMutation } from 'components/Media/query';
-import { Option } from 'components/Media/types';
+import { MediaCover, Option, useMovieCreateMutation, useSeriesCreateMutation } from 'components/Media';
 import { useSearchAllQuery } from 'query/search';
 import { SearchAllResponse } from 'types/search';
 

@@ -1,3 +1,5 @@
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+
 import '@fontsource/material-icons';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -5,8 +7,6 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import type { Preview } from '@storybook/react';
-
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 
 const darkTheme = createTheme({
   palette: {

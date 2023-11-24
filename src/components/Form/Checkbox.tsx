@@ -1,7 +1,7 @@
-import { title } from 'radash';
-
 import React from 'react';
 import { Controller } from 'react-hook-form';
+
+import { title } from 'radash';
 
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
