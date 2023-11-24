@@ -6,8 +6,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
 import LoadingIndicator from 'components/Loading';
-import { PopularList } from 'components/Releases';
-import { usePopularQuery } from 'components/Releases/query';
+import { PopularList, usePopularQuery } from 'components/Releases';
 
 export default function ReleasesIndex() {
   const { interval } = useParams();
