@@ -23,6 +23,15 @@ export const Default: Story = {
   },
   render: args => <Pill {...args} />,
 };
+export const Column: Story = {
+  args: {
+    name: 'Name',
+    value: 'Value',
+    color: 'primary',
+    variant: 'column',
+  },
+  render: args => <Pill {...args} />,
+};
 export const Icon: Story = {
   args: {
     name: 'Name',

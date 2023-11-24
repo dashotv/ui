@@ -4,6 +4,7 @@ import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+// TODO: support size, move styling to scss
 export const Pill = ({
   name,
   value,
@@ -11,7 +12,6 @@ export const Pill = ({
   variant = 'row',
   icon,
   width,
-  size = 'medium',
 }: {
   name: string;
   value: React.ReactElement | string | number;
@@ -42,26 +42,6 @@ export const Pill = ({
         return color;
     }
   };
-  const fontSize = () => {
-    switch (size) {
-      case 'small':
-        return '0.75rem';
-      case 'large':
-        return '1.25rem';
-      default:
-        return '1rem';
-    }
-  };
-  const height = () => {
-    switch (size) {
-      case 'small':
-        return '1.25rem';
-      case 'large':
-        return '1.75rem';
-      default:
-        return '1.5rem';
-    }
-  };
   return (
     <div>
       <Box
@@ -72,8 +52,6 @@ export const Pill = ({
           borderColor: colorValue(),
           overflow: 'hidden',
           width: 'fit-content',
-          fontSize: fontSize(),
-          height: height(),
         }}
       >
         <Box
@@ -82,17 +60,9 @@ export const Pill = ({
             backgroundColor: colorValue(),
             pr: '4px',
             pl: '4px',
-            fontSize: fontSize(),
-            height: height(),
           }}
         >
-          {icon ? (
-            icon
-          ) : (
-            <Typography fontSize={fontSize()} variant="button">
-              {name}
-            </Typography>
-          )}
+          {icon ? icon : <Typography variant="button">{name}</Typography>}
         </Box>
         <Box
           sx={{
@@ -104,8 +74,6 @@ export const Pill = ({
             maxWidth: width,
             whiteSpace: 'nowrap',
             textOverflow: 'ellipsis',
-            fontSize: fontSize(),
-            height: height(),
           }}
         >
           {value}
