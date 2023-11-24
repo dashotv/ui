@@ -13,6 +13,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { DownloadBanner } from 'components/Banner';
 import { DownloadInfo } from 'components/Downloads';
+import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek/types';
 import { FilesWithSelector } from 'components/Tabs/FilesWithSelector';
 import { MediumTabs } from 'components/Tabs/MediumTabs';
 import { Nzbgeek } from 'components/Tabs/Nzbgeek';
@@ -23,7 +24,6 @@ import { useDownloadMutation, useDownloadSelectionMutation, useDownloadSettingMu
 import { useTorrentRemoveMutation } from 'query/releases';
 import { DownloadFile, Download as DownloadType } from 'types/download';
 import { Medium } from 'types/medium';
-import { Nzbgeek as NzbgeekType } from 'types/nzbgeek';
 import { Release } from 'types/release';
 import { SearchForm } from 'types/search_form';
 import { Torrent } from 'types/torrents';

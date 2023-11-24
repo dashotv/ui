@@ -6,9 +6,9 @@ import Container from '@mui/material/Container';
 
 import LoadingIndicator from 'components/Loading';
 import Download from 'components/Media/Download';
+import { Nzbgeek } from 'components/Nzbgeek/types';
 import { useReleases } from 'hooks/useReleases';
 import { useDownloadMediumQuery, useDownloadMutation, useDownloadQuery } from 'query/downloads';
-import { Nzbgeek } from 'types/nzbgeek';
 import { Release } from 'types/release';
 import { Torrent } from 'types/torrents';
 
