@@ -16,11 +16,8 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 
 import Chrono from 'components/Chrono';
-import { useReleaseSettingMutation } from 'query/releases';
-import { Release } from 'types/release';
 
-import { Group } from './Group';
-import { Resolution } from './Resolution';
+import { Group, Release, Resolution, useReleaseSettingMutation } from '.';
 
 export function ReleasesList({
   data,

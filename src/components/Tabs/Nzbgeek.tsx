@@ -8,9 +8,9 @@ import LoadingIndicator from 'components/Loading';
 import { NzbgeekForm, NzbgeekResults, NzbgeekSearch } from 'components/Nzbgeek';
 import { useNzbSearchTvQuery } from 'components/Nzbgeek';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek/types';
+import { Release } from 'components/Releases/types';
 import { WrapErrorBoundary } from 'components/Util';
 import { useQueryString } from 'hooks/useQueryString';
-import { Release } from 'types/release';
 
 export type NzbgeekProps = {
   form: NzbgeekForm;

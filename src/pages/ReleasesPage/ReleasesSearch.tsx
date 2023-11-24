@@ -15,10 +15,9 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { ButtonMap } from 'components/ButtonMap';
 import LoadingIndicator from 'components/Loading';
 import { ReleasesList } from 'components/Releases';
-import { Search } from 'components/Search';
+import { ReleasesForm, useReleasesQuery } from 'components/Releases';
+import { SearchForm } from 'components/Releases/types';
 import { useQueryString } from 'hooks/useQueryString';
-import { useReleasesQuery } from 'query/releases';
-import { SearchForm } from 'types/search_form';
 
 import './releases.scss';
 
@@ -40,7 +39,7 @@ const formDefaults: SearchForm = {
 };
 
 // TODO: useForm and @hookform/devtools, see: https://www.youtube.com/watch?v=sD9fZxMO1us
-export default function ReleasesSearch() {
+export default function ReleasesSearchPage() {
   const { queryString } = useQueryString();
   const [searchParams] = useSearchParams();
   const [form, setForm] = useState<SearchForm>(
@@ -107,7 +106,7 @@ export default function ReleasesSearch() {
       <Container style={{ overflow: 'hidden' }} maxWidth="xl">
         <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
           {isFetching && <LoadingIndicator />}
-          <Search form={form} setForm={setForm} reset={reset} />
+          <ReleasesForm form={form} setForm={setForm} reset={reset} />
         </Paper>
       </Container>
       <Container style={{ overflow: 'hidden' }} maxWidth="xl">

@@ -15,9 +15,10 @@ import Stack from '@mui/material/Stack';
 
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { ReleaseSources, ReleaseTypes, Resolutions } from 'types/constants';
-import { SearchForm } from 'types/search_form';
 
-export function Search({
+import { SearchForm } from './types';
+
+export function ReleasesForm({
   form,
   setForm,
   reset,

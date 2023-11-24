@@ -7,9 +7,9 @@ import Container from '@mui/material/Container';
 import LoadingIndicator from 'components/Loading';
 import Download from 'components/Media/Download';
 import { Nzbgeek } from 'components/Nzbgeek/types';
+import { Release } from 'components/Releases/types';
 import { useReleases } from 'hooks/useReleases';
 import { useDownloadMediumQuery, useDownloadMutation, useDownloadQuery } from 'query/downloads';
-import { Release } from 'types/release';
 import { Torrent } from 'types/torrents';
 
 export default function DownloadsShowPage() {

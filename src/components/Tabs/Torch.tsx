@@ -7,11 +7,11 @@ import Paper from '@mui/material/Paper';
 import { ButtonMap } from 'components/ButtonMap';
 import LoadingIndicator from 'components/Loading';
 import { ReleasesList } from 'components/Releases';
-import { Search } from 'components/Search';
+import { ReleasesForm } from 'components/Releases';
+import { useReleasesQuery } from 'components/Releases';
+import { Release } from 'components/Releases/types';
+import { SearchForm } from 'components/Releases/types';
 import { useQueryString } from 'hooks/useQueryString';
-import { useReleasesQuery } from 'query/releases';
-import { Release } from 'types/release';
-import { SearchForm } from 'types/search_form';
 
 const pagesize = 25;
 
@@ -68,7 +68,7 @@ export function Torch({
     <>
       {releases.isFetching && <LoadingIndicator />}
       <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
-        <Search form={form} setForm={setForm} reset={() => setForm(initial)} />
+        <ReleasesForm form={form} setForm={setForm} reset={() => setForm(initial)} />
       </Paper>
       <ReleasesList data={releases.data?.Releases} actions={renderActions} selected={selected} />
     </>

@@ -1,3 +1,10 @@
+export interface ReleasesResponse {
+  Count: number;
+  Releases: Release[];
+  Total: number;
+  Search: string;
+}
+
 export interface Release {
   id: string;
   name?: string;
@@ -23,4 +30,20 @@ export interface Release {
   created_at?: string;
   updated_at?: string;
   published_at?: string;
+}
+
+export interface SearchForm {
+  text: string;
+  year: string;
+  season: number | string;
+  episode: number | string;
+  group: string;
+  author: string;
+  resolution: number | string;
+  source: string;
+  type: string;
+  exact: boolean;
+  verified: boolean;
+  uncensored: boolean;
+  bluray: boolean;
 }

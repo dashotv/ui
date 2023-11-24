@@ -38,14 +38,12 @@ import FeedsIndex from 'pages/ReleasesPage/FeedsIndex';
 import FeedsShow from 'pages/ReleasesPage/FeedsShow';
 import ReleasesIndex from 'pages/ReleasesPage/ReleasesIndex';
 import ReleasesSearch from 'pages/ReleasesPage/ReleasesSearch';
-import ReleasesShow from 'pages/ReleasesPage/ReleasesShow';
 import SeriesPage from 'pages/SeriesPage';
 import SeriesIndex from 'pages/SeriesPage/SeriesIndex';
 import SeriesShow from 'pages/SeriesPage/SeriesShow';
 import { GlobalStyle } from 'styles/global-styles';
 
 import './index.scss';
-
 
 function fallbackRender({ error, resetErrorBoundary }) {
   return (
@@ -240,14 +238,6 @@ export function App() {
               element={
                 <ClerkWrapper>
                   <ReleasesSearch />
-                </ClerkWrapper>
-              }
-            />
-            <Route
-              path="search/:id"
-              element={
-                <ClerkWrapper>
-                  <ReleasesShow />
                 </ClerkWrapper>
               }
             />
