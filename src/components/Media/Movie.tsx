@@ -8,9 +8,7 @@ import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
-import Details from 'components/Tabs/Details';
-import Paths from 'components/Tabs/Paths';
-import { MediumTabs } from 'components/Tabs/Tabs';
+import { Details, MediumTabs, Paths } from 'components/Tabs';
 import { Movie as MovieType } from 'types/medium';
 
 import { MediumBanner } from '.';

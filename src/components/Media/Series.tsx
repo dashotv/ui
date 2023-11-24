@@ -8,12 +8,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import StarsIcon from '@mui/icons-material/Stars';
 
-import Details from 'components/Tabs/Details';
-import Episodes from 'components/Tabs/Episodes';
-import Paths from 'components/Tabs/Paths';
-import Seasons from 'components/Tabs/Seasons';
-import { MediumTabs } from 'components/Tabs/Tabs';
-import Watches from 'components/Tabs/Watches';
+import { Details, Episodes, MediumTabs, Paths, Seasons, Watches } from 'components/Tabs';
 import { Episode, Series as SeriesType } from 'types/medium';
 
 import { MediumBanner } from '.';

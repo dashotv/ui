@@ -14,7 +14,7 @@ import { ButtonMap } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
 import { Episode } from 'types/medium';
 
-export default function Episodes({
+export function Episodes({
   episodes,
   changeEpisode,
 }: {

@@ -26,7 +26,7 @@ import { Medium } from 'types/medium';
 export type DetailsProps = {
   medium: Medium;
 };
-export default function Details({
+export function Details({
   medium,
   medium: { type, cover, background, search_params, title, description, release_date, created_at, updated_at },
 }: DetailsProps) {

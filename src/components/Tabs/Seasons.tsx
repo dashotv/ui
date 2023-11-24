@@ -11,7 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
-export default function Seasons({
+export function Seasons({
   current,
   changeSeason,
   seasons,

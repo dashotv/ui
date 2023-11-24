@@ -17,7 +17,7 @@ import { ButtonMap } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
 import { Path } from 'types/path';
 
-export default function Paths({ paths }: { paths: Path[] }) {
+export function Paths({ paths }: { paths: Path[] }) {
   const [hidden, setHidden] = useState(true);
   return (
     <Paper elevation={0}>

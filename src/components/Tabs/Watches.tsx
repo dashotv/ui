@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Chrono from 'components/Chrono';
 import { Watch } from 'types/medium';
 
-export default function Watches({ data }: { data: Watch[] }) {
+export function Watches({ data }: { data: Watch[] }) {
   return <Paper elevation={0}>{data?.map(watch => <WatchRow key={watch.id} {...watch} />)}</Paper>;
 }
 

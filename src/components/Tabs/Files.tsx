@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import { DownloadFile } from 'components/Downloads';
 import { Torrent } from 'types/torrents';
 
-export default function Files({
+export function Files({
   files,
   torrent,
   open,
