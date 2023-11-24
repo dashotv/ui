@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Typography } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 import { Chrono } from 'components/Common';
 
@@ -8,21 +10,11 @@ import { Log } from './types';
 
 export function LogsList({ logs }: { logs: Log[] }) {
   return (
-    <>
-      <div className="logs">
-        <table className="vertical-table">
-          <thead>
-            <tr>
-              <td className="actions">Time</td>
-              <td className="small">Facility</td>
-              <td className="smaller">Level</td>
-              <td>Message</td>
-            </tr>
-          </thead>
-          <tbody>{logs && logs.map((log: Log) => <LogRow key={log.id} {...log} />)}</tbody>
-        </table>
-      </div>
-    </>
+    <Paper elevation={0}>
+      {logs.map((log: Log) => (
+        <LogRow key={log.id} {...log} />
+      ))}
+    </Paper>
   );
 }
 
@@ -51,27 +43,23 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
     }
   };
   return (
-    <>
-      <tr key={id}>
-        <td title={created_at}>
-          <Typography color="gray" noWrap>
-            <Chrono fromNow>{created_at}</Chrono>
-          </Typography>
-        </td>
-        <td title={facility}>
-          <Typography variant="button" color="secondary" noWrap>
+    <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} width="100%" alignItems="center">
+        <Typography width="100%" color={color(level)} noWrap>
+          {message}
+        </Typography>
+        <Stack width="100%" direction="row" spacing={1} alignItems="center" justifyContent="end">
+          <Typography variant="button" color="secondary" noWrap maxWidth="100px">
             {name(facility)}
           </Typography>
-        </td>
-        <td title={level}>
-          <Typography variant="button" color={color(level)}>
+          <Typography variant="button" color={color(level)} maxWidth="50px" noWrap>
             {levelName(level)}
           </Typography>
-        </td>
-        <td className="truncate">
-          <Typography color={color(level)}>{message}</Typography>
-        </td>
-      </tr>
-    </>
+          <Typography variant="subtitle2" color="gray" noWrap>
+            <Chrono fromNow>{created_at}</Chrono>
+          </Typography>
+        </Stack>
+      </Stack>
+    </Paper>
   );
 }
