@@ -1,5 +1,5 @@
-import { Medium } from './medium';
-import { TorrentFile } from './torrents';
+import { Medium } from 'types/medium';
+import { TorrentFile } from 'types/torrents';
 
 export type DownloadStatus =
   | 'searching'
@@ -12,7 +12,8 @@ export type DownloadStatus =
   | 'deleted'
   | 'held'
   | string;
-export interface Download {
+
+export interface DownloadType {
   id: string;
   medium_id: string;
   medium: Medium;
@@ -22,7 +23,7 @@ export interface Download {
   url: string;
   release_id: string;
   thash: string;
-  timestamps: DownloadTimestamps;
+  timestamps: DownloadTimestamps; // TODO: not used
   selected: string;
   status: DownloadStatus;
   download_files: DownloadFile[];
@@ -49,7 +50,7 @@ export interface DownloadFile {
 export interface DownloadEvent {
   id: string;
   event: string;
-  download: Download;
+  download: DownloadType;
 }
 
 export interface DownloadSelection {

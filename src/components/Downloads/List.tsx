@@ -5,15 +5,16 @@ import Grid from '@mui/material/Grid';
 
 import { DownloadBanner } from 'components/Banner';
 import { useReleases } from 'hooks/useReleases';
-import { Download } from 'types/download';
 
-export function DownloadList({ downloads }: { downloads: Download[] }) {
+import { DownloadType } from './types';
+
+export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
   const { progress, eta, queue, files } = useReleases();
 
   return (
     <>
       {downloads &&
-        downloads.map(({ id, thash, status, multi, medium: { title, display, cover, background } }: Download) => {
+        downloads.map(({ id, thash, status, multi, medium: { title, display, cover, background } }: DownloadType) => {
           const { files: f, total: t } = multi ? files(thash) : { files: 0, total: 0 };
           const p = progress(thash)?.toFixed(1);
           const q = queue(thash)?.toString();

@@ -6,8 +6,7 @@ import Stack from '@mui/material/Stack';
 
 import { ButtonMapButton } from 'components/ButtonMap';
 import Chrono from 'components/Chrono';
-import { DownloadIconButton } from 'components/Downloads';
-import { DownloadStatus } from 'types/download';
+import { DownloadIconButton, DownloadStatus } from 'components/Downloads';
 
 import { Banner } from './Banner';
 

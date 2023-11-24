@@ -12,7 +12,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 import IconButton from '@mui/material/IconButton';
 
-import { DownloadStatus } from 'types/download';
+import { DownloadStatus } from './types';
 
 export const DownloadIcon = ({ status }: { status: DownloadStatus }) => {
   const icon = () => {

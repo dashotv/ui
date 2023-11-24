@@ -7,7 +7,7 @@ import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import StarsIcon from '@mui/icons-material/Stars';
 import IconButton from '@mui/material/IconButton';
 
-import { DownloadFile } from 'types/download';
+import { DownloadFile } from 'components/Downloads';
 import { Torrent } from 'types/torrents';
 
 export default function Files({

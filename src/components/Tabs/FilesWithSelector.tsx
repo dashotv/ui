@@ -13,7 +13,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { DownloadFile } from 'types/download';
+import { DownloadFile } from 'components/Downloads';
 import { Medium } from 'types/medium';
 import { Torrent } from 'types/torrents';
 

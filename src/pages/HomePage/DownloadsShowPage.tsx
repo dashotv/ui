@@ -4,17 +4,17 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
-import Download from 'components/Downloads/Download';
-import LoadingIndicator from 'components/Loading';
-import { Nzbgeek } from 'components/Nzbgeek/types';
-import { Release } from 'components/Releases/types';
-import { useReleases } from 'hooks/useReleases';
 import {
+  Download,
   useDownloadMediumQuery,
   useDownloadMutation,
   useDownloadQuery,
   useDownloadSelectionMutation,
-} from 'query/downloads';
+} from 'components/Downloads';
+import LoadingIndicator from 'components/Loading';
+import { Nzbgeek } from 'components/Nzbgeek/types';
+import { Release } from 'components/Releases/types';
+import { useReleases } from 'hooks/useReleases';
 import { Torrent } from 'types/torrents';
 
 export default function DownloadsShowPage() {

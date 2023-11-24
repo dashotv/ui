@@ -9,8 +9,8 @@ import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
+import { useDownloadsLastQuery } from 'components/Downloads';
 import { useSub } from 'hooks/useSub';
-import { useDownloadsLastQuery } from 'query/downloads';
 import { NzbResponse } from 'types/Nzb';
 import { TorrentsResponse } from 'types/torrents';
 

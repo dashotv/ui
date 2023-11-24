@@ -5,9 +5,8 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 
-import { DownloadList } from 'components/Downloads';
+import { DownloadList, useDownloadsRecentQuery } from 'components/Downloads';
 import LoadingIndicator from 'components/Loading';
-import { useDownloadsRecentQuery } from 'query/downloads';
 
 const pagesize = 42;
 

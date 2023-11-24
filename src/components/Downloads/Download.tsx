@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useCallback, useState } from 'react';
 
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
@@ -13,15 +13,13 @@ import { DownloadInfo } from 'components/Downloads';
 import { MediaGo } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
 import { Release } from 'components/Releases';
-import { FilesWithSelector } from 'components/Tabs/FilesWithSelector';
-import { MediumTabs } from 'components/Tabs/MediumTabs';
-import { Nzbgeek } from 'components/Tabs/Nzbgeek';
-import { Torch } from 'components/Tabs/Torch';
+import { FilesWithSelector, MediumTabs, Nzbgeek, Torch } from 'components/Tabs';
 import { useReleases } from 'hooks/useReleases';
 import { useTorrentRemoveMutation } from 'query/releases';
-import { DownloadFile, Download as DownloadType } from 'types/download';
 import { Medium } from 'types/medium';
 import { Torrent } from 'types/torrents';
+
+import { DownloadFile, DownloadType } from './types';
 
 export type DownloadProps = {
   id: string;
@@ -35,7 +33,7 @@ export type DownloadProps = {
   changeSetting: (name: string, value: string | boolean) => void;
   changeInfo: (info: Partial<DownloadType>) => void;
 };
-export default function Download({
+export function Download({
   id,
   // type,
   download,

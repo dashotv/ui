@@ -1,19 +1,14 @@
-import axios from 'axios';
 import { tower } from 'utils/axios';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { Download, DownloadSelection } from 'types/download';
 import { Setting } from 'types/setting';
 
-axios.interceptors.request.use(config => {
-  config.timeout = 10000;
-  return config;
-});
+import { DownloadSelection, DownloadType } from './types';
 
 export const getDownloadsActive = async () => {
   const response = await tower.get('/downloads/');
-  return response.data as Download[];
+  return response.data as DownloadType[];
 };
 
 export const getDownloadsRecent = async page => {
@@ -23,7 +18,7 @@ export const getDownloadsRecent = async page => {
 
 export const getDownload = async id => {
   const response = await tower.get(`/downloads/${id}`);
-  return response.data as Download;
+  return response.data as DownloadType;
 };
 
 export const getDownloadMedium = async id => {
@@ -36,17 +31,17 @@ export const getDownloadsLast = async () => {
   return response.data.last as number;
 };
 
-export const putDownload = async (id: string, download: Download) => {
+export const putDownload = async (id: string, download: DownloadType) => {
   const response = await tower.put(`/downloads/${id}`, download);
   return response.data;
 };
 export const putDownloadSelect = async (id, data) => {
   const response = await tower.put(`/downloads/${id}/select`, data);
-  return response.data as Download;
+  return response.data as DownloadType;
 };
 export const patchDownload = async (id, data) => {
   const response = await tower.patch(`/downloads/${id}`, data);
-  return response.data as Download;
+  return response.data as DownloadType;
 };
 
 export const useDownloadsActiveQuery = () =>
@@ -92,7 +87,7 @@ export const useDownloadMediumQuery = id =>
 export const useDownloadMutation = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (download: Download) => {
+    mutationFn: (download: DownloadType) => {
       return putDownload(id, download);
     },
     onSuccess: async () => {
