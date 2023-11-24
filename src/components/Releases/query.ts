@@ -33,6 +33,16 @@ export const getPopular = async (interval: string) => {
   return response.data as PopularResponse;
 };
 
+export const getFeedsAll = async () => {
+  const response = await tower.get('/feeds/');
+  return response.data;
+};
+
+export const getFeed = async id => {
+  const response = await tower.get(`/feeds/${id}`);
+  return response.data;
+};
+
 export const useReleasesQuery = (start, pagesize, queryString) =>
   useQuery({
     queryKey: ['releases', start, pagesize, queryString],
@@ -71,4 +81,20 @@ export const usePopularQuery = (interval: string) =>
   useQuery({
     queryKey: ['releases', 'popular', interval],
     queryFn: () => getPopular(interval),
+  });
+
+export const useFeedsAllQuery = () =>
+  useQuery({
+    queryKey: ['feeds', 'all'],
+    queryFn: () => getFeedsAll(),
+    placeholderData: previousData => previousData,
+    retry: false,
+  });
+
+export const useFeedQuery = id =>
+  useQuery({
+    queryKey: ['feeds', id],
+    queryFn: () => getFeed(id),
+    placeholderData: previousData => previousData,
+    retry: false,
   });

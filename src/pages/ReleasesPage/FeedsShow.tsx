@@ -6,8 +6,8 @@ import Container from '@mui/material/Container';
 
 import Chrono from 'components/Chrono';
 import LoadingIndicator from 'components/Loading';
-import { useFeedQuery } from 'query/feeds';
-import { Feed } from 'types/Feed';
+import { useFeedQuery } from 'components/Releases/query';
+import { Feed } from 'components/Releases/types';
 
 export default function FeedsShow() {
   const { id } = useParams();
