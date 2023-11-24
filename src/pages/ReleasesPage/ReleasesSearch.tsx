@@ -5,7 +5,6 @@ import { useSearchParams } from 'react-router-dom';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
 import Paper from '@mui/material/Paper';
@@ -14,8 +13,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 
 import { ButtonMap } from 'components/ButtonMap';
 import LoadingIndicator from 'components/Loading';
-import { ReleasesList } from 'components/Releases';
-import { ReleasesForm, useReleasesQuery } from 'components/Releases';
+import { ReleasesForm, ReleasesList, ReleasesPresets, useReleasesQuery } from 'components/Releases';
 import { SearchForm } from 'components/Releases/types';
 import { useQueryString } from 'hooks/useQueryString';
 
@@ -71,7 +69,6 @@ export default function ReleasesSearchPage() {
   }, []);
 
   useEffect(() => {
-    console.log('setQs:');
     setQs(queryString(form));
   }, [form, queryString]);
 
@@ -117,44 +114,7 @@ export default function ReleasesSearchPage() {
             alignItems="center"
             sx={{ width: '100%', justifyContent: 'space-between' }}
           >
-            <Stack direction="row" spacing={1}>
-              <Button
-                onClick={() => {
-                  setPage(1);
-                  setForm(() => {
-                    return { ...formDefaults, type: 'movies', resolution: 1080, verified: true };
-                  });
-                }}
-                size="small"
-                variant="contained"
-              >
-                Movies
-              </Button>
-              <Button
-                onClick={() => {
-                  setPage(1);
-                  setForm(() => {
-                    return { ...formDefaults, verified: true, type: 'anime', uncensored: true };
-                  });
-                }}
-                size="small"
-                variant="contained"
-              >
-                UN
-              </Button>
-              <Button
-                onClick={() => {
-                  setPage(1);
-                  setForm(() => {
-                    return { ...formDefaults, verified: true, type: 'anime', bluray: true };
-                  });
-                }}
-                size="small"
-                variant="contained"
-              >
-                BD
-              </Button>
-            </Stack>
+            <ReleasesPresets {...{ setForm, setPage, formDefaults }} />
             <Pagination
               boundaryCount={0}
               page={page}

@@ -6,3 +6,4 @@ export * from './Megabytes';
 export * from './Published';
 export * from './Resolution';
 export * from './Form';
+export * from './Presets';
