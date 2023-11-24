@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Setting, SettingsArgs } from 'types/setting';
 
-import { PopularResponse, Release, ReleasesResponse } from './types';
+import { Feed, PopularResponse, Release, ReleasesResponse } from './types';
 
 export const getReleasesPage = async (page, pagesize, qs) => {
   const start = (page - 1) * pagesize;
@@ -40,6 +40,16 @@ export const getFeedsAll = async () => {
 
 export const getFeed = async id => {
   const response = await tower.get(`/feeds/${id}`);
+  return response.data;
+};
+
+export const putFeed = async (id: string, feed: Feed) => {
+  const response = await tower.put(`/feeds/${id}`, feed);
+  return response.data;
+};
+
+export const patchFeed = async (id: string, setting: Setting) => {
+  const response = await tower.patch(`/feeds/${id}`, setting);
   return response.data;
 };
 
@@ -98,3 +108,23 @@ export const useFeedQuery = id =>
     placeholderData: previousData => previousData,
     retry: false,
   });
+
+export const useFeedMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (feed: Feed) => putFeed(feed.id, feed),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['feeds', 'all'] });
+    },
+  });
+};
+
+export const useFeedSettingMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (args: SettingsArgs) => patchFeed(args.id, args.setting),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['feeds', 'all'] });
+    },
+  });
+};

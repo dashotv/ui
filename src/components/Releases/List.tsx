@@ -3,9 +3,9 @@ import { SiApplenews, SiUtorrent } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { DialogActions } from '@mui/material';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
@@ -19,28 +19,27 @@ import Chrono from 'components/Chrono';
 
 import { Group, Release, Resolution, useReleaseSettingMutation } from '.';
 
-export function ReleasesList({
-  data,
-  actions,
-  selected,
-}: {
+export type ReleasesListProps = {
   data: Release[];
   actions?: (row: Release) => JSX.Element;
   selected?: { release_id: string; url: string };
-}) {
+};
+export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
   const releaseUpdate = useReleaseSettingMutation();
+  const [open, setOpen] = React.useState(false);
+  const [viewing, setViewing] = React.useState<Release | null>(null);
 
   const toggleVerified = row => {
     releaseUpdate.mutate({ id: row.id, setting: { setting: 'verified', value: !row.verified } });
   };
 
-  const [open, setOpen] = React.useState(false);
-  const [viewing, setViewing] = React.useState<Release | null>(null);
   const handleClose = () => setOpen(false);
+
   const view = (row: Release) => {
     setViewing(row);
     setOpen(true);
   };
+
   const isSelected = (row: Release) => {
     if (!selected) {
       return false;
@@ -142,7 +141,13 @@ export function ReleasesList({
   );
 }
 
-const ReleaseDialog = ({
+export type ReleaseDialogProps = {
+  open: boolean;
+  handleClose: () => void;
+  release: Release;
+  actions?: (row: Release) => JSX.Element;
+};
+export const ReleaseDialog = ({
   open,
   handleClose,
   actions,
@@ -169,12 +174,7 @@ const ReleaseDialog = ({
     updated_at,
     tags,
   },
-}: {
-  open: boolean;
-  handleClose: () => void;
-  release: Release;
-  actions?: (row: Release) => JSX.Element;
-}) => {
+}: ReleaseDialogProps) => {
   const theme = useTheme();
   return (
     <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
