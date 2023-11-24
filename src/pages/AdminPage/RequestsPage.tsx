@@ -6,9 +6,8 @@ import Container from '@mui/material/Container';
 import { useQueryClient } from '@tanstack/react-query';
 
 import LoadingIndicator from 'components/Loading';
-import { RequestsList } from 'components/Requests/RequestsList';
+import { RequestsList, useRequestsQuery } from 'components/Requests';
 import { useSub } from 'hooks/useSub';
-import { useRequestsQuery } from 'query/requests';
 
 export default function RequestsPage() {
   const [page] = useState(1);

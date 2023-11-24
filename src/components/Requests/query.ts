@@ -1,16 +1,16 @@
-import axios from 'axios';
+import { tower } from 'utils/axios';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { Request } from 'types/request';
+import { Request } from './types';
 
 export const getRequests = async (page: number) => {
-  const response = await axios.get('/api/tower/requests/?page=' + page);
+  const response = await tower.get(`/requests/?page=${page}`);
   return response.data as Request[];
 };
 
 export const setRequestStatus = async (r: Request) => {
-  const response = await axios.put(`/api/tower/requests/${r.id}`, r);
+  const response = await tower.put(`/api/tower/requests/${r.id}`, r);
   return response.data;
 };
 

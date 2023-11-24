@@ -8,8 +8,9 @@ import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 
 import Chrono from 'components/Chrono';
-import { useRequestsStatusMutation } from 'query/requests';
-import { Request } from 'types/request';
+
+import { useRequestsStatusMutation } from './query';
+import { Request } from './types';
 
 export function RequestsList({ requests }: { requests: Request[] }) {
   return (
