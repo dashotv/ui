@@ -67,7 +67,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
               >
                 <Stack direction="row" alignItems="center">
                   <IconButton size="small" onClick={() => toggleVerified(row)} title="verified">
-                    <CheckCircleIcon color={row.verified ? 'secondary' : 'action'} fontSize="small" />
+                    <CheckCircleIcon color={row.verified ? 'secondary' : 'disabled'} fontSize="small" />
                   </IconButton>
                   <IconButton size="small">
                     <SvgIcon
@@ -75,6 +75,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                       component={row.nzb ? SiApplenews : SiUtorrent}
                       inheritViewBox
                       fontSize="small"
+                      color="disabled"
                     />
                   </IconButton>
                 </Stack>
@@ -185,7 +186,7 @@ export const ReleaseDialog = ({
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
           <Stack width={{ xs: '100%', md: 'inherit' }} direction="row" alignItems="center">
             <IconButton size="small" title="verified">
-              <CheckCircleIcon color={verified ? 'secondary' : 'action'} fontSize="small" />
+              <CheckCircleIcon color={verified ? 'secondary' : 'disabled'} fontSize="small" />
             </IconButton>
             <IconButton size="small">
               <SvgIcon
