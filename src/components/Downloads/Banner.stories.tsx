@@ -15,7 +15,6 @@ import { DownloadBanner } from './Banner';
 
 //👇 This default export determines where your story goes in the story list
 const meta: Meta<typeof DownloadBanner> = {
-  title: 'Components/Banner',
   component: DownloadBanner,
   args: {
     id: 'blarg',
