@@ -1,11 +1,11 @@
-import axios from 'axios';
+import { tower } from 'utils/axios';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { Log } from 'types/log';
+import { Log } from './types';
 
 export const getLogs = async (page: number) => {
-  const response = await axios.get('/api/tower/messages/?page=' + page);
+  const response = await tower.get(`/messages/?page=${page}`);
   return response.data as Log[];
 };
 

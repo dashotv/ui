@@ -3,7 +3,8 @@ import React from 'react';
 import { Typography } from '@mui/material';
 
 import Chrono from 'components/Chrono';
-import { Log } from 'types/log';
+
+import { Log } from './types';
 
 export function LogsList({ logs }: { logs: Log[] }) {
   return (
