@@ -66,9 +66,13 @@ function fallbackRender({ error, resetErrorBoundary }) {
   );
 }
 
-export function ClerkWrapper({ children }: { children: React.ReactNode }) {
-  return <SignedIn>{children}</SignedIn>;
-}
+const withAuth = (Component: React.ComponentType) => {
+  return (
+    <SignedIn>
+      <Component />
+    </SignedIn>
+  );
+};
 
 export function App() {
   return (
@@ -82,172 +86,32 @@ export function App() {
         <Routes>
           <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
           <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
-          <Route
-            path="/"
-            element={
-              <ClerkWrapper>
-                <HomePage />
-              </ClerkWrapper>
-            }
-          >
-            <Route
-              path=""
-              element={
-                <ClerkWrapper>
-                  <UpcomingPage />
-                </ClerkWrapper>
-              }
-            />
-            <Route
-              path="recent"
-              element={
-                <ClerkWrapper>
-                  <RecentPage />
-                </ClerkWrapper>
-              }
-            />
+          <Route path="/" element={withAuth(HomePage)}>
+            <Route path="" element={withAuth(UpcomingPage)} />
+            <Route path="recent" element={withAuth(RecentPage)} />
             <Route path="downloads">
-              <Route
-                path=":id"
-                element={
-                  <ClerkWrapper>
-                    <DownloadsShowPage />
-                  </ClerkWrapper>
-                }
-              />
+              <Route path=":id" element={withAuth(DownloadsShowPage)} />
             </Route>
           </Route>
-          <Route
-            path="/admin"
-            element={
-              <ClerkWrapper>
-                <AdminPage />
-              </ClerkWrapper>
-            }
-          >
-            <Route
-              path=""
-              element={
-                <ClerkWrapper>
-                  <LogsPage />
-                </ClerkWrapper>
-              }
-            />
-            <Route
-              path="jobs"
-              element={
-                <ClerkWrapper>
-                  <JobsPage />
-                </ClerkWrapper>
-              }
-            />
-            <Route
-              path="requests"
-              element={
-                <ClerkWrapper>
-                  <RequestsPage />
-                </ClerkWrapper>
-              }
-            />
-            <Route
-              path="users"
-              element={
-                <ClerkWrapper>
-                  <UsersPage />
-                </ClerkWrapper>
-              }
-            />
+          <Route path="/admin" element={withAuth(AdminPage)}>
+            <Route path="" element={withAuth(LogsPage)} />
+            <Route path="jobs" element={withAuth(JobsPage)} />
+            <Route path="requests" element={withAuth(RequestsPage)} />
+            <Route path="users" element={withAuth(UsersPage)} />
           </Route>
-          <Route
-            path="series"
-            element={
-              <ClerkWrapper>
-                <SeriesPage />
-              </ClerkWrapper>
-            }
-          >
-            <Route
-              path=""
-              element={
-                <ClerkWrapper>
-                  <SeriesIndex />
-                </ClerkWrapper>
-              }
-            />
-            <Route
-              path=":id"
-              element={
-                <ClerkWrapper>
-                  <SeriesShow />
-                </ClerkWrapper>
-              }
-            />
+          <Route path="series" element={withAuth(SeriesPage)}>
+            <Route path="" element={withAuth(SeriesIndex)} />
+            <Route path=":id" element={withAuth(SeriesShow)} />
           </Route>
-          <Route
-            path="movies"
-            element={
-              <ClerkWrapper>
-                <MoviesPage />
-              </ClerkWrapper>
-            }
-          >
-            <Route
-              path=""
-              element={
-                <ClerkWrapper>
-                  <MoviesIndex />
-                </ClerkWrapper>
-              }
-            />
-            <Route
-              path=":id"
-              element={
-                <ClerkWrapper>
-                  <MoviesShow />
-                </ClerkWrapper>
-              }
-            />
+          <Route path="movies" element={withAuth(MoviesPage)}>
+            <Route path="" element={withAuth(MoviesIndex)} />
+            <Route path=":id" element={withAuth(MoviesShow)} />
           </Route>
-          <Route
-            path="releases"
-            element={
-              <ClerkWrapper>
-                <ReleasesPage />
-              </ClerkWrapper>
-            }
-          >
-            <Route
-              path=""
-              element={
-                <ClerkWrapper>
-                  <ReleasesIndex />
-                </ClerkWrapper>
-              }
-            />
-            <Route
-              path=":interval"
-              element={
-                <ClerkWrapper>
-                  <ReleasesIndex />
-                </ClerkWrapper>
-              }
-            />
-            <Route
-              path="search"
-              element={
-                <ClerkWrapper>
-                  <ReleasesSearch />
-                </ClerkWrapper>
-              }
-            />
-            <Route
-              path="feeds"
-              element={
-                <ClerkWrapper>
-                  <FeedsIndex />
-                </ClerkWrapper>
-              }
-            />
+          <Route path="releases" element={withAuth(ReleasesPage)}>
+            <Route path="" element={withAuth(ReleasesIndex)} />
+            <Route path=":interval" element={withAuth(ReleasesIndex)} />
+            <Route path="search" element={withAuth(ReleasesSearch)} />
+            <Route path="feeds" element={withAuth(FeedsIndex)} />
           </Route>
           {/* <Route element={<NotFoundPage />} /> */}
         </Routes>
