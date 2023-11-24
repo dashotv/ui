@@ -14,7 +14,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 
 import { ButtonMap } from 'components/ButtonMap';
 import LoadingIndicator from 'components/Loading';
-import { ReleasesList } from 'components/Releases/ReleasesList';
+import { ReleasesList } from 'components/Releases';
 import { Search } from 'components/Search';
 import { useQueryString } from 'hooks/useQueryString';
 import { useReleasesQuery } from 'query/releases';
