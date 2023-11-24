@@ -9,8 +9,7 @@ import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCirc
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
 import { DownloadInfo } from 'components/Downloads';
-import { MediaGo } from 'components/Media';
-import { Medium } from 'components/Media/types';
+import { MediaGo, Medium } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
 import { Release } from 'components/Releases';
 import { FilesWithSelector, MediumTabs, Nzbgeek, Torch } from 'components/Tabs';
