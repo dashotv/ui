@@ -7,7 +7,7 @@ import PendingIcon from '@mui/icons-material/Pending';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 
-import Chrono from 'components/Chrono';
+import { Chrono } from 'components/Common';
 
 import { useRequestsStatusMutation } from './query';
 import { Request } from './types';

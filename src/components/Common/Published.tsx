@@ -2,7 +2,7 @@ import React from 'react';
 
 import Typography from '@mui/material/Typography';
 
-import Chrono from 'components/Chrono';
+import { Chrono } from 'components/Common';
 
 export const Published = ({ date }: { date: string }) => {
   return (

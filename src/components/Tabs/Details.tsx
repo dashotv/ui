@@ -14,10 +14,9 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import Chrono from 'components/Chrono';
+import { Chrono, Pill } from 'components/Common';
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
-import { Pill } from 'components/Pill';
 import { useMovieUpdateMutation } from 'query/movies';
 import { useSeriesUpdateMutation } from 'query/series';
 import { Kinds, ReleaseSources, ReleaseTypes, Resolutions, Sources } from 'types/constants';

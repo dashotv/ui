@@ -3,7 +3,7 @@ import React from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 
-import Chrono from 'components/Chrono';
+import { Chrono } from 'components/Common';
 
 import { Job } from './types';
 

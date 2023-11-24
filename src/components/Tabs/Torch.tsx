@@ -4,13 +4,8 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 import Paper from '@mui/material/Paper';
 
-import { ButtonMap } from 'components/ButtonMap';
-import LoadingIndicator from 'components/Loading';
-import { ReleasesList } from 'components/Releases';
-import { ReleasesForm } from 'components/Releases';
-import { useReleasesQuery } from 'components/Releases';
-import { Release } from 'components/Releases/types';
-import { SearchForm } from 'components/Releases/types';
+import { ButtonMap, LoadingIndicator } from 'components/Common';
+import { Release, ReleasesForm, ReleasesList, SearchForm, useReleasesQuery } from 'components/Releases';
 import { useQueryString } from 'hooks/useQueryString';
 import { Medium } from 'types/medium';
 

@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 
 import Container from '@mui/material/Container';
 
-import LoadingIndicator from 'components/Loading';
+import { LoadingIndicator } from 'components/Common';
 import { UsersList } from 'components/Users/UsersList';
 import { useUsersQuery } from 'query/users';
 

@@ -8,8 +8,7 @@ import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
-import { ButtonMap, ButtonMapButton } from 'components/ButtonMap';
-
+import { ButtonMap, ButtonMapButton } from '.';
 import './Banner.scss';
 
 // TODO: generalize this?

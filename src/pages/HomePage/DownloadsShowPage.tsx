@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import Container from '@mui/material/Container';
 
+import { LoadingIndicator } from 'components/Common';
 import {
   Download,
   useDownloadMediumQuery,
@@ -11,7 +12,6 @@ import {
   useDownloadQuery,
   useDownloadSelectionMutation,
 } from 'components/Downloads';
-import LoadingIndicator from 'components/Loading';
 import { Nzbgeek } from 'components/Nzbgeek/types';
 import { Release } from 'components/Releases/types';
 import { useReleases } from 'hooks/useReleases';

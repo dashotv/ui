@@ -10,8 +10,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap } from 'components/ButtonMap';
-import Chrono from 'components/Chrono';
+import { ButtonMap, Chrono } from 'components/Common';
 import { Episode } from 'types/medium';
 
 export function Episodes({

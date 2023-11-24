@@ -3,13 +3,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 
-import { ButtonMap } from 'components/ButtonMap';
-import LoadingIndicator from 'components/Loading';
+import { ButtonMap, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
 import { NzbgeekForm, NzbgeekResults, NzbgeekSearch } from 'components/Nzbgeek';
-import { useNzbSearchTvQuery } from 'components/Nzbgeek';
-import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek/types';
-import { Release } from 'components/Releases/types';
-import { WrapErrorBoundary } from 'components/Util';
+import { Nzbgeek as NzbgeekType, useNzbSearchTvQuery } from 'components/Nzbgeek';
+import { Release } from 'components/Releases';
 import { useQueryString } from 'hooks/useQueryString';
 import { Medium } from 'types/medium';
 

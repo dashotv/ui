@@ -6,8 +6,8 @@ import Grid from '@mui/material/Grid';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { LoadingIndicator } from 'components/Common';
 import { DownloadList, DownloadType, useDownloadsActiveQuery } from 'components/Downloads';
-import LoadingIndicator from 'components/Loading';
 import { Media } from 'components/Media';
 import { useSub } from 'hooks/useSub';
 import { useUpcomingQuery } from 'query/upcoming';

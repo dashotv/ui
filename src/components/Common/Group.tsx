@@ -3,7 +3,7 @@ import React from 'react';
 import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 
-import { Pill } from 'components/Pill';
+import { Pill } from '.';
 
 export type GroupProps = {
   group: string | undefined;

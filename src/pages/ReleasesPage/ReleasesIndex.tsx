@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
-import LoadingIndicator from 'components/Loading';
+import { LoadingIndicator } from 'components/Common';
 import { PopularList, usePopularQuery } from 'components/Releases';
 
 export default function ReleasesIndex() {

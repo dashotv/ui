@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 
-import LoadingIndicator from 'components/Loading';
+import { LoadingIndicator } from 'components/Common';
 import { Media } from 'components/Media';
 import { useSeriesAllQuery } from 'query/series';
 

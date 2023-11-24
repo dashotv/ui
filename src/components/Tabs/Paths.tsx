@@ -13,8 +13,7 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap } from 'components/ButtonMap';
-import Chrono from 'components/Chrono';
+import { ButtonMap, Chrono } from 'components/Common';
 import { Path } from 'types/path';
 
 export function Paths({ paths }: { paths: Path[] }) {

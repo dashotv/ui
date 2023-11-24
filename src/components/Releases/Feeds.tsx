@@ -14,10 +14,11 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import { Published } from 'components/Common';
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { ReleaseSources, ReleaseTypes } from 'types/constants';
 
-import { Feed, Published, useFeedMutation, useFeedSettingMutation } from '.';
+import { Feed, useFeedMutation, useFeedSettingMutation } from '.';
 
 export type FeedsListProps = {
   data: Feed[];

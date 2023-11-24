@@ -16,7 +16,7 @@ interface DateProps {
   children?: string;
   stamp?: string;
 }
-export default function Chrono({ fromNow, format = 'YYYY-MM-DD', special, stamp, children }: DateProps) {
+export function Chrono({ fromNow, format = 'YYYY-MM-DD', special, stamp, children }: DateProps) {
   const raw = dayjs(stamp || children).utc();
 
   const process = () => {

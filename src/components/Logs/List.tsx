@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Typography } from '@mui/material';
 
-import Chrono from 'components/Chrono';
+import { Chrono } from 'components/Common';
 
 import { Log } from './types';
 

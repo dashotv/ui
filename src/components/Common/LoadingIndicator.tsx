@@ -1,9 +1,9 @@
+import styled from 'styled-components';
+
 import React from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 
-import Wrapper from './Wrapper';
-
-const LoadingIndicator = () => (
+export const LoadingIndicator = () => (
   <Wrapper>
     <ThreeDots
       height="120"
@@ -17,4 +17,14 @@ const LoadingIndicator = () => (
   </Wrapper>
 );
 
-export default LoadingIndicator;
+export const Wrapper = styled.div`
+  margin: 2em auto;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 1000;
+`;

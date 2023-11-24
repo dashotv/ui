@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import LoadingIndicator from 'components/Loading';
+import { LoadingIndicator } from 'components/Common';
 import { RequestsList, useRequestsQuery } from 'components/Requests';
 import { useSub } from 'hooks/useSub';
 

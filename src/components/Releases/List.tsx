@@ -15,7 +15,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 
-import Chrono from 'components/Chrono';
+import { Chrono } from 'components/Common';
 
 import { Group, Release, Resolution, useReleaseSettingMutation } from '.';
 

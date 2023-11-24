@@ -35,7 +35,6 @@ import MoviesIndex from 'pages/MoviesPage/MoviesIndex';
 import MoviesShow from 'pages/MoviesPage/MoviesShow';
 import ReleasesPage from 'pages/ReleasesPage';
 import FeedsIndex from 'pages/ReleasesPage/FeedsIndex';
-import FeedsShow from 'pages/ReleasesPage/FeedsShow';
 import ReleasesIndex from 'pages/ReleasesPage/ReleasesIndex';
 import ReleasesSearch from 'pages/ReleasesPage/ReleasesSearch';
 import SeriesPage from 'pages/SeriesPage';
@@ -246,14 +245,6 @@ export function App() {
               element={
                 <ClerkWrapper>
                   <FeedsIndex />
-                </ClerkWrapper>
-              }
-            />
-            <Route
-              path="feeds/:id"
-              element={
-                <ClerkWrapper>
-                  <FeedsShow />
                 </ClerkWrapper>
               }
             />

@@ -11,8 +11,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 
-import { ButtonMap } from 'components/ButtonMap';
-import LoadingIndicator from 'components/Loading';
+import { ButtonMap, LoadingIndicator } from 'components/Common';
 import { ReleasesForm, ReleasesList, ReleasesPresets, useReleasesQuery } from 'components/Releases';
 import { SearchForm } from 'components/Releases';
 import { useQueryString } from 'hooks/useQueryString';
