@@ -4,14 +4,19 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
+import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import TheatersIcon from '@mui/icons-material/Theaters';
 import TrafficIcon from '@mui/icons-material/Traffic';
+import UpcomingIcon from '@mui/icons-material/Upcoming';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -19,6 +24,7 @@ import Typography from '@mui/material/Typography';
 import { UserButton } from '@clerk/clerk-react';
 import { useNats } from '@quara-dev/react-nats-context';
 
+import { Gauges } from 'components/Guages';
 import { Container } from 'components/Layout';
 import { useSub } from 'hooks/useSub';
 import { EventNotice } from 'types/events';
@@ -29,10 +35,39 @@ import SuperSearch from './Search';
 import Logo from '/logo-small.png';
 
 const pages = [
-  { name: 'Home', page: '/', exact: true },
-  { name: 'Series', page: '/series' },
-  { name: 'Movies', page: '/movies' },
-  { name: 'Releases', page: '/releases' },
+  {
+    name: <HomeIcon />,
+    page: '/',
+    exact: true,
+    children: [
+      { name: 'Upcoming', page: '/', exact: true },
+      { name: 'Recent', page: '/recent' },
+    ],
+  },
+  {
+    name: <OndemandVideoIcon />,
+    page: '/series',
+    children: [
+      { name: 'Series', page: '/series' },
+      { name: 'Movies', page: '/movies' },
+    ],
+  },
+  // {
+  //   name: <TheatersIcon />,
+  //   page: '/movies',
+  //   children: [{ name: 'Movies', page: '/movies' }],
+  // },
+  {
+    name: <UpcomingIcon />,
+    page: '/releases',
+    children: [
+      { name: 'Daily', page: '/releases', exact: true },
+      { name: 'Weekly', page: '/releases/weekly' },
+      { name: 'Monthly', page: '/releases/monthly' },
+      { name: 'Search', page: '/releases/search' },
+      { name: 'Feeds', page: '/releases/feeds' },
+    ],
+  },
 ];
 
 function MessagesIcon() {
@@ -77,6 +112,13 @@ const NavBar = () => {
     return location.pathname.startsWith(path);
   };
 
+  const matchAny = (path, exact, children) => {
+    if (children && children?.length > 0) {
+      return children.some(({ page, exact }) => matchPath(page, exact)) || matchPath(path, exact);
+    }
+    return matchPath(path, exact);
+  };
+
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -99,7 +141,7 @@ const NavBar = () => {
               <img alt="logo" src={Logo} width="40" height="40" />
             </Box>
           </Link>
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="a"
@@ -115,7 +157,7 @@ const NavBar = () => {
             }}
           >
             DASHOTV
-          </Typography>
+          </Typography> */}
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -147,7 +189,7 @@ const NavBar = () => {
               }}
             >
               {pages.map(({ name, page, exact }) => (
-                <Link key={name} to={page}>
+                <Link key={page} to={page}>
                   <MenuItem sx={{ width: '300px' }} onClick={handleCloseNavMenu} selected={matchPath(page, exact)}>
                     <Typography textAlign="center">{name}</Typography>
                   </MenuItem>
@@ -155,20 +197,51 @@ const NavBar = () => {
               ))}
             </Menu>
           </Box>
-          <Box className="menu" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map(({ name, page, exact }) => (
-              <Link key={name} to={page}>
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, display: 'block' }}
-                  variant={matchPath(page, exact) ? 'outlined' : 'text'}
+          <Box className="menu" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
+            {pages.map(({ name, page, exact, children }) => (
+              <>
+                <Link to={page}>
+                  <IconButton
+                    onClick={handleCloseNavMenu}
+                    sx={{ color: matchAny(page, exact, children) ? 'primary.main' : 'gray' }}
+                  >
+                    {name}
+                  </IconButton>
+                </Link>
+                <Stack
+                  key={page}
+                  direction="row"
+                  spacing={1}
+                  alignItems="center"
+                  sx={{
+                    pl: matchAny(page, exact, children) ? 1 : 0,
+                    pr: matchAny(page, exact, children) ? 1 : 0,
+                    backgroundColor: matchAny(page, exact, children) ? '#363636' : 'inherit',
+                    height: '48px',
+                    borderRadius: '6px',
+                  }}
                 >
-                  {name}
-                </Button>
-              </Link>
+                  {matchAny(page, exact, children) &&
+                    children?.length &&
+                    children.length > 0 &&
+                    children.map(({ name, page, exact }) => (
+                      <Link key={name} to={page}>
+                        <Button
+                          variant={matchPath(page, exact) ? 'outlined' : 'text'}
+                          key={name}
+                          sx={{ color: 'primary.dark', borderColor: 'primary.dark' }}
+                        >
+                          {name}
+                        </Button>
+                      </Link>
+                    ))}
+                </Stack>
+              </>
             ))}
           </Box>
-
+          <Box sx={{ height: '54px' }}>
+            <Gauges />
+          </Box>
           <Box sx={{ flexGrow: 0, height: 51, width: 51, pt: '2px' }}>
             <SuperSearch />
           </Box>

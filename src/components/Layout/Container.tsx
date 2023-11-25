@@ -7,7 +7,7 @@ export type ContainerProps = {
 };
 export const Container = ({ children }: ContainerProps) => {
   return (
-    <MUIContainer sx={{ overflow: 'auto' }} maxWidth="xl">
+    <MUIContainer sx={{ overflow: 'hidden' }} maxWidth="xl">
       {children}
     </MUIContainer>
   );

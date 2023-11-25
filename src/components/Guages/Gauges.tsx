@@ -25,7 +25,7 @@ type GaugeProps = {
 };
 
 function BaseGauge({ icon, value, color }: GaugeProps) {
-  return <Chip icon={icon} label={value} color={color} size="small" />;
+  return <Chip icon={icon} label={value} sx={{ color: 'disabled.main' }} size="small" />;
 }
 
 function Countdown({ eventTime, interval, last }: { eventTime: number; interval: number; last: string }) {
