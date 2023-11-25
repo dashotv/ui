@@ -6,8 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { LoadingIndicator } from 'components/Common';
 import { Container } from 'components/Layout';
-import Movie from 'components/Media/Movie';
-import { putMovieRefresh, useMovieQuery, useMovieSettingMutation } from 'components/Media/query';
+import { Movie, putMovieRefresh, useMovieQuery, useMovieSettingMutation } from 'components/Movies';
 import { useSub } from 'hooks/useSub';
 import { EventMovie } from 'types/events';
 

@@ -1,5 +1,4 @@
-import { useCallback } from 'react';
-import * as React from 'react';
+import React from 'react';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -9,36 +8,28 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
 import { ButtonMapButton } from 'components/Common';
-import { Details, Paths, RoutingTabs, RoutingTabsRoute } from 'components/Tabs';
+import { MediumBanner } from 'components/Media';
 
-import { MediumBanner } from '.';
-import './Media.scss';
-import { Movie as MovieType } from './types';
+import { MovieType } from './types';
 
-export type MovieProps = {
+export type MovieBannerProps = {
   id: string;
   movie: MovieType;
   change: (id: string, key: string, value) => void;
   refresh: () => void;
 };
-// TODO: watches
-export default function Movie({
+export const MovieBanner = ({
   id,
-  movie,
-  movie: { paths, broken, downloaded, completed },
-  change,
   refresh,
-}: MovieProps) {
-  const complete = useCallback(ev => {
-    console.log('clicked complete');
-    ev.preventDefault(); // for the buttons inside the Link component
-  }, []);
-
+  change,
+  movie,
+  movie: { broken, downloaded, completed },
+}: MovieBannerProps) => {
   const buttons: ButtonMapButton[] = [
     {
       Icon: CloudCircleIcon,
       color: 'primary',
-      click: complete,
+      click: () => {},
       title: 'create download',
     },
     {
@@ -76,38 +67,9 @@ export default function Movie({
     {
       Icon: RemoveCircleIcon,
       color: 'error',
-      click: complete,
+      click: () => {},
       title: 'delete',
     },
   ];
-
-  const tabsMap: RoutingTabsRoute[] = [
-    {
-      label: 'Paths',
-      to: '',
-      element: <Paths paths={paths} />,
-    },
-    {
-      label: 'Details',
-      to: 'details',
-      element: <Details medium={movie} />,
-    },
-    {
-      label: 'Downloads',
-      to: 'downloads',
-      element: <div>downloads</div>,
-    },
-    {
-      label: 'Watches',
-      to: 'watches',
-      element: <div>watches</div>,
-    },
-  ];
-
-  return (
-    <div className="medium large">
-      <MediumBanner id={id} variant="large" medium={movie} buttons={buttons} />
-      <RoutingTabs data={tabsMap} route={`/movies/${id}`} />
-    </div>
-  );
-}
+  return <MediumBanner id={id} variant="large" medium={movie} buttons={buttons} />;
+};

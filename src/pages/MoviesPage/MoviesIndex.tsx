@@ -6,7 +6,8 @@ import Pagination from '@mui/material/Pagination';
 
 import { LoadingIndicator } from 'components/Common';
 import { Container } from 'components/Layout';
-import { Media, useMoviesAllQuery } from 'components/Media';
+import { Media } from 'components/Media';
+import { useMoviesAllQuery } from 'components/Movies';
 import SubNav from 'components/SubNav';
 
 const pagesize = 42;

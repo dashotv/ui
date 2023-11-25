@@ -18,8 +18,8 @@ import { Chrono, Pill } from 'components/Common';
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
 import { useSeriesUpdateMutation } from 'components/Media/query';
-import { useMovieUpdateMutation } from 'components/Media/query';
 import { Medium } from 'components/Media/types';
+import { useMovieUpdateMutation } from 'components/Movies/query';
 import { Kinds, ReleaseSources, ReleaseTypes, Resolutions, Sources } from 'types/constants';
 
 export type DetailsProps = {

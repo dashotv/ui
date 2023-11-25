@@ -26,7 +26,8 @@ import SvgIcon from '@mui/material/SvgIcon';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { MediaCover, Option, useMovieCreateMutation, useSeriesCreateMutation } from 'components/Media';
+import { MediaCover, Option, useSeriesCreateMutation } from 'components/Media';
+import { useMovieCreateMutation } from 'components/Movies';
 import { useSearchAllQuery } from 'query/search';
 import { SearchAllResponse } from 'types/search';
 

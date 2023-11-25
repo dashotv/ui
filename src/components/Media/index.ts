@@ -4,7 +4,6 @@ export * from './Icon';
 export * from './Image';
 export * from './Link';
 export * from './Media';
-export * from './Movie';
 export * from './Series';
 export * from './query';
 export * from './types';

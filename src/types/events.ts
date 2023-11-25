@@ -1,6 +1,7 @@
 import { DownloadType } from 'components/Downloads';
 import { Log } from 'components/Logs';
-import { Episode, Movie, SeriesType } from 'components/Media';
+import { Episode, SeriesType } from 'components/Media';
+import { MovieType } from 'components/Movies';
 import { Request } from 'components/Requests';
 
 export interface EventBase {
@@ -21,7 +22,7 @@ export interface EventSeries extends EventBase {
 }
 
 export interface EventMovie extends EventBase {
-  movie: Movie;
+  movie: MovieType;
 }
 
 export interface EventLog extends EventBase {
