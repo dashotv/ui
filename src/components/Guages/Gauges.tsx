@@ -5,9 +5,13 @@ import { useCountdown } from 'usehooks-ts';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import FeedIcon from '@mui/icons-material/Feed';
 import OpacityIcon from '@mui/icons-material/Opacity';
+import TrafficIcon from '@mui/icons-material/Traffic';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
+
+import { useNats } from '@quara-dev/react-nats-context';
 
 import { useDownloadsLastQuery } from 'components/Downloads';
 import { NzbResponse } from 'components/Nzbgeek/types';
@@ -24,9 +28,24 @@ type GaugeProps = {
   color: GaugeColor;
 };
 
-function BaseGauge({ icon, value, color }: GaugeProps) {
-  return <Chip icon={icon} label={value} sx={{ color: 'disabled.main' }} size="small" />;
-}
+export const NatsGauge = () => {
+  const { reconnecting, connecting, connected } = useNats();
+  const [color, setColor] = useState<'primary' | 'warning' | 'error'>('warning');
+  useEffect(() => {
+    if (connected) {
+      setColor('primary');
+    } else if (reconnecting || connecting) {
+      setColor('warning');
+    } else {
+      setColor('error');
+    }
+  }, [connected, reconnecting, connecting]);
+  return (
+    <IconButton sx={{ backgroundColor: `${color}.main`, height: '24px', width: '24px' }} size="small">
+      <TrafficIcon sx={{ color: 'black' }} fontSize="small" />
+    </IconButton>
+  );
+};
 
 function Countdown({ eventTime, interval, last }: { eventTime: number; interval: number; last: string }) {
   const [intervalValue] = useState<number>(interval);
@@ -96,6 +115,10 @@ function TorrentsGauge({ value, color }: GaugeProps) {
   return <BaseGauge title="Torrent" icon={<OpacityIcon />} value={value} color={color} />;
 }
 
+function BaseGauge({ icon, value, color }: GaugeProps) {
+  return <Chip icon={icon} label={value} color={color} size="small" />;
+}
+
 export function Gauges() {
   const [nzbs, setNzbs] = useState('0.0');
   const [torrents, setTorrents] = useState('0.0');
@@ -121,13 +144,12 @@ export function Gauges() {
   );
 
   return (
-    <div className="gauges">
-      <Stack spacing={2} direction="row">
-        <CountdownGauge color="primary" />
-        <DiskGauge value={diskFree} color={Number(diskFree) > 25.0 ? 'primary' : 'warning'} />
-        <NzbsGauge value={nzbs} color="primary" />
-        <TorrentsGauge value={torrents} color="primary" />
-      </Stack>
-    </div>
+    <Stack spacing={1} direction="row" alignItems="center" sx={{ height: '51px', pt: 1.3, pb: 1 }}>
+      <CountdownGauge color="primary" />
+      <DiskGauge value={diskFree} color={Number(diskFree) > 25.0 ? 'primary' : 'warning'} />
+      <NzbsGauge value={nzbs} color="primary" />
+      <TorrentsGauge value={torrents} color="primary" />
+      <NatsGauge />
+    </Stack>
   );
 }

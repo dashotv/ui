@@ -6,19 +6,18 @@ import SvgIcon from '@mui/material/SvgIcon';
 
 import { useSub } from 'hooks/useSub';
 
-import './Navbar.scss';
-
-export const MessagesIcon = () => {
-  const [color, setColor] = useState<'primary' | 'warning'>('primary');
+export const Messages = () => {
+  const [color, setColor] = useState<'inherit' | 'warning'>('inherit');
   const location = useLocation();
   const cb = () => {
     setColor('warning');
   };
   useEffect(() => {
     if (location.pathname === '/admin') {
-      setColor('primary');
+      setColor('inherit');
     }
   }, [color, location.pathname]);
   useSub('tower.logs', cb);
-  return <SvgIcon component={IoFileTrayFull} inheritViewBox fontSize="large" color={color} />;
+
+  return <SvgIcon component={IoFileTrayFull} inheritViewBox color={color} />;
 };

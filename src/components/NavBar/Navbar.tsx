@@ -18,6 +18,7 @@ import { useSub } from 'hooks/useSub';
 import { EventNotice } from 'types/events';
 
 import { Admin } from './Admin';
+import { Messages } from './Messages';
 import { Nav } from './Nav';
 import { NavSmall } from './NavSmall';
 import './Navbar.scss';
@@ -57,6 +58,17 @@ const pages: NavPageWithChildren[] = [
       { name: 'Monthly', page: '/releases/monthly' },
       { name: 'Search', page: '/releases/search' },
       { name: 'Feeds', page: '/releases/feeds' },
+    ],
+  },
+  {
+    name: <Messages />,
+    page: '/admin',
+    exact: true,
+    children: [
+      { name: 'Messages', page: '/admin', exact: true },
+      { name: 'Jobs', page: '/admin/jobs' },
+      { name: 'Requests', page: '/admin/requests' },
+      { name: 'Users', page: '/admin/users' },
     ],
   },
 ];
