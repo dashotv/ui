@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import * as React from 'react';
+import React, { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';

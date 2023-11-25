@@ -9,7 +9,7 @@ export default function SeriesPage() {
     <>
       <Routes>
         <Route index path="" element={<SeriesIndex />} />
-        <Route path=":id" element={<SeriesShow />} />
+        <Route path=":id/*" element={<SeriesShow />} />
       </Routes>
       <Outlet />
     </>

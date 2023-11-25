@@ -1,5 +1,4 @@
-import { useCallback } from 'react';
-import * as React from 'react';
+import React, { useCallback } from 'react';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
@@ -9,7 +8,7 @@ import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import StarsIcon from '@mui/icons-material/Stars';
 
 import { ButtonMapButton } from 'components/Common';
-import { Details, Episodes, MediumTabs, Paths, Seasons, Watches } from 'components/Tabs';
+import { Details, Episodes, Paths, RoutingTabs, RoutingTabsRoute, Seasons, Watches } from 'components/Tabs';
 
 import { Episode, MediumBanner, SeriesType } from '.';
 import './Media.scss';
@@ -35,18 +34,38 @@ export function Series({
   refresh,
   change,
 }: SeriesProps) {
-  const tabsMap = {
-    Episodes: (
-      <>
-        <Seasons current={currentSeason} seasons={seasons} changeSeason={changeSeason} />
-        <Episodes episodes={episodes} changeEpisode={changeEpisode} />
-      </>
-    ),
-    Paths: <Paths paths={paths} />,
-    Downloads: <div>downloads</div>,
-    Watches: <Watches data={watches} />,
-    Details: <Details medium={series} />,
-  };
+  const tabsMap: RoutingTabsRoute[] = [
+    {
+      label: 'Episodes',
+      to: '',
+      element: (
+        <>
+          <Seasons current={currentSeason} seasons={seasons} changeSeason={changeSeason} />
+          <Episodes episodes={episodes} changeEpisode={changeEpisode} />
+        </>
+      ),
+    },
+    {
+      label: 'Paths',
+      to: `paths`,
+      element: <Paths paths={paths} />,
+    },
+    {
+      label: 'Details',
+      to: `details`,
+      element: <Details medium={series} />,
+    },
+    {
+      label: 'Downloads',
+      to: `downloads`,
+      element: <div>downloads</div>,
+    },
+    {
+      label: 'Watches',
+      to: `watches`,
+      element: <Watches data={watches} />,
+    },
+  ];
 
   const complete = useCallback(ev => {
     console.log('clicked complete');
@@ -103,7 +122,7 @@ export function Series({
   return (
     <div className="medium large">
       <MediumBanner id={id} variant="large" medium={series} buttons={buttons} />
-      <MediumTabs data={tabsMap} />
+      <RoutingTabs data={tabsMap} route={`/series/${id}`} />
     </div>
   );
 }
