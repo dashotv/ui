@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
-import Container from '@mui/material/Container';
-
 import { useQueryClient } from '@tanstack/react-query';
 
 import { LoadingIndicator } from 'components/Common';
+import { Container } from 'components/Layout';
 import {
   Series,
   putSeriesRefresh,
@@ -65,7 +64,7 @@ export default function SeriesShow() {
         <title>Series{series ? ` - ${series.title}` : ''}</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container maxWidth="xl">
+      <Container>
         {(isFetching || episodesFetching) && <LoadingIndicator />}
         {series && (
           <Series

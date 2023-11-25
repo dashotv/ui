@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
 import { useQueryClient } from '@tanstack/react-query';
 
 import { LoadingIndicator } from 'components/Common';
 import { DownloadList, DownloadType, useDownloadsActiveQuery } from 'components/Downloads';
+import { Container } from 'components/Layout';
 import { Media } from 'components/Media';
 import { Episode } from 'components/Media';
 import { useSub } from 'hooks/useSub';
@@ -58,7 +58,7 @@ export default function UpcomingPage() {
         <title>Home</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container sx={{ pt: '5px', pb: '5px' }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container>
         {(downloads.isFetching || upcoming.isFetching) && <LoadingIndicator />}
         <Grid container spacing={1}>
           {downloads.data && <DownloadList downloads={downloads.data} />}

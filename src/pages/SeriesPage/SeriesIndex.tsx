@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 
 import { LoadingIndicator } from 'components/Common';
+import { Container } from 'components/Layout';
 import { Media, useSeriesAllQuery } from 'components/Media';
 import SubNav from 'components/SubNav';
 
@@ -33,7 +33,7 @@ export default function SeriesIndex() {
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
 
-      <Container sx={{ overflow: 'auto' }} maxWidth="xl">
+      <Container>
         <Grid container>
           <Grid item xs={12} md={6}>
             <SubNav items={items} />
@@ -51,7 +51,7 @@ export default function SeriesIndex() {
         </Grid>
       </Container>
 
-      <Container maxWidth="xl" sx={{ overflow: 'auto' }}>
+      <Container>
         <Grid container spacing={1}>
           {isFetching && <LoadingIndicator />}
           {data && <Media data={data.results} type="series" />}

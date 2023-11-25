@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 
 import { LoadingIndicator } from 'components/Common';
+import { Container } from 'components/Layout';
 import { Media, useMoviesAllQuery } from 'components/Media';
 
 const pagesize = 42;

@@ -2,11 +2,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
-import Container from '@mui/material/Container';
-
 import { useQueryClient } from '@tanstack/react-query';
 
 import { LoadingIndicator } from 'components/Common';
+import { Container } from 'components/Layout';
 import Movie from 'components/Media/Movie';
 import { putMovieRefresh, useMovieQuery, useMovieSettingMutation } from 'components/Media/query';
 import { useSub } from 'hooks/useSub';
@@ -42,7 +41,7 @@ export default function MoviesShow() {
         <title>Movie{data ? ` - ${data.title}` : ''}</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container maxWidth="xl">
+      <Container>
         {isFetching && <LoadingIndicator />}
         {data && <Movie id={data.id} movie={data} change={changeMovieSetting} refresh={refresh} />}
       </Container>

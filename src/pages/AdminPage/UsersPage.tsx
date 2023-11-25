@@ -1,9 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import Container from '@mui/material/Container';
-
 import { LoadingIndicator } from 'components/Common';
+import { Container } from 'components/Layout';
 import { UsersList, useUsersQuery } from 'components/Users';
 
 export default function UsersPage() {
@@ -15,7 +14,7 @@ export default function UsersPage() {
         <title>Home - Users</title>
         <meta name="description" content="dashotv" />
       </Helmet>
-      <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container>
         {users.isFetching && <LoadingIndicator />}
         {users.data && <UsersList users={users.data} />}
       </Container>

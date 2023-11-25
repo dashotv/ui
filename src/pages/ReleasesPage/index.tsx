@@ -1,9 +1,9 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
+import { Container } from 'components/Layout';
 import SubNav from 'components/SubNav';
 
 export default function ReleasesPage() {
@@ -16,7 +16,7 @@ export default function ReleasesPage() {
   ];
   return (
     <>
-      <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container>
         <Grid container>
           <Grid item xs={12} md={6}>
             <SubNav items={items} />

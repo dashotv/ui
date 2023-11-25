@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 
 import { LoadingIndicator } from 'components/Common';
 import { DownloadList, useDownloadsRecentQuery } from 'components/Downloads';
+import { Container } from 'components/Layout';
 
 const pagesize = 42;
 
@@ -25,10 +25,10 @@ export default function RecentPage() {
         <title>Home - Recent</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container sx={{ pt: '5px', pb: '5px' }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container>
         <Pagination count={Math.ceil(recent?.data?.count ? recent.data.count / pagesize : 0)} onChange={handleChange} />
       </Container>
-      <Container sx={{ pt: '5px', pb: '5px' }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container>
         <Grid container spacing={1}>
           {recent.isFetching && <LoadingIndicator />}
           {recent.data && <DownloadList downloads={recent.data?.results} />}

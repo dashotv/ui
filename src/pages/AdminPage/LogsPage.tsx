@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import Container from '@mui/material/Container';
-
 import { useQueryClient } from '@tanstack/react-query';
 
 import { LoadingIndicator } from 'components/Common';
+import { Container } from 'components/Layout';
 import { Log, LogsList, useLogsQuery } from 'components/Logs';
 import { useSub } from 'hooks/useSub';
 import { EventLog } from 'types/events';
@@ -27,7 +26,7 @@ export default function JobsPage() {
         <title>Home - Logs</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container>
         {logs.isFetching && <LoadingIndicator />}
         {logs.data && <LogsList logs={logs.data} />}
       </Container>

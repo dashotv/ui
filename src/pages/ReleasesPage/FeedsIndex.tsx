@@ -1,9 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import Container from '@mui/material/Container';
-
 import { LoadingIndicator } from 'components/Common';
+import { Container } from 'components/Layout';
 import { FeedsList, useFeedsAllQuery } from 'components/Releases';
 
 export default function FeedsIndex() {
@@ -14,7 +13,7 @@ export default function FeedsIndex() {
       <Helmet>
         <title>Releases - Feeds</title>
       </Helmet>
-      <Container maxWidth="xl">
+      <Container>
         {isFetching && <LoadingIndicator />}
         {data && <FeedsList data={data} />}
       </Container>

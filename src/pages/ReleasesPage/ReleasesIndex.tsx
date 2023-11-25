@@ -2,10 +2,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
 import { LoadingIndicator } from 'components/Common';
+import { Container } from 'components/Layout';
 import { PopularList, usePopularQuery } from 'components/Releases';
 
 export default function ReleasesIndex() {
@@ -19,7 +19,7 @@ export default function ReleasesIndex() {
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
 
-      <Container style={{ overflow: 'hidden' }} sx={{ pb: 5 }} maxWidth="xl">
+      <Container>
         {isFetching && <LoadingIndicator />}
         <Grid container>
           <Grid item md={4} xs={12}>

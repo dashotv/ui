@@ -2,8 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
-import Container from '@mui/material/Container';
-
 import { LoadingIndicator } from 'components/Common';
 import {
   Download,
@@ -12,6 +10,7 @@ import {
   useDownloadQuery,
   useDownloadSelectionMutation,
 } from 'components/Downloads';
+import { Container } from 'components/Layout';
 import { Nzbgeek } from 'components/Nzbgeek/types';
 import { Release } from 'components/Releases/types';
 import { useReleases } from 'hooks/useReleases';
@@ -94,7 +93,7 @@ export default function DownloadsShowPage() {
         <title>Series{download ? ` - ${download.medium.display}` : ''}</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container sx={{ pt: '5px', pb: '5px' }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container>
         {(downloadFetching || mediaFetching) && <LoadingIndicator />}
         {download && (
           <Download

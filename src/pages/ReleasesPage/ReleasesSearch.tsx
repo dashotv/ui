@@ -5,13 +5,13 @@ import { useSearchParams } from 'react-router-dom';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
-import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 
 import { ButtonMap, ButtonMapButton, LoadingIndicator } from 'components/Common';
+import { Container } from 'components/Layout';
 import { ReleasesForm, ReleasesList, ReleasesPresets, useReleasesQuery } from 'components/Releases';
 import { SearchForm } from 'components/Releases';
 import { useQueryString } from 'hooks/useQueryString';
@@ -101,13 +101,13 @@ export default function ReleasesSearchPage() {
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
 
-      <Container style={{ overflow: 'hidden' }} maxWidth="xl">
+      <Container>
         <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
           {isFetching && <LoadingIndicator />}
           <ReleasesForm form={form} setForm={setForm} reset={reset} />
         </Paper>
       </Container>
-      <Container style={{ overflow: 'hidden' }} maxWidth="xl">
+      <Container>
         <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
@@ -125,9 +125,7 @@ export default function ReleasesSearchPage() {
           </Stack>
         </Paper>
       </Container>
-      <Container style={{ overflow: 'hidden' }} maxWidth="xl">
-        {data && <ReleasesList data={data.Releases} actions={renderActions} />}
-      </Container>
+      <Container>{data && <ReleasesList data={data.Releases} actions={renderActions} />}</Container>
     </>
   );
 }

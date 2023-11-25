@@ -9,7 +9,6 @@ import TrafficIcon from '@mui/icons-material/Traffic';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -20,6 +19,7 @@ import Typography from '@mui/material/Typography';
 import { UserButton } from '@clerk/clerk-react';
 import { useNats } from '@quara-dev/react-nats-context';
 
+import { Container } from 'components/Layout';
 import { useSub } from 'hooks/useSub';
 import { EventNotice } from 'types/events';
 
@@ -89,7 +89,7 @@ const NavBar = () => {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container>
         <Toolbar disableGutters>
           <Link to="/">
             <Box sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
