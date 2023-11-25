@@ -7,7 +7,6 @@ import Pagination from '@mui/material/Pagination';
 import { LoadingIndicator } from 'components/Common';
 import { Container } from 'components/Layout';
 import { Media, useSeriesAllQuery } from 'components/Media';
-import SubNav from 'components/SubNav';
 
 const pagesize = 42;
 
@@ -15,7 +14,6 @@ export default function SeriesIndex() {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const { isFetching, data } = useSeriesAllQuery(page);
-  const items = [{ name: 'All', path: '/series', exact: true }];
 
   useEffect(() => {
     if (!data?.count) return;
@@ -35,10 +33,8 @@ export default function SeriesIndex() {
 
       <Container>
         <Grid container>
+          <Grid item xs={12} md={6}></Grid>
           <Grid item xs={12} md={6}>
-            <SubNav items={items} />
-          </Grid>
-          <Grid item xs={12} md={6} sx={{ pt: 2 }}>
             {data && (
               <Pagination
                 sx={{ display: 'flex', justifyContent: 'end' }}

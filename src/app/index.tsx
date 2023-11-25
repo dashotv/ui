@@ -20,7 +20,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import NavBar from 'components/NavBar';
+import { NavBar } from 'components/NavBar';
 import AdminPage from 'pages/AdminPage';
 import HomePage from 'pages/HomePage';
 import MoviesPage from 'pages/MoviesPage';

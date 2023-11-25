@@ -8,7 +8,6 @@ import { LoadingIndicator } from 'components/Common';
 import { Container } from 'components/Layout';
 import { Media } from 'components/Media';
 import { useMoviesAllQuery } from 'components/Movies';
-import SubNav from 'components/SubNav';
 
 const pagesize = 42;
 
@@ -16,7 +15,6 @@ export default function MoviesIndex() {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const { isFetching, data } = useMoviesAllQuery(page);
-  const items = [{ name: 'All', path: '/movies', exact: true }];
 
   useEffect(() => {
     if (!data?.count) return;
@@ -35,9 +33,7 @@ export default function MoviesIndex() {
       </Helmet>
       <Container>
         <Grid container>
-          <Grid item xs={12} md={6}>
-            <SubNav items={items} />
-          </Grid>
+          <Grid item xs={12} md={6}></Grid>
           <Grid item xs={12} md={6} sx={{ pt: 2 }}>
             {data && (
               <Pagination

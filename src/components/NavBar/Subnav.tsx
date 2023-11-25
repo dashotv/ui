@@ -10,9 +10,9 @@ import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-import './SubNav.scss';
+import { NavPage } from './types';
 
-export default function Subnav({ items }: { items: { name: string; path: string; exact?: boolean }[] }) {
+export function Subnav({ items }: { items: NavPage[] }) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const location = useLocation();
 
@@ -31,7 +31,7 @@ export default function Subnav({ items }: { items: { name: string; path: string;
     setAnchorElNav(null);
   };
 
-  const buttonsAndMenu = items => {
+  const buttonsAndMenu = (items: NavPage[]) => {
     if (items.length > 4) {
       return (
         <>
@@ -43,20 +43,19 @@ export default function Subnav({ items }: { items: { name: string; path: string;
     return buttons(items);
   };
 
-  const buttons = items => (
+  const buttons = (items: NavPage[]) => (
     <>
-      {items &&
-        items.map(({ name, path, exact }) => (
-          <Link key={name} to={path}>
-            <Button variant={matchPath(path, exact) ? 'outlined' : 'text'}>
-              <Typography textAlign="center">{name}</Typography>
-            </Button>
-          </Link>
-        ))}
+      {items?.map(({ name, page, exact }) => (
+        <Link key={page} to={page}>
+          <Button variant={matchPath(page, exact) ? 'outlined' : 'text'}>
+            <Typography textAlign="center">{name}</Typography>
+          </Button>
+        </Link>
+      ))}
     </>
   );
 
-  const menu = items => (
+  const menu = (items: NavPage[]) => (
     <>
       <IconButton
         size="large"
@@ -87,9 +86,9 @@ export default function Subnav({ items }: { items: { name: string; path: string;
         }}
       >
         {items &&
-          items.map(({ name, path }) => (
-            <Link key={name} to={path}>
-              <MenuItem key={name} onClick={handleCloseNavMenu}>
+          items.map(({ name, page }) => (
+            <Link key={page} to={page}>
+              <MenuItem key={page} onClick={handleCloseNavMenu}>
                 <Typography textAlign="center">{name}</Typography>
               </MenuItem>
             </Link>
