@@ -9,7 +9,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
 import { ButtonMapButton } from 'components/Common';
-import { Details, MediumTabs, Paths } from 'components/Tabs';
+import { Details, Paths, RoutingTabs, RoutingTabsRoute } from 'components/Tabs';
 
 import { MediumBanner } from '.';
 import './Media.scss';
@@ -81,17 +81,33 @@ export default function Movie({
     },
   ];
 
-  const tabsMap = {
-    Paths: <Paths paths={paths} />,
-    Downloads: <div>downloads</div>,
-    Watches: <div>watches</div>,
-    Details: <Details medium={movie} />,
-  };
+  const tabsMap: RoutingTabsRoute[] = [
+    {
+      label: 'Paths',
+      to: '',
+      element: <Paths paths={paths} />,
+    },
+    {
+      label: 'Details',
+      to: 'details',
+      element: <Details medium={movie} />,
+    },
+    {
+      label: 'Downloads',
+      to: 'downloads',
+      element: <div>downloads</div>,
+    },
+    {
+      label: 'Watches',
+      to: 'watches',
+      element: <div>watches</div>,
+    },
+  ];
 
   return (
     <div className="medium large">
       <MediumBanner id={id} variant="large" medium={movie} buttons={buttons} />
-      <MediumTabs data={tabsMap} />
+      <RoutingTabs data={tabsMap} route={`/movies/${id}`} />
     </div>
   );
 }

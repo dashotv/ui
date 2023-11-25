@@ -9,7 +9,7 @@ export default function MoviesPage() {
     <>
       <Routes>
         <Route index path="" element={<MoviesIndex />} />
-        <Route path=":id" element={<MoviesShow />} />
+        <Route path=":id/*" element={<MoviesShow />} />
       </Routes>
       <Outlet />
     </>
