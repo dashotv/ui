@@ -8,6 +8,7 @@ import { Container } from 'components/Layout';
 import SubNav from 'components/SubNav';
 
 import DownloadsShowPage from './DownloadsShowPage';
+import NotFoundPage from './NotFoundPage';
 import RecentPage from './RecentPage';
 import UpcomingPage from './UpcomingPage';
 
@@ -35,6 +36,7 @@ export default function HomePage() {
         <Route path="downloads">
           <Route path=":id" element={<DownloadsShowPage />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Outlet />
     </>

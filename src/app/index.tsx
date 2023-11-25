@@ -73,11 +73,10 @@ export function App() {
           <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
           <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
           <Route path="/*" element={withAuth(HomePage)} />
-          <Route path="/admin/*" element={withAuth(AdminPage)} />
+          <Route path="admin/*" element={withAuth(AdminPage)} />
           <Route path="series/*" element={withAuth(SeriesPage)} />
           <Route path="movies/*" element={withAuth(MoviesPage)} />
           <Route path="releases/*" element={withAuth(ReleasesPage)} />
-          {/* <Route element={<NotFoundPage />} /> */}
         </Routes>
       </ErrorBoundary>
       <SignedOut>
