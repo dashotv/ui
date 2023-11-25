@@ -23,7 +23,7 @@ export default function MoviesIndex() {
     setCount(Math.ceil((data.count || 0) / pagesize)); // Math.ceil((data?.count || 0) / pagesize)
   }, [data?.count]);
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handleChange = (event: unknown, value: number) => {
     setPage(value);
   };
 
