@@ -105,7 +105,7 @@ export const NavBar = () => {
   return (
     <>
       <AppBar position="static">
-        <MUIContainer sx={{ overflow: 'hidden' }}>
+        <MUIContainer sx={{ overflow: 'hidden' }} maxWidth="xl">
           <Toolbar disableGutters sx={{ display: { xs: 'none', md: 'flex' } }}>
             <Nav {...{ pages, matchPath, matchAny }} />
             <Box sx={{ height: '54px' }}>
@@ -119,7 +119,7 @@ export const NavBar = () => {
           </Toolbar>
         </MUIContainer>
       </AppBar>
-      <MUIContainer sx={{ display: { xs: 'flex', md: 'none' } }}>
+      <MUIContainer sx={{ display: { xs: 'flex', md: 'none' } }} maxWidth="xl">
         <Grid container>
           <Grid item xs={12}>
             <Gauges />
