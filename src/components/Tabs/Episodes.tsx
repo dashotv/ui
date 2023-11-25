@@ -95,7 +95,7 @@ function EpisodeRow({
             noWrap
             variant="subtitle1"
             color="textSecondary"
-            minWidth="28px"
+            minWidth="38px"
           >
             {number}
           </Typography>
