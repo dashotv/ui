@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
-import Typography from '@mui/material/Typography';
 
 import { LoadingIndicator } from 'components/Common';
 import { Container } from 'components/Layout';
 import { Media, useMoviesAllQuery } from 'components/Media';
+import SubNav from 'components/SubNav';
 
 const pagesize = 42;
 
 export default function MoviesIndex() {
   const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
   const { isFetching, data } = useMoviesAllQuery(page);
+  const items = [{ name: 'All', path: '/movies', exact: true }];
+
+  useEffect(() => {
+    if (!data?.count) return;
+    setCount(Math.ceil((data.count || 0) / pagesize)); // Math.ceil((data?.count || 0) / pagesize)
+  }, [data?.count]);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -25,21 +32,24 @@ export default function MoviesIndex() {
         <title>Movies</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
+      <Container>
         <Grid container>
           <Grid item xs={12} md={6}>
-            <Typography variant="h4">Movies</Typography>
+            <SubNav items={items} />
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Pagination
-              sx={{ float: 'right' }}
-              count={Math.ceil((data?.count || 0) / pagesize)}
-              onChange={handleChange}
-            />
+          <Grid item xs={12} md={6} sx={{ pt: 2 }}>
+            {data && (
+              <Pagination
+                sx={{ display: 'flex', justifyContent: 'end' }}
+                page={page}
+                count={count}
+                onChange={handleChange}
+              />
+            )}
           </Grid>
         </Grid>
       </Container>
-      <Container maxWidth="xl" sx={{ overflow: 'auto' }}>
+      <Container>
         <Grid container spacing={1}>
           {isFetching && <LoadingIndicator />}
           {data && <Media data={data.results} type="movies" />}

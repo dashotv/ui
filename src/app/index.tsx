@@ -31,12 +31,7 @@ import DownloadsShowPage from 'pages/HomePage/DownloadsShowPage';
 import RecentPage from 'pages/HomePage/RecentPage';
 import UpcomingPage from 'pages/HomePage/UpcomingPage';
 import MoviesPage from 'pages/MoviesPage';
-import MoviesIndex from 'pages/MoviesPage/MoviesIndex';
-import MoviesShow from 'pages/MoviesPage/MoviesShow';
 import ReleasesPage from 'pages/ReleasesPage';
-import FeedsIndex from 'pages/ReleasesPage/FeedsIndex';
-import ReleasesIndex from 'pages/ReleasesPage/ReleasesIndex';
-import ReleasesSearch from 'pages/ReleasesPage/ReleasesSearch';
 import SeriesPage from 'pages/SeriesPage';
 import { GlobalStyle } from 'styles/global-styles';
 
@@ -98,16 +93,8 @@ export function App() {
             <Route path="users" element={withAuth(UsersPage)} />
           </Route>
           <Route path="series/*" element={withAuth(SeriesPage)} />
-          <Route path="movies" element={withAuth(MoviesPage)}>
-            <Route path="" element={withAuth(MoviesIndex)} />
-            <Route path=":id" element={withAuth(MoviesShow)} />
-          </Route>
-          <Route path="releases" element={withAuth(ReleasesPage)}>
-            <Route path="" element={withAuth(ReleasesIndex)} />
-            <Route path=":interval" element={withAuth(ReleasesIndex)} />
-            <Route path="search" element={withAuth(ReleasesSearch)} />
-            <Route path="feeds" element={withAuth(FeedsIndex)} />
-          </Route>
+          <Route path="movies/*" element={withAuth(MoviesPage)} />
+          <Route path="releases/*" element={withAuth(ReleasesPage)} />
           {/* <Route element={<NotFoundPage />} /> */}
         </Routes>
       </ErrorBoundary>
