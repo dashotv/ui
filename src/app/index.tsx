@@ -38,8 +38,6 @@ import FeedsIndex from 'pages/ReleasesPage/FeedsIndex';
 import ReleasesIndex from 'pages/ReleasesPage/ReleasesIndex';
 import ReleasesSearch from 'pages/ReleasesPage/ReleasesSearch';
 import SeriesPage from 'pages/SeriesPage';
-import SeriesIndex from 'pages/SeriesPage/SeriesIndex';
-import SeriesShow from 'pages/SeriesPage/SeriesShow';
 import { GlobalStyle } from 'styles/global-styles';
 
 import './index.scss';
@@ -99,10 +97,7 @@ export function App() {
             <Route path="requests" element={withAuth(RequestsPage)} />
             <Route path="users" element={withAuth(UsersPage)} />
           </Route>
-          <Route path="series" element={withAuth(SeriesPage)}>
-            <Route path="" element={withAuth(SeriesIndex)} />
-            <Route path=":id" element={withAuth(SeriesShow)} />
-          </Route>
+          <Route path="series/*" element={withAuth(SeriesPage)} />
           <Route path="movies" element={withAuth(MoviesPage)}>
             <Route path="" element={withAuth(MoviesIndex)} />
             <Route path=":id" element={withAuth(MoviesShow)} />

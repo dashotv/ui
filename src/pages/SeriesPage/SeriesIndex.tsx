@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
-import Typography from '@mui/material/Typography';
 
 import { LoadingIndicator } from 'components/Common';
 import { Media, useSeriesAllQuery } from 'components/Media';
+import SubNav from 'components/SubNav';
 
 const pagesize = 42;
 
 export default function SeriesIndex() {
   const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
   const { isFetching, data } = useSeriesAllQuery(page);
+  const items = [{ name: 'All', path: '/series', exact: true }];
+
+  useEffect(() => {
+    if (!data?.count) return;
+    setCount(Math.ceil((data.count || 0) / pagesize)); // Math.ceil((data?.count || 0) / pagesize)
+  }, [data?.count]);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -25,23 +32,25 @@ export default function SeriesIndex() {
         <title>Series</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container sx={{ padding: 2 }} style={{ overflow: 'auto' }} maxWidth="xl">
+
+      <Container sx={{ overflow: 'auto' }} maxWidth="xl">
         <Grid container>
           <Grid item xs={12} md={6}>
-            <Typography variant="h4">Series</Typography>
+            <SubNav items={items} />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sx={{ pt: 2 }}>
             {data && (
               <Pagination
-                sx={{ float: 'right' }}
+                sx={{ display: 'flex', justifyContent: 'end' }}
                 page={page}
-                count={Math.ceil((data?.count || 0) / pagesize)}
+                count={count}
                 onChange={handleChange}
               />
             )}
           </Grid>
         </Grid>
       </Container>
+
       <Container maxWidth="xl" sx={{ overflow: 'auto' }}>
         <Grid container spacing={1}>
           {isFetching && <LoadingIndicator />}
