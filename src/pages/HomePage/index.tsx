@@ -1,11 +1,15 @@
 import * as React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 
 import { Gauges } from 'components/Guages';
 import { Container } from 'components/Layout';
 import SubNav from 'components/SubNav';
+
+import DownloadsShowPage from './DownloadsShowPage';
+import RecentPage from './RecentPage';
+import UpcomingPage from './UpcomingPage';
 
 export default function HomePage() {
   const items = [
@@ -24,6 +28,14 @@ export default function HomePage() {
           </Grid>
         </Grid>
       </Container>
+
+      <Routes>
+        <Route path="" element={<UpcomingPage />} />
+        <Route path="recent" element={<RecentPage />} />
+        <Route path="downloads">
+          <Route path=":id" element={<DownloadsShowPage />} />
+        </Route>
+      </Routes>
       <Outlet />
     </>
   );

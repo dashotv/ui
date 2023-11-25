@@ -22,14 +22,7 @@ import '@fontsource/roboto/700.css';
 
 import NavBar from 'components/NavBar';
 import AdminPage from 'pages/AdminPage';
-import JobsPage from 'pages/AdminPage/JobsPage';
-import LogsPage from 'pages/AdminPage/LogsPage';
-import RequestsPage from 'pages/AdminPage/RequestsPage';
-import UsersPage from 'pages/AdminPage/UsersPage';
 import HomePage from 'pages/HomePage';
-import DownloadsShowPage from 'pages/HomePage/DownloadsShowPage';
-import RecentPage from 'pages/HomePage/RecentPage';
-import UpcomingPage from 'pages/HomePage/UpcomingPage';
 import MoviesPage from 'pages/MoviesPage';
 import ReleasesPage from 'pages/ReleasesPage';
 import SeriesPage from 'pages/SeriesPage';
@@ -79,19 +72,8 @@ export function App() {
         <Routes>
           <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
           <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
-          <Route path="/" element={withAuth(HomePage)}>
-            <Route path="" element={withAuth(UpcomingPage)} />
-            <Route path="recent" element={withAuth(RecentPage)} />
-            <Route path="downloads">
-              <Route path=":id" element={withAuth(DownloadsShowPage)} />
-            </Route>
-          </Route>
-          <Route path="/admin" element={withAuth(AdminPage)}>
-            <Route path="" element={withAuth(LogsPage)} />
-            <Route path="jobs" element={withAuth(JobsPage)} />
-            <Route path="requests" element={withAuth(RequestsPage)} />
-            <Route path="users" element={withAuth(UsersPage)} />
-          </Route>
+          <Route path="/*" element={withAuth(HomePage)} />
+          <Route path="/admin/*" element={withAuth(AdminPage)} />
           <Route path="series/*" element={withAuth(SeriesPage)} />
           <Route path="movies/*" element={withAuth(MoviesPage)} />
           <Route path="releases/*" element={withAuth(ReleasesPage)} />
