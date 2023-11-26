@@ -13,6 +13,7 @@ export interface ButtonMapButton {
   color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'disabled' | 'action' | 'inherit';
   click?: (ev: React.MouseEvent<HTMLElement>) => void;
   Component?: IconType;
+  link?: string;
 }
 
 export interface ButtonMapProps {
@@ -23,7 +24,7 @@ export interface ButtonMapProps {
 export function ButtonMap({ buttons, size = 'medium' }: ButtonMapProps) {
   return (
     <Stack spacing={'5px'} direction="row" sx={{ justifyContent: 'end' }}>
-      {buttons.map(({ click, title, Icon, Component, color }, index) => (
+      {buttons.map(({ click, title, Icon, Component, color, link }, index) => (
         <IconButton
           key={index}
           sx={{ p: '0px' }}
@@ -31,6 +32,8 @@ export function ButtonMap({ buttons, size = 'medium' }: ButtonMapProps) {
           onClick={ev => {
             click && click(ev);
           }}
+          href={link || ''}
+          target={link ? '_blank' : undefined}
           title={title}
         >
           {Component ? (

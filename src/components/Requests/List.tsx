@@ -1,8 +1,10 @@
 import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
+import OutboundIcon from '@mui/icons-material/Outbound';
 import PendingIcon from '@mui/icons-material/Pending';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
@@ -39,32 +41,22 @@ export function RequestStatus({ status }: { status: string }) {
   }
 }
 
-export function RequestLink({
-  source,
-  source_id,
-  target,
-  color,
-  underline,
-}: {
-  source: string;
-  source_id: string;
-  target: string;
-  color: string;
-  underline?: 'none' | 'always' | 'hover';
-}) {
+export function link({ source, source_id }: { source: string; source_id: string }) {
   switch (source) {
     case 'tmdb':
-      return (
-        <Link href={`http://themoviedb.org/movie/${source_id}`} {...{ target, color, underline }}>
-          {source}:{source_id}
-        </Link>
-      );
+      return `http://themoviedb.org/movie/${source_id}`;
+    // return (
+    //   <Link href={`http://themoviedb.org/movie/${source_id}`} {...{ target, color, underline }}>
+    //     {source}:{source_id}
+    //   </Link>
+    // );
     case 'tvdb':
-      return (
-        <Link href={`https://thetvdb.com/search?query=${source_id}`} {...{ target, color, underline }}>
-          {source}:{source_id}
-        </Link>
-      );
+      return `https://thetvdb.com/search?query=${source_id}`;
+    // return (
+    //   <Link href={`https://thetvdb.com/search?query=${source_id}`} {...{ target, color, underline }}>
+    //     {source}:{source_id}
+    //   </Link>
+    // );
     default:
       return null;
   }
@@ -81,6 +73,12 @@ export function RequestRow(initial: Request) {
   }, []);
 
   const buttons: ButtonMapButton[] = [
+    {
+      title: 'View on site',
+      Icon: OutboundIcon,
+      color: 'primary',
+      link: link({ source, source_id }) || '#',
+    },
     {
       title: 'Approve',
       Icon: CheckCircleIcon,
