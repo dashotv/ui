@@ -1,5 +1,6 @@
 import React from 'react';
-import { SiApplenews, SiUtorrent } from 'react-icons/si';
+import { HiOutlineNewspaper } from 'react-icons/hi2';
+import { SiUtorrent } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -70,13 +71,23 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                     <CheckCircleIcon color={row.verified ? 'secondary' : 'disabled'} fontSize="small" />
                   </IconButton>
                   <IconButton size="small">
-                    <SvgIcon
-                      sx={{ width: '18px', height: '18px' }}
-                      component={row.nzb ? SiApplenews : SiUtorrent}
-                      inheritViewBox
-                      fontSize="small"
-                      color="disabled"
-                    />
+                    {row.nzb ? (
+                      <SvgIcon
+                        sx={{ width: '20px', height: '20px' }}
+                        component={HiOutlineNewspaper}
+                        inheritViewBox
+                        fontSize="small"
+                        color="disabled"
+                      />
+                    ) : (
+                      <SvgIcon
+                        sx={{ width: '18px', height: '18px' }}
+                        component={SiUtorrent}
+                        inheritViewBox
+                        fontSize="small"
+                        color="disabled"
+                      />
+                    )}
                   </IconButton>
                 </Stack>
                 <Typography variant="h6" noWrap color="primary" sx={{ '& a': { color: 'primary.main' } }}>
@@ -189,12 +200,23 @@ export const ReleaseDialog = ({
               <CheckCircleIcon color={verified ? 'secondary' : 'disabled'} fontSize="small" />
             </IconButton>
             <IconButton size="small">
-              <SvgIcon
-                sx={{ width: '18px', height: '18px', mr: '3px' }}
-                component={nzb ? SiApplenews : SiUtorrent}
-                inheritViewBox
-                fontSize="small"
-              />
+              {nzb ? (
+                <SvgIcon
+                  sx={{ width: '20px', height: '20px' }}
+                  component={HiOutlineNewspaper}
+                  inheritViewBox
+                  fontSize="small"
+                  color="disabled"
+                />
+              ) : (
+                <SvgIcon
+                  sx={{ width: '18px', height: '18px' }}
+                  component={SiUtorrent}
+                  inheritViewBox
+                  fontSize="small"
+                  color="disabled"
+                />
+              )}
             </IconButton>
             <Stack direction="row" spacing={1} alignItems="center">
               <Resolution resolution={resolution} variant="default" />
