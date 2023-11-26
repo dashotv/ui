@@ -110,9 +110,9 @@ function FilesRow({ open, clear, file: { num, torrent_file, medium } }: FilesRow
         alignItems="center"
         justifyContent="space-between"
       >
-        <Stack minWidth="0" direction="row" spacing={1} alignItems="center">
+        <Stack minWidth="0" width="100%" direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
           <Typography
-            // display={{ xs: 'none', md: 'inherit' }}
+            display={{ xs: 'none', md: 'inherit' }}
             noWrap
             variant="subtitle1"
             color="textSecondary"
@@ -120,21 +120,30 @@ function FilesRow({ open, clear, file: { num, torrent_file, medium } }: FilesRow
           >
             {num}
           </Typography>
-          <Typography variant="h6" noWrap color="primary">
+          <Typography maxWidth="100%" variant="h6" noWrap color="primary">
             {name(torrent_file?.name)}
           </Typography>
           {medium && (
-            <Typography variant="subtitle2" noWrap color="gray">
+            <Typography width={{ xs: '100%', md: '225px' }} variant="subtitle2" noWrap color="gray">
               {season_number}x{episode_number}
               {absolute_number ? ` #${absolute_number}` : ''} {title} {display}
             </Typography>
           )}
         </Stack>
         <Stack minWidth="0" direction="row" spacing={1} alignItems="center" justifyContent="end">
-          <Typography minWidth="65px" variant="subtitle2" noWrap color="secondary" textAlign="right">
+          <Typography
+            display={{ xs: 'inherit', md: 'none' }}
+            noWrap
+            variant="subtitle1"
+            color="textSecondary"
+            minWidth="38px"
+          >
+            {num}
+          </Typography>
+          <Typography minWidth="75px" variant="subtitle2" noWrap color="secondary" textAlign="right">
             {progress(torrent_file?.progress)}
           </Typography>
-          <Typography variant="subtitle2" noWrap color="gray">
+          <Typography minWidth="85px" variant="subtitle2" noWrap color="gray" textAlign="right">
             {size(torrent_file?.size)}
           </Typography>
           <ButtonMap buttons={buttons} size="small" />
