@@ -102,13 +102,13 @@ export default function ReleasesSearchPage() {
       </Helmet>
 
       <Container>
-        <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
+        <Paper sx={{ p: 1, width: '100%' }}>
           {isFetching && <LoadingIndicator />}
           <ReleasesForm form={form} setForm={setForm} reset={reset} />
         </Paper>
       </Container>
       <Container>
-        <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
+        <Paper sx={{ p: 1, width: '100%' }}>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
             spacing={1}
