@@ -48,7 +48,7 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
         <Typography width="100%" color={color(level)} noWrap>
           {message}
         </Typography>
-        <Stack width="100%" direction="row" spacing={1} alignItems="center" justifyContent="end">
+        <Stack minWidth="225px" direction="row" spacing={1} alignItems="center" justifyContent="end">
           <Typography variant="button" color="secondary" noWrap maxWidth="100px">
             {name(facility)}
           </Typography>
