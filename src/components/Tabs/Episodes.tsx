@@ -100,7 +100,7 @@ function EpisodeRow({
             {number}
           </Typography>
           <Typography noWrap variant="h6" color="primary">
-            {title} {title}
+            {title}
           </Typography>
         </Stack>
         <Stack
