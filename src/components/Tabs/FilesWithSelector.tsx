@@ -5,11 +5,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
@@ -124,36 +119,32 @@ export function FilesWithSelector({
           {dialogTitle}
         </DialogTitle>
         <DialogContent>
-          <List>
-            {episodes &&
-              episodes.map((e, i) => (
-                <ListItem key={i} disablePadding>
-                  <ListItemButton
-                    id={e.id}
-                    onClick={ev => {
-                      selector(ev.currentTarget.id);
-                      handleDialogClose();
-                    }}
-                  >
-                    <ListItemIcon>
-                      <CheckCircleIcon
-                        color={
-                          tracking.get(e.id) === selected ? 'primary' : tracking.has(e.id) ? 'secondary' : 'action'
-                        }
-                      />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <Stack spacing={1} direction="row">
-                        <Typography variant="subtitle2">
-                          {e.season_number}x{e.episode_number}
-                        </Typography>
-                        <Typography variant="body2">{e.title}</Typography>
-                      </Stack>
-                    </ListItemText>
-                  </ListItemButton>
-                </ListItem>
-              ))}
-          </List>
+          {episodes?.map(({ id, episode_number, season_number, absolute_number, title }, i) => (
+            <Stack
+              key={i}
+              minWidth="0"
+              width="100%"
+              spacing={1}
+              direction="row"
+              alignItems="center"
+              onClick={() => {
+                selector(id);
+                handleDialogClose();
+              }}
+              sx={{ p: '3px', cursor: 'pointer', '&:hover': { backgroundColor: '#343434' } }}
+            >
+              <CheckCircleIcon
+                color={tracking.get(id) === selected ? 'primary' : tracking.has(id) ? 'secondary' : 'action'}
+              />
+              <Typography minWidth="85px" textAlign="right" variant="button" color="secondary">
+                {season_number}x{episode_number}
+                {absolute_number ? ` #${absolute_number}` : ''}
+              </Typography>
+              <Typography noWrap variant="subtitle1" color="primary">
+                {title}
+              </Typography>
+            </Stack>
+          ))}
         </DialogContent>
       </Dialog>
     </>
