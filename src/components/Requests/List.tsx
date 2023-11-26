@@ -1,12 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import OutboundIcon from '@mui/icons-material/Outbound';
 import PendingIcon from '@mui/icons-material/Pending';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -112,28 +110,5 @@ export function RequestRow(initial: Request) {
         </Stack>
       </Stack>
     </Paper>
-    // <>
-    //   <tr key={id}>
-    //     <td>
-    //       <RequestStatus status={status} />
-    //     </td>
-    //     <td className="truncate">{title}</td>
-    //     <td>
-    //       <RequestLink {...{ source, source_id }} target="_window" color="primary" underline="none" />
-    //     </td>
-    //     <td>{user}</td>
-    //     <td align="right">
-    //       <Chrono fromNow>{created_at.toString()}</Chrono>
-    //     </td>
-    //     <td align="right">
-    //       <IconButton aria-label="delete" size="small" onClick={() => handleStatus('approved')}>
-    //         <CheckCircleIcon fontSize="small" color="primary" />
-    //       </IconButton>
-    //       <IconButton aria-label="delete" size="small" onClick={() => handleStatus('denied')}>
-    //         <CancelIcon fontSize="small" color="primary" />
-    //       </IconButton>
-    //     </td>
-    //   </tr>
-    // </>
   );
 }
