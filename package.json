@@ -10,6 +10,7 @@
     "@emotion/styled": "11.11.0",
     "@fontsource/material-icons": "^5.0.7",
     "@fontsource/roboto": "^5.0.8",
+    "@loadable/component": "^5.15.3",
     "@mui/icons-material": "5.14.14",
     "@mui/material": "5.14.14",
     "@originjs/vite-plugin-commonjs": "1.0.3",
@@ -130,6 +131,7 @@
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
     "@types/eslint": "^8",
+    "@types/loadable__component": "^5",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "@vitest/coverage-v8": "0.34.6",
