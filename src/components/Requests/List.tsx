@@ -4,37 +4,23 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import PendingIcon from '@mui/icons-material/Pending';
-import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
-import { Chrono } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Chrono } from 'components/Common';
 
 import { useRequestsStatusMutation } from './query';
 import { Request } from './types';
 
 export function RequestsList({ requests }: { requests: Request[] }) {
   return (
-    <>
-      <div className="releases">
-        <table className="vertical-table">
-          <thead>
-            <tr>
-              <td className="number"></td>
-              <td>Title</td>
-              <td className="actions">Source</td>
-              <td className="small">Requested</td>
-              <td className="date" align="right">
-                Created
-              </td>
-              <td className="small" align="right">
-                Actions
-              </td>
-            </tr>
-          </thead>
-          <tbody>{requests && requests.map((request: Request) => <RequestRow key={request.id} {...request} />)}</tbody>
-        </table>
-      </div>
-    </>
+    <Paper elevation={0}>
+      {requests.map((request: Request) => (
+        <RequestRow key={request.id} {...request} />
+      ))}
+    </Paper>
   );
 }
 
@@ -93,29 +79,63 @@ export function RequestRow(initial: Request) {
     setRequest(updated);
     mutation.mutate(updated);
   }, []);
+
+  const buttons: ButtonMapButton[] = [
+    {
+      title: 'Approve',
+      Icon: CheckCircleIcon,
+      color: 'primary',
+      click: () => handleStatus('approved'),
+    },
+    {
+      title: 'Deny',
+      Icon: CancelIcon,
+      color: 'primary',
+      click: () => handleStatus('denied'),
+    },
+  ];
   return (
-    <>
-      <tr key={id}>
-        <td>
+    <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} width="100%" alignItems="center">
+        <Stack width="100%" direction="row" spacing={1} alignItems="center">
           <RequestStatus status={status} />
-        </td>
-        <td className="truncate">{title}</td>
-        <td>
-          <RequestLink {...{ source, source_id }} target="_window" color="primary" underline="none" />
-        </td>
-        <td>{user}</td>
-        <td align="right">
-          <Chrono fromNow>{created_at.toString()}</Chrono>
-        </td>
-        <td align="right">
-          <IconButton aria-label="delete" size="small" onClick={() => handleStatus('approved')}>
-            <CheckCircleIcon fontSize="small" color="primary" />
-          </IconButton>
-          <IconButton aria-label="delete" size="small" onClick={() => handleStatus('denied')}>
-            <CancelIcon fontSize="small" color="primary" />
-          </IconButton>
-        </td>
-      </tr>
-    </>
+          <Typography variant="body1" color="primary" width="100%" noWrap>
+            {title}
+          </Typography>
+        </Stack>
+        <Stack width="100%" direction="row" spacing={1} alignItems="center" justifyContent="end">
+          <Typography variant="subtitle2" color="secondary" noWrap>
+            {user}
+          </Typography>
+          <Typography variant="subtitle2" color="gray" noWrap>
+            <Chrono fromNow>{created_at}</Chrono>
+          </Typography>
+          <ButtonMap buttons={buttons} size="small" />
+        </Stack>
+      </Stack>
+    </Paper>
+    // <>
+    //   <tr key={id}>
+    //     <td>
+    //       <RequestStatus status={status} />
+    //     </td>
+    //     <td className="truncate">{title}</td>
+    //     <td>
+    //       <RequestLink {...{ source, source_id }} target="_window" color="primary" underline="none" />
+    //     </td>
+    //     <td>{user}</td>
+    //     <td align="right">
+    //       <Chrono fromNow>{created_at.toString()}</Chrono>
+    //     </td>
+    //     <td align="right">
+    //       <IconButton aria-label="delete" size="small" onClick={() => handleStatus('approved')}>
+    //         <CheckCircleIcon fontSize="small" color="primary" />
+    //       </IconButton>
+    //       <IconButton aria-label="delete" size="small" onClick={() => handleStatus('denied')}>
+    //         <CancelIcon fontSize="small" color="primary" />
+    //       </IconButton>
+    //     </td>
+    //   </tr>
+    // </>
   );
 }
