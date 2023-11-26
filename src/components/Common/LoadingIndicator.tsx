@@ -1,30 +1,28 @@
 import React from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 
-import styled from 'styled-components';
+import Box from '@mui/material/Box';
 
 export const LoadingIndicator = () => (
-  <Wrapper>
-    <ThreeDots
-      height="120"
-      width="120"
-      radius="9"
-      color="white"
-      ariaLabel="three-dots-loading"
-      wrapperStyle={{}}
-      visible={true}
-    />
-  </Wrapper>
+  <Box
+    sx={{
+      backgroundColor: '#404040',
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      width: '80px',
+      height: '40px',
+      margin: '2em auto',
+      overflow: 'hidden',
+      justifyContent: 'center',
+      borderRadius: '15px',
+      pt: '5px',
+      pl: '10px',
+      opacity: 0.6,
+    }}
+  >
+    <ThreeDots width="60" height="30" radius="3" color="white" ariaLabel="three-dots-loading" visible={true} />
+  </Box>
 );
-
-export const Wrapper = styled.div`
-  margin: 2em auto;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  bottom: 0px;
-  right: 0px;
-  z-index: 1000;
-`;
