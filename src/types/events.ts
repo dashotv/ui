@@ -37,6 +37,6 @@ export interface EventNotice {
   event: string;
   time: string;
   class: string;
-  level: 'warning' | 'error' | 'default' | 'info' | 'success';
+  level: 'warning' | 'error' | 'info' | 'success';
   message: string;
 }

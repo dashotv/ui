@@ -100,7 +100,11 @@ export const NavBar = () => {
     return 0;
   };
 
-  useSub('tower.notices', (data: EventNotice) => enqueueSnackbar(<Notice data={data} />, { variant: data.level }));
+  useSub('tower.notices', (data: EventNotice) =>
+    enqueueSnackbar('', {
+      content: key => <Notice {...{ key, data }} />,
+    }),
+  );
 
   return (
     <>
