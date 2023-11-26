@@ -54,7 +54,7 @@ interface FilesRowProps {
   file: DownloadFile;
 }
 function FilesRow({ open, clear, file: { num, torrent_file, medium } }: FilesRowProps) {
-  const { season_number, episode_number, title, display } = medium || {};
+  const { season_number, episode_number, absolute_number, title, display } = medium || {};
   function size(raw: number | undefined) {
     if (raw === undefined) {
       return;
@@ -111,12 +111,22 @@ function FilesRow({ open, clear, file: { num, torrent_file, medium } }: FilesRow
         justifyContent="space-between"
       >
         <Stack minWidth="0" direction="row" spacing={1} alignItems="center">
+          <Typography
+            // display={{ xs: 'none', md: 'inherit' }}
+            noWrap
+            variant="subtitle1"
+            color="textSecondary"
+            minWidth="38px"
+          >
+            {num}
+          </Typography>
           <Typography variant="h6" noWrap color="primary">
             {name(torrent_file?.name)}
           </Typography>
           {medium && (
             <Typography variant="subtitle2" noWrap color="gray">
-              {season_number}x{episode_number} {title} {display}
+              {season_number}x{episode_number}
+              {absolute_number ? ` #${absolute_number}` : ''} {title} {display}
             </Typography>
           )}
         </Stack>
