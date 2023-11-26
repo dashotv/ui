@@ -55,15 +55,16 @@ function PathsRow({ i, extension, local, type, updated_at }: { i: number } & Pat
     },
   ];
   return (
-    <Paper elevation={1} sx={{ mb: 1 }}>
+    <Paper key={i} elevation={1} sx={{ mb: 1, pr: 1, pl: 1, width: '100%' }}>
       <Stack
-        key={i}
+        width="100%"
+        minWidth="0"
         direction={{ xs: 'column', md: 'row' }}
         spacing={1}
         alignItems="center"
-        sx={{ justifyContent: 'space-between' }}
+        justifyContent="space-between"
       >
-        <Stack sx={{ width: '100%', pl: 1 }} direction="row" spacing={1} alignItems="center">
+        <Stack minWidth="0" direction="row" spacing={1} alignItems="center">
           <Box sx={{ color: 'gray' }}>
             {extension === 'jpg' && <ImageIcon fontSize="small" />}
             {type === 'video' && <MovieIcon fontSize="small" />}
@@ -73,7 +74,7 @@ function PathsRow({ i, extension, local, type, updated_at }: { i: number } & Pat
             {local}.{extension}
           </Typography>
         </Stack>
-        <Stack sx={{ width: '100%', justifyContent: 'end', pr: 1 }} direction="row" spacing={1} alignItems="center">
+        <Stack minWidth="0" direction="row" spacing={1} alignItems="center" justifyContent="end">
           <Typography variant="subtitle2" noWrap color="gray">
             <Chrono fromNow>{updated_at?.toString()}</Chrono>
           </Typography>
