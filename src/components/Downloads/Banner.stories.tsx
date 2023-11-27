@@ -102,6 +102,24 @@ export const DownloadSmall: Story = {
   },
 };
 
+export const DownloadState: Story = {
+  render: args => {
+    return (
+      <Grid2 container spacing={3}>
+        <Grid2 item md={4} xs={12}>
+          <DownloadBanner {...args} />
+        </Grid2>
+        <Grid2 item md={4} xs={12}>
+          <DownloadBanner {...args} torrentState="error" />
+        </Grid2>
+        <Grid2 item md={4} xs={12}>
+          <DownloadBanner {...args} torrentState="pausedDL" />
+        </Grid2>
+      </Grid2>
+    );
+  },
+};
+
 export const DownloadLarge: Story = {
   render: args => <DownloadBanner {...args} buttons={buttons} statusAction={() => {}} />,
 };

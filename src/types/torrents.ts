@@ -8,6 +8,9 @@ export interface TorrentsResponse {
 
 export interface Torrent {
   Hash: string;
+  Status: number;
+  State: string;
+  Size: number;
   Progress: string;
   Queue: number;
   Name: string;

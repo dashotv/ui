@@ -56,7 +56,7 @@ export function Download({
     medium: { cover, background, title, display },
   } = download;
   const torrentRemove = useTorrentRemoveMutation();
-  const { progress, eta, queue } = useReleases();
+  const { progress, eta, queue, torrentState } = useReleases();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -130,6 +130,7 @@ export function Download({
         statusAction={() => {
           setOpen(true);
         }}
+        torrentState={torrentState(thash)}
         progress={progress(thash)?.toString()}
         queue={queue(thash)?.toString()}
         eta={eta(thash)?.toString()}

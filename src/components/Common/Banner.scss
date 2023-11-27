@@ -106,6 +106,20 @@ $height: 120px;
         background-color: #00ff00;
       }
     }
+    .state {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      top: 0;
+      z-index: 120;
+      overflow: auto;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.5;
+    }
   }
   .banner-background {
     position: absolute;

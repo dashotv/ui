@@ -1,5 +1,7 @@
 import React from 'react';
 
+import ErrorIcon from '@mui/icons-material/Error';
+import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import { useTheme } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
@@ -16,6 +18,7 @@ export type DownloadBannerProps = {
   background?: string;
   status?: DownloadStatus;
   statusAction?: () => void;
+  torrentState?: string;
   progress?: string;
   eta?: string;
   queue?: string;
@@ -36,6 +39,7 @@ export const DownloadBanner = ({
   buttons,
   status,
   statusAction,
+  torrentState,
   progress,
   eta,
   queue,
@@ -77,9 +81,44 @@ export const DownloadBanner = ({
       tertiary={tertiary()}
       buttons={buttons}
       unwatched={unwatched}
-      adornments={progressBar && progress && <DownloadProgressBar {...{ progress, multi, files, total }} />}
+      adornments={<DownloadAdornments {...{ progressBar, progress, multi, files, total, torrentState }} />}
     />
   );
+};
+export interface DownloadAdornmentProps {
+  progressBar?: boolean;
+  progress?: string;
+  multi?: boolean;
+  files?: number;
+  total?: number;
+  torrentState?: string;
+}
+const DownloadAdornments = ({ progressBar, progress, multi, files, total, torrentState }: DownloadAdornmentProps) => {
+  return (
+    <div className="adornments">
+      {torrentState && <DownloadState {...{ torrentState }} />}
+      {progressBar && progress && <DownloadProgressBar {...{ progress, multi, files, total }} />}
+    </div>
+  );
+};
+
+const DownloadState = ({ torrentState }: { torrentState: string }) => {
+  switch (torrentState) {
+    case 'error':
+      return (
+        <div className="state" style={{ backgroundColor: 'red' }}>
+          <ErrorIcon fontSize="large" />
+        </div>
+      );
+    case 'pausedDL':
+      return (
+        <div className="state" style={{ backgroundColor: 'grey' }}>
+          <PauseCircleIcon fontSize="large" />
+        </div>
+      );
+    default:
+      <div className="state"></div>;
+  }
 };
 
 const DownloadProgressBar = ({
@@ -106,7 +145,7 @@ const DownloadProgressBar = ({
       rows.push(<div className="file" style={{ backgroundColor: i < files ? primary : disabled }}></div>);
     }
     return (
-      <Stack sx={{ width: '100%' }} direction="row" spacing={'3px'} className="multibar">
+      <Stack sx={{ width: '100%' }} direction="row" spacing="3px" className="multibar">
         {rows}
       </Stack>
     );

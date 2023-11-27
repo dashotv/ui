@@ -9,6 +9,15 @@ export function useReleases() {
   const [nzbs, setNzbs] = useState<Map<number, Nzb> | null>(null);
   const [nzbStatus, setNzbStatus] = useState<NzbResponseStatus | null>(null);
 
+  const torrentState = (thash: string) => {
+    if (torrents != null) {
+      const torrent = torrents.get(thash);
+      if (torrent) {
+        return torrent.State;
+      }
+    }
+  };
+
   const files = (thash: string) => {
     if (torrents != null) {
       const torrent = torrents.get(thash);
@@ -107,5 +116,5 @@ export function useReleases() {
     ),
   );
 
-  return { torrents, nzbs, nzbStatus, progress, eta, queue, files };
+  return { torrents, nzbs, nzbStatus, progress, eta, queue, files, torrentState };
 }
