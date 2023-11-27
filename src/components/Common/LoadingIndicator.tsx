@@ -6,21 +6,20 @@ import Box from '@mui/material/Box';
 export const LoadingIndicator = () => (
   <Box
     sx={{
-      backgroundColor: '#404040',
+      backgroundColor: 'black',
       position: 'absolute',
       top: 0,
       bottom: 0,
       left: 0,
       right: 0,
-      width: '80px',
-      height: '40px',
-      margin: '2em auto',
+      margin: 'auto',
       overflow: 'hidden',
       justifyContent: 'center',
-      borderRadius: '15px',
-      pt: '5px',
-      pl: '10px',
+      alignContent: 'center',
+      alignItems: 'center',
       opacity: 0.6,
+      display: 'flex',
+      zIndex: 1000,
     }}
   >
     <ThreeDots width="60" height="30" radius="3" color="white" ariaLabel="three-dots-loading" visible={true} />
