@@ -95,10 +95,10 @@ export interface DownloadAdornmentProps {
 }
 const DownloadAdornments = ({ progressBar, progress, multi, files, total, torrentState }: DownloadAdornmentProps) => {
   return (
-    <div className="adornments">
+    <>
       {torrentState && <DownloadState {...{ torrentState }} />}
       {progressBar && progress && <DownloadProgressBar {...{ progress, multi, files, total }} />}
-    </div>
+    </>
   );
 };
 

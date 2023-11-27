@@ -8,7 +8,7 @@ import { useReleases } from 'hooks/useReleases';
 import { DownloadBanner, DownloadType } from '.';
 
 export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
-  const { progress, eta, queue, files } = useReleases();
+  const { progress, eta, queue, files, torrentState } = useReleases();
 
   return (
     <>
@@ -28,6 +28,7 @@ export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
                   cover={cover}
                   background={background}
                   status={status}
+                  torrentState={torrentState(thash)}
                   progress={p}
                   queue={q}
                   eta={e}
