@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -19,41 +19,53 @@ export function LogsList({ logs }: { logs: Log[] }) {
 }
 
 export function LogRow({ id, message, facility, level, created_at }: Log) {
-  const name = (facility: string) => {
+  const [name, setName] = useState<string | undefined>(undefined);
+  const [levelName, setLevelName] = useState<string | undefined>(undefined);
+  const [color, setColor] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
     const a = facility.split('::');
-    return a[a.length - 1];
-  };
-  const levelName = (level: string) => {
-    return level == 'warning' ? 'warn' : level;
-  };
-  const color = (level: string) => {
+    setName(a[a.length - 1]);
+    setLevelName(level == 'warning' ? 'warn' : level);
     switch (level) {
       case 'debug':
-        return 'gray';
+        setColor('gray');
+        break;
       case 'info':
-        return 'info.main';
+        setColor('info.main');
+        break;
       case 'warn':
-        return 'warning.main';
       case 'warning':
-        return 'warning.main';
+        setColor('warning.main');
+        break;
       case 'error':
-        return 'error.main';
+        setColor('error.main');
+        break;
       default:
-        return 'inherit';
+        setColor('inherit');
+        break;
     }
-  };
+  }, [facility, level]);
+
   return (
     <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} width="100%" alignItems="center">
-        <Typography width="100%" color={color(level)} noWrap>
+        <Typography width="100%" color={color} noWrap>
           {message}
         </Typography>
-        <Stack minWidth="225px" direction="row" spacing={1} alignItems="center" justifyContent="end">
-          <Typography variant="button" color="secondary" noWrap maxWidth="100px">
-            {name(facility)}
+        <Stack
+          minWidth="250px"
+          width={{ xs: '100%', md: 'auto' }}
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          justifyContent="end"
+        >
+          <Typography title={name} variant="button" color="secondary" noWrap maxWidth="100px">
+            {name}
           </Typography>
-          <Typography variant="button" color={color(level)} maxWidth="50px" noWrap>
-            {levelName(level)}
+          <Typography variant="button" color={color} maxWidth="50px" noWrap>
+            {levelName}
           </Typography>
           <Typography variant="subtitle2" color="gray" noWrap>
             <Chrono fromNow>{created_at}</Chrono>
