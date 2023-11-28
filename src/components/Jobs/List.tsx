@@ -24,33 +24,28 @@ export function JobRow({ id, name, processed_at, error }: Job) {
   return (
     <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} width="100%" alignItems="center">
-        {error === '' ? (
-          <CheckCircleIcon fontSize="small" color="success" />
-        ) : (
-          <ErrorIcon fontSize="small" color="error" />
-        )}
-        <Typography width="100%" color={error === '' ? 'primary' : 'error'} noWrap>
-          {name}
-        </Typography>
+        <Stack
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          justifyContent="start"
+          width={{ xs: '100%', md: 'auto' }}
+        >
+          {error === '' ? (
+            <CheckCircleIcon fontSize="small" color="success" />
+          ) : (
+            <ErrorIcon fontSize="small" color="error" />
+          )}
+          <Typography width="100%" color={error === '' ? 'primary' : 'error'} noWrap>
+            {name}
+          </Typography>
+        </Stack>
         <Stack width="100%" direction="row" spacing={1} alignItems="center" justifyContent="end">
           <Typography variant="subtitle2" color="gray" noWrap>
             {processed_at ? <Chrono fromNow>{processed_at.toString()}</Chrono> : 'Pending'}
           </Typography>
         </Stack>
       </Stack>
-      {/* <tr key={id}>
-        <td title={error}>
-          {error === '' ? (
-            <CheckCircleIcon fontSize="small" color="success" />
-          ) : (
-            <ErrorIcon fontSize="small" color="error" />
-          )}
-        </td>
-        <td>{name}</td>
-        <td className="actions" align="right">
-          {processed_at ? <Chrono fromNow>{processed_at.toString()}</Chrono> : 'Pending'}
-        </td>
-      </tr> */}
     </Paper>
   );
 }
