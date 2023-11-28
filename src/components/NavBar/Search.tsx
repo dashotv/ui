@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useDebounce } from 'usehooks-ts';
 
+import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -25,6 +26,8 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import useTheme from '@mui/system/useTheme';
 
 import { MediaCover, Option, useSeriesCreateMutation } from 'components/Media';
 import { useMovieCreateMutation } from 'components/Movies';
@@ -135,6 +138,9 @@ export interface SuperSearchDialogProps {
 }
 
 export function SuperSearchDialog({ open, setOpen, confirm, select, value, setValue, data }: SuperSearchDialogProps) {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -145,22 +151,34 @@ export function SuperSearchDialog({ open, setOpen, confirm, select, value, setVa
   }, []);
 
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
+    <Dialog open={open} onClose={handleClose} fullWidth fullScreen={fullScreen} maxWidth="md">
       <DialogTitle>
         <TextField
           autoFocus
-          margin="none"
           id="name"
           placeholder="Search for existing or new media"
-          fullWidth
           hiddenLabel
+          fullWidth
           value={value}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setValue(event.target.value);
           }}
-          variant="standard"
+          variant="outlined"
           size="small"
+          sx={{ pr: 4 }}
         />
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: theme => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
       </DialogTitle>
       <DialogContent sx={{ height: '430px' }}>
         {data?.Media?.Error || data?.Tvdb?.Error || data?.Tmdb?.Error ? (
@@ -201,7 +219,6 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
     ],
   };
 
-  console.log('option: ', option);
   if (!option.Kind) {
     setOption({ ...option, Kind: kinds[option.Type][0].value });
   }
