@@ -43,10 +43,10 @@ export const Nav = ({ pages, matchPath, matchAny }: NavProps) => {
       </Typography>
 
       <Box className="menu" sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-        {pages.map(({ name, page, exact, children }) => (
+        {pages.map(({ icon, name, page, exact, children }) => (
           <Stack key={page} spacing={0} direction="row" alignItems="center">
-            <Link to={page}>
-              <IconButton sx={{ color: matchAny(page, exact, children) ? 'primary.main' : 'gray' }}>{name}</IconButton>
+            <Link to={page} title={name}>
+              <IconButton sx={{ color: matchAny(page, exact, children) ? 'primary.main' : 'gray' }}>{icon}</IconButton>
             </Link>
             <Stack
               key={page}

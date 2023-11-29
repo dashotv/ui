@@ -1,5 +1,6 @@
 export type NavPage = {
-  name: React.ReactNode;
+  icon?: React.ReactNode;
+  name: string;
   page: string;
   exact?: boolean;
 };

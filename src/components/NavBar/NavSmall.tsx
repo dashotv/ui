@@ -81,10 +81,13 @@ export const NavSmall = ({ pages, matchPath, matchAny }: NavProps) => {
             display: { xs: 'block', md: 'none' },
           }}
         >
-          {pages.map(({ name, page, exact }) => (
+          {pages.map(({ name, icon, page, exact }) => (
             <Link key={page} to={page}>
               <MenuItem sx={{ width: '300px' }} onClick={handleCloseNavMenu} selected={matchPath(page, exact)}>
-                <Typography textAlign="center">{name}</Typography>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  {icon}
+                  <Typography sx={{ pt: 0.5 }}>{name}</Typography>
+                </Stack>
               </MenuItem>
             </Link>
           ))}

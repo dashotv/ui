@@ -28,7 +28,8 @@ import { NavPage, NavPageWithChildren } from './types';
 
 const pages: NavPageWithChildren[] = [
   {
-    name: <HomeIcon />,
+    icon: <HomeIcon />,
+    name: 'Home',
     page: '/',
     exact: true,
     children: [
@@ -37,20 +38,17 @@ const pages: NavPageWithChildren[] = [
     ],
   },
   {
-    name: <SvgIcon component={GrMultimedia} sx={{ height: '22px', width: '22px' }} />,
+    icon: <SvgIcon component={GrMultimedia} sx={{ height: '22px', width: '22px' }} />,
+    name: 'Media',
     page: '/series',
     children: [
       { name: 'Series', page: '/series' },
       { name: 'Movies', page: '/movies' },
     ],
   },
-  // {
-  //   name: <TheatersIcon />,
-  //   page: '/movies',
-  //   children: [{ name: 'Movies', page: '/movies' }],
-  // },
   {
-    name: <ArticleIcon />,
+    icon: <ArticleIcon />,
+    name: 'Releases',
     page: '/releases',
     children: [
       { name: 'Daily', page: '/releases', exact: true },
@@ -61,7 +59,8 @@ const pages: NavPageWithChildren[] = [
     ],
   },
   {
-    name: <Messages />,
+    icon: <Messages />,
+    name: 'Admin',
     page: '/admin',
     exact: true,
     children: [
