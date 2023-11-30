@@ -14,7 +14,7 @@ import { MediaTo, Medium } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
 import { Release } from 'components/Releases';
 import { FilesWithSelector, MediumTabs, Nzbgeek, Torch } from 'components/Tabs';
-import { useReleases } from 'hooks/useReleases';
+import { useReleaseMetrics } from 'hooks/useMetrics';
 import { useTorrentRemoveMutation } from 'query/releases';
 import { Torrent } from 'types/torrents';
 
@@ -56,7 +56,7 @@ export function Download({
     medium: { cover, background, title, display },
   } = download;
   const torrentRemove = useTorrentRemoveMutation();
-  const { progress, eta, queue, torrentState } = useReleases();
+  const { progress, eta, queue, torrentState } = useReleaseMetrics(thash);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -130,10 +130,10 @@ export function Download({
         statusAction={() => {
           setOpen(true);
         }}
-        torrentState={torrentState(thash)}
-        progress={progress(thash)?.toString()}
-        queue={queue(thash)?.toString()}
-        eta={eta(thash)?.toString()}
+        torrentState={torrentState}
+        progress={progress}
+        queue={queue}
+        eta={eta?.toString()}
         buttons={buttons}
       />
       <DownloadInfo {...{ open, setOpen, status, thash, release_id, url }} changer={changeInfo} />
