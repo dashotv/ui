@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -8,6 +9,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
 import { ButtonMapButton } from 'components/Common';
+import { useDownloadCreateMutation } from 'components/Downloads';
 import { MediumBanner } from 'components/Media';
 
 import { MovieType } from './types';
@@ -25,11 +27,23 @@ export const MovieBanner = ({
   movie,
   movie: { broken, downloaded, completed },
 }: MovieBannerProps) => {
+  const navigate = useNavigate();
+  const download = useDownloadCreateMutation();
   const buttons: ButtonMapButton[] = [
     {
       Icon: CloudCircleIcon,
       color: 'primary',
-      click: () => {},
+      click: () => {
+        download.mutate(id, {
+          onSuccess: data => {
+            if (data.error) {
+              console.error('error: ', data.error);
+              return;
+            }
+            navigate(`/downloads/${data.id}`);
+          },
+        });
+      },
       title: 'create download',
     },
     {

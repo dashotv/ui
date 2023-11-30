@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
@@ -8,6 +9,7 @@ import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import StarsIcon from '@mui/icons-material/Stars';
 
 import { ButtonMapButton } from 'components/Common';
+import { useDownloadCreateMutation } from 'components/Downloads';
 import { Details, Episodes, Paths, RoutingTabs, RoutingTabsRoute, Seasons, Watches } from 'components/Tabs';
 
 import { Episode, MediumBanner, SeriesType } from '.';
@@ -34,6 +36,8 @@ export function Series({
   refresh,
   change,
 }: SeriesProps) {
+  const navigate = useNavigate();
+  const download = useDownloadCreateMutation();
   const tabsMap: RoutingTabsRoute[] = [
     {
       label: 'Episodes',
@@ -76,7 +80,17 @@ export function Series({
     {
       Icon: CloudCircleIcon,
       color: 'primary',
-      click: complete,
+      click: () => {
+        download.mutate(id, {
+          onSuccess: data => {
+            if (data.error) {
+              console.error('error: ', data.error);
+              return;
+            }
+            navigate(`/downloads/${data.id}`);
+          },
+        });
+      },
       title: 'create download',
     },
     {

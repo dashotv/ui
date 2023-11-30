@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
@@ -11,6 +12,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { ButtonMap, ButtonMapButton, Chrono } from 'components/Common';
+import { useDownloadCreateMutation } from 'components/Downloads';
 import { Episode } from 'components/Media/types';
 
 export function Episodes({
@@ -37,7 +39,8 @@ function EpisodeRow({
   if (!number) {
     return <></>;
   }
-
+  const navigate = useNavigate();
+  const download = useDownloadCreateMutation();
   const [skipped, setSkipped] = useState(episode.skipped);
   const [completed, setCompleted] = useState(episode.completed);
   const [downloaded, setDownloaded] = useState(episode.downloaded);
@@ -46,7 +49,17 @@ function EpisodeRow({
     {
       Icon: CloudCircleIcon,
       color: 'primary',
-      click: () => {},
+      click: () => {
+        download.mutate(id, {
+          onSuccess: data => {
+            if (data.error) {
+              console.error('error: ', data.error);
+              return;
+            }
+            navigate(`/downloads/${data.id}`);
+          },
+        });
+      },
       title: 'create download',
     },
     {

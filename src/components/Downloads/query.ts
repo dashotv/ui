@@ -11,17 +11,17 @@ export const getDownloadsActive = async () => {
   return response.data as DownloadType[];
 };
 
-export const getDownloadsRecent = async page => {
+export const getDownloadsRecent = async (page: string) => {
   const response = await tower.get(`/downloads/recent?page=${page}`);
   return response.data;
 };
 
-export const getDownload = async id => {
+export const getDownload = async (id: string) => {
   const response = await tower.get(`/downloads/${id}`);
   return response.data as DownloadType;
 };
 
-export const getDownloadMedium = async id => {
+export const getDownloadMedium = async (id: string) => {
   const response = await tower.get(`/downloads/${id}/medium`);
   return response.data;
 };
@@ -35,13 +35,17 @@ export const putDownload = async (id: string, download: DownloadType) => {
   const response = await tower.put(`/downloads/${id}`, download);
   return response.data;
 };
-export const putDownloadSelect = async (id, data) => {
+export const putDownloadSelect = async (id: string, data: DownloadSelection) => {
   const response = await tower.put(`/downloads/${id}/select`, data);
   return response.data as DownloadType;
 };
-export const patchDownload = async (id, data) => {
+export const patchDownload = async (id: string, data: Setting) => {
   const response = await tower.patch(`/downloads/${id}`, data);
   return response.data as DownloadType;
+};
+export const createDownload = async (medium_id: string) => {
+  const response = await tower.post(`/downloads/`, { medium_id });
+  return response.data;
 };
 
 export const useDownloadsActiveQuery = () =>
@@ -114,5 +118,11 @@ export const useDownloadSelectionMutation = id => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['downloads', id] });
     },
+  });
+};
+
+export const useDownloadCreateMutation = () => {
+  return useMutation({
+    mutationFn: (medium_id: string) => createDownload(medium_id),
   });
 };
