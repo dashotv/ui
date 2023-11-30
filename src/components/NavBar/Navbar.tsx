@@ -9,6 +9,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import AppBar from '@mui/material/AppBar';
 import MUIContainer from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/system/Box';
@@ -109,15 +110,16 @@ export const NavBar = () => {
     <>
       <AppBar position="static">
         <MUIContainer sx={{ overflow: 'hidden' }} maxWidth="xl">
-          <Toolbar disableGutters sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Nav {...{ pages, matchPath, matchAny }} />
-            <Box sx={{ height: '54px' }}>
+          <Toolbar disableGutters sx={{ display: 'flex' }}>
+            <Stack spacing={0} direction="row" alignItems="center" flexGrow={1} display={{ xs: 'none', md: 'flex' }}>
+              <Nav {...{ pages, matchPath, matchAny }} />
+            </Stack>
+            <Stack spacing={0} direction="row" alignItems="center" flexGrow={1} display={{ xs: 'flex', md: 'none' }}>
+              <NavSmall {...{ pages, matchPath, matchAny }} />
+            </Stack>
+            <Box sx={{ height: '54px', display: { xs: 'none', md: 'flex' } }}>
               <Gauges />
             </Box>
-            <Admin />
-          </Toolbar>
-          <Toolbar disableGutters sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <NavSmall {...{ pages, matchPath, matchAny }} />
             <Admin />
           </Toolbar>
         </MUIContainer>
