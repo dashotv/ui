@@ -4,6 +4,21 @@ import { Nzb, NzbResponseStatus } from 'components/Nzbgeek/types';
 import { useSub } from 'hooks/useSub';
 import { Torrent } from 'types/torrents';
 
+export function useRelease(thash: string) {
+  const { torrents, nzbs, nzbStatus, progress, eta, queue, files, torrentState } = useReleases();
+
+  return {
+    torrent: torrents?.get(thash),
+    nzb: nzbs?.get(Number(thash)),
+    nzbStatus,
+    progress: progress(thash),
+    eta: eta(thash),
+    queue: queue(thash),
+    files: files(thash),
+    torrentState: torrentState(thash),
+  };
+}
+
 export function useReleases() {
   const [torrents, setTorrents] = useState<Map<string, Torrent> | null>(null);
   const [nzbs, setNzbs] = useState<Map<number, Nzb> | null>(null);

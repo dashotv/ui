@@ -14,9 +14,8 @@ import Stack from '@mui/material/Stack';
 import { useNats } from '@quara-dev/react-nats-context';
 
 import { useDownloadsLastQuery } from 'components/Downloads';
-import { NzbResponse } from 'components/Nzbgeek/types';
+import { useMetrics } from 'hooks/useMetrics';
 import { useSub } from 'hooks/useSub';
-import { TorrentsResponse } from 'types/torrents';
 
 import './gauges.scss';
 
@@ -120,33 +119,12 @@ function BaseGauge({ icon, value, color }: GaugeProps) {
 }
 
 export function Gauges() {
-  const [nzbs, setNzbs] = useState('0.0');
-  const [torrents, setTorrents] = useState('0.0');
-  const [diskFree, setDiskFree] = useState('0.0');
-
-  useSub(
-    'flame.qbittorrents',
-    useCallback((data: TorrentsResponse) => {
-      const download = (data.DownloadRate / 1000).toFixed(1);
-      setTorrents(download);
-    }, []),
-  );
-
-  useSub(
-    'flame.nzbs',
-    useCallback((data: NzbResponse) => {
-      const download = (data.Status.DownloadRate / 1000).toFixed(1);
-      setNzbs(download);
-
-      const free = (data.Status.FreeDiskSpaceMB / 1000).toFixed(1);
-      setDiskFree(free);
-    }, []),
-  );
+  const { diskfree, torrents, nzbs } = useMetrics();
 
   return (
     <Stack spacing={1} direction="row" alignItems="center" sx={{ height: '51px', pt: 1.3, pb: 1 }}>
       <CountdownGauge color="primary" />
-      <DiskGauge value={diskFree} color={Number(diskFree) > 25.0 ? 'primary' : 'warning'} />
+      <DiskGauge value={diskfree} color={Number(diskfree) > 25.0 ? 'primary' : 'warning'} />
       <NzbsGauge value={nzbs} color="primary" />
       <TorrentsGauge value={torrents} color="primary" />
       <NatsGauge />
