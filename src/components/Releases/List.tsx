@@ -31,7 +31,14 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
   const [viewing, setViewing] = React.useState<Release | null>(null);
 
   const toggleVerified = row => {
-    releaseUpdate.mutate({ id: row.id, setting: { setting: 'verified', value: !row.verified } });
+    releaseUpdate.mutate(
+      { id: row.id, setting: { setting: 'verified', value: !row.verified } },
+      {
+        onSuccess: () => {
+          row.verified = !row.verified;
+        },
+      },
+    );
   };
 
   const handleClose = () => setOpen(false);
