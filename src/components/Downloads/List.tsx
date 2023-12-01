@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 
-import { useRelease } from 'hooks/useReleases';
+import { useReleases } from 'hooks/useReleases';
 
 import { DownloadBanner, DownloadType } from '.';
 
 export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
+  const { release } = useReleases();
   return (
     <>
       {downloads?.map(({ id, thash, status, multi, medium: { title, display, cover, background } }: DownloadType) => {
@@ -17,7 +18,7 @@ export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
           queue,
           files: { files: f, total: t },
           torrentState,
-        } = useRelease(thash);
+        } = release(thash);
         // const { files: f, total: t } = multi ? files(thash) : { files: 0, total: 0 };
         // const p = progress(thash)?.toFixed(1);
         // const q = queue(thash)?.toString();
