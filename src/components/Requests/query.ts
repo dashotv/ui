@@ -10,7 +10,7 @@ export const getRequests = async (page: number) => {
 };
 
 export const setRequestStatus = async (r: Request) => {
-  const response = await tower.put(`/api/tower/requests/${r.id}`, r);
+  const response = await tower.put(`/requests/${r.id}`, r);
   return response.data;
 };
 
