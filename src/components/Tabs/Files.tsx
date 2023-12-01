@@ -128,11 +128,11 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
           >
             {num}
           </Typography>
-          <Typography maxWidth="100%" variant="h6" noWrap color="primary">
+          <Typography minWidth="100px" maxWidth="100%" variant="h6" noWrap color="primary">
             {name(torrent_file?.name)}
           </Typography>
           {medium && (
-            <Typography width={{ xs: '100%', md: '225px' }} variant="subtitle2" noWrap color="gray">
+            <Typography minWidth="100px" width={{ xs: '100%', md: '225px' }} variant="subtitle2" noWrap color="gray">
               {season_number}x{episode_number}
               {absolute_number ? ` #${absolute_number}` : ''} {title} {display}
             </Typography>
@@ -148,7 +148,7 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
           >
             {num}
           </Typography>
-          <Typography minWidth="75px" variant="subtitle2" noWrap color="secondary" textAlign="right">
+          <Typography minWidth="125px" variant="subtitle2" noWrap color="secondary" textAlign="right">
             {progress(torrent_file?.progress)}
           </Typography>
           <Typography minWidth="85px" variant="subtitle2" noWrap color="gray" textAlign="right">
