@@ -35,7 +35,7 @@ export function RequestStatus({ status }: { status: string }) {
     case 'failed':
       return <ErrorIcon fontSize="small" color="error" />;
     default:
-      return <PendingIcon fontSize="small" color="secondary" />;
+      return <PendingIcon fontSize="small" color="disabled" />;
   }
 }
 
