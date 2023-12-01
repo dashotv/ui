@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 
 import { ButtonMap, ButtonMapButton } from 'components/Common';
 import { DownloadFile } from 'components/Downloads';
+import { useTorrentWantMutation } from 'query/releases';
 import { Torrent } from 'types/torrents';
 
 export function Files({
@@ -42,7 +43,7 @@ export function Files({
   return (
     <Paper elevation={0}>
       {sortedFiles(files, torrent).map(row => (
-        <FilesRow key={row.num} file={row} open={open} clear={clear} />
+        <FilesRow key={row.num} file={row} thash={torrent?.Hash} open={open} clear={clear} />
       ))}
     </Paper>
   );
@@ -51,10 +52,12 @@ export function Files({
 interface FilesRowProps {
   open: (num: number, name: string | undefined) => void;
   clear: (num: number) => void;
+  thash?: string;
   file: DownloadFile;
 }
-function FilesRow({ open, clear, file: { num, torrent_file, medium } }: FilesRowProps) {
+function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: FilesRowProps) {
   const { season_number, episode_number, absolute_number, title, display } = medium || {};
+  const { mutate: want } = useTorrentWantMutation();
   function size(raw: number | undefined) {
     if (raw === undefined) {
       return;
@@ -96,7 +99,12 @@ function FilesRow({ open, clear, file: { num, torrent_file, medium } }: FilesRow
     {
       Icon: StarsIcon,
       color: torrent_file?.priority && torrent_file.priority > 0 ? 'secondary' : 'action',
-      click: () => {},
+      click: () => {
+        if (!torrent_file || !thash) {
+          return;
+        }
+        want({ hash: thash, id: torrent_file?.id });
+      },
       title: 'priority',
     },
   ];
