@@ -112,8 +112,11 @@ export interface Path {
   remote?: string;
   local?: string;
   extension?: string;
-  size?: bigint;
+  size?: number;
   updated_at?: Date;
+  bitrate?: number;
+  checksum?: string;
+  resolution?: number;
 }
 export interface SearchParams {
   type?: string;
