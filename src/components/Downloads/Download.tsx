@@ -14,7 +14,7 @@ import { MediaTo, Medium } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
 import { Release } from 'components/Releases';
 import { FilesWithSelector, MediumTabs, Nzbgeek, Torch } from 'components/Tabs';
-import { useReleaseMetrics } from 'hooks/useMetrics';
+import { useDownloadingId } from 'hooks/downloading';
 import { useTorrentRemoveMutation } from 'query/releases';
 import { Torrent } from 'types/torrents';
 
@@ -56,7 +56,7 @@ export function Download({
     medium: { cover, background, title, display },
   } = download;
   const torrentRemove = useTorrentRemoveMutation();
-  const { progress, eta, queue, torrentState } = useReleaseMetrics(thash);
+  const { progress, eta, queue, torrent_state } = useDownloadingId(id);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -130,7 +130,7 @@ export function Download({
         statusAction={() => {
           setOpen(true);
         }}
-        torrentState={torrentState}
+        torrentState={torrent_state}
         progress={progress}
         queue={queue}
         eta={eta?.toString()}

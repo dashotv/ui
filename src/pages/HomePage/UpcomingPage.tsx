@@ -10,7 +10,7 @@ import { DownloadList, DownloadType, useDownloadsActiveQuery } from 'components/
 import { Container } from 'components/Layout';
 import { Media } from 'components/Media';
 import { Episode } from 'components/Media';
-import { useSub } from 'hooks/useSub';
+import { useSub } from 'hooks/sub';
 import { useUpcomingQuery } from 'query/upcoming';
 import { EventDownload, EventEpisode } from 'types/events';
 

@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { LoadingIndicator } from 'components/Common';
 import { Container } from 'components/Layout';
 import { RequestsList, useRequestsQuery } from 'components/Requests';
-import { useSub } from 'hooks/useSub';
+import { useSub } from 'hooks/sub';
 
 export default function RequestsPage() {
   const [page] = useState(1);

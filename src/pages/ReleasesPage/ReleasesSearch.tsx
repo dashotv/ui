@@ -14,7 +14,7 @@ import { ButtonMap, ButtonMapButton, LoadingIndicator } from 'components/Common'
 import { Container } from 'components/Layout';
 import { ReleasesForm, ReleasesList, ReleasesPresets, useReleasesQuery } from 'components/Releases';
 import { SearchForm } from 'components/Releases';
-import { useQueryString } from 'hooks/useQueryString';
+import { useQueryString } from 'hooks/queryString';
 
 const pagesize = 25;
 const formDefaults: SearchForm = {

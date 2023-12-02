@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 import { ButtonMap, ButtonMapButton, LoadingIndicator } from 'components/Common';
 import { Medium } from 'components/Media/types';
 import { Release, ReleasesForm, ReleasesList, SearchForm, useReleasesQuery } from 'components/Releases';
-import { useQueryString } from 'hooks/useQueryString';
+import { useQueryString } from 'hooks/queryString';
 
 const pagesize = 25;
 

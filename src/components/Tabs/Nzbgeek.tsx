@@ -8,7 +8,7 @@ import { Medium } from 'components/Media/types';
 import { NzbgeekForm, NzbgeekResults, NzbgeekSearch } from 'components/Nzbgeek';
 import { Nzbgeek as NzbgeekType, useNzbSearchTvQuery } from 'components/Nzbgeek';
 import { Release } from 'components/Releases';
-import { useQueryString } from 'hooks/useQueryString';
+import { useQueryString } from 'hooks/queryString';
 
 const formdata = (medium: Medium): NzbgeekForm => {
   const { source_id, season_number, episode_number } = medium;

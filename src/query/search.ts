@@ -3,7 +3,7 @@ import { scry } from 'utils/axios';
 import { useQuery } from '@tanstack/react-query';
 
 import { Medium } from 'components/Media/types';
-import { objectToQueryString } from 'hooks/useQueryString';
+import { objectToQueryString } from 'hooks/queryString';
 import { SearchAllResponse } from 'types/search';
 
 export const getSearch = async (search: string) => {

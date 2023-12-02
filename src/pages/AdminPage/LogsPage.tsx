@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { LoadingIndicator } from 'components/Common';
 import { Container } from 'components/Layout';
 import { Log, LogsList, useLogsQuery } from 'components/Logs';
-import { useSub } from 'hooks/useSub';
+import { useSub } from 'hooks/sub';
 import { EventLog } from 'types/events';
 
 export default function JobsPage() {

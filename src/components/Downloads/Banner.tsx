@@ -19,9 +19,9 @@ export type DownloadBannerProps = {
   status?: DownloadStatus;
   statusAction?: () => void;
   torrentState?: string;
-  progress?: string;
+  progress?: string | number;
   eta?: string;
-  queue?: string;
+  queue?: string | number;
   buttons?: ButtonMapButton[];
   unwatched?: number;
   progressBar?: boolean;
@@ -49,13 +49,37 @@ export const DownloadBanner = ({
   files,
   total,
 }: DownloadBannerProps) => {
+  const Queue = ({ value }: { value: string | number | undefined }) => {
+    if (!value) {
+      return null;
+    }
+    return <Chip label={value} size="small" />;
+  };
+  const Status = ({ status, action }: { status?: DownloadStatus; action?: () => void }) => {
+    if (!status) {
+      return null;
+    }
+    return <DownloadIconButton {...{ status, action }} />;
+  };
+  const Progress = ({ progress }: { progress?: string | number }) => {
+    if (!progress) {
+      return null;
+    }
+    return <span>{Number(progress).toFixed(1)}%</span>;
+  };
+  const Eta = ({ eta }: { eta?: string }) => {
+    if (!eta) {
+      return null;
+    }
+    return <Chrono fromNow>{eta}</Chrono>;
+  };
   function tertiary() {
     return (
       <Stack spacing={1} direction="row" alignItems="center">
-        {queue && <Chip label={queue} size="small" />}
-        {status && <DownloadIconButton status={status} action={statusAction} />}
-        {progress && <span>{Number(progress).toFixed(1)}%</span>}
-        {eta && <Chrono fromNow>{eta}</Chrono>}
+        <Queue value={queue} />
+        <Status {...{ status, action: statusAction }} />
+        <Progress {...{ progress }} />
+        <Eta {...{ eta }} />
       </Stack>
     );
   }
@@ -87,7 +111,7 @@ export const DownloadBanner = ({
 };
 export interface DownloadAdornmentProps {
   progressBar?: boolean;
-  progress?: string;
+  progress?: string | number;
   multi?: boolean;
   files?: number;
   total?: number;
@@ -96,13 +120,16 @@ export interface DownloadAdornmentProps {
 const DownloadAdornments = ({ progressBar, progress, multi, files, total, torrentState }: DownloadAdornmentProps) => {
   return (
     <>
-      {torrentState && <DownloadState {...{ torrentState }} />}
-      {progressBar && progress && <DownloadProgressBar {...{ progress, multi, files, total }} />}
+      <DownloadState {...{ torrentState }} />
+      <DownloadProgressBar enabled={progressBar} {...{ progress, multi, files, total }} />
     </>
   );
 };
 
-const DownloadState = ({ torrentState }: { torrentState: string }) => {
+const DownloadState = ({ torrentState }: { torrentState?: string }) => {
+  if (!torrentState) {
+    return null;
+  }
   switch (torrentState) {
     case 'error':
       return (
@@ -122,16 +149,21 @@ const DownloadState = ({ torrentState }: { torrentState: string }) => {
 };
 
 const DownloadProgressBar = ({
+  enabled,
   progress,
   multi,
   files,
   total,
 }: {
-  progress: string;
+  enabled?: boolean;
+  progress?: string | number;
   multi?: boolean;
   files?: number;
   total?: number;
 }) => {
+  if (!enabled || !progress) {
+    return null;
+  }
   const theme = useTheme();
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;

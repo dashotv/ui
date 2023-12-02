@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
@@ -13,8 +13,7 @@ import {
 import { Container } from 'components/Layout';
 import { Nzbgeek } from 'components/Nzbgeek/types';
 import { Release } from 'components/Releases/types';
-import { useReleases } from 'hooks/useReleases';
-import { Torrent } from 'types/torrents';
+import { useDownloadingId } from 'hooks/downloading';
 
 export default function DownloadsShowPage() {
   const { id } = useParams();
@@ -24,20 +23,21 @@ export default function DownloadsShowPage() {
 
   const { isFetching: downloadFetching, data: download } = useDownloadQuery(id);
   const { isFetching: mediaFetching, data: media } = useDownloadMediumQuery(id);
-  const [torrent, setTorrent] = useState<Torrent | undefined>(undefined);
-  const { torrents } = useReleases();
+  // const [torrent, setTorrent] = useState<Torrent | undefined>(undefined);
+  // const { torrents } = useReleases();
   const downloadUpdate = useDownloadMutation(id);
   const downloadSelection = useDownloadSelectionMutation(id);
+  const { torrent } = useDownloadingId(id);
 
-  useEffect(() => {
-    if (!torrents || !download || !download.thash) {
-      return;
-    }
-    const t = torrents.get(download.thash);
-    if (t) {
-      setTorrent(t);
-    }
-  }, [torrents, download]);
+  // useEffect(() => {
+  //   if (!torrents || !download || !download.thash) {
+  //     return;
+  //   }
+  //   const t = torrents.get(download.thash);
+  //   if (t) {
+  //     setTorrent(t);
+  //   }
+  // }, [torrents, download]);
 
   const changeInfo = useCallback(
     info => {

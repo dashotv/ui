@@ -2,7 +2,7 @@ import React from 'react';
 
 import Link from '@mui/material/Link';
 
-import { useQueryString } from 'hooks/useQueryString';
+import { useQueryString } from 'hooks/queryString';
 
 import { Popular } from '.';
 import './popular.scss';

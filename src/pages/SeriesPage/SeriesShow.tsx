@@ -14,7 +14,7 @@ import {
   useSeriesSeasonEpisodesQuery,
   useSeriesSettingMutation,
 } from 'components/Media';
-import { useSub } from 'hooks/useSub';
+import { useSub } from 'hooks/sub';
 import { EventSeries } from 'types/events';
 
 export default function SeriesShow() {

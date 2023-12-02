@@ -15,7 +15,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/system/Box';
 
 import { Gauges } from 'components/Guages';
-import { useSub } from 'hooks/useSub';
+import { useSub } from 'hooks/sub';
 import { EventNotice } from 'types/events';
 
 import { Admin } from './Admin';

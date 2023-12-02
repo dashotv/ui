@@ -14,8 +14,8 @@ import Stack from '@mui/material/Stack';
 import { useNats } from '@quara-dev/react-nats-context';
 
 import { useDownloadsLastQuery } from 'components/Downloads';
-import { useMetrics } from 'hooks/useMetrics';
-import { useSub } from 'hooks/useSub';
+import { useMetrics } from 'hooks/metrics';
+import { useSub } from 'hooks/sub';
 
 import './gauges.scss';
 

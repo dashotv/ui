@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import SvgIcon from '@mui/material/SvgIcon';
 
-import { useSub } from 'hooks/useSub';
+import { useSub } from 'hooks/sub';
 
 export const Messages = () => {
   const [color, setColor] = useState<'inherit' | 'warning'>('inherit');
