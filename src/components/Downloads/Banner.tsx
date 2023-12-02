@@ -53,7 +53,7 @@ export const DownloadBanner = ({
     if (!queue) {
       return null;
     }
-    return <Chip label={1} size="small" />;
+    return <Chip label={queue} size="small" />;
   };
   const Status = ({ status, action }: { status?: DownloadStatus; action?: () => void }) => {
     if (!status) {
