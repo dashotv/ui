@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Path } from 'components/Media';
-import { Details, Paths, RoutingTabs, RoutingTabsRoute } from 'components/Tabs';
+import { Details, Paths, RoutingTabs, RoutingTabsRoute, Watches } from 'components/Tabs';
 
 import { MovieType } from './types';
 
@@ -29,8 +29,8 @@ export const MovieTabs = ({ id, paths, movie }: MovieTabsProps) => {
     },
     {
       label: 'Watches',
-      to: 'watches',
-      element: <div>watches</div>,
+      to: `watches`,
+      element: <Watches medium_id={id} />,
     },
   ];
   return <RoutingTabs data={tabsMap} route={`/movies/${id}`} />;

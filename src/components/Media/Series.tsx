@@ -28,7 +28,7 @@ export type SeriesProps = {
 export function Series({
   id,
   series,
-  series: { active, broken, favorite, seasons, watches, paths },
+  series: { active, broken, favorite, seasons, paths },
   episodes,
   currentSeason,
   changeSeason,
@@ -67,7 +67,7 @@ export function Series({
     {
       label: 'Watches',
       to: `watches`,
-      element: <Watches data={watches} />,
+      element: <Watches medium_id={id} />,
     },
   ];
 
