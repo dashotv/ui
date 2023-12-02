@@ -9,7 +9,6 @@ import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCirc
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
 import { ButtonMapButton } from 'components/Common';
-import { DownloadInfo } from 'components/Downloads';
 import { MediaTo, Medium } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
 import { Release } from 'components/Releases';
@@ -18,7 +17,7 @@ import { useDownloadingId } from 'hooks/downloading';
 import { useTorrentRemoveMutation } from 'query/releases';
 import { Torrent } from 'types/torrents';
 
-import { DownloadBanner, DownloadFile, DownloadType } from '.';
+import { DownloadBanner, DownloadFile, DownloadInfo, DownloadType } from '.';
 
 export type DownloadProps = {
   id: string;
