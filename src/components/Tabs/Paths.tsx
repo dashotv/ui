@@ -7,7 +7,6 @@ import ImageIcon from '@mui/icons-material/Image';
 import MovieIcon from '@mui/icons-material/Movie';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Theme } from '@mui/material';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
