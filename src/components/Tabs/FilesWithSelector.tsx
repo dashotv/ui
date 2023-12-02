@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import { WrapErrorBoundary } from 'components/Common';
 import { DownloadFile } from 'components/Downloads';
 import { Medium } from 'components/Media/types';
 import { Torrent } from 'types/torrents';
@@ -106,7 +107,7 @@ export function FilesWithSelector({
   }, [setTracking, files]);
 
   return (
-    <>
+    <WrapErrorBoundary>
       <Files files={files} torrent={torrent} open={handleClickOpen} clear={handleClickClear} />
       <Dialog
         open={open}
@@ -147,6 +148,6 @@ export function FilesWithSelector({
           ))}
         </DialogContent>
       </Dialog>
-    </>
+    </WrapErrorBoundary>
   );
 }

@@ -4,7 +4,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 import Paper from '@mui/material/Paper';
 
-import { ButtonMap, ButtonMapButton, LoadingIndicator } from 'components/Common';
+import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
 import { Medium } from 'components/Media/types';
 import { Release, ReleasesForm, ReleasesList, SearchForm, useReleasesQuery } from 'components/Releases';
 import { useQueryString } from 'hooks/queryString';
@@ -100,12 +100,12 @@ export function Torch({
   }
 
   return (
-    <>
+    <WrapErrorBoundary>
       {releases.isFetching && <LoadingIndicator />}
       <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
         <ReleasesForm form={form} setForm={setForm} reset={() => setForm(initial)} />
       </Paper>
       <ReleasesList data={releases.data?.Releases} actions={renderActions} selected={selected} />
-    </>
+    </WrapErrorBoundary>
   );
 }

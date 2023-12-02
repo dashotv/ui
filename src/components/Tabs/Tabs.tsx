@@ -4,6 +4,8 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
+import { WrapErrorBoundary } from 'components/Common';
+
 import { TabPanel } from '.';
 
 export interface MediumTabMap {
@@ -17,22 +19,24 @@ export function MediumTabs({ data }: { data: MediumTabMap }) {
 
   return (
     <div className="tabs">
-      <Box maxWidth="xl">
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="scrollable">
-            {Object.keys(data).map((k, i) => {
-              return <Tab key={i} label={k} id={`simple-tabs-${i}`} />;
-            })}
-          </Tabs>
+      <WrapErrorBoundary>
+        <Box maxWidth="xl">
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="scrollable">
+              {Object.keys(data).map((k, i) => {
+                return <Tab key={i} label={k} id={`simple-tabs-${i}`} />;
+              })}
+            </Tabs>
+          </Box>
         </Box>
-      </Box>
-      {Object.keys(data).map((k, i) => {
-        return (
-          <TabPanel key={i} index={i} value={value}>
-            {data[k]}
-          </TabPanel>
-        );
-      })}
+        {Object.keys(data).map((k, i) => {
+          return (
+            <TabPanel key={i} index={i} value={value}>
+              {data[k]}
+            </TabPanel>
+          );
+        })}
+      </WrapErrorBoundary>
     </div>
   );
 }

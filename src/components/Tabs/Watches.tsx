@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { Chrono, LoadingIndicator } from 'components/Common';
+import { Chrono, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
 import { Watch } from 'components/Media/types';
 
 const getWatches = async (medium_id: string) => {
@@ -27,10 +27,10 @@ const useWatchesQuery = (medium_id: string) =>
 export function Watches({ medium_id }: { medium_id: string }) {
   const { isFetching, data } = useWatchesQuery(medium_id);
   return (
-    <>
+    <WrapErrorBoundary>
       {isFetching && <LoadingIndicator />}
       <Paper elevation={0}>{data?.map(watch => <WatchRow key={watch.id} {...watch} />)}</Paper>
-    </>
+    </WrapErrorBoundary>
   );
 }
 
