@@ -49,11 +49,11 @@ export const DownloadBanner = ({
   files,
   total,
 }: DownloadBannerProps) => {
-  const Queue = ({ value }: { value: string | number | undefined }) => {
-    if (!value) {
+  const Queue = ({ queue }: { queue: string | number | undefined }) => {
+    if (!queue) {
       return null;
     }
-    return <Chip label={value} size="small" />;
+    return <Chip label={1} size="small" />;
   };
   const Status = ({ status, action }: { status?: DownloadStatus; action?: () => void }) => {
     if (!status) {
@@ -76,7 +76,7 @@ export const DownloadBanner = ({
   function tertiary() {
     return (
       <Stack spacing={1} direction="row" alignItems="center">
-        <Queue value={queue} />
+        <Queue {...{ queue }} />
         <Status {...{ status, action: statusAction }} />
         <Progress {...{ progress }} />
         <Eta {...{ eta }} />
@@ -174,7 +174,7 @@ const DownloadProgressBar = ({
     }
     const rows: React.ReactElement[] = [];
     for (let i = 0; i < total; i++) {
-      rows.push(<div className="file" style={{ backgroundColor: i < files ? primary : disabled }}></div>);
+      rows.push(<div key={i} className="file" style={{ backgroundColor: i < files ? primary : disabled }}></div>);
     }
     return (
       <Stack sx={{ width: '100%' }} direction="row" spacing="3px" className="multibar">
