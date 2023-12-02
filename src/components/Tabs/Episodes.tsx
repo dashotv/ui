@@ -7,11 +7,12 @@ import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Theme, useMediaQuery } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap, ButtonMapButton, Chrono } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution } from 'components/Common';
 import { useDownloadCreateMutation } from 'components/Downloads';
 import { Episode } from 'components/Media/types';
 
@@ -30,7 +31,7 @@ export function Episodes({
 }
 
 function EpisodeRow({
-  episode: { id, title, watched, episode_number: number, release_date: release, ...episode },
+  episode: { id, title, watched, episode_number: number, release_date: release, paths, ...episode },
   changeEpisode,
 }: {
   episode: Episode;
@@ -44,6 +45,7 @@ function EpisodeRow({
   const [skipped, setSkipped] = useState(episode.skipped);
   const [completed, setCompleted] = useState(episode.completed);
   const [downloaded, setDownloaded] = useState(episode.downloaded);
+  const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
   const buttons: ButtonMapButton[] = [
     {
@@ -99,44 +101,47 @@ function EpisodeRow({
     },
   ];
 
+  const video = paths && paths.filter(path => path.type === 'video')[0];
+
+  const Res = () => {
+    if (!video) {
+      return null;
+    }
+    return <Resolution resolution={video.resolution} />;
+  };
+
+  const Size = () => {
+    if (!video || !video.size) {
+      return null;
+    }
+    return <Megabytes value={video.size} ord="bytes" />;
+  };
+
   return (
     <Paper elevation={1} sx={{ width: '100%', mb: 1, pr: 1, pl: 1 }}>
       <Stack width="100%" minWidth="0" direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
-        <Stack width="100%" minWidth="0" direction="row" spacing={0} alignItems="center">
-          <Typography
-            display={{ xs: 'none', md: 'inherit' }}
-            noWrap
-            variant="subtitle1"
-            color="textSecondary"
-            minWidth="38px"
-          >
+        <Stack width="100%" minWidth="0" direction="row" spacing={1} alignItems="center">
+          <Typography noWrap variant="subtitle1" color="textSecondary" minWidth="34px">
             {number}
           </Typography>
           <Typography noWrap variant="h6" color="primary">
             {title}
           </Typography>
+          {matches && <Res />}
         </Stack>
         <Stack
           direction="row"
           spacing={1}
           minWidth="0"
           width={{ xs: '100%', md: 'auto' }}
-          justifyContent={{ md: 'end', xs: 'space-between' }}
+          alignItems="center"
+          justifyContent="end"
         >
-          <Stack minWidth="0" direction="row" spacing={1} alignItems="center">
-            <Typography
-              display={{ xs: 'inherit', md: 'none' }}
-              noWrap
-              variant="subtitle1"
-              color="textSecondary"
-              minWidth="28px"
-            >
-              {number}
-            </Typography>
-            <Typography color="gray" variant="button" minWidth="125px" noWrap>
-              <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
-            </Typography>
-          </Stack>
+          {!matches && <Res />}
+          <Size />
+          <Typography color="gray" variant="button" minWidth="85px" textAlign="right" noWrap>
+            <Chrono format="YYYY-MM-DD">{release?.toString()}</Chrono>
+          </Typography>
           <ButtonMap buttons={buttons} size="small" />
         </Stack>
       </Stack>
