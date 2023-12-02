@@ -25,6 +25,7 @@ export const useDownloading = () => {
   const [event, setEvent] = useState<EventDownloading | null>(null);
 
   useSub('tower.downloading', (data: EventDownloading) => {
+    // console.log('tower.downloading', data);
     setEvent(data);
   });
 
@@ -32,10 +33,10 @@ export const useDownloading = () => {
     if (!event) {
       return def;
     }
-    if (event.hashes[id_or_thash]) {
+    if (event.hashes && event.hashes[id_or_thash]) {
       return hash(id_or_thash);
     }
-    if (event.downloads[id_or_thash]) {
+    if (event.downloads && event.downloads[id_or_thash]) {
       return download(id_or_thash);
     }
     return def;
