@@ -43,9 +43,18 @@ export default function UpcomingPage() {
   const updateUpcoming = useCallback(
     (data: EventEpisode) => {
       if (data.event === 'updated') {
-        queryClient.setQueryData(['media', 'upcoming'], (prev: Episode[]) =>
-          prev.map(e => (e.id === data.id ? data.episode : e)),
-        );
+        if (data.episode.downloaded) {
+          queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) =>
+            prev.filter(e => e.id !== data.episode.id),
+          );
+        } else {
+          queryClient.setQueryData(['media', 'upcoming'], (prev: Episode[]) => {
+            if (prev.filter(e => e.id === data.id).length === 0) {
+              return [...prev, data.episode];
+            }
+            return prev.map(e => (e.id === data.id ? data.episode : e));
+          });
+        }
       }
     },
     [queryClient],
