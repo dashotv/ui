@@ -61,13 +61,21 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
           alignItems="center"
           justifyContent="end"
         >
-          <Typography title={name} variant="button" color="secondary" noWrap maxWidth="100px">
+          <Typography
+            title={name}
+            variant="button"
+            color="secondary"
+            noWrap
+            minWidth="100px"
+            maxWidth="125px"
+            textAlign="right"
+          >
             {name}
           </Typography>
-          <Typography variant="button" color={color} maxWidth="50px" noWrap>
+          <Typography minWidth="50px" variant="button" color={color} maxWidth="75px" noWrap textAlign="right">
             {levelName}
           </Typography>
-          <Typography variant="subtitle2" color="gray" noWrap>
+          <Typography minWidth="125px" variant="subtitle2" color="gray" noWrap textAlign="right">
             <Chrono fromNow>{created_at}</Chrono>
           </Typography>
         </Stack>
