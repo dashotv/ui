@@ -19,6 +19,7 @@ export function Media({ data }: { type: string; data: Medium[] }) {
         return `/${type}/404`;
     }
   };
+
   return (
     <>
       {data &&
@@ -32,7 +33,6 @@ export function Media({ data }: { type: string; data: Medium[] }) {
             </Grid>
           );
         })}
-      ;
     </>
   );
 }

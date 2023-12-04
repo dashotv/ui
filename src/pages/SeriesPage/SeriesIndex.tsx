@@ -30,7 +30,6 @@ export default function SeriesIndex() {
         <title>Series</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-
       <Container>
         <Grid container>
           <Grid item xs={12} md={6}></Grid>
@@ -46,7 +45,6 @@ export default function SeriesIndex() {
           </Grid>
         </Grid>
       </Container>
-
       <Container>
         <Grid container spacing={1}>
           {isFetching && <LoadingIndicator />}
