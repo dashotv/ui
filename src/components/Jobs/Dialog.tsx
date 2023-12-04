@@ -8,6 +8,9 @@ import { Chrono } from 'components/Common';
 import { Job } from './types';
 
 const Args = ({ args }: { args: string }) => {
+  if (args === '{}') {
+    return null;
+  }
   return (
     <div className="args">
       <pre style={{ fontSize: '12px', padding: '10px', backgroundColor: '#121212' }}>
@@ -111,7 +114,7 @@ export const JobsDialog = ({ close, job: { id, kind, status, args, attempts } }:
         </Stack>
 
         <Typography variant="subtitle1" color="textSecondary">
-          Args
+          Args {args === '{}' ? '(none)' : ''}
         </Typography>
         <Args {...{ args }} />
         <Typography variant="subtitle1" color="textSecondary">

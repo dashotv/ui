@@ -19,27 +19,13 @@ export const Default: Story = {
       id: '134qrer135',
       kind: 'Important',
       status: 'completed',
-      args: '{"foo": "bar", "baz": "qux"}',
+      args: '{}',
       attempts: [
         {
           started_at: new Date(),
           duration: 34,
           error: 'holy shit fuck, it messed up',
           status: 'failed',
-          stacktrace: ['oops.go:32', 'totally_fucked.go:28'],
-        },
-        {
-          started_at: new Date(),
-          duration: 34,
-          error: 'holy shit fuck, it messed up',
-          status: 'error',
-          stacktrace: ['oops.go:32', 'totally_fucked.go:28'],
-        },
-        {
-          started_at: new Date(),
-          duration: 34,
-          error: 'holy shit fuck, it messed up',
-          status: 'error',
           stacktrace: ['oops.go:32', 'totally_fucked.go:28'],
         },
         {

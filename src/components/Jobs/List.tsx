@@ -47,25 +47,19 @@ export function JobRow({ id, kind, status, attempts }: Job) {
   const { started_at, duration, error } = (attempts && attempts.length > 0 && attempts[attempts.length - 1]) || {};
   return (
     <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
-      <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} width="100%" alignItems="center">
-        <Stack
-          direction="row"
-          spacing={1}
-          alignItems="center"
-          justifyContent="start"
-          width={{ xs: '100%', md: 'auto' }}
-        >
+      <Stack width="100%" direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
+        <Stack width="100%" direction="row" spacing={1} alignItems="center" justifyContent="start">
           <Icon status={status} />
-          <Typography minWidth="0" width="100%" color={status === 'failed' ? 'error' : 'primary'} noWrap>
+          <Typography minWidth="0" color={status === 'failed' ? 'error' : 'primary'} noWrap>
             {kind}
           </Typography>
           {error && (
-            <Typography variant="caption" color="error">
+            <Typography variant="caption" color="error" minWidth="0" noWrap>
               {error}
             </Typography>
           )}
         </Stack>
-        <Stack width="100%" direction="row" spacing={1} alignItems="center" justifyContent="end">
+        <Stack minWidth="150px" direction="row" spacing={1} alignItems="center" justifyContent="end">
           <Typography variant="caption" color="action">
             {duration ? `${duration.toFixed(1)}s` : ''}
           </Typography>
