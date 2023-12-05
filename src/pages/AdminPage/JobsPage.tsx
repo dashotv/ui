@@ -25,12 +25,7 @@ export default function JobsPage() {
     }
     if (data.event === 'updated') {
       queryClient.setQueryData(['jobs', page], (prev: Job[]) => {
-        return prev.map(job => {
-          if (job.id === data.id) {
-            return data.job;
-          }
-          return job;
-        });
+        return [...prev.map(job => (job.id === data.id ? data.job : job))];
       });
       return;
     }

@@ -42,8 +42,30 @@ const Icon = ({ status }: { status: string }) => {
       return <PendingIcon fontSize="small" color="disabled" />;
   }
 };
+const Error = ({ error }: { error?: string }) => {
+  if (!error) return null;
+  return (
+    <Typography variant="caption" color="error" minWidth="0" noWrap>
+      {error}
+    </Typography>
+  );
+};
+const Title = ({ args }: { args: string }) => {
+  if (args === '{}') return null;
+  const parsed = JSON.parse(args);
+  if (parsed && !parsed.Title) return null;
+  return (
+    <Typography variant="caption" color="gray" minWidth="0" noWrap>
+      {parsed.Title}
+    </Typography>
+  );
+};
+const ErrorOrTitle = ({ error, args }: { error?: string; args: string }) => {
+  if (error) return <Error error={error} />;
+  return <Title args={args} />;
+};
 
-export function JobRow({ id, kind, status, attempts }: Job) {
+export function JobRow({ id, kind, status, args, attempts }: Job) {
   const { started_at, duration, error } = (attempts && attempts.length > 0 && attempts[attempts.length - 1]) || {};
   return (
     <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
@@ -53,11 +75,7 @@ export function JobRow({ id, kind, status, attempts }: Job) {
           <Typography minWidth="0" color={status === 'failed' ? 'error' : 'primary'} noWrap>
             {kind}
           </Typography>
-          {error && (
-            <Typography variant="caption" color="error" minWidth="0" noWrap>
-              {error}
-            </Typography>
-          )}
+          <ErrorOrTitle {...{ error, args }} />
         </Stack>
         <Stack minWidth="150px" direction="row" spacing={1} alignItems="center" justifyContent="end">
           <Typography variant="caption" color="action">

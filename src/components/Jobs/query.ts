@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Job } from './types';
 
 export const getJobs = async page => {
-  const response = await tower.get(`/jobs/?page=${page}`);
+  const response = await tower.get(`/jobs/?limit=250&page=${page}`);
   return response.data.jobs as Job[];
 };
 
