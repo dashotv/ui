@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -18,34 +18,35 @@ export function LogsList({ logs }: { logs: Log[] }) {
   );
 }
 
-export function LogRow({ id, message, facility, level, created_at }: Log) {
-  const [name, setName] = useState<string | undefined>(undefined);
-  const [levelName, setLevelName] = useState<string | undefined>(undefined);
-  const [color, setColor] = useState<string | undefined>(undefined);
+const Color = (level: string) => {
+  switch (level) {
+    case 'debug':
+      return 'gray';
+    case 'info':
+      return 'info.main';
+    case 'warn':
+    case 'warning':
+      return 'warning.main';
+    case 'error':
+      return 'error.main';
+    case 'success':
+      return 'success.main';
+    default:
+      return 'inherit';
+  }
+};
+const Name = (facility: string) => {
+  const a = facility.split('::');
+  return a[a.length - 1];
+};
+const LevelName = (level: string) => {
+  return level == 'warning' ? 'warn' : level;
+};
 
-  useEffect(() => {
-    const a = facility.split('::');
-    setName(a[a.length - 1]);
-    setLevelName(level == 'warning' ? 'warn' : level);
-    switch (level) {
-      case 'debug':
-        setColor('gray');
-        break;
-      case 'info':
-        setColor('info.main');
-        break;
-      case 'warn':
-      case 'warning':
-        setColor('warning.main');
-        break;
-      case 'error':
-        setColor('error.main');
-        break;
-      default:
-        setColor('inherit');
-        break;
-    }
-  }, [facility, level]);
+export function LogRow({ id, message, facility, level, created_at }: Log) {
+  const [name] = useState<string | undefined>(Name(facility));
+  const [levelName] = useState<string | undefined>(LevelName(level));
+  const [color] = useState<string | undefined>(Color(level));
 
   return (
     <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
@@ -72,7 +73,7 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
           >
             {name}
           </Typography>
-          <Typography minWidth="50px" variant="button" color={color} maxWidth="75px" noWrap textAlign="right">
+          <Typography minWidth="75px" variant="button" color={color} maxWidth="75px" noWrap textAlign="right">
             {levelName}
           </Typography>
           <Typography minWidth="125px" variant="subtitle2" color="gray" noWrap textAlign="right">
