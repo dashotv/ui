@@ -10,7 +10,7 @@ import { Container } from 'components/Layout';
 
 const pagesize = 42;
 
-export default function RecentPage() {
+export default function DownloadsPage() {
   const [page, setPage] = useState(1);
 
   const recent = useDownloadsRecentQuery(page);

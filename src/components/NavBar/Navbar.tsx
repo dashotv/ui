@@ -35,7 +35,7 @@ const pages: NavPageWithChildren[] = [
     exact: true,
     children: [
       { name: 'Upcoming', page: '/', exact: true },
-      { name: 'Recent', page: '/recent' },
+      { name: 'Downloads', page: '/downloads' },
     ],
   },
   {
