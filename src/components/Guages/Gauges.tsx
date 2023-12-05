@@ -46,6 +46,73 @@ export const NatsGauge = () => {
   );
 };
 
+// export const AdminGauge = () => {
+//   const [color, setColor] = useState<'primary' | 'warning'>('primary');
+//   const location = useLocation();
+//   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+//
+//   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+//     setAnchorElNav(event.currentTarget);
+//   };
+//
+//   const handleCloseNavMenu = () => {
+//     setAnchorElNav(null);
+//   };
+//
+//   const cb = () => {
+//     setColor('warning');
+//   };
+//   useEffect(() => {
+//     if (location.pathname === '/admin') {
+//       setColor('primary');
+//     }
+//   }, [color, location.pathname]);
+//   useSub('tower.logs', cb);
+//   const pages = [
+//     { name: 'Messages', page: '/admin', exact: true },
+//     { name: 'Jobs', page: '/admin/jobs' },
+//     { name: 'Requests', page: '/admin/requests' },
+//     { name: 'Users', page: '/admin/users' },
+//   ];
+//   //  selected={matchPath(page, exact)}
+//   return (
+//     <>
+//       <IconButton
+//         sx={{ backgroundColor: `${color}.main`, height: '24px', width: '24px' }}
+//         size="small"
+//         onClick={handleOpenNavMenu}
+//       >
+//         <SvgIcon sx={{ color: 'black', height: '18px', width: '18px' }} component={IoFileTrayFull} inheritViewBox />
+//       </IconButton>
+//       <Menu
+//         id="menu-appbar"
+//         anchorEl={anchorElNav}
+//         anchorOrigin={{
+//           vertical: 'bottom',
+//           horizontal: 'left',
+//         }}
+//         keepMounted
+//         transformOrigin={{
+//           vertical: 'top',
+//           horizontal: 'left',
+//         }}
+//         open={Boolean(anchorElNav)}
+//         onClose={handleCloseNavMenu}
+//       >
+//         {pages.map(({ name, page, exact }) => (
+//           <Link key={page} to={page}>
+//             <MenuItem sx={{ width: '300px' }} onClick={handleCloseNavMenu}>
+//               <Stack direction="row" spacing={2} alignItems="center">
+//                 <Typography sx={{ pt: 0.5 }}>{name}</Typography>
+//               </Stack>
+//             </MenuItem>
+//           </Link>
+//         ))}
+//       </Menu>
+//     </>
+//   );
+// };
+
 function Countdown({ eventTime, interval, last }: { eventTime: number; interval: number; last: string }) {
   const [intervalValue] = useState<number>(interval);
   const [count, { startCountdown, resetCountdown }] = useCountdown({

@@ -15,6 +15,7 @@ export default function HomePage() {
         <Route path="requests" element={<RequestsPage />} />
         <Route path="users" element={<UsersPage />} />
       </Routes>
+
       <Outlet />
     </>
   );
