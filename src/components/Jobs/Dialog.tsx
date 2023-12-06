@@ -1,22 +1,29 @@
 import React from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
-import { Alert, AlertTitle, Dialog, DialogContent, DialogTitle, IconButton, Stack, Typography } from '@mui/material';
+import {
+  Alert,
+  AlertTitle,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 import { Chrono } from 'components/Common';
 
 import { Job } from './types';
 
 const Args = ({ args }: { args: string }) => {
-  if (args === '{}') {
-    return null;
-  }
   return (
-    <div className="args">
-      <pre style={{ fontSize: '12px', padding: '10px', backgroundColor: '#121212' }}>
+    <Paper elevation={1} sx={{ p: '8px' }} className="args">
+      <pre style={{ fontSize: '12px', paddingTop: '1px', marginTop: '1px', marginBottom: '1px' }}>
         {JSON.stringify(JSON.parse(args), null, 2)}
       </pre>
-    </div>
+    </Paper>
   );
 };
 
@@ -32,7 +39,7 @@ const Attempt = ({
   attempt: Job['attempts'][0];
 }) => {
   return (
-    <div className="attempt" style={{ padding: '8px' }}>
+    <Paper elevation={1} className="attempt" sx={{ p: '8px', mb: 1 }}>
       <Stack key={key} direction="row" spacing={1} alignItems="center" justifyContent="start" width="100%">
         <Typography variant="subtitle1" color={status === 'failed' ? 'error' : 'action'}>
           {status}
@@ -47,7 +54,7 @@ const Attempt = ({
         </Stack>
       </Stack>
       <Stacktrace {...{ error, stacktrace }} />
-    </div>
+    </Paper>
   );
 };
 

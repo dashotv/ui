@@ -18,6 +18,7 @@ export default function JobsPage() {
   useSub('tower.jobs', (data: EventJob) => {
     // console.log('tower.jobs');
     if (data.event === 'created') {
+      console.log('job created', data.job);
       queryClient.setQueryData(['jobs', page], (prev: Job[]) => {
         return [data.job, ...prev];
       });

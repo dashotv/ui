@@ -1,5 +1,7 @@
 import React from 'react';
 
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import CachedIcon from '@mui/icons-material/Cached';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import PendingIcon from '@mui/icons-material/Pending';
@@ -38,6 +40,10 @@ const Icon = ({ status }: { status: string }) => {
       return <ErrorIcon fontSize="small" color="error" />;
     case 'finished':
       return <CheckCircleIcon fontSize="small" color="success" />;
+    case 'queued':
+      return <AccessTimeIcon fontSize="small" color="disabled" />;
+    case 'running':
+      return <CachedIcon fontSize="small" color="warning" />;
     default:
       return <PendingIcon fontSize="small" color="disabled" />;
   }
