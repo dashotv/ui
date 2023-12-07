@@ -8,24 +8,42 @@ import Stack from '@mui/material/Stack';
 
 import { Text } from 'components/Form';
 
-import { NzbgeekForm } from './types';
+import { NzbgeekFormMovie, NzbgeekFormTv } from './types';
 
-export type NzbgeekSearchProps = {
-  form: NzbgeekForm;
-  setForm: React.Dispatch<React.SetStateAction<NzbgeekForm>>;
+export type NzbgeekSearchTvProps = {
+  form: NzbgeekFormTv;
+  submit: (data: NzbgeekFormTv) => void;
 };
-export function NzbgeekSearch({ form, setForm }: NzbgeekSearchProps) {
-  const { handleSubmit, control } = useForm<NzbgeekForm>({ values: form });
-  const submit = (data: NzbgeekForm) => {
-    setForm(data);
-  };
+export function NzbgeekSearchTv({ form, submit }: NzbgeekSearchTvProps) {
+  const { handleSubmit, control } = useForm<NzbgeekFormTv>({ values: form });
+
   return (
     <Paper elevation={1} sx={{ p: 2, mb: 2, width: '100%' }}>
       <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(submit)}>
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} alignItems="center">
-          <Text name="tvdbid" control={control} />
-          <Text name="season" control={control} />
-          <Text name="episode" control={control} />
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Text name="tvdbid" control={control} sx={{ width: '125px' }} />
+          <Text name="season" control={control} sx={{ width: '75px' }} />
+          <Text name="episode" control={control} sx={{ width: '75px' }} />
+          <Button variant="contained" onClick={handleSubmit(submit)}>
+            Go
+          </Button>
+        </Stack>
+      </Box>
+    </Paper>
+  );
+}
+
+export type NzbgeekSearchMovieProps = {
+  form: NzbgeekFormMovie;
+  submit: (data: NzbgeekFormMovie) => void;
+};
+export function NzbgeekSearchMovie({ form, submit }: NzbgeekSearchMovieProps) {
+  const { handleSubmit, control } = useForm<NzbgeekFormMovie>({ values: form });
+  return (
+    <Paper elevation={1} sx={{ p: 2, mb: 2, width: '100%' }}>
+      <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(submit)}>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Text name="imdbid" control={control} sx={{ width: '125px' }} />
           <Button variant="contained" onClick={handleSubmit(submit)}>
             Go
           </Button>

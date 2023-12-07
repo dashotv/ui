@@ -5,29 +5,52 @@ import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 
 import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
 import { Medium } from 'components/Media/types';
-import { NzbgeekForm, NzbgeekResults, NzbgeekSearch } from 'components/Nzbgeek';
-import { Nzbgeek as NzbgeekType, useNzbSearchTvQuery } from 'components/Nzbgeek';
+import {
+  NzbgeekFormMovie,
+  NzbgeekFormTv,
+  NzbgeekResults,
+  NzbgeekSearchMovie,
+  NzbgeekSearchTv,
+  Nzbgeek as NzbgeekType,
+  useNzbSearchMovieQuery,
+  useNzbSearchTvQuery,
+} from 'components/Nzbgeek';
 import { Release } from 'components/Releases';
 import { useQueryString } from 'hooks/queryString';
 
-const formdata = (medium: Medium): NzbgeekForm => {
-  const { source_id, season_number, episode_number } = medium;
-  return {
-    tvdbid: source_id,
-    season: season_number,
-    episode: episode_number,
-  };
+export const Nzbgeek = ({
+  medium,
+  selector,
+  selected,
+}: {
+  medium: Medium;
+  selector: (selected: Release | NzbgeekType) => void;
+  selected?: { release_id: string; url: string };
+}) => {
+  switch (medium.type) {
+    case 'Series':
+    case 'Episode':
+      return <NzbgeekTv {...{ medium, selector, selected }} />;
+    case 'Movie':
+      return <NzbgeekMovie {...{ medium, selector, selected }} />;
+    default:
+      return <>wut?</>;
+  }
 };
 
-export type NzbgeekProps = {
+export type NzbgeekTvProps = {
   medium: Medium;
   selector: (selected: Release | NzbgeekType) => void;
   selected?: { release_id: string; url: string };
 };
-export function Nzbgeek({ medium, selector, selected }: NzbgeekProps) {
+export function NzbgeekTv({ medium, selector, selected }: NzbgeekTvProps) {
   const { queryString } = useQueryString();
-  const [initial] = useState<NzbgeekForm>(() => formdata(medium));
-  const [form, setForm] = useState(initial);
+  // const [initial] = useState<NzbgeekFormTv | NzbgeekFormMovie | null>(null);
+  const [form, setForm] = useState<NzbgeekFormTv>(() => {
+    if (!medium) return {};
+    const { source_id, season_number, episode_number } = medium;
+    return { tvdbid: source_id, season: season_number, episode: episode_number };
+  });
   const [qs, setQs] = useState(queryString(form));
   const { isFetching, data: nzbs } = useNzbSearchTvQuery(qs);
 
@@ -41,6 +64,10 @@ export function Nzbgeek({ medium, selector, selected }: NzbgeekProps) {
     },
     [selector],
   );
+
+  const submit = (data: NzbgeekFormTv) => {
+    setForm(data);
+  };
 
   const click = useCallback(() => {
     console.log('click');
@@ -67,7 +94,70 @@ export function Nzbgeek({ medium, selector, selected }: NzbgeekProps) {
   return (
     <WrapErrorBoundary>
       {isFetching && <LoadingIndicator />}
-      <NzbgeekSearch form={form} setForm={setForm} />
+      <NzbgeekSearchTv {...{ form, submit }} />
+      {nzbs && <NzbgeekResults data={nzbs} actions={renderActions} selected={selected} />}
+    </WrapErrorBoundary>
+  );
+}
+
+export type NzbgeekMovieProps = {
+  medium: Medium;
+  selector: (selected: Release | NzbgeekType) => void;
+  selected?: { release_id: string; url: string };
+};
+export function NzbgeekMovie({ medium, selector, selected }: NzbgeekMovieProps) {
+  const { queryString } = useQueryString();
+  // const [initial] = useState<NzbgeekFormTv | NzbgeekFormMovie | null>(null);
+  const [form, setForm] = useState<NzbgeekFormMovie>(() => {
+    if (!medium) return {};
+    const { imdb_id, source_id } = medium;
+    return { imdbid: imdb_id, tmdbid: source_id };
+  });
+  const [qs, setQs] = useState(queryString(form));
+  const { isFetching, data: nzbs } = useNzbSearchMovieQuery(qs);
+
+  useEffect(() => {
+    if (!form.imdbid) return;
+    setQs(queryString(form));
+  }, [form, queryString]);
+
+  const handleSelect = useCallback(
+    (selected: Release | NzbgeekType) => {
+      selector(selected);
+    },
+    [selector],
+  );
+
+  const submit = (data: NzbgeekFormMovie) => {
+    setForm(data);
+  };
+
+  const click = useCallback(() => {
+    console.log('click');
+  }, []);
+
+  const renderActions = (row: NzbgeekType) => {
+    const buttons: ButtonMapButton[] = [
+      {
+        Icon: OutboundRoundedIcon,
+        color: 'primary',
+        click: click,
+        title: 'edit',
+      },
+      {
+        Icon: CheckCircleIcon,
+        color: 'primary',
+        click: () => handleSelect(row),
+        title: 'select',
+      },
+    ];
+    return <ButtonMap buttons={buttons} size="small" />;
+  };
+
+  return (
+    <WrapErrorBoundary>
+      {isFetching && <LoadingIndicator />}
+      <NzbgeekSearchMovie {...{ form, submit }} />
       {nzbs && <NzbgeekResults data={nzbs} actions={renderActions} selected={selected} />}
     </WrapErrorBoundary>
   );

@@ -20,6 +20,7 @@ export interface Medium {
   kind?: string;
   source?: string;
   source_id?: string;
+  imdb_id?: string;
   title: string;
   name: string;
   description?: string;

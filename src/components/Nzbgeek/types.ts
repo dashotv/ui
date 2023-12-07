@@ -1,9 +1,12 @@
-export interface NzbgeekForm {
+export interface NzbgeekFormTv {
   tvdbid?: string;
   season?: number;
   episode?: number;
 }
-
+export interface NzbgeekFormMovie {
+  imdbid?: string;
+  tmdbid?: string;
+}
 export interface Nzbgeek {
   title: string;
   guid: string;
