@@ -6837,8 +6837,10 @@ __metadata:
     react-hook-form: "npm:^7.48.2"
     react-hotkeys-hook: "npm:4.4.1"
     react-icons: "npm:^4.12.0"
+    react-image: "npm:^4.1.0"
     react-loader-spinner: "npm:5.4.5"
     react-router-dom: "npm:6.17.0"
+    react-visibility-sensor: "npm:^5.1.1"
     sanitize.css: "npm:13.0.0"
     sass: "npm:1.69.4"
     storybook: "npm:^7.5.3"
@@ -12065,6 +12067,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-image@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "react-image@npm:4.1.0"
+  peerDependencies:
+    "@babel/runtime": ">=7"
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: f3e93e6d1bd25a898555058ac7691ff3d0c5757e631e8767a504178041f2dec7e82725f2f702acb1871e2aecff7ebffaa4c72288093256153a7b78050080609d
+  languageName: node
+  linkType: hard
+
 "react-inspector@npm:^6.0.0":
   version: 6.0.2
   resolution: "react-inspector@npm:6.0.2"
@@ -12220,6 +12233,18 @@ __metadata:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 2ba754ba748faefa15f87c96dfa700d5525054a0141de8c75763aae6734af0740e77e11261a1e8f4ffc08fd9ab78510122e05c21c2d79066c38bb6861a886c82
+  languageName: node
+  linkType: hard
+
+"react-visibility-sensor@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "react-visibility-sensor@npm:5.1.1"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ">=16.0.0"
+    react-dom: ">=16.0.0"
+  checksum: e40ed6ba5b02fa526de3f80debd21ee4b852ce668f90041391a95863b9cc1a4b36647cd4169f3473eefe0e26fc5edae383511c98d4b2540c4499fa5f0f5700b5
   languageName: node
   linkType: hard
 

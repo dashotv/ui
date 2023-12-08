@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React from 'react';
+import { useImage } from 'react-image';
+import VisibilitySensor from 'react-visibility-sensor';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -52,6 +54,12 @@ export function BannerActions({ unwatched, buttons, flags }: BannerActionsProps)
   );
 }
 
+const BannerImage = ({ images }: { images?: string[] }) => {
+  const list = (images ? images : []).concat('/blank.png');
+  const { src } = useImage({ srcList: list, useSuspense: false });
+  return <img src={src} />;
+};
+
 export type BannerProps = {
   id: string;
   title: string;
@@ -75,14 +83,6 @@ export function Banner({
   unwatched,
   adornments,
 }: BannerProps) {
-  const background = () => {
-    return images
-      ?.concat('/blank.png')
-      .map(i => {
-        return `url(${i})`;
-      })
-      .join(', ');
-  };
   return (
     <Paper elevation={5}>
       <div className="banner-container">
@@ -101,12 +101,11 @@ export function Banner({
           {adornments && <div className="adornments">{adornments}</div>}
         </div>
         <div className="banner-dimmer"></div>
-        <div
-          className="banner-background"
-          style={{
-            backgroundImage: background(),
-          }}
-        />
+        <div className="banner-background">
+          <VisibilitySensor partialVisibility={true} offset={{ bottom: 100 }}>
+            <BannerImage images={images} />
+          </VisibilitySensor>
+        </div>
       </div>
     </Paper>
   );

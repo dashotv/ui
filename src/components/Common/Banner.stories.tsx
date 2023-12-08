@@ -24,6 +24,7 @@ export const Default: Story = {
     subtitle: 'subtitle',
     tertiary: 'tertiary',
     images: [
+      '/blarg.png',
       'http://localhost:3000/media-images/series-61b6f1383359bb870c54116a/background.jpg',
       'http://localhost:3000/media-images/series-61b6f1383359bb870c54116a/cover.jpg',
     ],
