@@ -2,6 +2,7 @@ import React from 'react';
 
 import ErrorIcon from '@mui/icons-material/Error';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
+import WarningIcon from '@mui/icons-material/Warning';
 import { useTheme } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
@@ -134,13 +135,22 @@ const DownloadState = ({ torrentState }: { torrentState?: string }) => {
     case 'error':
       return (
         <div className="state" style={{ backgroundColor: 'red' }}>
-          <ErrorIcon fontSize="large" />
+          <ErrorIcon fontSize="large" sx={{ color: 'black' }} />
+        </div>
+      );
+    case 'checkingDL':
+    case 'checkingUP':
+    case 'checkingResumeData':
+      return (
+        <div className="state" style={{ backgroundColor: 'orange' }}>
+          <WarningIcon fontSize="large" sx={{ color: 'black' }} />
         </div>
       );
     case 'pausedDL':
+    case 'pausedUP':
       return (
         <div className="state" style={{ backgroundColor: 'grey' }}>
-          <PauseCircleIcon fontSize="large" />
+          <PauseCircleIcon fontSize="large" sx={{ color: 'black' }} />
         </div>
       );
     default:
