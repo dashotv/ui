@@ -17,7 +17,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution } from 'components/Common';
 import { Path } from 'components/Media/types';
 
-export function Paths({ paths }: { paths: Path[] }) {
+export function Paths({ paths }: { paths?: Path[] }) {
+  if (!paths) return null;
   const [hidden, setHidden] = useState(true);
   return (
     <Paper elevation={0}>
