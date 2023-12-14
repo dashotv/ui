@@ -41,14 +41,17 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis ellipsis;
+
       div {
         width: 100px;
       }
+
       div.media {
         display: none;
         padding-left: 10px;
       }
     }
+
     td.name:hover {
       div.media {
         display: inherit;
@@ -64,19 +67,22 @@
 :root {
   --height: 200px;
   --width: 136px;
-  --backgroundHeight: 77px;
+  --backgroundHeight: 200px;
+  --backgroundWidth: 356px;
 }
 
 @media (max-width: 410px) {
   :root {
     --height: 150px;
     --width: 100px;
-    --backgroundHeight: 56px;
+    --backgroundHeight: 150px;
+    --backgroundWidth: 266px;
   }
 }
 
 .mediaCover:has(div.image-background) {
   height: var(--backgroundHeight);
+  width: var(--backgroundWidth);
 }
 
 .mediaCover {
@@ -87,25 +93,30 @@
   min-width: var(--width);
   margin: 5px;
   cursor: pointer;
+
   .image {
     position: absolute;
     top: 0px;
     left: 0px;
     right: 0px;
     z-index: 99;
+
     object,
     img {
       height: var(--height);
       width: var(--width);
     }
   }
+
   .image-background {
+
     object,
     img {
       height: var(--backgroundHeight);
-      width: var(--width);
+      width: var(--backgroundWidth);
     }
   }
+
   .title {
     position: absolute;
     top: 0px;
@@ -120,6 +131,7 @@
     font-weight: bold;
     padding: 2px;
   }
+
   .release {
     position: absolute;
     bottom: 0px;
@@ -129,6 +141,7 @@
     background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     padding: 2px;
+
     span {
       overflow: hidden;
       white-space: nowrap;
@@ -136,6 +149,7 @@
       font-weight: bold;
     }
   }
+
   .description {
     position: absolute;
     display: none;
@@ -150,6 +164,7 @@
     padding: 2px;
   }
 }
+
 .mediaCover:hover {
   .description {
     display: block;

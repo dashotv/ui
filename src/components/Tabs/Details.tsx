@@ -162,7 +162,7 @@ export function Details({
               </Stack>
               <Typography>{description}</Typography>
             </Stack>
-            <Stack direction="column" spacing={1}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
               <div className="mediaCover">
                 <MediaCoverImage image={cover} />
               </div>
