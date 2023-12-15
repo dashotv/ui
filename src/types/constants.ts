@@ -41,6 +41,7 @@ export const Kinds = {
     { label: 'Movies 4K', value: 'movies4k' },
     { label: 'Movies 3D', value: 'movies3d' },
     { label: 'Kids', value: 'kids' },
+    { label: 'Movies 4H', value: 'movies4h' },
   ],
 };
 
