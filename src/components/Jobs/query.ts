@@ -9,6 +9,11 @@ export const getJobs = async page => {
   return response.data.jobs as Job[];
 };
 
+export const queueJob = async (name: string) => {
+  const response = await tower.post(`/jobs/?job=${name}`);
+  return response.data;
+};
+
 export const useJobsQuery = page =>
   useQuery({
     queryKey: ['jobs', page],
