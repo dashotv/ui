@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useCallback } from 'react';
+import { HashRouter } from 'react-router-dom';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -35,7 +36,11 @@ export function Files({
       for (let i = 0; i < files.length; i++) {
         files[i].torrent_file = torrent.Files[files[i].num];
       }
-      return files.sort((a, b) => a.torrent_file!.name.localeCompare(b.torrent_file!.name));
+      const hasTorrentFiles = files.filter(f => f.torrent_file != null);
+      const noTorrentFiles = files.filter(f => f.torrent_file == null);
+      return hasTorrentFiles
+        .sort((a, b) => a.torrent_file!.name.localeCompare(b.torrent_file!.name))
+        .concat(noTorrentFiles.sort((a, b) => a.num - b.num));
     }
     return files.sort((a, b) => a.num - b.num);
   }, []);
