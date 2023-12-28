@@ -9,7 +9,7 @@ import { Log, LogsList, useLogsQuery } from 'components/Logs';
 import { useSub } from 'hooks/sub';
 import { EventLog } from 'types/events';
 
-export default function JobsPage() {
+export default function LogsPage() {
   const [page] = useState(1);
   const logs = useLogsQuery(page);
   const queryClient = useQueryClient();

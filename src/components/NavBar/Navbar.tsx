@@ -69,6 +69,7 @@ const pages: NavPageWithChildren[] = [
       { name: 'Jobs', page: '/admin/jobs' },
       { name: 'Requests', page: '/admin/requests' },
       { name: 'Users', page: '/admin/users' },
+      { name: 'Watches', page: '/admin/watches' },
     ],
   },
 ];
