@@ -118,21 +118,29 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
       <Stack
         key={num}
         direction={{ xs: 'column', md: 'row' }}
-        spacing={1}
+        spacing={0}
         alignItems="center"
         justifyContent="space-between"
       >
-        <Stack minWidth="0" width="100%" direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
+        <Stack
+          minWidth="0"
+          width="100%"
+          direction={{ xs: 'column', md: 'row' }}
+          spacing={{ xs: 0, md: 2 }}
+          alignItems="center"
+          justifyContent="start"
+        >
           <Typography
             display={{ xs: 'none', md: 'inherit' }}
             noWrap
             variant="subtitle1"
             color="textSecondary"
+            justifyContent="end"
             minWidth="38px"
           >
             {num}
           </Typography>
-          <Typography minWidth="100px" maxWidth="100%" variant="h6" noWrap color="primary">
+          <Typography minWidth="100px" width={{ xs: '100%', md: 'auto' }} fontWeight="bolder" noWrap color="primary">
             {name(torrent_file?.name)}
           </Typography>
           {medium && (
@@ -142,7 +150,14 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
             </Typography>
           )}
         </Stack>
-        <Stack minWidth="0" direction="row" spacing={1} alignItems="center" justifyContent="end">
+        <Stack
+          minWidth="0"
+          width={{ xs: '100%', md: 'auto' }}
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          justifyContent="end"
+        >
           <Typography
             display={{ xs: 'inherit', md: 'none' }}
             noWrap
@@ -152,7 +167,7 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
           >
             {num}
           </Typography>
-          <Typography minWidth="125px" variant="subtitle2" noWrap color="secondary" textAlign="right">
+          <Typography minWidth="75px" variant="subtitle2" noWrap color="secondary" textAlign="right">
             {progress(torrent_file?.progress)}
           </Typography>
           <Typography minWidth="85px" variant="subtitle2" noWrap color="gray" textAlign="right">
