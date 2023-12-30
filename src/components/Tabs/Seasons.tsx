@@ -36,7 +36,7 @@ export function Seasons({
     }
   }
   return (
-    <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
+    <Paper sx={{ mb: 1, p: 1, width: '100%' }}>
       <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
         <IconButton
           aria-label="account of current user"
@@ -46,7 +46,7 @@ export function Seasons({
           color="inherit"
         >
           <MoreIcon />
-          <Typography sx={{ ml: '5px' }} variant="h6">
+          <Typography sx={{ ml: '5px' }} fontWeight="bolder">
             Season {current}
           </Typography>
         </IconButton>

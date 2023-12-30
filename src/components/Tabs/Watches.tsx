@@ -44,7 +44,7 @@ function WatchRow({ id, username, watched_at, medium, player }: Watch) {
         spacing={1}
         alignItems="center"
       >
-        <Typography noWrap width="100%" variant="h6" color="primary">
+        <Typography noWrap width="100%" fontWeight="bolder" color="primary">
           {display}
         </Typography>
         <Stack direction="row" spacing={1} alignItems="center" sx={{ width: '100%', justifyContent: 'end' }}>

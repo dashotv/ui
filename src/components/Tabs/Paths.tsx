@@ -62,20 +62,25 @@ function PathsRow({ i, extension, local, type, size, resolution, updated_at }: {
     if (type === 'subtitle') return <ClosedCaptionIcon fontSize="small" color="disabled" />;
     return null;
   };
+  const Path = ({ local, extension }: { local?: string; extension?: string }) => {
+    if (!local) return null;
+    const list = local.split('/');
+    return `${list[list.length - 1]}.${extension}`;
+  };
   return (
     <Paper key={i} elevation={1} sx={{ mb: 1, pr: 1, pl: 1, width: '100%' }}>
       <Stack
         width="100%"
         minWidth="0"
         direction={{ xs: 'column', md: 'row' }}
-        spacing={1}
+        spacing={{ xs: 0, md: 1 }}
         alignItems="center"
         justifyContent="space-between"
       >
         <Stack minWidth="0" width="100%" direction="row" spacing={1} alignItems="center">
           {matches && <PathIcon {...{ extension, type }} />}
-          <Typography variant="h6" noWrap color="primary">
-            {local}.{extension}
+          <Typography title={`${local}.${extension}`} fontWeight="bolder" noWrap color="primary">
+            <Path {...{ local, extension }} />
           </Typography>
           {matches && <Resolution resolution={resolution} />}
         </Stack>

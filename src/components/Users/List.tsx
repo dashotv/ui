@@ -17,7 +17,7 @@ export function UserRow({ id, name, email, created_at }: User) {
     <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} width="100%" alignItems="center">
         <Stack width="100%" direction="row" spacing={1} alignItems="center">
-          <Typography variant="h6" color="primary" noWrap>
+          <Typography fontWeight="bolder" color="primary" noWrap>
             {name}
           </Typography>
           <Typography variant="body1" color="textSecondary" noWrap>

@@ -207,7 +207,7 @@ export const ReleaseDialog = ({
   return (
     <Dialog open={open} onClose={handleClose} fullWidth fullScreen={fullScreen} maxWidth="md">
       <DialogTitle>
-        <Typography noWrap color="primary" variant="h6">
+        <Typography noWrap color="primary" fontWeight="bolder">
           {display || title}
         </Typography>
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">

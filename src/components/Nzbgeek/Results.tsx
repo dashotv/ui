@@ -59,7 +59,7 @@ export function NzbgeekResultsRow({
       >
         <Stack width="100%" direction="row" spacing={1} alignItems="center" maxWidth={{ xs: '100%', md: '900px' }}>
           <ArticleIcon fontSize="small" />
-          <Typography title={title} variant="h6" color="primary" noWrap>
+          <Typography title={title} fontWeight="bolder" color="primary" noWrap>
             {title}
           </Typography>
           <ResolutionTitle title={title} />

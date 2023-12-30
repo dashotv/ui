@@ -62,7 +62,7 @@ export function FeedsList({ data }: FeedsListProps) {
                 <CheckCircleIcon color={row.active ? 'secondary' : 'disabled'} fontSize="small" />
               </IconButton>
               <Link href="#" onClick={() => view(row)}>
-                <Typography variant="h6" color="primary">
+                <Typography fontWeight="bolder" color="primary">
                   {row.name}
                 </Typography>
               </Link>

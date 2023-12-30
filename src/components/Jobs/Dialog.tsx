@@ -87,7 +87,7 @@ export const JobsDialog = ({ close, job: { id, kind, status, args, attempts } }:
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitle>
         <Stack direction="row" spacing={3} alignItems="center" justifyContent="start" width="100%">
-          <Typography variant="h6" color="primary">
+          <Typography fontWeight="bolder" color="primary">
             {kind}
           </Typography>
         </Stack>
