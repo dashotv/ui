@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 import Link from '@mui/material/Link';
 
@@ -23,7 +24,7 @@ export function PopularList({ data, type }: { data: Popular[]; type: string }) {
             </Link>
           </span>
           <span className="number">
-            <Link href={SearchURL(name, type)}>{count}</Link>
+            <RouterLink to={SearchURL(name, type)}>{count}</RouterLink>
           </span>
         </div>
       ))}
@@ -31,7 +32,7 @@ export function PopularList({ data, type }: { data: Popular[]; type: string }) {
   );
 }
 
-export function SearchURL(text, type) {
+export function SearchURL(text: string, type: string) {
   const { queryString } = useQueryString();
   const base = '/releases/search?';
   const settings = {
