@@ -17,29 +17,40 @@ import { useDownloadCreateMutation } from 'components/Downloads';
 import { Episode } from 'components/Media/types';
 
 export function Episodes({
+  kind,
   episodes,
   changeEpisode,
 }: {
+  kind: string;
   episodes: Episode[];
   changeEpisode: (id: string, field: string, value: boolean) => void;
 }) {
   return (
     <Paper elevation={0}>
-      {episodes && episodes.map(row => <EpisodeRow key={row.id} episode={row} changeEpisode={changeEpisode} />)}
+      {episodes &&
+        episodes.map(row => <EpisodeRow key={row.id} kind={kind} episode={row} changeEpisode={changeEpisode} />)}
     </Paper>
   );
 }
 
 function EpisodeRow({
-  episode: { id, title, watched, episode_number: number, release_date: release, paths, ...episode },
+  episode: {
+    id,
+    title,
+    watched,
+    episode_number: number,
+    absolute_number: absolute,
+    release_date: release,
+    paths,
+    ...episode
+  },
+  kind,
   changeEpisode,
 }: {
+  kind: string;
   episode: Episode;
   changeEpisode: (id: string, field: string, value: boolean) => void;
 }) {
-  if (!number) {
-    return <></>;
-  }
   const navigate = useNavigate();
   const download = useDownloadCreateMutation();
   const [skipped, setSkipped] = useState(episode.skipped);
@@ -117,15 +128,35 @@ function EpisodeRow({
     return <Megabytes value={video.size} ord="bytes" />;
   };
 
+  const Number = () => {
+    if (!number) {
+      return null;
+    }
+    switch (kind) {
+      case 'anime':
+      case 'ecchi':
+        return '#' + `${absolute}`.padStart(3, '0');
+      default:
+        return number;
+    }
+  };
+
+  const Title = () => {
+    if (!title) {
+      return 'episode';
+    }
+    return title;
+  };
+
   return (
     <Paper elevation={1} sx={{ width: '100%', mb: 1, pr: 1, pl: 1 }}>
-      <Stack width="100%" minWidth="0" direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
+      <Stack width="100%" minWidth="0" direction={{ xs: 'column', md: 'row' }} spacing={0} alignItems="center">
         <Stack width="100%" minWidth="0" direction="row" spacing={1} alignItems="center">
-          <Typography noWrap variant="subtitle1" color="textSecondary" minWidth="34px">
-            {number}
+          <Typography noWrap title={`${number} #${absolute}`} variant="subtitle1" color="textSecondary" minWidth="34px">
+            <Number />
           </Typography>
-          <Typography noWrap variant="h6" color="primary">
-            {title}
+          <Typography noWrap color="primary" fontWeight="bolder">
+            <Title />
           </Typography>
           {matches && <Res />}
         </Stack>

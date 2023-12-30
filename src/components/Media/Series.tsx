@@ -28,7 +28,7 @@ export type SeriesProps = {
 export function Series({
   id,
   series,
-  series: { active, broken, favorite, seasons, paths },
+  series: { kind, active, broken, favorite, seasons, paths },
   episodes,
   currentSeason,
   changeSeason,
@@ -45,7 +45,7 @@ export function Series({
       element: (
         <>
           <Seasons current={currentSeason} seasons={seasons} changeSeason={changeSeason} />
-          <Episodes episodes={episodes} changeEpisode={changeEpisode} />
+          <Episodes kind={kind} episodes={episodes} changeEpisode={changeEpisode} />
         </>
       ),
     },
