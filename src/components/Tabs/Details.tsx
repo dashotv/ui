@@ -10,6 +10,11 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -17,7 +22,7 @@ import Typography from '@mui/material/Typography';
 import { Chrono, Pill } from 'components/Common';
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
-import { useSeriesUpdateMutation } from 'components/Media/query';
+import { getSeriesBackgrounds, getSeriesCovers, useSeriesUpdateMutation } from 'components/Media/query';
 import { Medium } from 'components/Media/types';
 import { useMovieUpdateMutation } from 'components/Movies/query';
 import { Kinds, ReleaseSources, ReleaseTypes, Resolutions, Sources } from 'types/constants';
@@ -37,6 +42,73 @@ export function Details({
   const { handleSubmit, control } = useForm({ values: medium });
   const series = useSeriesUpdateMutation(id);
   const movie = useMovieUpdateMutation(id);
+  const [images, setImages] = React.useState<string[]>([]);
+  const [coverOpen, setCoverOpen] = React.useState(false);
+  const [backgroundOpen, setBackgroundOpen] = React.useState(false);
+
+  const currentCover = () => {
+    if (!medium.paths || medium.paths.length === 0) {
+      return;
+    }
+    for (const path of medium.paths) {
+      if (path.type === 'cover') {
+        return path.remote;
+      }
+    }
+  };
+  const chooseCover = () => {
+    setCoverOpen(true);
+    getCovers()?.then(covers => {
+      setImages(covers);
+    });
+  };
+  const selectCover = (url: string) => {
+    console.log('selectCover:', url);
+    setCoverOpen(false);
+    if (url != '') {
+      submit({ ...medium, cover: url });
+    }
+  };
+  const getCovers = () => {
+    switch (type) {
+      case 'Series':
+        return getSeriesCovers(id);
+      // case 'Movie':
+      // return movieCovers();
+    }
+  };
+
+  const currentBackground = () => {
+    if (!medium.paths || medium.paths.length === 0) {
+      return;
+    }
+    for (const path of medium.paths) {
+      if (path.type === 'background') {
+        return path.remote;
+      }
+    }
+  };
+  const chooseBackground = () => {
+    setBackgroundOpen(true);
+    getBackgrounds()?.then(backgrounds => {
+      setImages(backgrounds);
+    });
+  };
+  const selectBackground = (url: string) => {
+    console.log('selectBackground:', url);
+    setBackgroundOpen(false);
+    if (url != '') {
+      submit({ ...medium, background: url });
+    }
+  };
+  const getBackgrounds = () => {
+    switch (type) {
+      case 'Series':
+        return getSeriesBackgrounds(id);
+      // case 'Movie':
+      // return movieCovers();
+    }
+  };
 
   const submit = (data: Medium) => {
     console.log('data:', data);
@@ -163,16 +235,56 @@ export function Details({
               <Typography>{description}</Typography>
             </Stack>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
-              <div className="mediaCover">
+              <Link onClick={() => chooseCover()}>
                 <MediaCoverImage image={cover} />
-              </div>
-              <div className="mediaCover">
+              </Link>
+              <Link onClick={() => chooseBackground()}>
                 <MediaCoverImage image={background} background={true} />
-              </div>
+              </Link>
             </Stack>
           </Stack>
         </Paper>
       </Stack>
+
+      <ImageDialog open={coverOpen} close={selectCover} current={currentCover()} images={images} background={false} />
+      <ImageDialog
+        open={backgroundOpen}
+        close={selectBackground}
+        current={currentBackground()}
+        images={images}
+        background={true}
+      />
     </Box>
   );
 }
+
+export const ImageDialog = ({
+  images,
+  current,
+  background,
+  open,
+  close,
+}: {
+  images: string[];
+  current?: string;
+  background: boolean;
+  open: boolean;
+  close: (url: string) => void;
+}) => {
+  return (
+    <Dialog open={open} onClose={() => close('')} maxWidth="md" fullWidth={true}>
+      <DialogTitle>Choose Image</DialogTitle>
+      <DialogContent>
+        <Grid container spacing={2}>
+          {images.map((image, index) => (
+            <Grid item key={index}>
+              <Link onClick={() => close(image)}>
+                <MediaCoverImage image={image} selected={current === image} background={background} />
+              </Link>
+            </Grid>
+          ))}
+        </Grid>
+      </DialogContent>
+    </Dialog>
+  );
+};

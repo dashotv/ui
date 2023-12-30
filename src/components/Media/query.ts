@@ -26,6 +26,16 @@ export const getSeriesSeasonEpisodes = async (id, season) => {
   return response.data;
 };
 
+export const getSeriesCovers = async id => {
+  const response = await tower.get(`/series/${id}/covers`);
+  return response.data.covers;
+};
+
+export const getSeriesBackgrounds = async id => {
+  const response = await tower.get(`/series/${id}/backgrounds`);
+  return response.data.backgrounds;
+};
+
 export const putSeriesRefresh = async (id: string) => {
   const response = await tower.put(`/series/${id}/refresh`);
   return response.data;
