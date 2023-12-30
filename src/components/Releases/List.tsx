@@ -4,6 +4,7 @@ import { SiUtorrent } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -15,6 +16,7 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { Chrono } from 'components/Common';
 
@@ -64,7 +66,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
             key={row.id}
             sx={{ width: '100%', mb: 1, backgroundColor: isSelected(row) ? '#222266' : 'inherit' }}
           >
-            <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
+            <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 0, md: 1 }} alignItems="center">
               <Stack
                 direction="row"
                 spacing={1}
@@ -97,7 +99,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                     )}
                   </IconButton>
                 </Stack>
-                <Typography variant="h6" noWrap color="primary" sx={{ '& a': { color: 'primary.main' } }}>
+                <Typography fontWeight="bolder" noWrap color="primary" sx={{ '& a': { color: 'primary.main' } }}>
                   <Link to="#" onClick={() => view(row)} title={row.raw}>
                     {row.display || row.name}
                   </Link>
@@ -131,11 +133,17 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                 >
                   <Resolution resolution={row.resolution} variant="default" />
                   <Group group={row.group} author={row.author} variant="default" />
-                  <Typography variant="subtitle2" noWrap color="textSecondary">
+                  <Typography display={{ xs: 'none', md: 'inherit' }} variant="subtitle2" noWrap color="textSecondary">
                     {row.source}:{row.type}
                   </Typography>
                 </Stack>
-                <Stack direction="row" spacing={1} alignItems="center" sx={{ pr: 1 }}>
+                <Stack
+                  direction="row"
+                  width={{ xs: '100%', md: 'auto' }}
+                  spacing={1}
+                  alignItems="center"
+                  sx={{ pr: 1 }}
+                >
                   {row.size && (
                     <Typography
                       display={{ xs: 'none', md: 'inherit' }}
@@ -149,7 +157,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                   <Typography noWrap variant="subtitle2" color="gray" pl="3px" width="100%">
                     {row.published_at && <Chrono fromNow>{row.published_at}</Chrono>}
                   </Typography>
-                  <Box display={{ xs: 'none', md: 'inherit' }}>{actions && actions(row)}</Box>
+                  <Box>{actions && actions(row)}</Box>
                 </Stack>
               </Stack>
             </Stack>
@@ -195,8 +203,9 @@ export const ReleaseDialog = ({
   },
 }: ReleaseDialogProps) => {
   const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
+    <Dialog open={open} onClose={handleClose} fullWidth fullScreen={fullScreen} maxWidth="md">
       <DialogTitle>
         <Typography noWrap color="primary" variant="h6">
           {display || title}
@@ -242,6 +251,18 @@ export const ReleaseDialog = ({
             </Typography>
           </Stack>
         </Stack>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: theme => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
       </DialogTitle>
       <DialogContent>
         <Stack width="100%" direction="column" spacing={1}>
