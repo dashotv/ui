@@ -62,8 +62,8 @@ export const Nav = ({ pages, matchPath, matchAny }: NavProps) => {
               }}
             >
               {matchAny(page, exact, children) &&
-                children?.map(({ icon, page, exact }) => (
-                  <Link key={page} to={page}>
+                children?.map(({ icon, name, page, exact }) => (
+                  <Link key={page} to={page} title={name}>
                     <Button
                       variant={matchPath(page, exact) ? 'outlined' : 'text'}
                       key={page}
