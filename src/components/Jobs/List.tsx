@@ -25,12 +25,9 @@ export function JobsList({ jobs }: { jobs: Job[] }) {
   };
   return (
     <Paper elevation={0}>
-      <Paper elevation={0} sx={{ minHeight: '75px' }}>
-        <Typography variant="h6" gutterBottom color="primary">
-          Running
-        </Typography>
+      <Paper elevation={0}>
         {jobs.map(job => {
-          if (job.status !== 'failed' && job.status !== 'finished') {
+          if (job.status !== 'failed' && job.status !== 'finished' && job.status !== 'pending') {
             return (
               <Link key={job.id} href="#" onClick={() => open(job)}>
                 <JobRow {...job} />
@@ -41,9 +38,6 @@ export function JobsList({ jobs }: { jobs: Job[] }) {
       </Paper>
 
       <Paper elevation={0}>
-        <Typography variant="h6" gutterBottom color="primary">
-          Completed
-        </Typography>
         {jobs.map(job => {
           if (job.status === 'failed' || job.status === 'finished') {
             return (
@@ -53,8 +47,8 @@ export function JobsList({ jobs }: { jobs: Job[] }) {
             );
           }
         })}
-        {selected && <JobsDialog job={selected} close={close} />}
       </Paper>
+      {selected && <JobsDialog job={selected} close={close} />}
     </Paper>
   );
 }

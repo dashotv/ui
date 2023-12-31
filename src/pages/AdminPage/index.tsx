@@ -11,8 +11,8 @@ export default function HomePage() {
   return (
     <>
       <Routes>
-        <Route index path="" element={<LogsPage />} />
-        <Route path="jobs" element={<JobsPage />} />
+        <Route index path="" element={<JobsPage />} />
+        <Route path="logs" element={<LogsPage />} />
         <Route path="requests" element={<RequestsPage />} />
         <Route path="users" element={<UsersPage />} />
         <Route path="watches" element={<WatchesPage />} />

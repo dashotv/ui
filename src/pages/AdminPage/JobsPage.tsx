@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { Grid, Typography } from '@mui/material';
+
 import { useQueryClient } from '@tanstack/react-query';
 
 import { LoadingIndicator, WrapErrorBoundary } from 'components/Common';
-import { JobsList } from 'components/Jobs';
-import { Job } from 'components/Jobs';
+import { Job, JobsList, JobsStats } from 'components/Jobs';
 import { useJobsQuery } from 'components/Jobs/query';
 import { Container } from 'components/Layout';
 import { useSub } from 'hooks/sub';
-import { EventJob } from 'types/events';
+import { EventJob, EventStats } from 'types/events';
 
 export default function JobsPage() {
   const [page] = useState(1);
+  const [stats, setStats] = useState({});
   const jobs = useJobsQuery(page);
   const queryClient = useQueryClient();
   useSub('tower.jobs', (data: EventJob) => {
@@ -32,6 +34,10 @@ export default function JobsPage() {
     }
   });
 
+  useSub('tower.stats', (data: EventStats) => {
+    setStats(data);
+  });
+
   return (
     <>
       <Helmet>
@@ -41,6 +47,16 @@ export default function JobsPage() {
       <Container>
         <WrapErrorBoundary>
           {jobs.isFetching && <LoadingIndicator />}
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h6" gutterBottom color="primary">
+                Jobs
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6} justifyContent="end">
+              {stats && <JobsStats stats={stats} />}
+            </Grid>
+          </Grid>
           {jobs.data && <JobsList jobs={jobs.data} />}
         </WrapErrorBoundary>
       </Container>

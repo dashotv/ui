@@ -5,12 +5,15 @@ import { useLocation } from 'react-router-dom';
 import SvgIcon from '@mui/material/SvgIcon';
 
 import { useSub } from 'hooks/sub';
+import { EventLog } from 'types/events';
 
 export const Messages = () => {
-  const [color, setColor] = useState<'inherit' | 'warning'>('inherit');
+  const [color, setColor] = useState<'inherit' | 'error'>('inherit');
   const location = useLocation();
-  const cb = () => {
-    setColor('warning');
+  const cb = (data: EventLog) => {
+    if (!location.pathname.startsWith('/admin') && data.log.level === 'error') {
+      setColor('error');
+    }
   };
   useEffect(() => {
     if (location.pathname === '/admin') {

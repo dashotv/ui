@@ -34,7 +34,12 @@ export interface EventLog extends EventBase {
 export interface EventJob extends EventBase {
   job: Job;
 }
-
+export interface EventStats {
+  [key: string]: EventStatsQueue;
+}
+export interface EventStatsQueue {
+  [key: string]: number;
+}
 export interface EventRequest extends EventBase {
   request: Request;
 }

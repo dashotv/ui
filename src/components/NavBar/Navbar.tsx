@@ -5,7 +5,21 @@ import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 import ArticleIcon from '@mui/icons-material/Article';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import EventIcon from '@mui/icons-material/Event';
+import FeedIcon from '@mui/icons-material/Feed';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
 import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import TheatersIcon from '@mui/icons-material/Theaters';
+import TodayIcon from '@mui/icons-material/Today';
+import TvIcon from '@mui/icons-material/Tv';
+import UpcomingIcon from '@mui/icons-material/Upcoming';
+import WatchIcon from '@mui/icons-material/Watch';
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+import WysiwygIcon from '@mui/icons-material/Wysiwyg';
 import AppBar from '@mui/material/AppBar';
 import MUIContainer from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -34,8 +48,8 @@ const pages: NavPageWithChildren[] = [
     page: '/',
     exact: true,
     children: [
-      { name: 'Upcoming', page: '/', exact: true },
-      { name: 'Downloads', page: '/downloads' },
+      { icon: <UpcomingIcon />, name: 'Upcoming', page: '/', exact: true },
+      { icon: <CloudDownloadIcon />, name: 'Downloads', page: '/downloads' },
     ],
   },
   {
@@ -43,8 +57,8 @@ const pages: NavPageWithChildren[] = [
     name: 'Media',
     page: '/series',
     children: [
-      { name: 'Series', page: '/series' },
-      { name: 'Movies', page: '/movies' },
+      { icon: <TvIcon />, name: 'Series', page: '/series' },
+      { icon: <TheatersIcon />, name: 'Movies', page: '/movies' },
     ],
   },
   {
@@ -52,11 +66,11 @@ const pages: NavPageWithChildren[] = [
     name: 'Releases',
     page: '/releases',
     children: [
-      { name: 'Daily', page: '/releases', exact: true },
-      { name: 'Weekly', page: '/releases/weekly' },
-      { name: 'Monthly', page: '/releases/monthly' },
-      { name: 'Search', page: '/releases/search' },
-      { name: 'Feeds', page: '/releases/feeds' },
+      { icon: <TodayIcon />, name: 'Daily', page: '/releases', exact: true },
+      { icon: <EventIcon />, name: 'Weekly', page: '/releases/weekly' },
+      { icon: <CalendarMonthIcon />, name: 'Monthly', page: '/releases/monthly' },
+      { icon: <FindInPageIcon />, name: 'Search', page: '/releases/search' },
+      { icon: <FeedIcon />, name: 'Feeds', page: '/releases/feeds' },
     ],
   },
   {
@@ -65,11 +79,11 @@ const pages: NavPageWithChildren[] = [
     page: '/admin',
     exact: true,
     children: [
-      { name: 'Messages', page: '/admin', exact: true },
-      { name: 'Jobs', page: '/admin/jobs' },
-      { name: 'Requests', page: '/admin/requests' },
-      { name: 'Users', page: '/admin/users' },
-      { name: 'Watches', page: '/admin/watches' },
+      { icon: <WorkHistoryIcon />, name: 'Jobs', page: '/admin', exact: true },
+      { icon: <WysiwygIcon />, name: 'Messages', page: '/admin/logs' },
+      { icon: <RecordVoiceOverIcon />, name: 'Requests', page: '/admin/requests' },
+      { icon: <PersonIcon />, name: 'Users', page: '/admin/users' },
+      { icon: <WatchIcon />, name: 'Watches', page: '/admin/watches' },
     ],
   },
 ];
