@@ -26,7 +26,7 @@ export function JobsList({ jobs }: { jobs: Job[] }) {
   return (
     <Paper elevation={0}>
       <Paper elevation={0} sx={{ minHeight: '75px' }}>
-        <Typography fontWeight="bolder" gutterBottom color="primary">
+        <Typography variant="h6" gutterBottom color="primary">
           Running
         </Typography>
         {jobs.map(job => {
@@ -41,7 +41,7 @@ export function JobsList({ jobs }: { jobs: Job[] }) {
       </Paper>
 
       <Paper elevation={0}>
-        <Typography fontWeight="bolder" gutterBottom color="primary">
+        <Typography variant="h6" gutterBottom color="primary">
           Completed
         </Typography>
         {jobs.map(job => {
