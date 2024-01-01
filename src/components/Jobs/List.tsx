@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import BlockIcon from '@mui/icons-material/Block';
 import CachedIcon from '@mui/icons-material/Cached';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -59,9 +60,11 @@ const Icon = ({ status }: { status: string }) => {
     case 'finished':
       return <CheckCircleIcon fontSize="small" color="success" />;
     case 'queued':
-      return <AccessTimeIcon fontSize="small" color="disabled" />;
+      return <AccessTimeIcon fontSize="small" color="secondary" />;
     case 'running':
-      return <CachedIcon fontSize="small" color="warning" />;
+      return <CachedIcon fontSize="small" color="primary" />;
+    case 'cancelled':
+      return <BlockIcon fontSize="small" color="warning" />;
     default:
       return <PendingIcon fontSize="small" color="disabled" />;
   }
@@ -106,7 +109,7 @@ export function JobRow({ id, kind, status, args, attempts }: Job) {
             {duration ? `${duration.toFixed(1)}s` : ''}
           </Typography>
           <Typography minWidth="100px" variant="subtitle2" color="gray" noWrap>
-            {started_at ? <Chrono fromNow>{started_at.toString()}</Chrono> : 'Pending'}
+            {started_at ? <Chrono fromNow>{started_at.toString()}</Chrono> : ''}
           </Typography>
         </Stack>
       </Stack>

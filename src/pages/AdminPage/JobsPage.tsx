@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { Grid, Typography } from '@mui/material';
+import BlockIcon from '@mui/icons-material/Block';
+import ErrorIcon from '@mui/icons-material/Error';
+import PendingIcon from '@mui/icons-material/Pending';
+import { Grid, IconButton, Stack } from '@mui/material';
 
 import { useQueryClient } from '@tanstack/react-query';
 
 import { LoadingIndicator, WrapErrorBoundary } from 'components/Common';
-import { Job, JobsList, JobsStats } from 'components/Jobs';
-import { useJobsQuery } from 'components/Jobs/query';
+import { Job, JobsList, JobsStats, deleteJob, useJobsQuery } from 'components/Jobs';
 import { Container } from 'components/Layout';
 import { useSub } from 'hooks/sub';
 import { EventJob, EventStats } from 'types/events';
@@ -17,6 +19,7 @@ export default function JobsPage() {
   const [stats, setStats] = useState({});
   const jobs = useJobsQuery(page);
   const queryClient = useQueryClient();
+
   useSub('tower.jobs', (data: EventJob) => {
     // console.log('tower.jobs');
     if (data.event === 'created') {
@@ -38,6 +41,15 @@ export default function JobsPage() {
     setStats(data);
   });
 
+  const handleCancel = (id: string) => {
+    console.log('cancel', id);
+    deleteJob(id, false);
+  };
+  const handleClear = (id: string) => {
+    console.log('clear', id);
+    deleteJob(id, true);
+  };
+
   return (
     <>
       <Helmet>
@@ -47,11 +59,19 @@ export default function JobsPage() {
       <Container>
         <WrapErrorBoundary>
           {jobs.isFetching && <LoadingIndicator />}
-          <Grid container spacing={2}>
+          <Grid container spacing={0} sx={{ mb: 2 }}>
             <Grid item xs={12} md={6}>
-              <Typography variant="h6" gutterBottom color="primary">
-                Jobs
-              </Typography>
+              <Stack direction="row" spacing={0} justifyContent="start">
+                <IconButton title="Cancel Pending" onClick={() => handleCancel('pending')}>
+                  <PendingIcon color="disabled" />
+                </IconButton>
+                <IconButton title="Clear Cancelled" onClick={() => handleClear('cancelled')}>
+                  <BlockIcon color="warning" />
+                </IconButton>
+                <IconButton title="Clear Failed" onClick={() => handleClear('failed')}>
+                  <ErrorIcon color="error" />
+                </IconButton>
+              </Stack>
             </Grid>
             <Grid item xs={12} md={6} justifyContent="end">
               {stats && <JobsStats stats={stats} />}

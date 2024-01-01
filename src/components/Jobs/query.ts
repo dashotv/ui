@@ -14,6 +14,11 @@ export const queueJob = async (name: string) => {
   return response.data;
 };
 
+export const deleteJob = async (id: string, hard: boolean) => {
+  const response = await tower.delete(`/jobs/${id}?hard=${hard}`);
+  return response.data;
+};
+
 export const useJobsQuery = page =>
   useQuery({
     queryKey: ['jobs', page],
