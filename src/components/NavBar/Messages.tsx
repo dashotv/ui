@@ -8,7 +8,7 @@ import { useSub } from 'hooks/sub';
 import { EventLog } from 'types/events';
 
 export const Messages = () => {
-  const [color, setColor] = useState<'inherit' | 'error'>('error');
+  const [color, setColor] = useState<'inherit' | 'error'>('inherit');
   const location = useLocation();
   const cb = (data: EventLog) => {
     console.log(data);
