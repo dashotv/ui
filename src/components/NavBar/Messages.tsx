@@ -8,15 +8,16 @@ import { useSub } from 'hooks/sub';
 import { EventLog } from 'types/events';
 
 export const Messages = () => {
-  const [color, setColor] = useState<'inherit' | 'error'>('inherit');
+  const [color, setColor] = useState<'inherit' | 'error'>('error');
   const location = useLocation();
   const cb = (data: EventLog) => {
-    if (!location.pathname.startsWith('/admin') && data.log.level === 'error') {
+    console.log(data);
+    if (data.log.level === 'error') {
       setColor('error');
     }
   };
   useEffect(() => {
-    if (location.pathname === '/admin') {
+    if (location.pathname === '/admin/logs') {
       setColor('inherit');
     }
   }, [color, location.pathname]);
