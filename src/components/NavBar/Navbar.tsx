@@ -20,6 +20,7 @@ import UpcomingIcon from '@mui/icons-material/Upcoming';
 import WatchIcon from '@mui/icons-material/Watch';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import WysiwygIcon from '@mui/icons-material/Wysiwyg';
+import { Theme, useMediaQuery } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import MUIContainer from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -91,6 +92,7 @@ const pages: NavPageWithChildren[] = [
 export const NavBar = () => {
   const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
+  const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
   const matchPath = (path: string, exact?: boolean): boolean => {
     if (exact) {
@@ -126,11 +128,8 @@ export const NavBar = () => {
       <AppBar position="static">
         <MUIContainer sx={{ overflow: 'hidden' }} maxWidth="xl">
           <Toolbar disableGutters sx={{ display: 'flex' }}>
-            <Stack spacing={0} direction="row" alignItems="center" flexGrow={1} display={{ xs: 'none', md: 'flex' }}>
-              <Nav {...{ pages, matchPath, matchAny }} />
-            </Stack>
-            <Stack spacing={0} direction="row" alignItems="center" flexGrow={1} display={{ xs: 'flex', md: 'none' }}>
-              <NavSmall {...{ pages, matchPath, matchAny }} />
+            <Stack spacing={0} direction="row" alignItems="center" flexGrow={1}>
+              {matches ? <Nav {...{ pages, matchPath, matchAny }} /> : <NavSmall {...{ pages, matchPath, matchAny }} />}
             </Stack>
             <Box sx={{ height: '54px', display: { xs: 'none', md: 'flex' } }}>
               <Gauges />
