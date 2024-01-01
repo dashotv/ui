@@ -7,4 +7,5 @@ export * from './Megabytes';
 export * from './Pill';
 export * from './Published';
 export * from './Resolution';
+export * from './Row';
 export * from './WrapErrorBoundary';

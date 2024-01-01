@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { Chrono } from 'components/Common';
+import { Chrono, Row } from 'components/Common';
 
 import { Log } from './types';
 
@@ -49,8 +49,8 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
   const [color] = useState<string | undefined>(Color(level));
 
   return (
-    <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
-      <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} width="100%" alignItems="center">
+    <Row key={id}>
+      <Stack direction={{ xs: 'column', md: 'row' }} width="100%" alignItems="center">
         <Typography width="100%" color={color} noWrap>
           {message}
         </Typography>
@@ -73,6 +73,6 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
           </Typography>
         </Stack>
       </Stack>
-    </Paper>
+    </Row>
   );
 }

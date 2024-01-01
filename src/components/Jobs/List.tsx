@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { ButtonMap, ButtonMapButton, Chrono, LoadingIndicator } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Chrono, LoadingIndicator, Row } from 'components/Common';
 import { Job, useJobsQuery } from 'components/Jobs';
 import { useSub } from 'hooks/sub';
 import { EventJob } from 'types/events';
@@ -136,7 +136,7 @@ export function JobRow({
     },
   ];
   return (
-    <Paper key={id} elevation={0} sx={{ pb: 1, '&:hover': { backgroundColor: 'blue' } }}>
+    <Row key={id}>
       <Stack width="100%" direction={{ xs: 'column', md: 'row' }} alignItems="center">
         <Stack
           width="100%"
@@ -179,6 +179,6 @@ export function JobRow({
           <ButtonMap size="small" buttons={buttons} />
         </Stack>
       </Stack>
-    </Paper>
+    </Row>
   );
 }
