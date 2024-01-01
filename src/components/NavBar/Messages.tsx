@@ -11,7 +11,6 @@ export const Messages = () => {
   const [color, setColor] = useState<'inherit' | 'error'>('inherit');
   const location = useLocation();
   const cb = (data: EventLog) => {
-    console.log(data);
     if (data.log.level === 'error') {
       setColor('error');
     }
