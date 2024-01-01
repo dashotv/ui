@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { Published } from 'components/Common';
+import { Published, Row } from 'components/Common';
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { ReleaseSources, ReleaseTypes } from 'types/constants';
 
@@ -48,7 +48,7 @@ export function FeedsList({ data }: FeedsListProps) {
   return (
     <Paper elevation={0} sx={{ width: '100%' }}>
       {data.map((row: Feed) => (
-        <Paper elevation={1} key={row.id} sx={{ width: '100%', mb: 1, justifyContent: 'space-between' }}>
+        <Row key={row.id}>
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
             <Stack
               direction="row"
@@ -74,7 +74,7 @@ export function FeedsList({ data }: FeedsListProps) {
               <Published date={row.processed} />
             </Stack>
           </Stack>
-        </Paper>
+        </Row>
       ))}
       {selected && <FeedDialog handleClose={handleClose} feed={selected} />}
     </Paper>

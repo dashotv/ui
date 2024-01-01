@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { Chrono } from 'components/Common';
+import { Chrono, Row } from 'components/Common';
 
 import { User } from './types';
 
@@ -14,7 +14,7 @@ export function UsersList({ users }: { users: User[] }) {
 
 export function UserRow({ id, name, email, created_at }: User) {
   return (
-    <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
+    <Row key={id}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} width="100%" alignItems="center">
         <Stack width="100%" direction="row" spacing={1} alignItems="center">
           <Typography fontWeight="bolder" color="primary" noWrap>
@@ -30,7 +30,7 @@ export function UserRow({ id, name, email, created_at }: User) {
           </Typography>
         </Stack>
       </Stack>
-    </Paper>
+    </Row>
     // <>
     //   <tr key={id}>
     //     <td>

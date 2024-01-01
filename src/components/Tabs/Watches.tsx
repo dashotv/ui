@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { Chrono, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
+import { Chrono, LoadingIndicator, Row, WrapErrorBoundary } from 'components/Common';
 import { Watch } from 'components/Media/types';
 
 const getWatches = async (medium_id: string) => {
@@ -37,7 +37,7 @@ export function Watches({ medium_id }: { medium_id: string }) {
 function WatchRow({ id, username, watched_at, medium, player }: Watch) {
   const { display } = medium || {};
   return (
-    <Paper key={id} elevation={1} sx={{ width: '100%', mb: 1 }}>
+    <Row key={id}>
       <Stack
         sx={{ width: '100%', pr: 1, pl: 1, justifyContent: 'space-between' }}
         direction={{ xs: 'column', md: 'row' }}
@@ -59,6 +59,6 @@ function WatchRow({ id, username, watched_at, medium, player }: Watch) {
           </Typography>
         </Stack>
       </Stack>
-    </Paper>
+    </Row>
   );
 }

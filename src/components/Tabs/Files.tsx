@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap, ButtonMapButton } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Row } from 'components/Common';
 import { DownloadFile } from 'components/Downloads';
 import { useTorrentWantMutation } from 'query/releases';
 import { Torrent } from 'types/torrents';
@@ -114,7 +114,7 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
   ];
 
   return (
-    <Paper elevation={1} sx={{ mb: 1, pr: 1, pl: 1, width: '100%' }}>
+    <Row variant="selected">
       <Stack
         key={num}
         direction={{ xs: 'column', md: 'row' }}
@@ -176,6 +176,6 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
           <ButtonMap buttons={buttons} size="small" />
         </Stack>
       </Stack>
-    </Paper>
+    </Row>
   );
 }

@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from 'components/Common';
 import { useDownloadCreateMutation } from 'components/Downloads';
 import { Episode } from 'components/Media/types';
 
@@ -149,7 +149,7 @@ function EpisodeRow({
   };
 
   return (
-    <Paper elevation={1} sx={{ width: '100%', mb: 1, pr: 1, pl: 1 }}>
+    <Row>
       <Stack width="100%" minWidth="0" direction={{ xs: 'column', md: 'row' }} spacing={0} alignItems="center">
         <Stack width="100%" minWidth="0" direction="row" spacing={1} alignItems="center">
           <Typography noWrap title={`${number} #${absolute}`} variant="subtitle1" color="textSecondary" minWidth="34px">
@@ -176,6 +176,6 @@ function EpisodeRow({
           <ButtonMap buttons={buttons} size="small" />
         </Stack>
       </Stack>
-    </Paper>
+    </Row>
   );
 }

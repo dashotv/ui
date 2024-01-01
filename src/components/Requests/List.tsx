@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap, ButtonMapButton, Chrono } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Chrono, Row } from 'components/Common';
 
 import { useRequestsStatusMutation } from './query';
 import { Request } from './types';
@@ -91,7 +91,7 @@ export function RequestRow(initial: Request) {
     },
   ];
   return (
-    <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
+    <Row key={id}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} width="100%" alignItems="center">
         <Stack width="100%" direction="row" spacing={1} alignItems="center">
           <RequestStatus status={status} />
@@ -109,6 +109,6 @@ export function RequestRow(initial: Request) {
           <ButtonMap buttons={buttons} size="small" />
         </Stack>
       </Stack>
-    </Paper>
+    </Row>
   );
 }

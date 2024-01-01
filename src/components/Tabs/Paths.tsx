@@ -14,7 +14,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from 'components/Common';
 import { Path } from 'components/Media/types';
 
 export function Paths({ paths }: { paths?: Path[] }) {
@@ -68,7 +68,7 @@ function PathsRow({ i, extension, local, type, size, resolution, updated_at }: {
     return `${list[list.length - 1]}.${extension}`;
   };
   return (
-    <Paper key={i} elevation={1} sx={{ mb: 1, pr: 1, pl: 1, width: '100%' }}>
+    <Row key={i}>
       <Stack
         width="100%"
         minWidth="0"
@@ -100,6 +100,6 @@ function PathsRow({ i, extension, local, type, size, resolution, updated_at }: {
           <ButtonMap buttons={buttons} size="small" />
         </Stack>
       </Stack>
-    </Paper>
+    </Row>
   );
 }

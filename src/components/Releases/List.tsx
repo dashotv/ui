@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { Chrono } from 'components/Common';
+import { Chrono, Row } from 'components/Common';
 
 import { Group, Release, Resolution, useReleaseSettingMutation } from '.';
 
@@ -59,110 +59,99 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
 
   return (
     <Paper elevation={0} sx={{ width: '100%' }}>
-      {data &&
-        data.map((row: Release) => (
-          <Paper
-            elevation={1}
-            key={row.id}
-            sx={{ width: '100%', mb: 1, backgroundColor: isSelected(row) ? '#222266' : 'inherit' }}
-          >
-            <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 0, md: 1 }} alignItems="center">
-              <Stack
-                direction="row"
-                spacing={1}
-                width="100%"
-                maxWidth={{ xs: '100%', md: '900px' }}
-                pr="3px"
-                alignItems="center"
-              >
-                <Stack direction="row" alignItems="center">
-                  <IconButton size="small" onClick={() => toggleVerified(row)} title="verified">
-                    <CheckCircleIcon color={row.verified ? 'secondary' : 'disabled'} fontSize="small" />
-                  </IconButton>
-                  <IconButton size="small">
-                    {row.nzb ? (
-                      <SvgIcon
-                        sx={{ width: '20px', height: '20px' }}
-                        component={HiOutlineNewspaper}
-                        inheritViewBox
-                        fontSize="small"
-                        color="disabled"
-                      />
-                    ) : (
-                      <SvgIcon
-                        sx={{ width: '18px', height: '18px' }}
-                        component={SiUtorrent}
-                        inheritViewBox
-                        fontSize="small"
-                        color="disabled"
-                      />
-                    )}
-                  </IconButton>
-                </Stack>
-                <Typography fontWeight="bolder" noWrap color="primary" sx={{ '& a': { color: 'primary.main' } }}>
-                  <Link to="#" onClick={() => view(row)} title={row.raw}>
-                    {row.display || row.name}
-                  </Link>
-                </Typography>
-                <Stack
-                  display={{ xs: 'none', md: 'inherit' }}
-                  direction="row"
-                  spacing={1}
-                  alignItems="center"
-                  sx={{ pl: 1 }}
-                >
-                  <Resolution resolution={row.resolution} variant="default" />
-                  <Group group={row.group} author={row.author} variant="default" />
-                  <Typography variant="subtitle2" noWrap color="textSecondary">
-                    {row.source}:{row.type}
-                  </Typography>
-                </Stack>
-              </Stack>
-              <Stack
-                direction="row"
-                spacing={1}
-                alignItems="center"
-                sx={{ width: '100%', justifyContent: { xs: 'start', md: 'end' } }}
-              >
-                <Stack
-                  display={{ xs: 'inherit', md: 'none' }}
-                  direction="row"
-                  spacing={1}
-                  alignItems="center"
-                  sx={{ pl: 1 }}
-                >
-                  <Resolution resolution={row.resolution} variant="default" />
-                  <Group group={row.group} author={row.author} variant="default" />
-                  <Typography display={{ xs: 'none', md: 'inherit' }} variant="subtitle2" noWrap color="textSecondary">
-                    {row.source}:{row.type}
-                  </Typography>
-                </Stack>
-                <Stack
-                  direction="row"
-                  width={{ xs: '100%', md: 'auto' }}
-                  spacing={1}
-                  alignItems="center"
-                  sx={{ pr: 1 }}
-                >
-                  {row.size && (
-                    <Typography
-                      display={{ xs: 'none', md: 'inherit' }}
-                      variant="subtitle2"
-                      color="textSecondary"
-                      pl="3px"
-                    >
-                      {row.size ? `${row.size}mb` : ''}
-                    </Typography>
+      {data?.map((row: Release) => (
+        <Row key={row.id} variant={isSelected(row) ? 'selected' : undefined}>
+          <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 0, md: 1 }} alignItems="center">
+            <Stack
+              direction="row"
+              spacing={1}
+              width="100%"
+              maxWidth={{ xs: '100%', md: '900px' }}
+              pr="3px"
+              alignItems="center"
+            >
+              <Stack direction="row" alignItems="center">
+                <IconButton size="small" onClick={() => toggleVerified(row)} title="verified">
+                  <CheckCircleIcon color={row.verified ? 'secondary' : 'disabled'} fontSize="small" />
+                </IconButton>
+                <IconButton size="small">
+                  {row.nzb ? (
+                    <SvgIcon
+                      sx={{ width: '20px', height: '20px' }}
+                      component={HiOutlineNewspaper}
+                      inheritViewBox
+                      fontSize="small"
+                      color="disabled"
+                    />
+                  ) : (
+                    <SvgIcon
+                      sx={{ width: '18px', height: '18px' }}
+                      component={SiUtorrent}
+                      inheritViewBox
+                      fontSize="small"
+                      color="disabled"
+                    />
                   )}
-                  <Typography noWrap variant="subtitle2" color="gray" pl="3px" width="100%">
-                    {row.published_at && <Chrono fromNow>{row.published_at}</Chrono>}
-                  </Typography>
-                  <Box>{actions && actions(row)}</Box>
-                </Stack>
+                </IconButton>
+              </Stack>
+              <Typography fontWeight="bolder" noWrap color="primary" sx={{ '& a': { color: 'primary.main' } }}>
+                <Link to="#" onClick={() => view(row)} title={row.raw}>
+                  {row.display || row.name}
+                </Link>
+              </Typography>
+              <Stack
+                display={{ xs: 'none', md: 'inherit' }}
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                sx={{ pl: 1 }}
+              >
+                <Resolution resolution={row.resolution} variant="default" />
+                <Group group={row.group} author={row.author} variant="default" />
+                <Typography variant="subtitle2" noWrap color="textSecondary">
+                  {row.source}:{row.type}
+                </Typography>
               </Stack>
             </Stack>
-          </Paper>
-        ))}
+            <Stack
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              sx={{ width: '100%', justifyContent: { xs: 'start', md: 'end' } }}
+            >
+              <Stack
+                display={{ xs: 'inherit', md: 'none' }}
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                sx={{ pl: 1 }}
+              >
+                <Resolution resolution={row.resolution} variant="default" />
+                <Group group={row.group} author={row.author} variant="default" />
+                <Typography display={{ xs: 'none', md: 'inherit' }} variant="subtitle2" noWrap color="textSecondary">
+                  {row.source}:{row.type}
+                </Typography>
+              </Stack>
+              <Stack direction="row" width={{ xs: '100%', md: 'auto' }} spacing={1} alignItems="center" sx={{ pr: 1 }}>
+                {row.size && (
+                  <Typography
+                    display={{ xs: 'none', md: 'inherit' }}
+                    variant="subtitle2"
+                    color="textSecondary"
+                    pl="3px"
+                  >
+                    {row.size ? `${row.size}mb` : ''}
+                  </Typography>
+                )}
+                <Typography noWrap variant="subtitle2" color="gray" pl="3px" width="100%">
+                  {row.published_at && <Chrono fromNow>{row.published_at}</Chrono>}
+                </Typography>
+                <Box>{actions && actions(row)}</Box>
+              </Stack>
+            </Stack>
+          </Stack>
+        </Row>
+      ))}
       {viewing && <ReleaseDialog {...{ open, handleClose }} release={viewing} actions={actions} />}
     </Paper>
   );
@@ -207,7 +196,7 @@ export const ReleaseDialog = ({
   return (
     <Dialog open={open} onClose={handleClose} fullWidth fullScreen={fullScreen} maxWidth="md">
       <DialogTitle>
-        <Typography noWrap color="primary" fontWeight="bolder">
+        <Typography noWrap color="primary" variant="h6">
           {display || title}
         </Typography>
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
