@@ -11,13 +11,36 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { Chrono } from 'components/Common';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { ButtonMap, ButtonMapButton, Chrono, LoadingIndicator } from 'components/Common';
+import { Job, useJobsQuery } from 'components/Jobs';
+import { useSub } from 'hooks/sub';
+import { EventJob } from 'types/events';
 
 import { JobsDialog } from './Dialog';
-import { Job } from './types';
 
-export function JobsList({ jobs }: { jobs: Job[] }) {
+export function JobsList({ page, handleCancel }: { page: number; handleCancel: (id: string) => void }) {
+  const jobs = useJobsQuery(page);
   const [selected, setSelected] = React.useState<Job | null>(null);
+  const queryClient = useQueryClient();
+
+  useSub('tower.jobs', (data: EventJob) => {
+    // console.log('tower.jobs');
+    if (data.event === 'created') {
+      console.log('job created', data.job);
+      queryClient.setQueryData(['jobs', page], (prev: Job[]) => {
+        return [data.job, ...prev];
+      });
+      return;
+    }
+    if (data.event === 'updated') {
+      queryClient.setQueryData(['jobs', page], (prev: Job[]) => {
+        return [...prev.map(job => (job.id === data.id ? data.job : job))];
+      });
+      return;
+    }
+  });
   const open = (job: Job) => {
     setSelected(job);
   };
@@ -26,12 +49,13 @@ export function JobsList({ jobs }: { jobs: Job[] }) {
   };
   return (
     <Paper elevation={0}>
+      {jobs.isFetching && <LoadingIndicator />}
       <Paper elevation={0}>
-        {jobs.map(job => {
+        {jobs.data?.map(job => {
           if (job.status !== 'failed' && job.status !== 'finished' && job.status !== 'pending') {
             return (
               <Link key={job.id} href="#" onClick={() => open(job)}>
-                <JobRow {...job} />
+                <JobRow {...{ job, handleCancel }} />
               </Link>
             );
           }
@@ -39,11 +63,11 @@ export function JobsList({ jobs }: { jobs: Job[] }) {
       </Paper>
 
       <Paper elevation={0}>
-        {jobs.map(job => {
+        {jobs.data?.map(job => {
           if (job.status === 'failed' || job.status === 'finished') {
             return (
               <Link key={job.id} href="#" onClick={() => open(job)}>
-                <JobRow {...job} />
+                <JobRow {...{ job, handleCancel }} />
               </Link>
             );
           }
@@ -72,7 +96,7 @@ const Icon = ({ status }: { status: string }) => {
 const Error = ({ error }: { error?: string }) => {
   if (!error) return null;
   return (
-    <Typography variant="caption" color="error" minWidth="0" noWrap>
+    <Typography variant="caption" color="error" minWidth="0" width={{ xs: '100%', md: 'auto' }} noWrap>
       {error}
     </Typography>
   );
@@ -80,9 +104,9 @@ const Error = ({ error }: { error?: string }) => {
 const Title = ({ args }: { args: string }) => {
   if (args === '{}') return null;
   const parsed = JSON.parse(args);
-  if (parsed && !parsed.Title) return null;
+  if (!parsed || !parsed.Title) return null;
   return (
-    <Typography variant="caption" color="gray" minWidth="0" noWrap>
+    <Typography variant="caption" color="gray" minWidth="0" width={{ xs: '100%', md: 'auto' }} noWrap>
       {parsed.Title}
     </Typography>
   );
@@ -92,25 +116,67 @@ const ErrorOrTitle = ({ error, args }: { error?: string; args: string }) => {
   return <Title args={args} />;
 };
 
-export function JobRow({ id, kind, status, args, attempts }: Job) {
+export function JobRow({
+  job: { id, kind, queue, status, args, attempts },
+  handleCancel,
+}: {
+  job: Job;
+  handleCancel: (id: string) => void;
+}) {
   const { started_at, duration, error } = (attempts && attempts.length > 0 && attempts[attempts.length - 1]) || {};
+
+  const buttons: ButtonMapButton[] = [
+    {
+      Icon: BlockIcon,
+      color: 'warning',
+      click: () => {
+        handleCancel(id);
+      },
+      title: 'cancel',
+    },
+  ];
   return (
-    <Paper key={id} elevation={1} sx={{ mb: 1, p: 1 }}>
-      <Stack width="100%" direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
-        <Stack width="100%" direction="row" spacing={1} alignItems="center" justifyContent="start">
-          <Icon status={status} />
-          <Typography minWidth="0" color={status === 'failed' ? 'error' : 'primary'} noWrap>
-            {kind}
-          </Typography>
+    <Paper key={id} elevation={0} sx={{ pb: 1, '&:hover': { backgroundColor: 'blue' } }}>
+      <Stack width="100%" direction={{ xs: 'column', md: 'row' }} alignItems="center">
+        <Stack
+          width="100%"
+          direction={{ xs: 'column', md: 'row' }}
+          spacing={1}
+          alignItems="center"
+          justifyContent="start"
+        >
+          <Stack
+            width={{ xs: '100%', md: 'auto' }}
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            justifyContent="start"
+          >
+            <Icon status={status} />
+            <Typography minWidth="0" color={status === 'failed' ? 'error' : 'primary'} noWrap>
+              {kind}
+            </Typography>
+          </Stack>
           <ErrorOrTitle {...{ error, args }} />
         </Stack>
-        <Stack minWidth="150px" direction="row" spacing={1} alignItems="center" justifyContent="end">
-          <Typography variant="caption" color="action">
+        <Stack
+          minWidth="300px"
+          width={{ xs: '100%', md: 'auto' }}
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          justifyContent="end"
+        >
+          <Typography noWrap variant="button" color="primary.dark">
+            {queue}
+          </Typography>
+          <Typography noWrap variant="button" color="action">
             {duration ? `${duration.toFixed(1)}s` : ''}
           </Typography>
-          <Typography minWidth="100px" variant="subtitle2" color="gray" noWrap>
+          <Typography variant="subtitle2" color="gray" noWrap>
             {started_at ? <Chrono fromNow>{started_at.toString()}</Chrono> : ''}
           </Typography>
+          <ButtonMap size="small" buttons={buttons} />
         </Stack>
       </Stack>
     </Paper>

@@ -12,6 +12,8 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { Chrono } from 'components/Common';
 
@@ -31,16 +33,10 @@ const Attempts = ({ attempts }: { attempts: Job['attempts'] }) => {
   return attempts && attempts.map((attempt, i) => <Attempt key={i} attempt={attempt} />);
 };
 
-const Attempt = ({
-  attempt: { status, started_at, duration, error, stacktrace },
-  key,
-}: {
-  key: number;
-  attempt: Job['attempts'][0];
-}) => {
+const Attempt = ({ attempt: { status, started_at, duration, error, stacktrace } }: { attempt: Job['attempts'][0] }) => {
   return (
     <Paper elevation={1} className="attempt" sx={{ p: '8px', mb: 1 }}>
-      <Stack key={key} direction="row" spacing={1} alignItems="center" justifyContent="start" width="100%">
+      <Stack direction="row" spacing={1} alignItems="center" justifyContent="start" width="100%">
         <Typography variant="subtitle1" color={status === 'failed' ? 'error' : 'action'}>
           {status}
         </Typography>
@@ -77,14 +73,22 @@ const Trace = ({ trace }: { trace: Job['attempts'][0]['stacktrace'][0] }) => {
   );
 };
 
-export const JobsDialog = ({ close, job: { id, kind, status, args, attempts } }: { close: () => void; job: Job }) => {
+export const JobsDialog = ({
+  close,
+  job: { id, kind, queue, status, args, attempts },
+}: {
+  close: () => void;
+  job: Job;
+}) => {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [open, setOpen] = React.useState(true);
   const handleClose = () => {
     setOpen(false);
     close();
   };
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth fullScreen={fullScreen}>
       <DialogTitle>
         <Stack direction="row" spacing={3} alignItems="center" justifyContent="start" width="100%">
           <Typography fontWeight="bolder" color="primary">
@@ -105,7 +109,13 @@ export const JobsDialog = ({ close, job: { id, kind, status, args, attempts } }:
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <Stack width="100%" direction={{ xs: 'column', md: 'row' }} spacing={1}>
+        <Stack width="100%" direction={{ xs: 'column', md: 'row' }} spacing={0} sx={{ mb: 1 }}>
+          <Typography minWidth="125px" variant="subtitle1" color="textSecondary">
+            ID
+          </Typography>
+          <Typography variant="button">{id}</Typography>
+        </Stack>
+        <Stack width="100%" direction={{ xs: 'column', md: 'row' }} spacing={0} sx={{ mb: 1 }}>
           <Typography minWidth="125px" variant="subtitle1" color="textSecondary">
             Status
           </Typography>
@@ -113,11 +123,11 @@ export const JobsDialog = ({ close, job: { id, kind, status, args, attempts } }:
             {status}
           </Typography>
         </Stack>
-        <Stack width="100%" direction={{ xs: 'column', md: 'row' }} spacing={1}>
+        <Stack width="100%" direction={{ xs: 'column', md: 'row' }} spacing={0} sx={{ mb: 1 }}>
           <Typography minWidth="125px" variant="subtitle1" color="textSecondary">
-            ID
+            Queue
           </Typography>
-          <Typography variant="button">{id}</Typography>
+          <Typography variant="subtitle1">{queue}</Typography>
         </Stack>
 
         <Typography variant="subtitle1" color="textSecondary">

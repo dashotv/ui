@@ -19,6 +19,7 @@ export const Default: Story = {
       id: '134qrer135',
       kind: 'Important',
       status: 'completed',
+      queue: 'default',
       args: '{}',
       attempts: [
         {

@@ -1,6 +1,7 @@
 export interface Job {
   id: string;
   kind: string;
+  queue: string;
   args: string;
   status: string;
   attempts: JobAttempt[];

@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Stack } from '@mui/material';
 
 import { Pill } from 'components/Common';
+import { useSub } from 'hooks/sub';
 import { EventStats } from 'types/events';
 
-export const JobsStats = ({ stats }: { stats: EventStats }) => {
+export const JobsStats = () => {
+  const [stats, setStats] = useState({});
+
+  useSub('tower.stats', (data: EventStats) => {
+    setStats(data);
+  });
+
   if (!stats || !stats['totals']) {
     return null;
   }
