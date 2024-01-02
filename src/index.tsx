@@ -31,7 +31,7 @@ const darkTheme = createTheme({
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: false,
+      retry: 5,
       staleTime: 5 * 1000,
       throwOnError: true,
     },

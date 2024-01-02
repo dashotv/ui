@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Typography } from '@mui/material';
+
 import { ButtonMapButton, Chrono } from 'components/Common';
 
 import { Banner } from '../Common/Banner';
@@ -18,6 +20,7 @@ export function MediumBanner({
   buttons,
   medium: {
     type,
+    kind,
     title,
     source,
     source_id,
@@ -46,11 +49,28 @@ export function MediumBanner({
     return out;
   };
 
+  const subtitle = () => {
+    if (type == 'Episode') {
+      return display;
+    }
+    return (
+      <>
+        <Typography variant="caption" fontWeight="bolder" mr={1}>
+          {kind}
+        </Typography>
+        <Typography variant="caption" fontWeight="bolder">
+          {source}:
+        </Typography>
+        <Typography variant="caption">{source_id}</Typography>
+      </>
+    );
+  };
+
   return (
     <Banner
       id={id}
       title={type == 'Episode' ? title : display || title}
-      subtitle={type == 'Episode' ? display : `${source}:${source_id}`}
+      subtitle={subtitle()}
       tertiary={release_date && <Chrono special>{release_date.toString()}</Chrono>}
       images={images()}
       flags={!large ? { active, broken, completed, favorite } : undefined}

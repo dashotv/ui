@@ -64,7 +64,7 @@ export type BannerProps = {
   id: string;
   title: string;
   extra?: string;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   tertiary?: React.ReactNode;
   images?: string[];
   buttons?: ButtonMapButton[];
