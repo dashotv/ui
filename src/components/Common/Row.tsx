@@ -6,16 +6,13 @@ export const Row = ({ variant, children }: { variant?: string; children: React.R
   let backgroundColor: string;
   switch (variant) {
     case 'selected':
-      backgroundColor = '#66622';
+      backgroundColor = '#222266';
       break;
     default:
       backgroundColor = 'auto';
   }
   return (
-    <Paper
-      elevation={0}
-      sx={{ pt: 0.5, pb: 0.5, '&:hover': { backgroundColor: '#242424' }, backgroundColor: backgroundColor }}
-    >
+    <Paper elevation={0} sx={{ p: 0.5, '&:hover': { backgroundColor: '#242424' }, backgroundColor: backgroundColor }}>
       {children}
     </Paper>
   );
