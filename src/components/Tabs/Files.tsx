@@ -114,7 +114,7 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
   ];
 
   return (
-    <Row variant="selected">
+    <Row>
       <Stack
         key={num}
         direction={{ xs: 'column', md: 'row' }}
