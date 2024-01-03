@@ -129,7 +129,9 @@ export function JobRow({
     {
       Icon: BlockIcon,
       color: 'warning',
-      click: () => {
+      click: e => {
+        e.preventDefault();
+        e.stopPropagation();
         handleCancel(id);
       },
       title: 'cancel',
@@ -170,7 +172,7 @@ export function JobRow({
           <Typography noWrap variant="button" color="primary.dark">
             {queue}
           </Typography>
-          <Typography noWrap variant="button" color="action">
+          <Typography noWrap fontWeight="bolder" color="action">
             {duration ? `${duration.toFixed(1)}s` : ''}
           </Typography>
           <Typography variant="subtitle2" color="gray" noWrap>
