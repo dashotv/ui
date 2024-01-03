@@ -129,10 +129,10 @@ export const DownloadMulti: Story = {
     args.progressBar = true;
     args.multi = true;
     args.files = 19;
-    args.total = 26;
+    args.total = 48;
     return (
       <Grid2 container>
-        <Grid2 item md={4} xs={12}>
+        <Grid2 item width="400px">
           <DownloadBanner {...args} />
         </Grid2>
       </Grid2>

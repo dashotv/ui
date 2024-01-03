@@ -179,7 +179,7 @@ const DownloadProgressBar = ({
   const secondary = theme.palette.secondary.main;
   const disabled = theme.palette.grey[700];
   const multibar = () => {
-    if (!multi || !files || !total || total > 26) {
+    if (!multi || !files || !total || total > 48) {
       return;
     }
     const rows: React.ReactElement[] = [];
@@ -187,7 +187,7 @@ const DownloadProgressBar = ({
       rows.push(<div key={i} className="file" style={{ backgroundColor: i < files ? primary : disabled }}></div>);
     }
     return (
-      <Stack sx={{ width: '100%' }} direction="row" spacing="3px" className="multibar">
+      <Stack sx={{ width: '100%' }} direction="row" spacing="2px" className="multibar">
         {rows}
       </Stack>
     );
