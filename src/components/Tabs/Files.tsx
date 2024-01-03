@@ -140,7 +140,14 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
           >
             {num}
           </Typography>
-          <Typography minWidth="100px" width={{ xs: '100%', md: 'auto' }} fontWeight="bolder" noWrap color="primary">
+          <Typography
+            title={torrent_file?.name}
+            minWidth="100px"
+            width={{ xs: '100%', md: 'auto' }}
+            fontWeight="bolder"
+            noWrap
+            color="primary"
+          >
             {name(torrent_file?.name)}
           </Typography>
           {medium && (
