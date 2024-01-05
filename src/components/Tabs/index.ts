@@ -1,4 +1,5 @@
 export * from './Details';
+export * from './Downloads';
 export * from './Episodes';
 export * from './Files';
 export * from './FilesWithSelector';

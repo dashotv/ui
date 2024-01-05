@@ -11,8 +11,8 @@ export const getDownloadsActive = async () => {
   return response.data as DownloadType[];
 };
 
-export const getDownloadsRecent = async (page: string) => {
-  const response = await tower.get(`/downloads/recent?page=${page}`);
+export const getDownloadsRecent = async (page: string, medium_id?: string) => {
+  const response = await tower.get(`/downloads/recent?page=${page}&medium_id=${medium_id}`);
   return response.data;
 };
 
@@ -68,6 +68,13 @@ export const useDownloadsRecentQuery = page =>
   useQuery({
     queryKey: ['downloads', 'recent', page],
     queryFn: () => getDownloadsRecent(page),
+    placeholderData: previousData => previousData,
+    retry: false,
+  });
+export const useDownloadsRecentMediaQuery = (page: string, medium_id: string) =>
+  useQuery({
+    queryKey: ['downloads', 'medium', medium_id, page],
+    queryFn: () => getDownloadsRecent(page, medium_id),
     placeholderData: previousData => previousData,
     retry: false,
   });

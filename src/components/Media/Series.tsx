@@ -10,7 +10,7 @@ import StarsIcon from '@mui/icons-material/Stars';
 
 import { ButtonMapButton } from 'components/Common';
 import { useDownloadCreateMutation } from 'components/Downloads';
-import { Details, Episodes, Paths, RoutingTabs, RoutingTabsRoute, Seasons, Watches } from 'components/Tabs';
+import { Details, Downloads, Episodes, Paths, RoutingTabs, RoutingTabsRoute, Seasons, Watches } from 'components/Tabs';
 
 import { Episode, MediumBanner, SeriesType } from '.';
 import './Media.scss';
@@ -62,7 +62,7 @@ export function Series({
     {
       label: 'Downloads',
       to: `downloads`,
-      element: <div>downloads</div>,
+      element: <Downloads medium_id={id} />,
     },
     {
       label: 'Watches',
