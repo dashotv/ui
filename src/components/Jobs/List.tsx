@@ -20,7 +20,17 @@ import { EventJob } from 'types/events';
 
 import { JobsDialog } from './Dialog';
 
-export function JobsList({ page, handleCancel }: { page: number; handleCancel: (id: string) => void }) {
+export function JobsList({
+  page,
+  handleCancel,
+  runningOnly,
+  limit = 250,
+}: {
+  page: number;
+  runningOnly?: boolean;
+  limit?: number;
+  handleCancel: (id: string) => void;
+}) {
   const jobs = useJobsQuery(page);
   const [selected, setSelected] = React.useState<Job | null>(null);
   const queryClient = useQueryClient();
@@ -62,17 +72,19 @@ export function JobsList({ page, handleCancel }: { page: number; handleCancel: (
         })}
       </Paper>
 
-      <Paper elevation={0}>
-        {jobs.data?.map(job => {
-          if (job.status === 'failed' || job.status === 'finished') {
-            return (
-              <Link key={job.id} href="#" onClick={() => open(job)}>
-                <JobRow {...{ job, handleCancel }} />
-              </Link>
-            );
-          }
-        })}
-      </Paper>
+      {!runningOnly && (
+        <Paper elevation={0}>
+          {jobs.data?.slice(0, limit).map(job => {
+            if (job.status === 'failed' || job.status === 'finished') {
+              return (
+                <Link key={job.id} href="#" onClick={() => open(job)}>
+                  <JobRow {...{ job, handleCancel }} />
+                </Link>
+              );
+            }
+          })}
+        </Paper>
+      )}
       {selected && <JobsDialog job={selected} close={close} />}
     </Paper>
   );
