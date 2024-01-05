@@ -38,6 +38,8 @@ export interface Release {
   checksum?: string;
   tags?: string[];
   resolution?: number;
+  bluray?: boolean;
+  uncensored?: boolean;
   created_at?: string;
   updated_at?: string;
   published_at?: string;

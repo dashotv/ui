@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
+import SportsBarIcon from '@mui/icons-material/SportsBar';
+import VideocamIcon from '@mui/icons-material/Videocam';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -70,11 +72,8 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
               pr="3px"
               alignItems="center"
             >
-              <Stack direction="row" alignItems="center">
-                <IconButton size="small" onClick={() => toggleVerified(row)} title="verified">
-                  <CheckCircleIcon color={row.verified ? 'secondary' : 'disabled'} fontSize="small" />
-                </IconButton>
-                <IconButton size="small">
+              <Stack direction="row" alignItems="center" spacing={0}>
+                <IconButton size="small" sx={{ pr: '2px', pl: '2px' }}>
                   {row.nzb ? (
                     <SvgIcon
                       sx={{ width: '20px', height: '20px' }}
@@ -92,6 +91,20 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                       color="disabled"
                     />
                   )}
+                </IconButton>
+                <IconButton
+                  size="small"
+                  onClick={() => toggleVerified(row)}
+                  title="verified"
+                  sx={{ pr: '2px', pl: '2px' }}
+                >
+                  <CheckCircleIcon color={row.verified ? 'secondary' : 'disabled'} fontSize="small" />
+                </IconButton>
+                <IconButton size="small" title="bluray" sx={{ pr: '2px', pl: '2px' }}>
+                  <VideocamIcon color={row.bluray ? 'secondary' : 'disabled'} fontSize="small" />
+                </IconButton>
+                <IconButton size="small" title="uncensored" sx={{ pr: '2px', pl: '2px' }}>
+                  <SportsBarIcon color={row.uncensored ? 'secondary' : 'disabled'} fontSize="small" />
                 </IconButton>
               </Stack>
               <Typography fontWeight="bolder" noWrap color="primary" sx={{ '& a': { color: 'primary.main' } }}>
@@ -117,7 +130,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
               direction="row"
               spacing={1}
               alignItems="center"
-              sx={{ width: '100%', justifyContent: { xs: 'start', md: 'end' } }}
+              sx={{ width: { xs: '100%', md: 'auto' }, justifyContent: 'end' }}
             >
               <Stack
                 display={{ xs: 'inherit', md: 'none' }}
@@ -132,21 +145,23 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                   {row.source}:{row.type}
                 </Typography>
               </Stack>
-              <Stack direction="row" width={{ xs: '100%', md: 'auto' }} spacing={1} alignItems="center" sx={{ pr: 1 }}>
+              <Stack
+                direction="row"
+                width={{ xs: '100%', md: 'auto' }}
+                spacing={1}
+                alignItems="center"
+                justifyContent="end"
+                sx={{ pr: 1 }}
+              >
                 {row.size && (
-                  <Typography
-                    display={{ xs: 'none', md: 'inherit' }}
-                    variant="subtitle2"
-                    color="textSecondary"
-                    pl="3px"
-                  >
+                  <Typography variant="subtitle2" color="textSecondary" pl="3px">
                     {row.size ? `${row.size}mb` : ''}
                   </Typography>
                 )}
                 <Typography noWrap variant="subtitle2" color="gray" pl="3px" width="100%">
                   {row.published_at && <Chrono fromNow>{row.published_at}</Chrono>}
                 </Typography>
-                <Box>{actions && actions(row)}</Box>
+                {/* <Box>{actions && actions(row)}</Box> */}
               </Stack>
             </Stack>
           </Stack>
