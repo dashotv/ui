@@ -159,7 +159,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                 <Typography noWrap variant="subtitle2" color="gray" pl="3px" width="100%">
                   {row.published_at && <Chrono fromNow>{row.published_at}</Chrono>}
                 </Typography>
-                {/* <Box>{actions && actions(row)}</Box> */}
+                <Box>{actions && actions(row)}</Box>
               </Stack>
             </Stack>
           </Stack>

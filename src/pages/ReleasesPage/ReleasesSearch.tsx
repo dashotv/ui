@@ -61,37 +61,38 @@ export default function ReleasesSearchPage() {
     setPage(1);
   };
 
-  const click = useCallback(() => {
-    console.log('click');
-  }, []);
+  // const click = useCallback(() => {
+  //   console.log('click');
+  // }, []);
 
   useEffect(() => {
     setQs(queryString(form));
   }, [form, queryString]);
 
   const renderActions = () => {
-    const buttons: ButtonMapButton[] = [
-      {
-        Icon: SvgIcon,
-        Component: RiEditCircleFill,
-        color: 'primary',
-        click: click,
-        title: 'edit',
-      },
-      {
-        Icon: ReplayCircleFilledIcon,
-        color: 'warning',
-        click: click,
-        title: 're-process',
-      },
-      {
-        Icon: CancelIcon,
-        color: 'error',
-        click: click,
-        title: 'delete',
-      },
-    ];
-    return <ButtonMap buttons={buttons} size="small" />;
+    // const buttons: ButtonMapButton[] = [
+    //   {
+    //     Icon: SvgIcon,
+    //     Component: RiEditCircleFill,
+    //     color: 'primary',
+    //     click: click,
+    //     title: 'edit',
+    //   },
+    //   {
+    //     Icon: ReplayCircleFilledIcon,
+    //     color: 'warning',
+    //     click: click,
+    //     title: 're-process',
+    //   },
+    //   {
+    //     Icon: CancelIcon,
+    //     color: 'error',
+    //     click: click,
+    //     title: 'delete',
+    //   },
+    // ];
+    // return <ButtonMap buttons={buttons} size="small" />;
+    return <></>;
   };
 
   return (
