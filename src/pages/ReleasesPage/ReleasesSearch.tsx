@@ -1,19 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { RiEditCircleFill } from 'react-icons/ri';
 import { useSearchParams } from 'react-router-dom';
 
-import CancelIcon from '@mui/icons-material/Cancel';
-import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import Pagination from '@mui/material/Pagination';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
-import SvgIcon from '@mui/material/SvgIcon';
 
-import { ButtonMap, ButtonMapButton, LoadingIndicator } from 'components/Common';
+import { LoadingIndicator } from 'components/Common';
 import { Container } from 'components/Layout';
-import { ReleasesForm, ReleasesList, ReleasesPresets, useReleasesQuery } from 'components/Releases';
-import { SearchForm } from 'components/Releases';
+import { ReleasesForm, ReleasesList, ReleasesPresets, SearchForm, useReleasesQuery } from 'components/Releases';
 import { useQueryString } from 'hooks/queryString';
 
 const pagesize = 25;
