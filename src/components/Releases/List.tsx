@@ -130,7 +130,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
               direction="row"
               spacing={1}
               alignItems="center"
-              sx={{ width: { xs: '100%', md: 'auto' }, justifyContent: 'end' }}
+              sx={{ width: '100%', justifyContent: { xs: 'start', md: 'end' } }}
             >
               <Stack
                 display={{ xs: 'inherit', md: 'none' }}
@@ -145,16 +145,14 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                   {row.source}:{row.type}
                 </Typography>
               </Stack>
-              <Stack
-                direction="row"
-                width={{ xs: '100%', md: 'auto' }}
-                spacing={1}
-                alignItems="center"
-                justifyContent="end"
-                sx={{ pr: 1 }}
-              >
+              <Stack direction="row" width={{ xs: '100%', md: 'auto' }} spacing={1} alignItems="center" sx={{ pr: 1 }}>
                 {row.size && (
-                  <Typography variant="subtitle2" color="textSecondary" pl="3px">
+                  <Typography
+                    display={{ xs: 'none', md: 'inherit' }}
+                    variant="subtitle2"
+                    color="textSecondary"
+                    pl="3px"
+                  >
                     {row.size ? `${row.size}mb` : ''}
                   </Typography>
                 )}
