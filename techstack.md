@@ -62,7 +62,7 @@ Full tech stack [here](/techstack.md)
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [dashotv/ui](https://github.com/dashotv/ui)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|44<br/>Tools used|12/14/23 <br/>Report generated|
+|46<br/>Tools used|01/05/24 <br/>Report generated|
 |------|------|
 </div>
 
@@ -294,9 +294,9 @@ Full tech stack [here](/techstack.md)
 </table>
 
 
-## <img src='https://img.stackshare.io/group.svg' /> Open source packages (19)</h2>
+## <img src='https://img.stackshare.io/group.svg' /> Open source packages (21)</h2>
 
-## <img width='24' height='24' src='https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png'/> npm (19)
+## <img width='24' height='24' src='https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png'/> npm (21)
 
 |NAME|VERSION|LAST UPDATED|LAST UPDATED BY|LICENSE|VULNERABILITIES|
 |:------|:------|:------|:------|:------|:------|
@@ -314,6 +314,8 @@ Full tech stack [here](/techstack.md)
 |[dayjs](https://www.npmjs.com/dayjs)|v1.11.10|10/22/23|Shawn Catanzarite |MIT|N/A|
 |[eslint-plugin-react](https://www.npmjs.com/eslint-plugin-react)|v7.33.2|12/08/23|Shawn Catanzarite |MIT|N/A|
 |[http-proxy-middleware](https://www.npmjs.com/http-proxy-middleware)|v2.0.6|09/25/22|Shawn Catanzarite |MIT|N/A|
+|[husky](https://www.npmjs.com/husky)|v8.0.3|11/11/23|Shawn Catanzarite |MIT|N/A|
+|[lint-staged](https://www.npmjs.com/lint-staged)|v15.0.2|11/11/23|Shawn Catanzarite |MIT|N/A|
 |[react-app-polyfill](https://www.npmjs.com/react-app-polyfill)|v3.0.0|12/08/23|Shawn Catanzarite |MIT|N/A|
 |[react-dom](https://www.npmjs.com/react-dom)|v18.2.0|12/08/23|Shawn Catanzarite |MIT|N/A|
 |[react-icons](https://www.npmjs.com/react-icons)|v4.12.0|12/08/23|Shawn Catanzarite |MIT|N/A|
