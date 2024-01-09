@@ -17,6 +17,7 @@ import TheatersIcon from '@mui/icons-material/Theaters';
 import TodayIcon from '@mui/icons-material/Today';
 import TvIcon from '@mui/icons-material/Tv';
 import UpcomingIcon from '@mui/icons-material/Upcoming';
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import WatchIcon from '@mui/icons-material/Watch';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import WysiwygIcon from '@mui/icons-material/Wysiwyg';
@@ -51,6 +52,7 @@ const pages: NavPageWithChildren[] = [
     children: [
       { icon: <UpcomingIcon />, name: 'Upcoming', page: '/', exact: true },
       { icon: <CloudDownloadIcon />, name: 'Downloads', page: '/downloads' },
+      { icon: <VideoLibraryIcon />, name: 'Collections', page: '/collections' },
     ],
   },
   {

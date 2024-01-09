@@ -135,9 +135,19 @@ export interface SuperSearchDialogProps {
   select: (option: Option) => void;
   value: string;
   setValue: (value: SetStateAction<string>) => void;
+  remote?: boolean;
 }
 
-export function SuperSearchDialog({ open, setOpen, confirm, select, value, setValue, data }: SuperSearchDialogProps) {
+export function SuperSearchDialog({
+  open,
+  setOpen,
+  confirm,
+  select,
+  value,
+  setValue,
+  data,
+  remote = true,
+}: SuperSearchDialogProps) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -185,8 +195,8 @@ export function SuperSearchDialog({ open, setOpen, confirm, select, value, setVa
           <Alert severity="error">{data?.Media?.Error || data?.Tvdb?.Error || data?.Tmdb?.Error}</Alert>
         ) : null}
         <SuperSearchAccordion name="Dasho.TV" data={data && data.Media.Results} select={select} />
-        <SuperSearchAccordion name="TVDB" type="series" data={data && data.Tvdb.Results} select={create} />
-        <SuperSearchAccordion name="TMDB" type="movie" data={data && data.Tmdb.Results} select={create} />
+        {remote && <SuperSearchAccordion name="TVDB" type="series" data={data && data.Tvdb.Results} select={create} />}
+        {remote && <SuperSearchAccordion name="TMDB" type="movie" data={data && data.Tmdb.Results} select={create} />}
       </DialogContent>
     </Dialog>
   );

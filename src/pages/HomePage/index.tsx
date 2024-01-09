@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
+import CollectionsPage from './CollectionsPage';
 import DownloadsPage from './DownloadsPage';
 import DownloadsShowPage from './DownloadsShowPage';
 import NotFoundPage from './NotFoundPage';
@@ -11,6 +12,9 @@ export default function HomePage() {
     <>
       <Routes>
         <Route path="" element={<UpcomingPage />} />
+        <Route path="collections">
+          <Route path="" element={<CollectionsPage />} />
+        </Route>
         <Route path="downloads">
           <Route path="" element={<DownloadsPage />} />
           <Route path=":id" element={<DownloadsShowPage />} />
