@@ -12,7 +12,7 @@ export const getDownloadsActive = async () => {
 };
 
 export const getDownloadsRecent = async (page: string, medium_id?: string) => {
-  const response = await tower.get(`/downloads/recent?page=${page}&medium_id=${medium_id}`);
+  const response = await tower.get(`/downloads/recent?page=${page}&medium_id=${medium_id ? medium_id : ''}`);
   return response.data;
 };
 
