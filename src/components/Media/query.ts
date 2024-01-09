@@ -11,8 +11,11 @@ export const createSeries = async (r: Option) => {
   return response.data;
 };
 
-export const getSeriesAll = async page => {
-  const response = await tower.get(`/series/?page=${page}`);
+export const getSeriesAll = async (page: number, filters) => {
+  const qs = Object.keys(filters)
+    .map(key => `${key}=${filters[key]}`)
+    .join('&');
+  const response = await tower.get(`/series/?page=${page}&${qs}`);
   return response.data;
 };
 
@@ -55,10 +58,10 @@ export const patchEpisode = async (id: string, setting: Setting) => {
   return response.data;
 };
 
-export const useSeriesAllQuery = page =>
+export const useSeriesAllQuery = (page: number, filters) =>
   useQuery({
-    queryKey: ['series', 'all', page],
-    queryFn: () => getSeriesAll(page),
+    queryKey: ['series', 'all', page, filters],
+    queryFn: () => getSeriesAll(page, filters),
     placeholderData: previousData => previousData,
     retry: false,
   });
