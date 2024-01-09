@@ -289,22 +289,24 @@ export const ReleaseDialog = ({
           <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
             Links
           </Typography>
-          <Typography minHeight="24px" variant="body1" color="primary">
-            <div>
-              {view && (
-                <Link style={{ color: theme.palette.primary.main }} to={view}>
+          <div>
+            {view && (
+              <Link style={{ color: theme.palette.primary.main }} to={view}>
+                <Typography minHeight="24px" variant="body1" color="primary">
                   View
-                </Link>
-              )}
-            </div>
-            <div>
-              {download && (
-                <Link style={{ color: theme.palette.primary.main }} to={download}>
+                </Typography>
+              </Link>
+            )}
+          </div>
+          <div>
+            {download && (
+              <Link style={{ color: theme.palette.primary.main }} to={download}>
+                <Typography minHeight="24px" variant="body1" color="primary">
                   Download
-                </Link>
-              )}
-            </div>
-          </Typography>
+                </Typography>
+              </Link>
+            )}
+          </div>
           <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
             Hash
           </Typography>
