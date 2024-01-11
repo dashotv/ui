@@ -44,8 +44,8 @@ export const CollectionList = ({ page }: { page: number }) => {
       {isFetching && <LoadingIndicator />}
       {data?.results?.map(collection => (
         <Paper key={collection.id} elevation={0} sx={{ mb: 1, width: '100%' }}>
-          <Stack spacing={1} direction="row" justifyContent="space-between" alignItems="center">
-            <Stack spacing={1} direction="row" alignItems="center">
+          <Stack spacing={1} direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems="center">
+            <Stack spacing={1} direction="row" alignItems="center" width="100%" justifyContent="flex-start">
               <Typography color="primary" noWrap minWidth={0}>
                 {collection.name}
               </Typography>
@@ -56,7 +56,7 @@ export const CollectionList = ({ page }: { page: number }) => {
                 {collection.rating_key}
               </Typography>
             </Stack>
-            <Stack spacing={1} direction="row" justifyContent="flex-end" alignItems="center">
+            <Stack spacing={1} direction="row" justifyContent="flex-end" alignItems="center" width="100%">
               <Typography noWrap fontWeight="bolder" color="action" pr={1}>
                 {collection.media ? collection.media.length : 0}
               </Typography>
@@ -125,6 +125,9 @@ export const CollectionDialog = ({
   const [value, setValue] = useState(collection.name);
   const [library, setLibrary] = useState<string>(collection.library || '');
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   const save = () => {
     if (!value || !library) {
       return;
@@ -157,7 +160,7 @@ export const CollectionDialog = ({
       <IconButton onClick={() => setOpen(true)} size="small" color="primary">
         <EditIcon fontSize="small" />
       </IconButton>
-      <Dialog onClose={() => setOpen(false)} open={open} fullWidth maxWidth="md">
+      <Dialog onClose={() => setOpen(false)} open={open} fullWidth maxWidth="md" fullScreen={fullScreen}>
         <DialogTitle>
           Edit
           <IconButton
@@ -214,30 +217,43 @@ export const CollectionDialog = ({
             </Stack>
           </Paper>
           <Paper elevation={1} sx={{ p: 1, mb: 2, width: '100%' }}>
-            <Stack spacing={1} direction="row" alignItems="center" width="100%">
-              <Typography variant="button" noWrap minWidth={0}>
-                Rating Key
-              </Typography>
-              <Typography variant="subtitle2" color="gray" noWrap minWidth={0}>
-                {collection.rating_key}
-              </Typography>
-              <Typography variant="button" noWrap minWidth={0}>
-                Synced
-              </Typography>
-              <Typography variant="subtitle2" color="gray" noWrap minWidth={0}>
-                <Chrono fromNow>{collection.synced_at}</Chrono>
-              </Typography>
+            <Stack spacing={1} direction="column" alignItems="center" width="100%">
+              <Stack spacing={1} direction="row" alignItems="center" width="100%">
+                <Typography variant="button" noWrap minWidth="125px">
+                  Rating Key
+                </Typography>
+                <Typography variant="subtitle2" color="gray" noWrap minWidth={0}>
+                  {collection.rating_key}
+                </Typography>
+              </Stack>
+              <Stack spacing={1} direction="row" alignItems="center" width="100%">
+                <Typography variant="button" noWrap minWidth="125px">
+                  Synced
+                </Typography>
+                <Typography variant="subtitle2" color="gray" noWrap minWidth={0}>
+                  <Chrono fromNow>{collection.synced_at}</Chrono>
+                </Typography>
+              </Stack>
             </Stack>
           </Paper>
-          <Paper elevation={1} sx={{ p: 1, width: '100%' }}>
-            <Stack direction="row" spacing={1} alignItems="center" mb={2}>
+          <Paper elevation={1} sx={{ p: 1, width: '100%', overflow: 'auto' }}>
+            <Stack direction="row" spacing={1} alignItems="center" mb={2} justifyContent="space-between">
               <Typography color="primary">Media</Typography>
               <AddDialog {...{ library, confirm }} />
             </Stack>
-            <Stack direction="column" sx={{ width: '100%' }}>
+            <Stack direction="column" sx={{ width: '100%' }} alignItems="center">
               {collection.media?.map(media => (
-                <Stack key={media.rating_key} direction="row" spacing={1} width="100%" justifyContent="space-between">
-                  <Typography>{media.title}</Typography>
+                <Stack
+                  key={media.rating_key}
+                  direction="row"
+                  spacing={1}
+                  width="100%"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Typography minWidth="0" noWrap>
+                    {media.title}
+                  </Typography>
                   <Stack direction="row" spacing={1} sx={{ justifyContent: 'end' }}>
                     <IconButton size="small" color="error" onClick={() => remove(media.rating_key)}>
                       <DeleteForeverIcon fontSize="small" />
