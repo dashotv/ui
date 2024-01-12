@@ -67,5 +67,5 @@ export interface Feed {
   type: string;
   name: string;
   url: string;
-  processed: string;
+  processed?: string;
 }

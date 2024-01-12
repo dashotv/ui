@@ -43,6 +43,11 @@ export const getFeed = async id => {
   return response.data;
 };
 
+export const postFeed = async (feed: Feed) => {
+  const response = await tower.post(`/feeds/`, feed);
+  return response.data;
+};
+
 export const putFeed = async (id: string, feed: Feed) => {
   const response = await tower.put(`/feeds/${id}`, feed);
   return response.data;
@@ -113,6 +118,16 @@ export const useFeedMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (feed: Feed) => putFeed(feed.id, feed),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['feeds', 'all'] });
+    },
+  });
+};
+
+export const useFeedCreateMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (feed: Feed) => postFeed(feed),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['feeds', 'all'] });
     },

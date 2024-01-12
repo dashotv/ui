@@ -71,7 +71,7 @@ export function FeedsList({ data }: FeedsListProps) {
               <Typography variant="subtitle2" color="textSecondary">
                 {row.source}:{row.type}
               </Typography>
-              <Published date={row.processed} />
+              {row.processed && <Published date={row.processed} />}
             </Stack>
           </Stack>
         </Row>
