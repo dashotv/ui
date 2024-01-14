@@ -331,7 +331,7 @@ const AddDialog = ({ library, confirm }: { library: string; confirm: (option: Op
               href="#"
               underline="none"
               onClick={() => {
-                confirm({ ID: ratingKey, Title: title, Type: type, Date: year.toString(), Source: 'plex' });
+                confirm({ ID: ratingKey, Title: title, Type: type, Date: year?.toString(), Source: 'plex' });
                 setOpen(false);
               }}
             >
