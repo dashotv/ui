@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import StarsIcon from '@mui/icons-material/Stars';
 import Paper from '@mui/material/Paper';
@@ -91,18 +92,23 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
     },
     {
       Icon: PlaylistAddCircleIcon,
-      color: medium ? 'secondary' : 'action',
+      color: medium ? 'secondary' : 'disabled',
       click: () => open(num, name(torrent_file?.name)),
       title: 'select',
     },
     {
+      Icon: DownloadForOfflineIcon,
+      color: medium?.downloaded ? 'secondary' : 'disabled',
+      title: 'downloaded',
+    },
+    {
       Icon: CheckCircleIcon,
-      color: medium?.downloaded ? 'secondary' : 'action',
+      color: medium?.completed ? 'secondary' : 'disabled',
       title: 'downloaded',
     },
     {
       Icon: StarsIcon,
-      color: torrent_file?.priority && torrent_file.priority > 0 ? 'secondary' : 'action',
+      color: torrent_file?.priority && torrent_file.priority > 0 ? 'secondary' : 'disabled',
       click: () => {
         if (!torrent_file || !thash) {
           return;
