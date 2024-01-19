@@ -38,6 +38,7 @@ function EpisodeRow({
     id,
     title,
     watched,
+    watched_any,
     episode_number: number,
     absolute_number: absolute,
     release_date: release,
@@ -58,6 +59,16 @@ function EpisodeRow({
   const [downloaded, setDownloaded] = useState(episode.downloaded);
   const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
+  const watchedColor = (watched, watched_any) => {
+    if (watched_any) {
+      return 'action';
+    }
+    if (watched) {
+      return 'primary';
+    }
+    return 'disabled';
+  };
+
   const buttons: ButtonMapButton[] = [
     {
       Icon: CloudCircleIcon,
@@ -77,7 +88,7 @@ function EpisodeRow({
     },
     {
       Icon: NextPlanIcon,
-      color: skipped ? 'secondary' : 'action',
+      color: skipped ? 'secondary' : 'disabled',
       click: () => {
         changeEpisode(id, 'skipped', !skipped);
         setSkipped(!skipped);
@@ -86,7 +97,7 @@ function EpisodeRow({
     },
     {
       Icon: DownloadForOfflineIcon,
-      color: downloaded ? 'secondary' : 'action',
+      color: downloaded ? 'secondary' : 'disabled',
       click: () => {
         changeEpisode(id, 'downloaded', !downloaded);
         setDownloaded(!downloaded);
@@ -95,7 +106,7 @@ function EpisodeRow({
     },
     {
       Icon: CheckCircleIcon,
-      color: completed ? 'secondary' : 'action',
+      color: completed ? 'secondary' : 'disabled',
       click: () => {
         changeEpisode(id, 'completed', !completed);
         setCompleted(!completed);
@@ -104,7 +115,7 @@ function EpisodeRow({
     },
     {
       Icon: VisibilityIcon,
-      color: watched ? 'secondary' : 'action',
+      color: watchedColor(watched, watched_any),
       click: () => {
         console.log("can't change watched yet");
       },

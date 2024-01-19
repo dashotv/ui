@@ -68,6 +68,7 @@ export interface Episode {
   updated_at: string;
   // convenience
   watched?: boolean;
+  watched_any?: boolean;
 }
 
 export interface SeriesType {
