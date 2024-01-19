@@ -60,11 +60,11 @@ function EpisodeRow({
   const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
   const watchedColor = (watched, watched_any) => {
+    if (watched) {
+      return 'secondary';
+    }
     if (watched_any) {
       return 'action';
-    }
-    if (watched) {
-      return 'primary';
     }
     return 'disabled';
   };
@@ -93,7 +93,7 @@ function EpisodeRow({
         changeEpisode(id, 'skipped', !skipped);
         setSkipped(!skipped);
       },
-      title: 'refresh',
+      title: 'skipped',
     },
     {
       Icon: DownloadForOfflineIcon,
@@ -102,7 +102,7 @@ function EpisodeRow({
         changeEpisode(id, 'downloaded', !downloaded);
         setDownloaded(!downloaded);
       },
-      title: 'broken',
+      title: 'downloaded',
     },
     {
       Icon: CheckCircleIcon,
@@ -111,7 +111,7 @@ function EpisodeRow({
         changeEpisode(id, 'completed', !completed);
         setCompleted(!completed);
       },
-      title: 'favorite',
+      title: 'completed',
     },
     {
       Icon: VisibilityIcon,
@@ -119,7 +119,7 @@ function EpisodeRow({
       click: () => {
         console.log("can't change watched yet");
       },
-      title: 'active',
+      title: `watched ${watched}/${watched_any}`,
     },
   ];
 
