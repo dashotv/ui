@@ -37,6 +37,7 @@ function EpisodeRow({
   episode: {
     id,
     title,
+    missing,
     watched,
     watched_any,
     episode_number: number,
@@ -163,7 +164,13 @@ function EpisodeRow({
     <Row>
       <Stack width="100%" minWidth="0" direction={{ xs: 'column', md: 'row' }} spacing={0} alignItems="center">
         <Stack width="100%" minWidth="0" direction="row" spacing={1} alignItems="center">
-          <Typography noWrap title={`${number} #${absolute}`} variant="subtitle1" color="textSecondary" minWidth="34px">
+          <Typography
+            noWrap
+            title={`${number} #${absolute}`}
+            variant="subtitle1"
+            color={missing ? 'error' : 'textSecondary'}
+            minWidth="34px"
+          >
             <Number />
           </Typography>
           <Typography noWrap color="primary" fontWeight="bolder">

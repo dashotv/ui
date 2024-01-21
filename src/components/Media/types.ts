@@ -62,6 +62,7 @@ export interface Episode {
   completed?: boolean;
   skipped?: boolean;
   broken?: boolean;
+  missing: string;
   release_date?: Date;
   paths?: Path[];
   created_at: string;
