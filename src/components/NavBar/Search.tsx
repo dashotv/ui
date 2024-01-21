@@ -32,6 +32,7 @@ import useTheme from '@mui/system/useTheme';
 import { MediaCover, Option, useSeriesCreateMutation } from 'components/Media';
 import { useMovieCreateMutation } from 'components/Movies';
 import { useSearchAllQuery } from 'query/search';
+import { Kinds } from 'types/constants';
 import { SearchAllResponse } from 'types/search';
 
 export default function SuperSearch() {
@@ -215,19 +216,8 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
   const [option, setOption] = useState<Option>(initial);
 
   const kinds = {
-    series: [
-      { label: 'TV', value: 'tv' },
-      { label: 'Anime', value: 'anime' },
-      { label: 'Ecchi', value: 'ecchi' },
-      { label: 'News', value: 'news' },
-    ],
-    movie: [
-      { label: 'Movies', value: 'movies' },
-      { label: 'Movies 4K', value: 'movies4k' },
-      { label: 'Movies 3D', value: 'movies3d' },
-      { label: 'Kids', value: 'kids' },
-      { label: 'Movies 4H', value: 'movies4h' },
-    ],
+    series: Kinds.Series,
+    movie: Kinds.Movie,
   };
 
   if (!option.Kind) {
@@ -248,9 +238,14 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
             <Typography noWrap variant="h5" color="primary">
               {option.Title}
             </Typography>
-            <Typography variant="body2" color="action">
-              {option.Date}
-            </Typography>
+            <Stack direction="row" spacing={1}>
+              <Typography variant="body2" color="secondary">
+                {option.Date}
+              </Typography>
+              <Typography variant="body2" color="action">
+                {option.ID}
+              </Typography>
+            </Stack>
             <Typography variant="body1">{option.Description}</Typography>
           </Stack>
         </Stack>
