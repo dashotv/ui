@@ -57,6 +57,10 @@ export const patchEpisode = async (id: string, setting: Setting) => {
   const response = await tower.patch(`/episodes/${id}`, setting);
   return response.data;
 };
+export const postEpisodeBatchSetting = async (ids: string[], field: string, value: boolean) => {
+  const response = await tower.post(`/episodes/settings`, { ids, field, value });
+  return response.data;
+};
 
 export const useSeriesAllQuery = (page: number, filters) =>
   useQuery({
@@ -96,6 +100,12 @@ export const useSeriesSettingMutation = id => {
 export const useEpisodeSettingMutation = () => {
   return useMutation({
     mutationFn: (args: SettingsArgs) => patchEpisode(args.id, args.setting),
+  });
+};
+export const useEpisodeBatchSettingMutation = () => {
+  return useMutation({
+    mutationFn: ({ ids, field, value }: { ids: string[]; field: string; value: boolean }) =>
+      postEpisodeBatchSetting(ids, field, value),
   });
 };
 

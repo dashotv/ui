@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -14,7 +13,7 @@ import Typography from '@mui/material/Typography';
 
 import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from 'components/Common';
 import { useDownloadCreateMutation } from 'components/Downloads';
-import { Episode } from 'components/Media/types';
+import { Episode, useEpisodeBatchSettingMutation } from 'components/Media';
 
 export function Episodes({
   kind,
@@ -25,10 +24,60 @@ export function Episodes({
   episodes: Episode[];
   changeEpisode: (id: string, field: string, value: boolean) => void;
 }) {
+  const [ids, setIds] = useState<string[]>([]);
+  const [skipped, setSkipped] = useState(false);
+  const [downloaded, setDownloaded] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [watched, setWatched] = useState(false);
+  const settings = useEpisodeBatchSettingMutation();
+
+  useEffect(() => {
+    if (!episodes) {
+      return;
+    }
+    setIds(() => episodes.map(episode => episode.id));
+    setSkipped(() => episodes.filter(episode => episode.skipped).length === episodes.length);
+    setDownloaded(() => episodes.filter(episode => episode.downloaded).length === episodes.length);
+    setCompleted(() => episodes.filter(episode => episode.completed).length === episodes.length);
+    setWatched(() => episodes.filter(episode => episode.watched).length === episodes.length);
+  }, [episodes]);
+
+  const updateSettings = (field: string, value: boolean) => {
+    settings.mutate({ ids, field, value });
+  };
+
+  const buttons: ButtonMapButton[] = [
+    {
+      Icon: NextPlanIcon,
+      color: skipped ? 'secondary' : 'disabled',
+      click: () => updateSettings('skipped', !skipped),
+      title: 'skipped',
+    },
+    {
+      Icon: DownloadForOfflineIcon,
+      color: downloaded ? 'secondary' : 'disabled',
+      click: () => updateSettings('downloaded', !downloaded),
+      title: 'downloaded',
+    },
+    {
+      Icon: CheckCircleIcon,
+      color: completed ? 'secondary' : 'disabled',
+      click: () => updateSettings('completed', !completed),
+      title: 'completed',
+    },
+    {
+      Icon: VisibilityIcon,
+      color: watched ? 'secondary' : 'disabled',
+      click: () => updateSettings('watched', !watched),
+      title: `watched`,
+    },
+  ];
   return (
     <Paper elevation={0}>
-      {episodes &&
-        episodes.map(row => <EpisodeRow key={row.id} kind={kind} episode={row} changeEpisode={changeEpisode} />)}
+      <Row>
+        <ButtonMap buttons={buttons} size="small" />
+      </Row>
+      {episodes?.map(row => <EpisodeRow key={row.id} kind={kind} episode={row} changeEpisode={changeEpisode} />)}
     </Paper>
   );
 }
