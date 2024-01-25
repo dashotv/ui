@@ -8,9 +8,10 @@ import RecommendOutlinedIcon from '@mui/icons-material/RecommendOutlined';
 import StarsIcon from '@mui/icons-material/Stars';
 import StarsOutlinedIcon from '@mui/icons-material/StarsOutlined';
 import UndoIcon from '@mui/icons-material/Undo';
-import { Checkbox, Grid, IconButton, MenuItem, Pagination, Stack, TextField } from '@mui/material';
+import { Grid, IconButton, Pagination, Stack } from '@mui/material';
 
 import { LoadingIndicator } from 'components/Common';
+import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
 import { Container } from 'components/Layout';
 import { Media, useSeriesAllQuery } from 'components/Media';
 
@@ -28,62 +29,6 @@ const sources: Choice[] = [
   { name: 'TheTVDB', type: 'tvdb' },
   { name: 'The Movie DB', type: 'tmdb' },
 ];
-
-interface Choice {
-  name: string;
-  type: string;
-}
-
-const FilterSelect = ({
-  name,
-  choices,
-  choose,
-  selected,
-}: {
-  name: string;
-  selected: string;
-  choices: Choice[];
-  choose: (choice: string) => void;
-}) => {
-  const handleChange = event => {
-    choose(event.target.value);
-  };
-  return (
-    <TextField
-      select
-      id={name}
-      label={name}
-      variant="standard"
-      fullWidth
-      onChange={handleChange}
-      value={selected}
-      defaultValue={choices[0].type}
-    >
-      {choices.map(({ name, type }) => (
-        <MenuItem key={type} value={type}>
-          {name}
-        </MenuItem>
-      ))}
-    </TextField>
-  );
-};
-
-const FilterCheckbox = ({
-  checked,
-  icon,
-  checkedIcon,
-  change,
-}: {
-  checked: boolean;
-  icon: React.ReactNode;
-  checkedIcon: React.ReactNode;
-  change: (checked: boolean) => void;
-}) => {
-  const handleChange = event => {
-    change(event.target.checked);
-  };
-  return <Checkbox checked={checked} icon={icon} checkedIcon={checkedIcon} onChange={handleChange} />;
-};
 
 const filtersDefaults = { type: '', source: '', active: '', favorite: '', broken: '' };
 

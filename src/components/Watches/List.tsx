@@ -13,12 +13,18 @@ export const WatchesList = ({ watches }: { watches: Watch[] }) => {
     <Paper elevation={0}>
       {watches.map(({ id, username, player, medium, watched_at }) => (
         <Row key={id}>
-          <Stack width="100%" direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
+          <Stack
+            width="100%"
+            direction={{ xs: 'column', md: 'row' }}
+            spacing={1}
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <Stack width="100%" direction="row" spacing={1} alignItems="center" justifyContent="start">
-              <Typography minWidth="0" maxWidth="390px" noWrap color="primary">
+              <Typography minWidth="0" maxWidth="200px" noWrap color="primary">
                 {medium.title}
               </Typography>
-              <Typography minWidth="0" maxWidth="390px" noWrap color="primary.dark">
+              <Typography minWidth="0" maxWidth="200px" noWrap color="primary.dark">
                 {medium.display}
               </Typography>
             </Stack>

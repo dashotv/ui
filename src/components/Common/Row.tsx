@@ -8,11 +8,17 @@ export const Row = ({ variant, children }: { variant?: string; children: React.R
     case 'selected':
       backgroundColor = '#222266';
       break;
+    case 'transparent':
+      backgroundColor = 'transparent';
+      break;
     default:
       backgroundColor = 'auto';
   }
   return (
-    <Paper elevation={0} sx={{ p: 0.5, '&:hover': { backgroundColor: '#242424' }, backgroundColor: backgroundColor }}>
+    <Paper
+      elevation={0}
+      sx={{ p: 0.5, '&:hover': { backgroundColor: '#242424' }, zIndex: 1000, backgroundColor: backgroundColor }}
+    >
       {children}
     </Paper>
   );

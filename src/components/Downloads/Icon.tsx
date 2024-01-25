@@ -14,33 +14,33 @@ import IconButton from '@mui/material/IconButton';
 
 import { DownloadStatus } from './types';
 
-export const DownloadIcon = ({ status }: { status: DownloadStatus }) => {
-  const icon = () => {
-    switch (status) {
-      case 'searching':
-        return SearchIcon;
-      case 'loading':
-        return YoutubeSearchedForIcon;
-      case 'managing':
-        return ManageSearchIcon;
-      case 'reviewing':
-        return ErrorIcon;
-      case 'downloading':
-        return CloudDownloadIcon;
-      case 'done':
-        return DownloadDoneIcon;
-      case 'paused':
-        return PauseCircleIcon;
-      case 'deleted':
-        return RemoveCircleIcon;
-      case 'held':
-        return PendingIcon;
-      default:
-        return ReportProblemIcon;
-    }
-  };
+export const DownloadGetIcon = (status: DownloadStatus) => {
+  switch (status) {
+    case 'searching':
+      return SearchIcon;
+    case 'loading':
+      return YoutubeSearchedForIcon;
+    case 'managing':
+      return ManageSearchIcon;
+    case 'reviewing':
+      return ErrorIcon;
+    case 'downloading':
+      return CloudDownloadIcon;
+    case 'done':
+      return DownloadDoneIcon;
+    case 'paused':
+      return PauseCircleIcon;
+    case 'deleted':
+      return RemoveCircleIcon;
+    case 'held':
+      return PendingIcon;
+    default:
+      return ReportProblemIcon;
+  }
+};
 
-  return React.createElement(icon(), { fontSize: 'small' });
+export const DownloadIcon = ({ status }: { status: DownloadStatus }) => {
+  return React.createElement(DownloadGetIcon(status), { fontSize: 'small' });
 };
 
 export const DownloadIconButton = ({ status, action }: { status: DownloadStatus; action?: () => void }) => {

@@ -13,6 +13,7 @@ import { Route, Routes } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 import { RedirectToSignIn, SignIn, SignUp, SignedIn, SignedOut } from '@clerk/clerk-react';
 import '@fontsource/roboto/300.css';
@@ -69,15 +70,17 @@ export function App() {
 
       <ErrorBoundary fallbackRender={fallbackRender}>
         <NavBar />
-        <Routes>
-          <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
-          <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
-          <Route path="/*" element={withAuth(HomePage)} />
-          <Route path="admin/*" element={withAuth(AdminPage)} />
-          <Route path="series/*" element={withAuth(SeriesPage)} />
-          <Route path="movies/*" element={withAuth(MoviesPage)} />
-          <Route path="releases/*" element={withAuth(ReleasesPage)} />
-        </Routes>
+        <Box sx={{ ml: { xs: 0, md: '235px' } }}>
+          <Routes>
+            <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
+            <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
+            <Route path="/*" element={withAuth(HomePage)} />
+            <Route path="admin/*" element={withAuth(AdminPage)} />
+            <Route path="series/*" element={withAuth(SeriesPage)} />
+            <Route path="movies/*" element={withAuth(MoviesPage)} />
+            <Route path="releases/*" element={withAuth(ReleasesPage)} />
+          </Routes>
+        </Box>
       </ErrorBoundary>
       <SignedOut>
         <RedirectToSignIn />

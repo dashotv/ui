@@ -22,6 +22,7 @@ const meta: Meta<typeof MediumBanner> = {
     medium: {
       id: 'blarg',
       type: 'Episode',
+      kind: 'anime',
       source: 'tvdb',
       source_id: 'blah',
       description: 'blah blah blah',

@@ -10,8 +10,11 @@ export const createMovie = async (r: Option) => {
   return response.data;
 };
 
-export const getMoviesAll = async page => {
-  const response = await tower.get(`/movies/?page=${page}`);
+export const getMoviesAll = async (page: number, filters) => {
+  const qs = Object.keys(filters)
+    .map(key => `${key}=${filters[key]}`)
+    .join('&');
+  const response = await tower.get(`/movies/?page=${page}&${qs}`);
   return response.data;
 };
 
@@ -35,10 +38,10 @@ export const patchMovie = async (id: string, setting: Setting) => {
   return response.data;
 };
 
-export const useMoviesAllQuery = page =>
+export const useMoviesAllQuery = (page: number, filters) =>
   useQuery({
-    queryKey: ['movies', 'all', page],
-    queryFn: () => getMoviesAll(page),
+    queryKey: ['movies', 'all', page, filters],
+    queryFn: () => getMoviesAll(page, filters),
     placeholderData: previousData => previousData,
     retry: false,
   });

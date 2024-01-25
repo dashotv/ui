@@ -1,6 +1,5 @@
 import React from 'react';
 import { GrMultimedia } from 'react-icons/gr';
-import { useLocation } from 'react-router-dom';
 
 import { useSnackbar } from 'notistack';
 
@@ -11,6 +10,7 @@ import EventIcon from '@mui/icons-material/Event';
 import FeedIcon from '@mui/icons-material/Feed';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import HomeIcon from '@mui/icons-material/Home';
+import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import TheatersIcon from '@mui/icons-material/Theaters';
@@ -21,14 +21,12 @@ import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import WatchIcon from '@mui/icons-material/Watch';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import WysiwygIcon from '@mui/icons-material/Wysiwyg';
-import { Theme, useMediaQuery } from '@mui/material';
+import { Grid, IconButton, Theme, useMediaQuery } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 import MUIContainer from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Toolbar from '@mui/material/Toolbar';
-import Box from '@mui/system/Box';
 
 import { Gauges } from 'components/Guages';
 import { useSub } from 'hooks/sub';
@@ -36,23 +34,22 @@ import { EventNotice } from 'types/events';
 
 import { Admin } from './Admin';
 import { Messages } from './Messages';
-import { Nav } from './Nav';
-import { NavSmall } from './NavSmall';
+import { NavDrawer, NavDrawerMobile } from './NavDrawer';
 import './Navbar.scss';
 import { Notice } from './Notice';
-import { Subnav } from './Subnav';
-import { NavPage, NavPageWithChildren } from './types';
+import { NavPageWithChildren } from './types';
 
+const drawerWidth = 240;
 const pages: NavPageWithChildren[] = [
   {
-    icon: <HomeIcon />,
+    icon: <HomeIcon fontSize="small" />,
     name: 'Home',
     page: '/',
     exact: true,
     children: [
-      { icon: <UpcomingIcon />, name: 'Upcoming', page: '/', exact: true },
-      { icon: <CloudDownloadIcon />, name: 'Downloads', page: '/downloads' },
-      { icon: <VideoLibraryIcon />, name: 'Collections', page: '/collections' },
+      { icon: <UpcomingIcon fontSize="small" />, name: 'Upcoming', page: '/', exact: true },
+      { icon: <CloudDownloadIcon fontSize="small" />, name: 'Downloads', page: '/downloads' },
+      { icon: <VideoLibraryIcon fontSize="small" />, name: 'Collections', page: '/collections' },
     ],
   },
   {
@@ -60,20 +57,20 @@ const pages: NavPageWithChildren[] = [
     name: 'Media',
     page: '/series',
     children: [
-      { icon: <TvIcon />, name: 'Series', page: '/series' },
-      { icon: <TheatersIcon />, name: 'Movies', page: '/movies' },
+      { icon: <TvIcon fontSize="small" />, name: 'Series', page: '/series' },
+      { icon: <TheatersIcon fontSize="small" />, name: 'Movies', page: '/movies' },
     ],
   },
   {
-    icon: <ArticleIcon />,
+    icon: <ArticleIcon fontSize="small" />,
     name: 'Releases',
     page: '/releases',
     children: [
-      { icon: <TodayIcon />, name: 'Daily', page: '/releases', exact: true },
-      { icon: <EventIcon />, name: 'Weekly', page: '/releases/weekly' },
-      { icon: <CalendarMonthIcon />, name: 'Monthly', page: '/releases/monthly' },
-      { icon: <FindInPageIcon />, name: 'Search', page: '/releases/search' },
-      { icon: <FeedIcon />, name: 'Feeds', page: '/releases/feeds' },
+      { icon: <TodayIcon fontSize="small" />, name: 'Daily', page: '/releases', exact: true },
+      { icon: <EventIcon fontSize="small" />, name: 'Weekly', page: '/releases/weekly' },
+      { icon: <CalendarMonthIcon fontSize="small" />, name: 'Monthly', page: '/releases/monthly' },
+      { icon: <FindInPageIcon fontSize="small" />, name: 'Search', page: '/releases/search' },
+      { icon: <FeedIcon fontSize="small" />, name: 'Feeds', page: '/releases/feeds' },
     ],
   },
   {
@@ -82,41 +79,35 @@ const pages: NavPageWithChildren[] = [
     page: '/admin',
     exact: true,
     children: [
-      { icon: <WorkHistoryIcon />, name: 'Jobs', page: '/admin', exact: true },
-      { icon: <WysiwygIcon />, name: 'Messages', page: '/admin/logs' },
-      { icon: <RecordVoiceOverIcon />, name: 'Requests', page: '/admin/requests' },
-      { icon: <PersonIcon />, name: 'Users', page: '/admin/users' },
-      { icon: <WatchIcon />, name: 'Watches', page: '/admin/watches' },
+      { icon: <WorkHistoryIcon fontSize="small" />, name: 'Jobs', page: '/admin', exact: true },
+      { icon: <WysiwygIcon fontSize="small" />, name: 'Messages', page: '/admin/logs' },
+      { icon: <RecordVoiceOverIcon fontSize="small" />, name: 'Requests', page: '/admin/requests' },
+      { icon: <PersonIcon fontSize="small" />, name: 'Users', page: '/admin/users' },
+      { icon: <WatchIcon fontSize="small" />, name: 'Watches', page: '/admin/watches' },
     ],
   },
 ];
 
 export const NavBar = () => {
-  const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
   const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
-  const matchPath = (path: string, exact?: boolean): boolean => {
-    if (exact) {
-      return path === location.pathname;
-    }
-    return location.pathname.startsWith(path);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [isClosing, setIsClosing] = React.useState(false);
+
+  const handleDrawerClose = () => {
+    setIsClosing(true);
+    setMobileOpen(false);
   };
 
-  const matchAny = (path: string, exact?: boolean, children?: NavPage[]): boolean => {
-    if (children && children?.length > 0) {
-      return children.some(({ page, exact }) => matchPath(page, exact)) || matchPath(path, exact);
-    }
-    return matchPath(path, exact);
+  const handleDrawerTransitionEnd = () => {
+    setIsClosing(false);
   };
 
-  const matchChildren = (pages: NavPageWithChildren[]): number => {
-    for (let i = 0; i < pages.length; i++) {
-      if (matchAny(pages[i].page, pages[i].exact, pages[i].children)) {
-        return i;
-      }
-    }
-    return 0;
+  const handleDrawerToggle = () => {
+    // if (!isClosing) {
+    setMobileOpen(!mobileOpen);
+    // }
   };
 
   useSub('tower.notices', (data: EventNotice) =>
@@ -129,13 +120,22 @@ export const NavBar = () => {
     <>
       <AppBar position="static">
         <MUIContainer sx={{ overflow: 'hidden' }} maxWidth="xl">
-          <Toolbar disableGutters sx={{ display: 'flex' }}>
-            <Stack spacing={0} direction="row" alignItems="center" flexGrow={1}>
-              {matches ? <Nav {...{ pages, matchPath, matchAny }} /> : <NavSmall {...{ pages, matchPath, matchAny }} />}
-            </Stack>
-            <Box sx={{ height: '54px', display: { xs: 'none', md: 'flex' } }}>
-              <Gauges />
-            </Box>
+          <Toolbar disableGutters sx={{ display: 'flex', ml: { xs: '0', md: '250px' } }}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { md: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Box flexGrow={1}></Box>
+            {matches && (
+              <Box sx={{ height: '54px', display: { xs: 'none', md: 'flex' } }}>
+                <Gauges />
+              </Box>
+            )}
             <Admin />
           </Toolbar>
         </MUIContainer>
@@ -145,11 +145,16 @@ export const NavBar = () => {
           <Grid item xs={12}>
             <Gauges />
           </Grid>
-          <Grid item xs={12}>
-            <Subnav items={pages[matchChildren(pages)].children} />
-          </Grid>
         </Grid>
       </MUIContainer>
+
+      <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        {matches && <NavDrawer pages={pages} />}
+        {!matches && (
+          <NavDrawerMobile {...{ pages, mobileOpen, isClosing, handleDrawerClose, handleDrawerTransitionEnd }} />
+        )}
+      </Box>
     </>
   );
 };
