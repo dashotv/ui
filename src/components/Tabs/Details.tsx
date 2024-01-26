@@ -219,19 +219,21 @@ export function Details({
           </Paper>
         </Stack>
         <Paper sx={{ p: 2, width: '100%' }}>
-          <Typography noWrap variant="h6" color="primary">
-            Source
-          </Typography>
+          <Stack width="100%" direction={{ xs: 'column', sm: 'row' }} spacing={1} justifyContent="space-between">
+            <Typography noWrap variant="h6" color="primary">
+              Source
+            </Typography>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <Pill color="gray" name="Release" value={<Chrono format="YYYY-MM-DD">{release_date}</Chrono>} />
+              <Pill color="gray" name="Created" value={<Chrono fromNow>{created_at}</Chrono>} />
+              <Pill color="gray" name="Updated" value={<Chrono fromNow>{updated_at}</Chrono>} />
+            </Stack>
+          </Stack>
           <Stack width="100%" direction={{ xs: 'column', sm: 'row' }} spacing={1}>
             <Stack width="100%" direction="column" spacing={1}>
               <Typography noWrap variant="h6">
                 {title}
               </Typography>
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <Pill color="gray" name="Release" value={<Chrono format="YYYY-MM-DD">{release_date}</Chrono>} />
-                <Pill color="gray" name="Created" value={<Chrono fromNow>{created_at}</Chrono>} />
-                <Pill color="gray" name="Updated" value={<Chrono fromNow>{updated_at}</Chrono>} />
-              </Stack>
               <Typography>{description}</Typography>
             </Stack>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
