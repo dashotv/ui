@@ -13,8 +13,9 @@ import Logo from '/logo-small.png';
 const drawerWidth = 240;
 export interface NavDrawerProps {
   pages: NavPageWithChildren[];
+  handleDrawerClose: () => void;
 }
-export const NavDrawer = ({ pages }: NavDrawerProps) => {
+export const NavDrawer = ({ pages, handleDrawerClose }: NavDrawerProps) => {
   return (
     <Drawer
       variant="permanent"
@@ -25,7 +26,7 @@ export const NavDrawer = ({ pages }: NavDrawerProps) => {
       }}
       open
     >
-      <NavDrawerToolbar />
+      <NavDrawerToolbar {...{ handleDrawerClose }} />
       <NavDrawerLinks pages={pages} />
     </Drawer>
   );
@@ -57,17 +58,17 @@ export const NavDrawerMobile = ({
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
         }}
       >
-        <NavDrawerToolbar />
+        <NavDrawerToolbar {...{ handleDrawerClose }} />
         <NavDrawerLinks {...{ pages, mobileOpen, handleDrawerClose }} />
       </Drawer>
     </div>
   );
 };
 
-export const NavDrawerToolbar = () => {
+export const NavDrawerToolbar = ({ handleDrawerClose }: { handleDrawerClose: () => void }) => {
   return (
     <Toolbar disableGutters sx={{ display: 'flex', backgroundColor: 'rgba(255,255,255,0.09)' }}>
-      <Link to="/">
+      <Link to="/" onClick={handleDrawerClose}>
         <Stack direction="row" spacing={1} alignItems="center" pl={2} width="100%">
           <Box sx={{ mr: 2 }}>
             <img alt="logo" src={Logo} width="40" height="40" />

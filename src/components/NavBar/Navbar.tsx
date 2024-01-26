@@ -150,7 +150,7 @@ export const NavBar = () => {
 
       <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        {matches && <NavDrawer pages={pages} />}
+        {matches && <NavDrawer {...{ pages, handleDrawerClose }} />}
         {!matches && (
           <NavDrawerMobile {...{ pages, mobileOpen, isClosing, handleDrawerClose, handleDrawerTransitionEnd }} />
         )}
