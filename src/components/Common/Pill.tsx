@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 // TODO: support size, move styling to scss
 export const Pill = ({
@@ -14,7 +13,7 @@ export const Pill = ({
   width,
 }: {
   name: string;
-  value: React.ReactElement | string | number;
+  value?: React.ReactElement | string | number;
   color?: string;
   variant?: 'row' | 'column';
   icon?: React.ReactElement;
@@ -43,42 +42,43 @@ export const Pill = ({
     }
   };
   return (
-    <div>
+    <Box
+      sx={{
+        display: display,
+        border: '1px solid',
+        borderRadius: '8px',
+        borderColor: colorValue(),
+        overflow: 'hidden',
+        width: 'fit-content',
+        height: variant == 'row' ? '22px' : '42px',
+      }}
+    >
       <Box
         sx={{
-          display: display,
-          border: '1px solid',
-          borderRadius: '5px',
-          borderColor: colorValue(),
-          overflow: 'hidden',
-          width: 'fit-content',
+          color: 'black',
+          backgroundColor: colorValue(),
+          pr: '4px',
+          pl: '4px',
+          fontSize: icon ? 'auto' : 'small',
         }}
       >
-        <Box
-          sx={{
-            color: 'black',
-            backgroundColor: colorValue(),
-            pr: '4px',
-            pl: '4px',
-          }}
-        >
-          {icon ? icon : <Typography variant="button">{name}</Typography>}
-        </Box>
-        <Box
-          sx={{
-            color: colorValue(),
-            backgroundColor: '#363636',
-            pr: '4px',
-            pl: '4px',
-            overflow: 'hidden',
-            maxWidth: width,
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {value}
-        </Box>
+        {icon ? icon : name}
       </Box>
-    </div>
+      <Box
+        sx={{
+          color: colorValue(),
+          backgroundColor: '#363636',
+          pr: '4px',
+          pl: '4px',
+          overflow: 'hidden',
+          maxWidth: width,
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+          fontSize: 'small',
+        }}
+      >
+        {value}
+      </Box>
+    </Box>
   );
 };

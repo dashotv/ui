@@ -37,7 +37,7 @@ export const Icon: Story = {
     name: 'Name',
     value: 'Value',
     color: 'secondary',
-    icon: <AccessTimeIcon />,
+    icon: <AccessTimeIcon fontSize="small" />,
   },
   render: args => <Pill {...args} />,
 };
