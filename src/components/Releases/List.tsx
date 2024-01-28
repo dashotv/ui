@@ -20,9 +20,9 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { Chrono, Row } from 'components/Common';
+import { Chrono, Group, Resolution, Row } from 'components/Common';
 
-import { Group, Release, Resolution, useReleaseSettingMutation } from '.';
+import { Release, useReleaseSettingMutation } from '.';
 
 export type ReleasesListProps = {
   data: Release[];

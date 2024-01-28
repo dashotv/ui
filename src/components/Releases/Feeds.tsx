@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
+import QueueIcon from '@mui/icons-material/Queue';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -13,26 +14,34 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Unstable_Grid2';
 
+import { LoadingIndicator } from 'components/Common';
 import { Published, Row } from 'components/Common';
 import { IconCheckbox, Select, Text } from 'components/Form';
+import { Container } from 'components/Layout';
 import { ReleaseSources, ReleaseTypes } from 'types/constants';
 
-import { Feed, useFeedMutation, useFeedSettingMutation } from '.';
+import { Feed, useFeedCreateMutation, useFeedMutation, useFeedSettingMutation, useFeedsAllQuery } from '.';
 
 export type FeedsListProps = {
   data: Feed[];
 };
-export function FeedsList({ data }: FeedsListProps) {
+export function FeedsList() {
   const [selected, setSelected] = React.useState<Feed | undefined>(undefined);
+  const { isFetching, data } = useFeedsAllQuery();
   const feed = useFeedMutation();
   const setting = useFeedSettingMutation();
+  const create = useFeedCreateMutation();
 
   const handleClose = (data?: Feed) => {
     setSelected(undefined);
 
     if (data) {
-      console.log(data);
+      if (data.id === '') {
+        create.mutate(data);
+        return;
+      }
       feed.mutate(data);
     }
   };
@@ -40,44 +49,74 @@ export function FeedsList({ data }: FeedsListProps) {
   const view = (row: Feed) => {
     setSelected(row);
   };
+  const newFeed = () => {
+    setSelected({
+      id: '',
+      name: '',
+      url: '',
+      type: '',
+      source: '',
+      active: true,
+    });
+  };
 
   const toggle = (id: string, name: string, value: boolean) => {
     setting.mutate({ id, setting: { setting: name, value: value } });
   };
 
   return (
-    <Paper elevation={0} sx={{ width: '100%' }}>
-      {data.map((row: Feed) => (
-        <Row key={row.id}>
-          <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
-            <Stack
-              direction="row"
-              spacing={1}
-              width="100%"
-              maxWidth={{ xs: '100%', md: '900px' }}
-              pr="3px"
-              alignItems="center"
-            >
-              <IconButton size="small" onClick={() => toggle(row.id, 'active', !row.active)} title="active">
-                <CheckCircleIcon color={row.active ? 'secondary' : 'disabled'} fontSize="small" />
-              </IconButton>
-              <Link href="#" onClick={() => view(row)}>
-                <Typography fontWeight="bolder" color="primary">
-                  {row.name}
-                </Typography>
-              </Link>
-            </Stack>
-            <Stack direction="row" spacing={1} alignItems="center" width="100%" justifyContent="end">
-              <Typography variant="subtitle2" color="textSecondary">
-                {row.source}:{row.type}
+    <>
+      <Container>
+        <Grid container spacing={2}>
+          <Grid xs={12} md={6}>
+            <Stack spacing={1} direction="row" justifyContent="start" alignItems="center">
+              <Typography variant="h6" color="primary">
+                Feeds
               </Typography>
-              {row.processed && <Published date={row.processed} />}
+              <IconButton aria-label="refresh" color="primary" onClick={() => newFeed()}>
+                <QueueIcon />
+              </IconButton>
             </Stack>
-          </Stack>
-        </Row>
-      ))}
-      {selected && <FeedDialog handleClose={handleClose} feed={selected} />}
-    </Paper>
+          </Grid>
+          <Grid xs={12} md={6}></Grid>
+        </Grid>
+      </Container>
+      <Container>
+        {isFetching && <LoadingIndicator />}
+        <Paper elevation={0} sx={{ width: '100%' }}>
+          {data?.map((row: Feed) => (
+            <Row key={row.id}>
+              <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  width="100%"
+                  maxWidth={{ xs: '100%', md: '900px' }}
+                  pr="3px"
+                  alignItems="center"
+                >
+                  <IconButton size="small" onClick={() => toggle(row.id, 'active', !row.active)} title="active">
+                    <CheckCircleIcon color={row.active ? 'secondary' : 'disabled'} fontSize="small" />
+                  </IconButton>
+                  <Link href="#" onClick={() => view(row)}>
+                    <Typography fontWeight="bolder" color="primary">
+                      {row.name}
+                    </Typography>
+                  </Link>
+                </Stack>
+                <Stack direction="row" spacing={1} alignItems="center" width="100%" justifyContent="end">
+                  <Typography variant="subtitle2" color="textSecondary">
+                    {row.source}:{row.type}
+                  </Typography>
+                  {row.processed && <Published date={row.processed} />}
+                </Stack>
+              </Stack>
+            </Row>
+          ))}
+          {selected && <FeedDialog handleClose={handleClose} feed={selected} />}
+        </Paper>
+      </Container>
+    </>
   );
 }
 
