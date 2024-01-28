@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Typography from '@mui/material/Typography';
 
@@ -6,18 +6,17 @@ export const Megabytes = ({ value, ord }: { value: number; ord: 'bytes' | 'kilob
   const getOutput = (v: number) => {
     switch (ord) {
       case 'bytes':
-        return v / 1000000;
+        return v / (1024 * 1024);
       case 'kilobytes':
-        return v / 1000;
+        return v / 1024;
       default:
         return v;
     }
   };
-  const [output] = useState(getOutput(value));
 
   return (
-    <Typography variant="subtitle2" color="textSecondary">
-      {output.toFixed(2)}mb
+    <Typography variant="subtitle2" color="textSecondary" title={`${value} ${ord}`}>
+      {getOutput(value).toFixed(2)}mb
     </Typography>
   );
 };

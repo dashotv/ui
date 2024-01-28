@@ -1,5 +1,6 @@
 import React from 'react';
 
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import QueueIcon from '@mui/icons-material/Queue';
@@ -22,9 +23,11 @@ import {
   useIndexerSettingMutation,
   useIndexersAllQuery,
 } from '.';
+import { IndexersRead } from './Read';
 
 export const IndexersList = () => {
   const [selected, setSelected] = React.useState<Indexer | undefined>(undefined);
+  const [reading, setReading] = React.useState<Indexer | undefined>(undefined);
   const { isFetching, data } = useIndexersAllQuery();
   const indexer = useIndexerMutation();
   const setting = useIndexerSettingMutation();
@@ -45,6 +48,9 @@ export const IndexersList = () => {
 
   const view = (row: Indexer) => {
     setSelected(row);
+  };
+  const read = (row: Indexer) => {
+    setReading(row);
   };
 
   const toggle = (id: string, name: string, value: boolean) => {
@@ -125,6 +131,9 @@ export const IndexersList = () => {
                 </Stack>
                 <Stack direction="row" spacing={1} alignItems="center" width="100%" justifyContent="end">
                   {row.processed_at && <Published date={row.processed_at} />}
+                  <IconButton size="small" onClick={() => read(row)} title="active">
+                    <AutoStoriesIcon color="primary" fontSize="small" />
+                  </IconButton>
                   <IconButton size="small" onClick={() => deleteIndexer(row.id)} title="active">
                     <DeleteForeverIcon color="error" fontSize="small" />
                   </IconButton>
@@ -133,6 +142,7 @@ export const IndexersList = () => {
             </Row>
           ))}
           {selected && <IndexerDialog handleClose={handleClose} indexer={selected} />}
+          {reading && <IndexersRead indexer={reading} handleClose={() => setReading(undefined)} />}
         </Paper>
       </Container>
     </>

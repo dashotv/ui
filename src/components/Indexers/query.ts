@@ -4,11 +4,21 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Setting, SettingsArgs } from 'types/setting';
 
-import { Indexer, IndexersResponse, RunicSourcesResponse } from './types';
+import { Indexer, IndexersResponse, RunicReadResponse, RunicSourcesResponse } from './types';
 
 export const getRunicSources = async () => {
   const response = await tower.get('/runic/');
   return response.data as RunicSourcesResponse;
+};
+
+export const getRunicSource = async (id: string) => {
+  const response = await tower.get(`/runic/${id}`);
+  return response.data as RunicReadResponse;
+};
+
+export const getRunicRead = async (id: string, categories: number[]) => {
+  const response = await tower.get(`/runic/${id}/read?categories=${categories.join(',')}`);
+  return response.data;
 };
 
 export const getIndexersAll = async () => {
@@ -45,6 +55,14 @@ export const useRunicSourcesQuery = () =>
   useQuery({
     queryKey: ['runic', 'sources'],
     queryFn: () => getRunicSources(),
+    placeholderData: previousData => previousData,
+    retry: false,
+  });
+
+export const useRunicReadQuery = (id: string, categories: number[]) =>
+  useQuery({
+    queryKey: ['runic', id, 'read', categories],
+    queryFn: () => getRunicRead(id, categories),
     placeholderData: previousData => previousData,
     retry: false,
   });
