@@ -195,8 +195,9 @@ function EpisodeRow({
     }
     switch (kind) {
       case 'anime':
+      case 'donghua':
       case 'ecchi':
-        return '#' + `${absolute}`.padStart(3, '0');
+        return absolute && absolute > 0 ? '#' + `${absolute}`.padStart(3, '0') : number;
       default:
         return number;
     }
