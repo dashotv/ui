@@ -46,6 +46,13 @@ export default defineConfig({
         ws: true,
         rewrite: path => path.replace(/^\/api\/flame/, ''),
       },
+      '/api/runic': {
+        target: 'http://localhost:9002',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        rewrite: path => path.replace(/^\/api\/runic/, ''),
+      },
       '/api/scry': {
         target: 'http://localhost:10080',
         changeOrigin: true,

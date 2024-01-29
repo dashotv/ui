@@ -1,4 +1,4 @@
-import { tower } from 'utils/axios';
+import { runic } from 'utils/axios';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -7,47 +7,47 @@ import { Setting, SettingsArgs } from 'types/setting';
 import { Indexer, IndexersResponse, RunicReadResponse, RunicSourcesResponse } from './types';
 
 export const getRunicSources = async () => {
-  const response = await tower.get('/runic/');
+  const response = await runic.get('/sources/');
   return response.data as RunicSourcesResponse;
 };
 
 export const getRunicSource = async (id: string) => {
-  const response = await tower.get(`/runic/${id}`);
+  const response = await runic.get(`/sources/${id}`);
   return response.data as RunicReadResponse;
 };
 
 export const getRunicRead = async (id: string, categories: number[]) => {
-  const response = await tower.get(`/runic/${id}/read?categories=${categories.join(',')}`);
+  const response = await runic.get(`/sources/${id}/read?categories=${categories.join(',')}`);
   return response.data;
 };
 
 export const getIndexersAll = async () => {
-  const response = await tower.get('/indexers/');
+  const response = await runic.get('/indexers/');
   return response.data as IndexersResponse;
 };
 
 export const getIndexer = async id => {
-  const response = await tower.get(`/indexers/${id}`);
+  const response = await runic.get(`/indexers/${id}`);
   return response.data;
 };
 
 export const postIndexer = async (indexer: Indexer) => {
-  const response = await tower.post(`/indexers/`, indexer);
+  const response = await runic.post(`/indexers/`, indexer);
   return response.data;
 };
 
 export const putIndexer = async (id: string, indexer: Indexer) => {
-  const response = await tower.put(`/indexers/${id}`, indexer);
+  const response = await runic.put(`/indexers/${id}`, indexer);
   return response.data;
 };
 
 export const patchIndexer = async (id: string, setting: Setting) => {
-  const response = await tower.patch(`/indexers/${id}`, setting);
+  const response = await runic.patch(`/indexers/${id}`, setting);
   return response.data;
 };
 
 export const deleteIndexer = async (id: string) => {
-  const response = await tower.delete(`/indexers/${id}`);
+  const response = await runic.delete(`/indexers/${id}`);
   return response.data;
 };
 
@@ -118,7 +118,7 @@ export const useIndexerSettingMutation = () => {
   return useMutation({
     mutationFn: (args: SettingsArgs) => patchIndexer(args.id, args.setting),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['Indexers', 'all'] });
+      await queryClient.invalidateQueries({ queryKey: ['indexers', 'all'] });
     },
   });
 };

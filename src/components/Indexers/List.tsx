@@ -110,24 +110,7 @@ export const IndexersList = () => {
                       {row.name}
                     </Typography>
                   </Link>
-                  <Typography variant="body1" color="secondary" fontWeight="bold">
-                    tv
-                  </Typography>
-                  <Typography variant="body2" color="secondary.dark">
-                    {row.categories['tv'].join(', ')}
-                  </Typography>
-                  <Typography variant="body1" color="secondary" fontWeight="bold">
-                    anime
-                  </Typography>
-                  <Typography variant="body2" color="secondary.dark">
-                    {row.categories['anime'].join(', ')}
-                  </Typography>
-                  <Typography variant="body1" color="secondary" fontWeight="bold">
-                    movie
-                  </Typography>
-                  <Typography variant="body2" color="secondary.dark">
-                    {row.categories['movie'].join(', ')}
-                  </Typography>
+                  <Categories categories={row.categories} />
                 </Stack>
                 <Stack direction="row" spacing={1} alignItems="center" width="100%" justifyContent="end">
                   {row.processed_at && <Published date={row.processed_at} />}
@@ -147,4 +130,21 @@ export const IndexersList = () => {
       </Container>
     </>
   );
+};
+
+const Categories = ({ categories }) => {
+  return ['tv', 'anime', 'movie'].map(key => {
+    if (categories[key]) {
+      return (
+        <>
+          <Typography variant="body1" color="secondary" fontWeight="bold">
+            {key}
+          </Typography>
+          <Typography variant="body2" color="secondary.dark">
+            {categories[key].join(', ')}
+          </Typography>
+        </>
+      );
+    }
+  });
 };
