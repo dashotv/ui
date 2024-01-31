@@ -29,11 +29,12 @@ const processSearch = (medium: Medium) => {
 const formdata = (medium: Medium): SearchForm => {
   const { text, episode } = processSearch(medium);
   const { kind, season_number, search_params } = medium;
+  const isAnimeKind = ['anime', 'ecchi', 'donghua'].includes(kind);
 
   return {
     text: text || '',
     year: '',
-    season: kind !== 'anime' ? season_number || '' : '',
+    season: isAnimeKind ? season_number || '' : '',
     episode: episode || '',
     group: search_params?.group || '',
     author: '',
