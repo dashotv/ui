@@ -96,7 +96,7 @@ const Icon = ({ status }: { status: string }) => {
 const Error = ({ error }: { error?: string }) => {
   if (!error) return null;
   return (
-    <Typography variant="caption" color="error" minWidth="0" width={{ xs: '100%', md: 'auto' }} noWrap>
+    <Typography variant="caption" color="error" minWidth="0" /*width={{ xs: '100%', md: 'auto' }}*/ noWrap>
       {error}
     </Typography>
   );
@@ -106,7 +106,7 @@ const Title = ({ args }: { args: string }) => {
   const parsed = JSON.parse(args);
   if (!parsed || !parsed.Title) return null;
   return (
-    <Typography variant="caption" color="gray" minWidth="0" width={{ xs: '100%', md: 'auto' }} noWrap>
+    <Typography variant="caption" color="gray" minWidth="0" /*width={{ xs: '100%', md: 'auto' }}*/ noWrap>
       {parsed.Title}
     </Typography>
   );
@@ -139,9 +139,10 @@ export function JobRow({
   ];
   return (
     <Row key={id}>
-      <Stack width="100%" direction={{ xs: 'column', md: 'row' }} alignItems="center">
+      <Stack width="100%" direction={{ xs: 'column', md: 'row' }} alignItems="center" justifyContent="space-between">
         <Stack
           width="100%"
+          maxWidth="650px"
           direction={{ xs: 'column', md: 'row' }}
           spacing={1}
           alignItems="center"
