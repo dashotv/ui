@@ -12,6 +12,7 @@ const Show = ({ show }: { show: Child }) => {
       <div className="backdrop"></div>
       <img src={show.thumb} alt="thumbnail" />
       <div className="title">{show.title}</div>
+      <div className="type">{show.librarySectionTitle}</div>
       <div className="viewed">
         {show.viewed}/{show.total}
       </div>

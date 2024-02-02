@@ -53,6 +53,18 @@
     z-index: 5;
   }
 
+  .type {
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: bolder;
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    z-index: 5;
+    font-size: small;
+    color: #AAA;
+  }
+
   .date {
     overflow: hidden;
     white-space: nowrap;
@@ -62,6 +74,6 @@
     left: 8px;
     z-index: 5;
     font-size: small;
-    color: #888;
+    color: #AAA;
   }
 }
