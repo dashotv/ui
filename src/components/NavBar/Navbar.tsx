@@ -7,6 +7,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import EventIcon from '@mui/icons-material/Event';
+import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import FeedIcon from '@mui/icons-material/Feed';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import HomeIcon from '@mui/icons-material/Home';
@@ -50,6 +51,7 @@ const pages: NavPageWithChildren[] = [
       { icon: <UpcomingIcon fontSize="small" />, name: 'Upcoming', page: '/', exact: true },
       { icon: <CloudDownloadIcon fontSize="small" />, name: 'Downloads', page: '/downloads' },
       { icon: <VideoLibraryIcon fontSize="small" />, name: 'Collections', page: '/collections' },
+      { icon: <FeaturedPlayListIcon fontSize="small" />, name: 'Stuff', page: '/stuff' },
     ],
   },
   {
