@@ -1,23 +1,29 @@
 import React from 'react';
 
+import { Box, Link } from '@mui/material';
+
 import { Chrono, LoadingIndicator } from 'components/Common';
+import { Container } from 'components/Layout';
 
 import './List.scss';
-import { usePlexStuff } from './query';
+import { Players } from './Players';
+import { usePlexPlayMutation, usePlexStuff } from './query';
 import { Child } from './types';
 
-const Show = ({ show }: { show: Child }) => {
+const Show = ({ show, play }: { show: Child; play: (show: Child) => void }) => {
   return (
-    <div className="show">
-      <div className="backdrop"></div>
-      <img src={show.thumb} alt="thumbnail" />
-      <div className="title">{show.title}</div>
-      <div className="type">{show.librarySectionTitle}</div>
-      <div className="viewed">
-        {show.viewed}/{show.total}
-      </div>
-      <ShowDate unix={show.lastViewedAt} />
-    </div>
+    <Link onClick={() => play(show)} sx={{ cursor: 'pointer' }}>
+      <Box className="show">
+        <Box className="backdrop"></Box>
+        <img src={show.thumb} alt="thumbnail" />
+        <Box className="title">{show.title}</Box>
+        <Box className="type">{show.librarySectionTitle}</Box>
+        <Box className="viewed">
+          {show.viewed}/{show.total}
+        </Box>
+        <ShowDate unix={show.lastViewedAt} />
+      </Box>
+    </Link>
   );
 };
 const ShowDate = ({ unix }: { unix: string }) => {
@@ -32,11 +38,23 @@ const ShowDate = ({ unix }: { unix: string }) => {
 };
 export const Stuff = () => {
   const { data, isFetching } = usePlexStuff();
+  const [player, setPlayer] = React.useState('');
+  const { mutate: playMutation } = usePlexPlayMutation();
+
+  const play = (show: Child) => {
+    if (player === '') return;
+    playMutation({ ratingKey: show.next, player });
+  };
 
   return (
     <>
-      {isFetching && <LoadingIndicator />}
-      {data?.map((child: Child) => <Show key={child.key} show={child} />)}
+      <Container>
+        <Players {...{ player, setPlayer }} />
+      </Container>
+      <Container>
+        {isFetching && <LoadingIndicator />}
+        {data?.map((child: Child) => <Show key={child.key} show={child} play={play} />)}
+      </Container>
     </>
   );
 };
