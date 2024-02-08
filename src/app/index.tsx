@@ -13,7 +13,6 @@ import { Route, Routes } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 
 import { RedirectToSignIn, SignIn, SignUp, SignedIn, SignedOut } from '@clerk/clerk-react';
 import '@fontsource/roboto/300.css';
@@ -54,6 +53,9 @@ function fallbackRender({ error, resetErrorBoundary }) {
 }
 
 const withAuth = (Component: React.ComponentType) => {
+  if (import.meta.env.MODE === 'development') {
+    return <Component />;
+  }
   return (
     <SignedIn>
       <Component />
@@ -82,9 +84,11 @@ export function App() {
           </Routes>
         </Box>
       </ErrorBoundary>
-      <SignedOut>
-        <RedirectToSignIn />
-      </SignedOut>
+      {import.meta.env.PROD && (
+        <SignedOut>
+          <RedirectToSignIn />
+        </SignedOut>
+      )}
 
       <GlobalStyle />
     </>

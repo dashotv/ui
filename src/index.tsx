@@ -43,13 +43,8 @@ if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
 }
 const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
 
-ReactDOMClient.createRoot(MOUNT_NODE!).render(
-  <ClerkProvider
-    publishableKey={clerkPubKey}
-    appearance={{
-      baseTheme: dark,
-    }}
-  >
+const Root = () => {
+  return (
     <ThemeProvider theme={darkTheme}>
       <SnackbarProvider
         maxSnack={3}
@@ -62,19 +57,37 @@ ReactDOMClient.createRoot(MOUNT_NODE!).render(
           <Router>
             <CssBaseline />
             <HelmetProvider>
-              {/*<React.StrictMode>*/}
               <QueryClientProvider client={queryClient}>
                 <App />
                 <ReactQueryDevtools initialIsOpen={false} />
               </QueryClientProvider>
-              {/*</React.StrictMode>*/}
             </HelmetProvider>
           </Router>
         </NatsProvider>
       </SnackbarProvider>
     </ThemeProvider>
-  </ClerkProvider>,
-);
+  );
+};
+
+const RootWithAuth = () => {
+  return (
+    <ClerkProvider
+      publishableKey={clerkPubKey}
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
+      <Root />
+    </ClerkProvider>
+  );
+};
+
+const rootNode = ReactDOMClient.createRoot(MOUNT_NODE!);
+if (import.meta.env.PROD) {
+  rootNode.render(<RootWithAuth />);
+} else {
+  rootNode.render(<Root />);
+}
 
 // Hot reloadable translation json files
 // if (module.hot) {

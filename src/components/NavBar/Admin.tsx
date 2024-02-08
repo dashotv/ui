@@ -13,9 +13,7 @@ export const Admin = () => {
       <Box sx={{ height: 51, width: 51 }}>
         <SuperSearch />
       </Box>
-      <Box sx={{ height: 51, pt: 1.3 }}>
-        <UserButton />
-      </Box>
+      <Box sx={{ height: 51, pt: 1.3 }}>{import.meta.env.PROD && <UserButton />}</Box>
     </>
   );
 };
