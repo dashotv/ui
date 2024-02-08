@@ -1,17 +1,16 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { Container } from 'components/Layout';
-import { Players, Stuff } from 'components/Stuff';
+import { CombinationsView } from 'components/Combinations';
 
-export default function StuffPage() {
+export default function CombinationsPage() {
   return (
     <>
       <Helmet>
         <title>Home - Stuff</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Stuff />
+      <CombinationsView />
     </>
   );
 }

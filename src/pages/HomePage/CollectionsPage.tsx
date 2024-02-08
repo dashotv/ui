@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { CollectionList, useCollectionMutation } from 'components/Collections';
+import { Combinations } from 'components/Combinations';
 import { Container } from 'components/Layout';
 import { PlexLibrary, usePlexLibrariesQuery } from 'components/Plex';
 
@@ -60,6 +61,7 @@ export default function CollectionsPage() {
       <Container>
         <CollectionList {...{ page }} />
       </Container>
+      <Combinations />
     </>
   );
 }

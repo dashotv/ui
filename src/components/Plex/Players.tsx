@@ -13,7 +13,7 @@ export const Players = ({ player, setPlayer }: { player: string; setPlayer: (v: 
   };
   const { isFetching, data: players } = usePlexPlayers();
   return (
-    <FormControl sx={{ width: '300px' }}>
+    <FormControl sx={{ width: '300px' }} fullWidth>
       <InputLabel id="demo-simple-select-label">Player</InputLabel>
       <Select
         labelId="demo-simple-select-label"
