@@ -12,15 +12,17 @@ import { useQueryString } from 'hooks/queryString';
 const pagesize = 25;
 
 const processSearch = (medium: Medium) => {
-  const { search, display, episode_number, absolute_number } = medium;
+  const { kind, search, display, episode_number, absolute_number } = medium;
+  const isAnimeKind = ['anime', 'ecchi', 'donghua'].includes(kind);
   if (!search) {
     return { text: display, episode: episode_number };
   }
   const s = search.split(':');
   const text = s[0];
-  const minus = Number(s[1]);
+  const minus = Number(s[1]) || 0;
   let episode = episode_number;
-  if (minus && absolute_number) {
+  console.log('episode:', episode, 'absolute_number:', absolute_number, 'minus:', minus);
+  if (isAnimeKind && absolute_number && absolute_number > 0) {
     episode = absolute_number - minus;
   }
   return { text, episode };
@@ -34,7 +36,7 @@ const formdata = (medium: Medium): SearchForm => {
   return {
     text: text || '',
     year: '',
-    season: isAnimeKind ? season_number || '' : '',
+    season: isAnimeKind ? '' : season_number || '',
     episode: episode || '',
     group: search_params?.group || '',
     author: '',
