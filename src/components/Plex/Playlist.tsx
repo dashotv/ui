@@ -54,20 +54,20 @@ export const PlexPlaylist = ({ list }: { list: PlexCollectionChild[] }) => {
 
 const PlexList = ({ list, play }: { list: PlexCollectionChild[]; play: (show: PlexCollectionChild) => void }) => {
   return (
-    <Paper elevation={0}>
+    <Paper elevation={1}>
       {list.map((show, i) => (
         <Row key={i}>
-          <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
-            <Stack direction="row" spacing={2} alignItems="center">
+          <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between" width="100%">
+            <Stack direction="row" spacing={1} alignItems="center">
               <Unwatched viewed={show.viewed} total={show.total} />
-              <Stack direction="column" spacing={0}>
+              <Stack direction="column" spacing={0} width={{ xs: '165px', md: 'auto' }}>
                 <Typography variant="body1" fontWeight="bolder" noWrap minWidth="35px" color="primary">
                   {show.title}
                 </Typography>
                 <ShowDate unix={show.lastViewedAt} />
               </Stack>
             </Stack>
-            <Stack direction="row" spacing={1} alignItems="center">
+            <Stack direction="row" spacing={1} alignItems="center" minWidth="125px" justifyContent="end">
               <Typography variant="caption" color="gray">
                 {show.librarySectionTitle}
               </Typography>
