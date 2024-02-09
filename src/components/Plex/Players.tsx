@@ -7,11 +7,13 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { usePlexPlayers } from './query';
 
-export const Players = ({ player, setPlayer }: { player: string; setPlayer: (v: string) => void }) => {
+export const PlexPlayers = ({ player, setPlayer }: { player: string; setPlayer: (v: string) => void }) => {
+  const { isFetching, data: players } = usePlexPlayers();
+
   const handleChange = (event: SelectChangeEvent) => {
     setPlayer(event.target.value as string);
   };
-  const { isFetching, data: players } = usePlexPlayers();
+
   return (
     <FormControl sx={{ width: '300px' }} fullWidth>
       <InputLabel id="demo-simple-select-label">Player</InputLabel>
@@ -23,9 +25,10 @@ export const Players = ({ player, setPlayer }: { player: string; setPlayer: (v: 
         onChange={handleChange}
         disabled={isFetching}
       >
-        {players?.map(player => (
-          <MenuItem key={player.clientIdentifier} value={player.clientIdentifier}>
-            {player.name}
+        <MenuItem value="">Select a player</MenuItem>
+        {players?.map(c => (
+          <MenuItem key={c.clientIdentifier} value={c.clientIdentifier}>
+            {c.name}
           </MenuItem>
         ))}
       </Select>

@@ -27,6 +27,11 @@ export const getPlexPlay = async (player: string, ratingKey: string) => {
   return response.data;
 };
 
+export const getPlexStop = async (session: string) => {
+  const response = await tower.get(`/plex/stop?session=${session}`);
+  return response.data;
+};
+
 export const usePlexLibrariesQuery = () =>
   useQuery({
     queryKey: ['plex', 'libraries'],
@@ -55,4 +60,9 @@ export const usePlexPlayers = () =>
 export const usePlexPlayMutation = () =>
   useMutation({
     mutationFn: ({ player, ratingKey }: { player: string; ratingKey: string }) => getPlexPlay(player, ratingKey),
+  });
+
+export const usePlexStopMutation = () =>
+  useMutation({
+    mutationFn: ({ session }: { session: string }) => getPlexStop(session),
   });

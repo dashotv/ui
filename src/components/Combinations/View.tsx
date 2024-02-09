@@ -1,64 +1,49 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Box, Chip, Link } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
-import { Chrono, LoadingIndicator } from 'components/Common';
+import { LoadingIndicator } from 'components/Common';
 import { Container } from 'components/Layout';
-import { Players, PlexCollectionChild, usePlexPlayMutation } from 'components/Plex';
+import {
+  EventPlexSessions,
+  PlexCollectionChild,
+  PlexPlayer,
+  PlexPlayers,
+  PlexSession,
+  usePlexPlayMutation,
+  usePlexStopMutation,
+} from 'components/Plex';
+import { PlexController } from 'components/Plex';
+import { useSub } from 'hooks/sub';
 
+import { Show } from './Item';
 import './View.scss';
 import { useCombinationQuery } from './query';
 
-const Show = ({ show, play }: { show: PlexCollectionChild; play: (show: PlexCollectionChild) => void }) => {
-  return (
-    <Link onClick={() => play(show)} sx={{ cursor: 'pointer' }}>
-      <Box className="show">
-        <Box className="backdrop"></Box>
-        <img src={show.thumb} alt="thumbnail" />
-        <Box className="title">{show.title}</Box>
-        <Box className="type">{show.librarySectionTitle}</Box>
-        <Unwatched viewed={show.viewed} total={show.total} />
-        <ShowDate unix={show.lastViewedAt} />
-      </Box>
-    </Link>
-  );
-};
-const Unwatched = ({ viewed, total }: { viewed: string; total: string }) => {
-  const v = Number(viewed);
-  const t = Number(total);
-  if (v === t) return null;
-  const watched = t - v;
-  return <Chip className="viewed" label={watched > 9 ? '+' : watched} size="small" color="primary" />;
-};
-const ShowDate = ({ unix }: { unix: string }) => {
-  if (!unix) return null;
-
-  const string = new Date(Number(unix) * 1000).toString();
-  return (
-    <div className="date">
-      <Chrono fromNow>{string}</Chrono>
-    </div>
-  );
-};
 export const CombinationsView = () => {
   const { name } = useParams();
   if (!name) return null;
-
   const { data, isFetching } = useCombinationQuery(name);
-  const [player, setPlayer] = React.useState('');
-  const { mutate: playMutation } = usePlexPlayMutation();
+
+  const [player, setPlayer] = useState<PlexPlayer | undefined>(undefined);
+
+  const { mutate: plexPlay } = usePlexPlayMutation();
+  const { mutate: plexStop } = usePlexStopMutation();
 
   const play = (show: PlexCollectionChild) => {
-    if (player === '') return;
-    playMutation({ ratingKey: show.next, player });
+    if (!player || player.clientIdentifier === '') return;
+    plexPlay({ player: player.clientIdentifier, ratingKey: show.next });
+  };
+
+  const stop = (sessionId: string) => {
+    plexStop({ session: sessionId });
   };
 
   return (
     <>
       <Container>
-        <Players {...{ player, setPlayer }} />
+        <PlexController {...{ player, setPlayer, stop }} />
       </Container>
       <Container>
         {isFetching && <LoadingIndicator />}
