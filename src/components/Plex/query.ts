@@ -4,7 +4,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { objectToQueryString } from 'hooks/queryString';
 
-import { PlexLibrary, PlexPlayer, PlexSearchResponse } from './types';
+import { PlexClient, PlexLibrary, PlexSearchResponse } from './types';
 
 export const getLibraries = async () => {
   const response = await tower.get('/plex/libraries');
@@ -19,7 +19,7 @@ export const getPlexSearch = async (search: string, library: string) => {
 
 export const getPlexPlayers = async () => {
   const response = await tower.get(`/plex/resources`);
-  return response.data as PlexPlayer[];
+  return response.data as PlexClient[];
 };
 
 export const getPlexPlay = async (player: string, ratingKey: string) => {

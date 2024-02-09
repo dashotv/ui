@@ -32,6 +32,13 @@ export default defineConfig({
     // this sets a default port to 3000
     port: 3000,
     proxy: {
+      '/thumbs': {
+        target: 'http://10.0.4.61:32400',
+        changeOrigin: true,
+        secure: false,
+        ws: false,
+        rewrite: path => path.replace(/^\/thumbs\/(.*)/, '/$1?X-Plex-Token=***REMOVED***'),
+      },
       '/api/tower': {
         target: 'http://localhost:9000',
         changeOrigin: true,

@@ -54,7 +54,7 @@ export interface PlexSearchResponse {
     "device": "SHIELD Android TV",
     "clientIdentifier": "972291a8b1cb9552-com-plexapp-android",
     */
-export interface PlexPlayer {
+export interface PlexClient {
   name: string;
   product: string;
   productVersion: string;
