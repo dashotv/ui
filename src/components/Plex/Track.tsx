@@ -7,7 +7,7 @@ import { PlexClient, PlexSession } from 'components/Plex';
 export const PlexTrack = ({ player, session }: { player?: PlexClient; session?: PlexSession }) => {
   return (
     <Stack direction="row" spacing={2}>
-      <PlexTrackThumb thumb={session?.thumb} />
+      <PlexTrackThumb thumb={session?.grandparentThumb || session?.thumb} />
       <Stack direction="column" spacing={0} alignItems="baseline">
         <PlexTrackTitle title={session?.title} />
         <PlexTrackInfo grandparentTitle={session?.grandparentTitle} parentTitle={session?.parentTitle} />
@@ -33,6 +33,9 @@ const PlexTrackThumb = ({ thumb }: { thumb?: string }) => {
           width: '50px',
           backgroundImage: 'url(/blank.png)',
           border: '1px solid #242424',
+        },
+        '& > img': {
+          objectFit: 'cover',
         },
       }}
     >
