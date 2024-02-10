@@ -5,30 +5,18 @@ import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
 import { Box, IconButton, LinearProgress, Stack, Typography } from '@mui/material';
 
-import {
-  PlexClient,
-  PlexCollectionChild,
-  PlexSession,
-  usePlexPlayMutation,
-  usePlexStopMutation,
-} from 'components/Plex';
+import { PlexSession, usePlexStopMutation } from 'components/Plex';
 
 const hms = (seconds: number) => {
   return new Date(seconds).toISOString().substring(11, 19);
 };
 
-export const PlexControls = ({ player, session }: { player?: PlexClient; session?: PlexSession }) => {
+export const PlexControls = ({ session }: { session?: PlexSession }) => {
   const [progress, setProgress] = React.useState<number>(0);
   const [current, setCurrent] = React.useState<string>('0:00');
   const [duration, setDuration] = React.useState<string>('0:00');
-  const { mutate: plexPlay } = usePlexPlayMutation();
+
   const { mutate: plexStop } = usePlexStopMutation();
-
-  const play = (show: PlexCollectionChild) => {
-    if (!player || player.clientIdentifier === '') return;
-    plexPlay({ player: player.clientIdentifier, ratingKey: show.next });
-  };
-
   const stop = () => {
     if (!session) return;
     plexStop({ session: session.Session.id });
