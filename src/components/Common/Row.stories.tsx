@@ -25,3 +25,9 @@ export const Selected: Story = {
   },
   render: args => <Row {...args}>Blah blah blah</Row>,
 };
+export const Success: Story = {
+  args: {
+    variant: 'success',
+  },
+  render: args => <Row {...args}>Blah blah blah</Row>,
+};

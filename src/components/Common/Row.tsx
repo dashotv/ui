@@ -3,22 +3,25 @@ import React from 'react';
 import { Paper } from '@mui/material';
 
 export const Row = ({ variant, children }: { variant?: string; children: React.ReactNode }) => {
-  let backgroundColor: string;
+  let color: string | undefined = undefined;
+  let hover: string = '#242424';
+
   switch (variant) {
+    case 'success':
+      color = '#226622';
+      hover = '#228822';
+      break;
     case 'selected':
-      backgroundColor = '#222266';
+      color = '#222266';
+      hover = '#222288';
       break;
     case 'transparent':
-      backgroundColor = 'transparent';
+      color = 'transparent';
       break;
-    default:
-      backgroundColor = 'auto';
   }
+
   return (
-    <Paper
-      elevation={0}
-      sx={{ p: 0.5, '&:hover': { backgroundColor: '#242424' }, zIndex: 1000, backgroundColor: backgroundColor }}
-    >
+    <Paper elevation={0} sx={{ p: 0.5, '&:hover': { backgroundColor: hover }, zIndex: 1000, backgroundColor: color }}>
       {children}
     </Paper>
   );
