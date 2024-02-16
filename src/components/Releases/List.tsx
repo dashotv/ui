@@ -145,13 +145,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                   {row.source}:{row.type}
                 </Typography>
               </Stack>
-              <Stack
-                width={{ xs: '100%', md: 'auto' }}
-                direction="row"
-                spacing={1}
-                alignItems="center"
-                border="1px solid red"
-              >
+              <Stack width={{ xs: '100%', md: 'auto' }} direction="row" spacing={1} alignItems="center">
                 {row.size && (
                   <Typography
                     display={{ xs: 'none', md: 'inherit' }}
