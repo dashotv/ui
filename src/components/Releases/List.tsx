@@ -68,7 +68,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
               direction="row"
               spacing={1}
               width="100%"
-              maxWidth={{ xs: '100%', md: '900px' }}
+              maxWidth={{ xs: '100%', md: '800px' }}
               pr="3px"
               alignItems="center"
             >
@@ -145,7 +145,13 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                   {row.source}:{row.type}
                 </Typography>
               </Stack>
-              <Stack direction="row" width={{ xs: '100%', md: 'auto' }} spacing={1} alignItems="center" sx={{ pr: 1 }}>
+              <Stack
+                width={{ xs: '100%', md: 'auto' }}
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                border="1px solid red"
+              >
                 {row.size && (
                   <Typography
                     display={{ xs: 'none', md: 'inherit' }}
@@ -153,7 +159,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                     color="textSecondary"
                     pl="3px"
                   >
-                    {row.size ? `${row.size}mb` : ''}
+                    {row.size}
                   </Typography>
                 )}
                 <Typography noWrap variant="subtitle2" color="gray" pl="3px" width="100%">

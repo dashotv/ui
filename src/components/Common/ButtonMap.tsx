@@ -23,7 +23,7 @@ export interface ButtonMapProps {
 
 export function ButtonMap({ buttons, size = 'medium' }: ButtonMapProps) {
   return (
-    <Stack spacing={'5px'} direction="row" sx={{ justifyContent: 'end' }}>
+    <Stack spacing="5px" direction="row" sx={{ justifyContent: 'end' }}>
       {buttons.map(({ click, title, Icon, Component, color, link }, index) => (
         <IconButton
           key={index}

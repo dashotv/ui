@@ -164,7 +164,7 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
           )}
         </Stack>
         <Stack
-          minWidth="0"
+          minWidth="300px"
           width={{ xs: '100%', md: 'auto' }}
           direction="row"
           spacing={1}
