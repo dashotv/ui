@@ -2,6 +2,7 @@ import React from 'react';
 import { HiOutlineNewspaper } from 'react-icons/hi2';
 import { SiUtorrent } from 'react-icons/si';
 import { Link } from 'react-router-dom';
+import Truncate from 'react-truncate-inside';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
@@ -107,9 +108,15 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                   <SportsBarIcon color={row.uncensored ? 'secondary' : 'disabled'} fontSize="small" />
                 </IconButton>
               </Stack>
-              <Typography fontWeight="bolder" noWrap color="primary" sx={{ '& a': { color: 'primary.main' } }}>
+              <Typography
+                component="div"
+                fontWeight="bolder"
+                noWrap
+                color="primary"
+                sx={{ pr: 1, '& a': { color: 'primary.main' } }}
+              >
                 <Link to="#" onClick={() => view(row)} title={row.raw}>
-                  {row.display || row.name}
+                  <Truncate text={row.display || row.name || ''} ellipsis=" ... " />
                 </Link>
               </Typography>
               <Stack

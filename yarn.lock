@@ -6840,6 +6840,7 @@ __metadata:
     react-image: "npm:^4.1.0"
     react-loader-spinner: "npm:5.4.5"
     react-router-dom: "npm:6.17.0"
+    react-truncate-inside: "npm:^1.0.3"
     react-visibility-sensor: "npm:^5.1.1"
     sanitize.css: "npm:13.0.0"
     sass: "npm:1.69.4"
@@ -12233,6 +12234,15 @@ __metadata:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 2ba754ba748faefa15f87c96dfa700d5525054a0141de8c75763aae6734af0740e77e11261a1e8f4ffc08fd9ab78510122e05c21c2d79066c38bb6861a886c82
+  languageName: node
+  linkType: hard
+
+"react-truncate-inside@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "react-truncate-inside@npm:1.0.3"
+  peerDependencies:
+    react: ">= 16.x.x"
+  checksum: eff2d2186a6424ba89285b4948db47934c55d237bd132c819aaff829c118e03b6376f69deea5e9e24f20ae15b8d8eb3a2d53380e54a02ceb08101234e705b48c
   languageName: node
   linkType: hard
 
