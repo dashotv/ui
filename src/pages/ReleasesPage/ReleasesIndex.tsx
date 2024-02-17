@@ -70,9 +70,9 @@ export default function ReleasesIndex() {
               Search
             </Typography>
             <form onSubmit={submit}>
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} width="100%">
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
                 <TextField type="search" label="search" size="small" fullWidth autoComplete="off" />
-                <Stack direction="row" spacing={1} width={{ xs: '100%', md: '225px' }}>
+                <Stack direction="row" spacing={1} width={{ xs: '100%', md: '300px' }}>
                   <Button size="small" variant="contained" fullWidth onClick={() => link('t:movies r:1080 v:true')}>
                     Movies
                   </Button>
@@ -80,7 +80,10 @@ export default function ReleasesIndex() {
                     Uncen
                   </Button>
                   <Button size="small" variant="contained" fullWidth onClick={() => link('t:anime b:true v:true')}>
-                    Bluray
+                    BD
+                  </Button>
+                  <Button size="small" variant="contained" fullWidth onClick={() => link('t:anime r:2160')}>
+                    4K
                   </Button>
                 </Stack>
               </Stack>

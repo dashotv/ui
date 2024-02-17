@@ -49,6 +49,18 @@ export const ReleasesPresets = ({ setPage, setForm, formDefaults }: ReleasesPres
       >
         BD
       </Button>
+      <Button
+        onClick={() => {
+          setPage(1);
+          setForm(() => {
+            return { ...formDefaults, type: 'anime', resolution: 2160 };
+          });
+        }}
+        size="small"
+        variant="contained"
+      >
+        4K
+      </Button>
     </Stack>
   );
 };
