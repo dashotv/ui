@@ -98,9 +98,9 @@ export function Torch({
     return <ButtonMap buttons={buttons} size="small" />;
   };
 
-  if (!releases.data) {
-    return;
-  }
+  // if (!releases.data) {
+  //   return;
+  // }
 
   return (
     <WrapErrorBoundary>
@@ -108,7 +108,7 @@ export function Torch({
       <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
         <ReleasesForm form={form} setForm={setForm} reset={() => setForm(initial)} />
       </Paper>
-      <ReleasesList data={releases.data?.Releases} actions={renderActions} selected={selected} />
+      {releases.data && <ReleasesList data={releases.data?.Releases} actions={renderActions} selected={selected} />}
     </WrapErrorBoundary>
   );
 }
