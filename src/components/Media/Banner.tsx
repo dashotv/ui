@@ -34,17 +34,19 @@ export function MediumBanner({
     completed,
     favorite,
     unwatched,
+    updated_at,
   },
 }: MediumBannerProps) {
   const large = variant === 'large';
 
   const images: () => string[] = () => {
+    const updated = Date.parse(updated_at).valueOf() / 1000;
     const out: string[] = [];
     if (background) {
-      out.push(background);
+      out.push(background + '?updated=' + updated);
     }
     if (cover) {
-      out.push(cover);
+      out.push(cover + '?updated=' + updated);
     }
     return out;
   };
