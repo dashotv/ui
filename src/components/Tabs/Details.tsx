@@ -45,6 +45,7 @@ export function Details({
   const [images, setImages] = React.useState<string[]>([]);
   const [coverOpen, setCoverOpen] = React.useState(false);
   const [backgroundOpen, setBackgroundOpen] = React.useState(false);
+  const [updated] = React.useState(Date.parse(updated_at).valueOf() / 1000);
 
   const currentCover = () => {
     if (!medium.paths || medium.paths.length === 0) {
@@ -238,10 +239,10 @@ export function Details({
             </Stack>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
               <Link onClick={() => chooseCover()}>
-                <MediaCoverImage image={cover} />
+                <MediaCoverImage image={cover + '?updated=' + updated} />
               </Link>
               <Link onClick={() => chooseBackground()}>
-                <MediaCoverImage image={background} background={true} />
+                <MediaCoverImage image={background + '?updated=' + updated} background={true} />
               </Link>
             </Stack>
           </Stack>

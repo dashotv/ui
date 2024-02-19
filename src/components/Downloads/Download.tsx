@@ -52,7 +52,7 @@ export function Download({
     auto,
     force,
     medium,
-    medium: { cover, background, title, display },
+    medium: { cover, background, title, display, updated_at },
   } = download;
   const torrentRemove = useTorrentRemoveMutation();
   const { progress, eta, queue, torrent_state } = useDownloadingId(id);
@@ -134,6 +134,7 @@ export function Download({
         queue={queue}
         eta={eta?.toString()}
         buttons={buttons}
+        updated_at={updated_at}
       />
       <DownloadInfo {...{ open, setOpen, status, thash, release_id, url }} changer={changeInfo} />
       <MediumTabs data={tabsMap} />

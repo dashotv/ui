@@ -11,7 +11,7 @@ export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
   const { get } = useDownloading();
   return (
     <>
-      {downloads?.map(({ id, status, multi, medium }: DownloadType) => {
+      {downloads?.map(({ id, status, multi, medium, updated_at }: DownloadType) => {
         const {
           progress,
           eta,
@@ -38,6 +38,7 @@ export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
                   multi,
                   files,
                   total,
+                  updated_at,
                 }}
               />
             </Link>
