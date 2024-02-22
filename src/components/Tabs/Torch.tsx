@@ -17,15 +17,14 @@ const processSearch = (medium: Medium) => {
   if (!search) {
     return { text: display, episode: episode_number };
   }
+  if (!isAnimeKind || !search.includes(':') || !absolute_number || absolute_number === 0) {
+    return { text: search, episode: episode_number };
+  }
+
   const s = search.split(':');
   const text = s[0];
   const minus = Number(s[1]) || 0;
-  let episode = episode_number;
-  console.log('episode:', episode, 'absolute_number:', absolute_number, 'minus:', minus);
-  if (isAnimeKind && absolute_number && absolute_number > 0) {
-    episode = absolute_number - minus;
-  }
-  return { text, episode };
+  return { text, episode: absolute_number - minus };
 };
 
 const formdata = (medium: Medium): SearchForm => {
