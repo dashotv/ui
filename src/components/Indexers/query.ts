@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Setting, SettingsArgs } from 'types/setting';
 
-import { Indexer, IndexersResponse, RunicReadResponse, RunicSourcesResponse } from './types';
+import { Indexer, IndexersResponse, RunicParseResponse, RunicReadResponse, RunicSourcesResponse } from './types';
 
 export const getRunicSources = async () => {
   const response = await runic.get('/sources/');
@@ -18,7 +18,12 @@ export const getRunicSource = async (id: string) => {
 
 export const getRunicRead = async (id: string, categories: number[]) => {
   const response = await runic.get(`/sources/${id}/read?categories=${categories.join(',')}`);
-  return response.data;
+  return response.data as RunicReadResponse;
+};
+
+export const getRunicParse = async (id: string, categories: number[]) => {
+  const response = await runic.get(`/sources/${id}/parse?categories=${categories.join(',')}`);
+  return response.data as RunicParseResponse;
 };
 
 export const getIndexersAll = async () => {
@@ -63,6 +68,14 @@ export const useRunicReadQuery = (id: string, categories: number[]) =>
   useQuery({
     queryKey: ['runic', id, 'read', categories],
     queryFn: () => getRunicRead(id, categories),
+    placeholderData: previousData => previousData,
+    retry: false,
+  });
+
+export const useRunicParseQuery = (id: string, categories: number[]) =>
+  useQuery({
+    queryKey: ['runic', id, 'parse', categories],
+    queryFn: () => getRunicParse(id, categories),
     placeholderData: previousData => previousData,
     retry: false,
   });

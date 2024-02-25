@@ -23,11 +23,13 @@ import {
   useIndexerSettingMutation,
   useIndexersAllQuery,
 } from '.';
+import { IndexersParse } from './Parse';
 import { IndexersRead } from './Read';
 
 export const IndexersList = () => {
   const [selected, setSelected] = React.useState<Indexer | undefined>(undefined);
   const [reading, setReading] = React.useState<Indexer | undefined>(undefined);
+  const [parsing, setParsing] = React.useState<Indexer | undefined>(undefined);
   const { isFetching, data } = useIndexersAllQuery();
   const indexer = useIndexerMutation();
   const setting = useIndexerSettingMutation();
@@ -51,6 +53,9 @@ export const IndexersList = () => {
   };
   const read = (row: Indexer) => {
     setReading(row);
+  };
+  const parse = (row: Indexer) => {
+    setParsing(row);
   };
 
   const toggle = (id: string, name: string, value: boolean) => {
@@ -117,6 +122,9 @@ export const IndexersList = () => {
                   <IconButton size="small" onClick={() => read(row)} title="active">
                     <AutoStoriesIcon color="primary" fontSize="small" />
                   </IconButton>
+                  <IconButton size="small" onClick={() => parse(row)} title="active">
+                    <AutoStoriesIcon color="primary" fontSize="small" />
+                  </IconButton>
                   <IconButton size="small" onClick={() => deleteIndexer(row.id)} title="active">
                     <DeleteForeverIcon color="error" fontSize="small" />
                   </IconButton>
@@ -126,25 +134,30 @@ export const IndexersList = () => {
           ))}
           {selected && <IndexerDialog handleClose={handleClose} indexer={selected} />}
           {reading && <IndexersRead indexer={reading} handleClose={() => setReading(undefined)} />}
+          {parsing && <IndexersParse indexer={parsing} handleClose={() => setParsing(undefined)} />}
         </Paper>
       </Container>
     </>
   );
 };
 
-const Categories = ({ categories }) => {
-  return ['tv', 'anime', 'movie'].map(key => {
-    if (categories[key]) {
-      return (
-        <>
-          <Typography variant="body1" color="secondary" fontWeight="bold">
-            {key}
-          </Typography>
-          <Typography variant="body2" color="secondary.dark">
-            {categories[key].join(', ')}
-          </Typography>
-        </>
-      );
-    }
-  });
+const Categories = ({ categories }: { categories: Map<string, number[]> }) => {
+  return (
+    <Stack direction="row" spacing={1} alignItems="baseline">
+      {['tv', 'anime', 'movie'].map(key => {
+        if (categories[key]) {
+          return (
+            <Stack key={key} direction="row" spacing={0.75} alignItems="baseline">
+              <Typography variant="body1" color="secondary" fontWeight="bold" noWrap>
+                {key}
+              </Typography>
+              <Typography variant="body2" color="secondary.dark" noWrap>
+                {categories[key].join(',')}
+              </Typography>
+            </Stack>
+          );
+        }
+      })}
+    </Stack>
+  );
 };

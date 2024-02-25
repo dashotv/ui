@@ -1,3 +1,5 @@
+import { Release } from 'components/Releases';
+
 export interface IndexersResponse {
   results: Indexer[];
   count: number;
@@ -14,6 +16,70 @@ export interface RunicReadResponse {
   error: boolean;
   source: string;
   results: NZB[];
+}
+export interface RunicParseResponse {
+  error: boolean;
+  source: string;
+  results: RunicRelease[];
+}
+/*
+type Release struct { // model
+	grimoire.Document `bson:",inline"` // includes default model settings
+	//ID        primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	//CreatedAt time.Time          `bson:"created_at" json:"created_at"`
+	//UpdatedAt time.Time          `bson:"updated_at" json:"updated_at"`
+	Type        string       `bson:"type" json:"type"`
+	Source      string       `bson:"source" json:"source"`
+	Title       string       `bson:"title" json:"title"`
+	Year        int          `bson:"year" json:"year"`
+	Description string       `bson:"description" json:"description"`
+	Size        int64        `bson:"size" json:"size"`
+	View        string       `bson:"view" json:"view"`
+	Download    string       `bson:"download" json:"download"`
+	Infohash    string       `bson:"infohash" json:"infohash"`
+	Season      int          `bson:"season" json:"season"`
+	Episode     int          `bson:"episode" json:"episode"`
+	Volume      int          `bson:"volume" json:"volume"`
+	Group       string       `bson:"group" json:"group"`
+	Verified    bool         `bson:"verified" json:"verified"`
+	Widescreen  bool         `bson:"widescreen" json:"widescreen"`
+	Uncensored  bool         `bson:"uncensored" json:"uncensored"`
+	Bluray      bool         `bson:"bluray" json:"bluray"`
+	Nzb         bool         `bson:"nzb" json:"nzb"`
+	Resolution  string       `bson:"resolution" json:"resolution"`
+	Encoding    string       `bson:"encoding" json:"encoding"`
+	Quality     string       `bson:"quality" json:"quality"`
+	Raw         *newznab.NZB `bson:"raw" json:"raw"`
+	PublishedAt time.Time    `bson:"published_at" json:"published_at"`
+}
+*/
+export interface RunicRelease {
+  id: string;
+  type: string;
+  source: string;
+  title: string;
+  year: number;
+  description: string;
+  size: number;
+  view: string;
+  download: string;
+  infohash: string;
+  season: number;
+  episode: number;
+  volume: number;
+  group: string;
+  verified: boolean;
+  widescreen: boolean;
+  uncensored: boolean;
+  bluray: boolean;
+  is_torrent: boolean;
+  resolution: string;
+  encoding: string;
+  quality: string;
+  raw: NZB;
+  published_at: string;
+  created_at: string;
+  updated_at: string;
 }
 /*
 type NZB struct {
