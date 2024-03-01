@@ -1,5 +1,3 @@
-import { Release } from 'components/Releases';
-
 export interface IndexersResponse {
   results: Indexer[];
   count: number;
@@ -68,6 +66,7 @@ export interface RunicRelease {
   episode: number;
   volume: number;
   group: string;
+  website: string;
   verified: boolean;
   widescreen: boolean;
   uncensored: boolean;
@@ -77,6 +76,7 @@ export interface RunicRelease {
   encoding: string;
   quality: string;
   raw: NZB;
+  downloader: string;
   published_at: string;
   created_at: string;
   updated_at: string;

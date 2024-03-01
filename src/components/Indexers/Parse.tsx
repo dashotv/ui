@@ -6,13 +6,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import MenuItem from '@mui/material/MenuItem';
-import Paper from '@mui/material/Paper';
 import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 
-import { Megabytes, Row } from 'components/Common';
-
-import { Indexer, RunicRelease, useRunicParseQuery } from '.';
+import { Indexer, IndexersReleases, useRunicParseQuery } from '.';
 
 export const IndexersParse = ({ indexer, handleClose }: { indexer: Indexer; handleClose: () => void }) => {
   const [open, setOpen] = useState(true);
@@ -25,7 +22,7 @@ export const IndexersParse = ({ indexer, handleClose }: { indexer: Indexer; hand
     );
   };
   const [cats, setCats] = useState<number[]>(allCats());
-  const { isFetching, data } = useRunicParseQuery(indexer.name, cats);
+  const { data } = useRunicParseQuery(indexer.name, cats);
   const close = () => {
     setOpen(false);
     handleClose();
@@ -67,26 +64,7 @@ export const IndexersParse = ({ indexer, handleClose }: { indexer: Indexer; hand
           </Stack>
         </Stack>
       </DialogTitle>
-      <DialogContent>
-        <Paper elevation={0} sx={{ width: '100%', p: 1 }}>
-          {isFetching && <Typography variant="body1">Loading...</Typography>}
-          {data?.results?.map((r: RunicRelease) => (
-            <Row key={r.id || r.infohash || r.raw?.infohash}>
-              <Stack direction="row" spacing={1} width="100%" alignItems="baseline" justifyContent="space-between">
-                <Typography fontWeight="bolder" minWidth="300px" noWrap color="primary">
-                  {r.title}
-                </Typography>
-                <Stack direction="row" spacing={1} minWidth="225px" alignItems="baseline" justifyContent="end">
-                  <Typography fontWeight="bolder" minWidth="0" noWrap color="secondary.dark">
-                    {r.raw?.category?.join(',')}
-                  </Typography>
-                  {r.size && <Megabytes value={Number(r.size)} ord="bytes" />}
-                </Stack>
-              </Stack>
-            </Row>
-          ))}
-        </Paper>
-      </DialogContent>
+      <DialogContent>{data?.results ? <IndexersReleases data={data?.results} /> : null}</DialogContent>
       <DialogActions>
         <Button variant="contained" onClick={() => close()}>
           Ok

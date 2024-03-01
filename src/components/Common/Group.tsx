@@ -23,7 +23,7 @@ export const Group = ({ group, author, variant }: GroupProps) => {
       return <Pill name="G" value={<Typography noWrap>{value}</Typography>} color="secondary.dark" />;
     default:
       return (
-        <Typography title={value} maxWidth="75px" noWrap variant="button" color="secondary.dark">
+        <Typography title={value} maxWidth="95px" noWrap variant="button" color="secondary.dark">
           {value}
         </Typography>
       );
