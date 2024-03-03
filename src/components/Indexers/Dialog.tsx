@@ -68,7 +68,6 @@ export const IndexerDialog = ({ indexer, handleClose }: IndexerDialogProps) => {
     if (!cats || cats.length === 0) {
       return false;
     }
-    console.log('isSet', id, cats);
     return cats.some(x => x === id);
   };
   const set = (id: number, value: boolean) => {
