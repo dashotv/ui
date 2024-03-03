@@ -115,7 +115,7 @@ export const IndexersList = () => {
                       {row.name}
                     </Typography>
                   </Link>
-                  <Categories categories={row.categories} />
+                  {/* <Categories categories={row.categories} /> */}
                 </Stack>
                 <Stack direction="row" spacing={1} alignItems="center" width="100%" justifyContent="end">
                   {row.processed_at && <Published date={row.processed_at} />}
