@@ -14,14 +14,22 @@ import Typography from '@mui/material/Typography';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { ButtonMap, ButtonMapButton, Chrono, LoadingIndicator, Row } from 'components/Common';
-import { Job, useJobsQuery } from 'components/Jobs';
+import { Job, useJobsForQuery } from 'components/Jobs';
 import { useSub } from 'hooks/sub';
 import { EventJob } from 'types/events';
 
 import { JobsDialog } from './Dialog';
 
-export function JobsList({ page, handleCancel }: { page: number; handleCancel: (id: string) => void }) {
-  const jobs = useJobsQuery(page);
+export function JobsList({
+  page,
+  service,
+  handleCancel,
+}: {
+  page: number;
+  service: string;
+  handleCancel: (id: string) => void;
+}) {
+  const jobs = useJobsForQuery(service, page);
   const [selected, setSelected] = React.useState<Job | null>(null);
   const queryClient = useQueryClient();
 
@@ -104,10 +112,10 @@ const Error = ({ error }: { error?: string }) => {
 const Title = ({ args }: { args: string }) => {
   if (args === '{}') return null;
   const parsed = JSON.parse(args);
-  if (!parsed || !parsed.Title) return null;
+  if (!parsed || !parsed.title) return null;
   return (
     <Typography variant="caption" color="gray" minWidth="0" /*width={{ xs: '100%', md: 'auto' }}*/ noWrap>
-      {parsed.Title}
+      {parsed.title}
     </Typography>
   );
 };
