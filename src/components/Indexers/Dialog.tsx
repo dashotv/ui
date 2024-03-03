@@ -29,10 +29,10 @@ export type IndexerDialogProps = {
 export const IndexerDialog = ({ indexer, handleClose }: IndexerDialogProps) => {
   const { control, handleSubmit, setValue } = useForm<Indexer>({ values: indexer });
   const [open, setOpen] = useState(false);
-  const { data } = useRunicSourcesQuery();
+  const { isFetched, data } = useRunicSourcesQuery();
   const [sources, setSources] = useState<Option[]>([]);
   const [categories, setCategories] = useState<RunicSourceCapsCategories>();
-  const [cats, setCats] = useState<Map<string, number[]>>(indexer.categories ?? new Map());
+  const [cats, setCats] = useState<number[]>(indexer.categories ?? []);
   const close = () => {
     setOpen(false);
     handleClose();
@@ -64,23 +64,28 @@ export const IndexerDialog = ({ indexer, handleClose }: IndexerDialogProps) => {
     }
   };
 
-  const isSet = (kind: string, id: number) => {
-    return cats[kind]?.includes(id) ?? false;
+  const isSet = (id: number) => {
+    if (!cats || cats.length === 0) {
+      return false;
+    }
+    console.log('isSet', id, cats);
+    return cats.some(x => x === id);
   };
-  const set = (kind: string, id: number, value: boolean) => {
+  const set = (id: number, value: boolean) => {
     if (value) {
       setCats(cats => {
-        const set = cats[kind] ?? [];
-        set.push(id);
-        return { ...cats, [kind]: set };
+        return [...cats, id];
       });
     } else {
       setCats(cats => {
-        const set = cats[kind] ?? [];
-        return { ...cats, [kind]: set.filter(i => i !== id) };
+        return [...cats.filter(i => i !== id)];
       });
     }
   };
+
+  if (!isFetched || !sources || !categories) {
+    return null;
+  }
 
   return (
     <Dialog open={open} onClose={() => close()} fullWidth={true} maxWidth="sm">
@@ -121,29 +126,14 @@ const Categories = ({
   set,
 }: {
   categories: RunicSourceCapsCategories;
-  isSet: (kind: string, id: number) => boolean;
-  set: (kind: string, id: number, value: boolean) => void;
+  isSet: (id: number) => boolean;
+  set: (id: number, value: boolean) => void;
 }) => {
   return (
     <Stack direction="column" spacing={0} sx={{ mr: 2 }}>
-      <Stack direction="row" spacing={1} alignItems="baseline" justifyContent="space-between">
-        <Stack direction="row" spacing={1} alignItems="baseline">
-          <Typography variant="body1" color="primary" fontWeight="bold">
-            Name
-          </Typography>
-        </Stack>
-        <Stack direction="row" spacing={1} alignItems="baseline">
-          <Typography variant="body1" color="primary" width="14px" fontWeight="bold" title="TV">
-            T
-          </Typography>
-          <Typography variant="body1" color="primary" width="14px" fontWeight="bold" title="Anime">
-            A
-          </Typography>
-          <Typography variant="body1" color="primary" width="14px" fontWeight="bold" title="Movie">
-            M
-          </Typography>
-        </Stack>
-      </Stack>
+      <Typography variant="body1" color="primary" fontWeight="bold" sx={{ ml: '29px' }}>
+        Name
+      </Typography>
       {categories.Category.map((c: RunicSourceCapsCategoriesCategory) => (
         <Box key={c.ID} sx={{ mb: 1 }}>
           <Category category={c} {...{ set, isSet }} />
@@ -163,39 +153,25 @@ const Category = ({
 }: {
   category: RunicSourceCapsCategoriesCategory | RunicSourceCapsCategoriesCategorySubcat;
   disabled?: boolean;
-  isSet: (kind: string, id: number) => boolean;
-  set: (kind: string, id: number, value: boolean) => void;
+  isSet: (id: number) => boolean;
+  set: (id: number, value: boolean) => void;
 }) => {
   return (
-    <Stack direction="row" spacing={1} alignItems="baseline" justifyContent="space-between">
+    <Stack direction="row" spacing={2} alignItems="baseline">
+      <Stack direction="row" spacing={1} alignItems="baseline">
+        <input
+          type="checkbox"
+          onChange={e => set(Number(category.ID), e.target.checked)}
+          checked={isSet(Number(category.ID))}
+          name={category.ID}
+          disabled={disabled}
+        />
+      </Stack>
       <Stack direction="row" spacing={1} alignItems="baseline">
         <Typography variant="body1">{category.Name}</Typography>
         <Typography variant="caption" color="gray">
           {category.ID}
         </Typography>
-      </Stack>
-      <Stack direction="row" spacing={1} alignItems="baseline">
-        <input
-          type="checkbox"
-          onChange={e => set('tv', Number(category.ID), e.target.checked)}
-          checked={isSet('tv', Number(category.ID))}
-          name={category.ID}
-          disabled={disabled}
-        />
-        <input
-          type="checkbox"
-          onChange={e => set('anime', Number(category.ID), e.target.checked)}
-          checked={isSet('anime', Number(category.ID))}
-          name={category.ID}
-          disabled={disabled}
-        />
-        <input
-          type="checkbox"
-          onChange={e => set('movie', Number(category.ID), e.target.checked)}
-          checked={isSet('movie', Number(category.ID))}
-          name={category.ID}
-          disabled={disabled}
-        />
       </Stack>
     </Stack>
   );

@@ -5,9 +5,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
-import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 
 import { Megabytes, Row } from 'components/Common';
@@ -16,27 +14,11 @@ import { Indexer, NZB, useRunicReadQuery } from '.';
 
 export const IndexersRead = ({ indexer, handleClose }: { indexer: Indexer; handleClose: () => void }) => {
   const [open, setOpen] = useState(true);
-  const [kind, setKind] = useState<string>('all');
-  const allCats = () => {
-    return [].concat(
-      indexer.categories['tv'] ?? [5000],
-      indexer.categories['movie'] ?? [2000],
-      indexer.categories['anime'] ?? [5070],
-    );
-  };
-  const [cats, setCats] = useState<number[]>(allCats());
+  const [cats] = useState<number[]>(indexer.categories ?? [5000, 2000, 5070]);
   const { isFetching, data } = useRunicReadQuery(indexer.name, cats);
   const close = () => {
     setOpen(false);
     handleClose();
-  };
-  const handleChange = event => {
-    setKind(event.target.value);
-    if (event.target.value === 'all') {
-      setCats(allCats());
-      return;
-    }
-    setCats(indexer.categories[event.target.value]);
   };
 
   return (
@@ -58,12 +40,6 @@ export const IndexersRead = ({ indexer, handleClose }: { indexer: Indexer; handl
             <Typography noWrap color="gray">
               {cats.join(',')}
             </Typography>
-            <Select variant="standard" label="Kind" value={kind} onChange={handleChange} sx={{ width: '100px' }}>
-              <MenuItem value="all">All</MenuItem>
-              <MenuItem value="tv">TV</MenuItem>
-              <MenuItem value="anime">Anime</MenuItem>
-              <MenuItem value="movie">Movie</MenuItem>
-            </Select>
           </Stack>
         </Stack>
       </DialogTitle>

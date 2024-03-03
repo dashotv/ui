@@ -1,6 +1,5 @@
 import React from 'react';
 
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ClassIcon from '@mui/icons-material/Class';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -70,7 +69,7 @@ export const IndexersList = () => {
       name: '',
       url: '',
       active: false,
-      categories: new Map<string, number[]>(),
+      categories: [],
     });
   };
   const deleteIndexer = (id: string) => {
@@ -117,7 +116,7 @@ export const IndexersList = () => {
                       {row.name}
                     </Typography>
                   </Link>
-                  {/* <Categories categories={row.categories} /> */}
+                  <Categories categories={row.categories} />
                 </Stack>
                 <Stack direction="row" spacing={0} alignItems="center" width="100%" justifyContent="end">
                   {row.processed_at && <Published date={row.processed_at} />}
@@ -143,23 +142,16 @@ export const IndexersList = () => {
   );
 };
 
-const Categories = ({ categories }: { categories: Map<string, number[]> }) => {
+const Categories = ({ categories }: { categories: number[] }) => {
+  if (!categories || categories.length === 0) return null;
   return (
-    <Stack direction="row" spacing={1} alignItems="baseline">
-      {['tv', 'anime', 'movie'].map(key => {
-        if (categories[key]) {
-          return (
-            <Stack key={key} direction="row" spacing={0.75} alignItems="baseline">
-              <Typography variant="body1" color="secondary" fontWeight="bold" noWrap>
-                {key}
-              </Typography>
-              <Typography variant="body2" color="secondary.dark" noWrap>
-                {categories[key].join(',')}
-              </Typography>
-            </Stack>
-          );
-        }
-      })}
+    <Stack direction="row" spacing={0.75} alignItems="baseline">
+      <Typography variant="body1" color="secondary" fontWeight="bold" noWrap>
+        categories
+      </Typography>
+      <Typography variant="body2" color="secondary.dark" noWrap>
+        {categories?.length}
+      </Typography>
     </Stack>
   );
 };

@@ -228,7 +228,7 @@ export interface Indexer {
   name: string;
   url: string;
   active: boolean;
-  categories: Map<string, number[]>;
+  categories: number[];
   processed_at?: string;
   created_at?: string;
   updated_at?: string;
