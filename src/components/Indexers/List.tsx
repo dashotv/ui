@@ -2,7 +2,9 @@ import React from 'react';
 
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ClassIcon from '@mui/icons-material/Class';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import PlayLessonIcon from '@mui/icons-material/PlayLesson';
 import QueueIcon from '@mui/icons-material/Queue';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
@@ -117,13 +119,13 @@ export const IndexersList = () => {
                   </Link>
                   {/* <Categories categories={row.categories} /> */}
                 </Stack>
-                <Stack direction="row" spacing={1} alignItems="center" width="100%" justifyContent="end">
+                <Stack direction="row" spacing={0} alignItems="center" width="100%" justifyContent="end">
                   {row.processed_at && <Published date={row.processed_at} />}
                   <IconButton size="small" onClick={() => read(row)} title="active">
-                    <AutoStoriesIcon color="primary" fontSize="small" />
+                    <ClassIcon color="primary" fontSize="small" />
                   </IconButton>
                   <IconButton size="small" onClick={() => parse(row)} title="active">
-                    <AutoStoriesIcon color="primary" fontSize="small" />
+                    <PlayLessonIcon color="primary" fontSize="small" />
                   </IconButton>
                   <IconButton size="small" onClick={() => deleteIndexer(row.id)} title="active">
                     <DeleteForeverIcon color="error" fontSize="small" />
