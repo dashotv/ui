@@ -40,8 +40,10 @@ export default function JobsPage() {
         <WrapErrorBoundary>
           <Grid container spacing={0} sx={{ mb: 2 }}>
             <Grid item xs={12} md={6}>
-              <Stack direction="row" spacing={0} justifyContent="start" alignItems="center">
-                <FilterSelect name="Type" choices={services} choose={setService} selected={service} />
+              <FilterSelect name="Type" choices={services} choose={setService} selected={service} />
+            </Grid>
+            <Grid item xs={12} md={6} justifyContent="end">
+              <Stack direction="row" spacing={0} justifyContent="end" alignItems="center">
                 <IconButton title="Cancel Pending" onClick={() => handleCancel('pending')}>
                   <PendingIcon color="disabled" />
                 </IconButton>
@@ -51,10 +53,8 @@ export default function JobsPage() {
                 <IconButton title="Clear Failed" onClick={() => handleClear('failed')}>
                   <ErrorIcon color="error" />
                 </IconButton>
+                <JobsStats />
               </Stack>
-            </Grid>
-            <Grid item xs={12} md={6} justifyContent="end">
-              <JobsStats />
             </Grid>
           </Grid>
           <JobsList {...{ page, service, handleCancel }} />
