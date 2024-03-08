@@ -28,6 +28,7 @@ export default ({ mode }) => {
           'react-truncate-inside',
           'dayjs',
           'react-helmet-async',
+          'react-hook-form',
           '@mui/material',
           '@mui/icons-material',
           '@tanstack/react-query',
