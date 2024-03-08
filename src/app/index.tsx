@@ -6,6 +6,7 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 import React from 'react';
+import { Suspense, lazy } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
@@ -29,6 +30,15 @@ import SeriesPage from 'pages/SeriesPage';
 import { GlobalStyle } from 'styles/global-styles';
 
 import './index.scss';
+
+const RunicApp = lazy(() => import('runic/App'));
+const RunicAppWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RunicApp />
+    </Suspense>
+  );
+};
 
 function fallbackRender({ error, resetErrorBoundary }) {
   return (
@@ -81,6 +91,7 @@ export function App() {
             <Route path="series/*" element={withAuth(SeriesPage)} />
             <Route path="movies/*" element={withAuth(MoviesPage)} />
             <Route path="releases/*" element={withAuth(ReleasesPage)} />
+            <Route path="runic/*" element={withAuth(RunicAppWrapper)} />
           </Routes>
         </Box>
       </ErrorBoundary>

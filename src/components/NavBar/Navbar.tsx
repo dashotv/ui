@@ -10,6 +10,7 @@ import EventIcon from '@mui/icons-material/Event';
 import FeedIcon from '@mui/icons-material/Feed';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import HomeIcon from '@mui/icons-material/Home';
+import LinkIcon from '@mui/icons-material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
@@ -60,6 +61,12 @@ const pages: NavPageWithChildren[] = [
       { icon: <TvIcon fontSize="small" />, name: 'Series', page: '/series' },
       { icon: <TheatersIcon fontSize="small" />, name: 'Movies', page: '/movies' },
     ],
+  },
+  {
+    icon: <LinkIcon fontSize="small" />,
+    name: 'External',
+    page: '/runic',
+    children: [{ icon: <LinkIcon fontSize="small" />, name: 'Runic', page: '/runic', exact: true }],
   },
   {
     icon: <ArticleIcon fontSize="small" />,

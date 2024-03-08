@@ -3,6 +3,7 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
+import federation from '@originjs/vite-plugin-federation';
 import react from '@vitejs/plugin-react';
 
 export default ({ mode }) => {
@@ -10,7 +11,29 @@ export default ({ mode }) => {
   return defineConfig({
     // depending on your application, base can also be "/"
     base: '/',
-    plugins: [react(), nodePolyfills(), viteTsconfigPaths()],
+    plugins: [
+      react(),
+      nodePolyfills(),
+      viteTsconfigPaths(),
+      federation({
+        name: 'runic',
+        remotes: {
+          runic: '/api/runic/assets/remote.js',
+        },
+        shared: [
+          'react',
+          'react-dom',
+          'react-router-dom',
+          'axios',
+          'react-truncate-inside',
+          'dayjs',
+          'react-helmet-async',
+          '@mui/material',
+          '@mui/icons-material',
+          '@tanstack/react-query',
+        ],
+      }),
+    ],
     optimizeDeps: {
       esbuildOptions: {
         plugins: [esbuildCommonjs(['react-moment'])],
