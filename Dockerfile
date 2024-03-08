@@ -5,10 +5,10 @@ ENV VITE_APP_CLERK_PUBLISHABLE_KEY=$CLERK_KEY
 
 WORKDIR /app
 COPY package*.json yarn.lock ./
-RUN yarn install --production
+RUN --mount=type=cache,target=/app/node_modules yarn install --production
 
 COPY . .
-RUN yarn build
+RUN --mount=type=cache,target=/app/node_modules yarn build
 
 ####################################################################################################
 FROM nginx:alpine

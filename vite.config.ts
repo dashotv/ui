@@ -11,6 +11,9 @@ export default ({ mode }) => {
   return defineConfig({
     // depending on your application, base can also be "/"
     base: '/',
+    build: {
+      target: 'esnext', //browsers can handle the latest ES features
+    },
     plugins: [
       react(),
       nodePolyfills(),

@@ -6,6 +6,7 @@ steps:
   - name: publish
     image: plugins/docker
     environment:
+      DOCKER_BUILDKIT: 1
       CLERK_KEY:
         from_secret: CLERK_KEY
     settings:
