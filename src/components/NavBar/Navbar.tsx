@@ -64,9 +64,12 @@ const pages: NavPageWithChildren[] = [
   },
   {
     icon: <LinkIcon fontSize="small" />,
-    name: 'External',
+    name: 'Runic',
     page: '/runic',
-    children: [{ icon: <LinkIcon fontSize="small" />, name: 'Runic', page: '/runic', exact: true }],
+    children: [
+      { icon: <LinkIcon fontSize="small" />, name: 'Releases', page: '/runic', exact: true },
+      { icon: <LinkIcon fontSize="small" />, name: 'Indexers', page: '/runic/indexers', exact: true },
+    ],
   },
   {
     icon: <ArticleIcon fontSize="small" />,
