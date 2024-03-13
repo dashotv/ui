@@ -6,6 +6,8 @@ import Paper from '@mui/material/Paper';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
+import { WrapErrorBoundary } from 'components/Common';
+
 export interface RoutingTabsRoute {
   label: string;
   element: JSX.Element;
@@ -28,7 +30,7 @@ export const RoutingTabs = ({ data, route }: { data: RoutingTabsRoute[]; route: 
       <Paper elevation={0} sx={{ pt: 1 }}>
         <Routes>
           {data.map(({ to, element }, i) => {
-            return <Route key={i} path={to} element={element} />;
+            return <Route key={i} path={to} element={<WrapErrorBoundary>{element}</WrapErrorBoundary>} />;
           })}
         </Routes>
       </Paper>

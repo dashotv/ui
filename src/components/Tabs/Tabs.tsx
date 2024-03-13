@@ -32,7 +32,7 @@ export function MediumTabs({ data }: { data: MediumTabMap }) {
         {Object.keys(data).map((k, i) => {
           return (
             <TabPanel key={i} index={i} value={value}>
-              {data[k]}
+              <WrapErrorBoundary>{data[k]}</WrapErrorBoundary>
             </TabPanel>
           );
         })}
