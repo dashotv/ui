@@ -7,19 +7,17 @@ import PendingIcon from '@mui/icons-material/Pending';
 import { Grid, IconButton, Stack } from '@mui/material';
 
 import { WrapErrorBoundary } from 'components/Common';
-import { FilterSelect } from 'components/Form';
 import { JobsList, JobsStats, deleteJob } from 'components/Jobs';
 import { Container } from 'components/Layout';
 
-const services = [
-  { name: 'Tower', type: 'tower' },
-  { name: 'Runic', type: 'runic' },
-  { name: 'Flame', type: 'flame' },
-];
+// const services = [
+//   { name: 'Tower', type: 'tower' },
+//   { name: 'Runic', type: 'runic' },
+//   { name: 'Flame', type: 'flame' },
+// ];
 
 export default function JobsPage() {
   const [page] = useState(1);
-  const [service, setService] = useState('tower');
 
   const handleCancel = (id: string) => {
     console.log('cancel', id);
@@ -39,9 +37,7 @@ export default function JobsPage() {
       <Container>
         <WrapErrorBoundary>
           <Grid container spacing={0} sx={{ mb: 2 }}>
-            <Grid item xs={12} md={6}>
-              <FilterSelect name="Type" choices={services} choose={setService} selected={service} />
-            </Grid>
+            <Grid item xs={12} md={6}></Grid>
             <Grid item xs={12} md={6} justifyContent="end">
               <Stack direction="row" spacing={0} justifyContent="end" alignItems="center">
                 <IconButton title="Cancel Pending" onClick={() => handleCancel('pending')}>
@@ -57,7 +53,7 @@ export default function JobsPage() {
               </Stack>
             </Grid>
           </Grid>
-          <JobsList {...{ page, service, handleCancel }} />
+          <JobsList {...{ page, handleCancel }} />
         </WrapErrorBoundary>
       </Container>
     </>

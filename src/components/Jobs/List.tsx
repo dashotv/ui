@@ -14,29 +14,21 @@ import Typography from '@mui/material/Typography';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { ButtonMap, ButtonMapButton, Chrono, LoadingIndicator, Row } from 'components/Common';
-import { Job, useJobsForQuery } from 'components/Jobs';
+import { Job, useJobsQuery } from 'components/Jobs';
 import { useSub } from 'hooks/sub';
 import { EventJob } from 'types/events';
 
 import { JobsDialog } from './Dialog';
 
-export function JobsList({
-  page,
-  service,
-  handleCancel,
-}: {
-  page: number;
-  service: string;
-  handleCancel: (id: string) => void;
-}) {
-  const jobs = useJobsForQuery(service, page);
+export function JobsList({ page, handleCancel }: { page: number; handleCancel: (id: string) => void }) {
+  const jobs = useJobsQuery(page);
   const [selected, setSelected] = React.useState<Job | null>(null);
   const queryClient = useQueryClient();
 
   useSub('tower.jobs', (data: EventJob) => {
     // console.log('tower.jobs');
     if (data.event === 'created') {
-      console.log('job created', data.job);
+      // console.log('job created', data.job);
       queryClient.setQueryData(['jobs', page], (prev: Job[]) => {
         return [data.job, ...prev];
       });
