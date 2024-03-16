@@ -2,6 +2,7 @@ import { tower } from 'utils/axios';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { Medium } from 'components/Media';
 import { Setting } from 'types/setting';
 
 import { DownloadSelection, DownloadType } from './types';
@@ -23,7 +24,7 @@ export const getDownload = async (id: string) => {
 
 export const getDownloadMedium = async (id: string) => {
   const response = await tower.get(`/downloads/${id}/medium`);
-  return response.data;
+  return response.data as Medium[];
 };
 
 export const getDownloadsLast = async () => {
