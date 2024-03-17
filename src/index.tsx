@@ -19,7 +19,7 @@ import { NatsProvider } from '@quara-dev/react-nats-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-const nats = import.meta.env.PROD ? 'wss://www.dasho.tv:9222/' : 'ws://localhost:9222/';
+const nats = import.meta.env.PROD ? 'wss://www.dasho.tv:9222/' : 'ws://10.0.4.62:59222/';
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
 const darkTheme = createTheme({
