@@ -10,8 +10,8 @@ export const getJobsFor = async (id: string, page: number) => {
   return response.data.jobs as Job[];
 };
 
-export const getJobs = async page => {
-  const response = await tower.get(`/jobs/?limit=250&page=${page}`);
+export const getJobs = async (page:number, status:string) => {
+  const response = await tower.get(`/jobs/?limit=250&page=${page}&status=${status}`);
   return response.data.jobs as Job[];
 };
 
@@ -25,10 +25,10 @@ export const deleteJob = async (id: string, hard: boolean) => {
   return response.data;
 };
 
-export const useJobsQuery = page =>
+export const useJobsQuery = (page: number, status: string) =>
   useQuery({
-    queryKey: ['jobs', page],
-    queryFn: () => getJobs(page),
+    queryKey: ['jobs', page, status],
+    queryFn: () => getJobs(page, status),
     placeholderData: previousData => previousData,
     retry: false,
   });

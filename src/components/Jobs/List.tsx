@@ -21,7 +21,9 @@ import { EventJob } from 'types/events';
 import { JobsDialog } from './Dialog';
 
 export function JobsList({ page, handleCancel }: { page: number; handleCancel: (id: string) => void }) {
-  const jobs = useJobsQuery(page);
+  const failed = useJobsQuery(page, 'failed');
+  const queued = useJobsQuery(page, 'queued');
+  const running = useJobsQuery(page, 'running');
   const [selected, setSelected] = React.useState<Job | null>(null);
   const queryClient = useQueryClient();
 
@@ -49,32 +51,36 @@ export function JobsList({ page, handleCancel }: { page: number; handleCancel: (
   };
   return (
     <Paper elevation={0}>
-      {jobs.isFetching && <LoadingIndicator />}
-      <Paper elevation={0}>
-        {jobs.data?.map(job => {
-          if (job.status !== 'failed' && job.status !== 'finished' && job.status !== 'pending') {
-            return (
-              <Link key={job.id} href="#" onClick={() => open(job)}>
-                <JobRow {...{ job, handleCancel }} />
-              </Link>
-            );
-          }
-        })}
-      </Paper>
+      
+      <JobsListSection page={page} status="queued" open={open} handleCancel={handleCancel} />
+      <JobsListSection page={page} status="running" open={open} handleCancel={handleCancel} />
+      <JobsListSection page={page} status="failed" open={open} handleCancel={handleCancel} />
+      <JobsListSection page={page} status="finished" open={open} handleCancel={handleCancel} />
 
-      <Paper elevation={0}>
-        {jobs.data?.map(job => {
-          if (job.status === 'failed' || job.status === 'finished') {
-            return (
-              <Link key={job.id} href="#" onClick={() => open(job)}>
-                <JobRow {...{ job, handleCancel }} />
-              </Link>
-            );
-          }
-        })}
-      </Paper>
       {selected && <JobsDialog job={selected} close={close} />}
     </Paper>
+  );
+}
+const JobsListSection = ({ page, status, open, handleCancel }: { page: number; status: string; open: (job: Job)=>void, handleCancel: (id: string) => void }) => {
+  const jobs = useJobsQuery(page, status);
+  return (
+      <Paper elevation={0} sx={{minHeight: '75px'}}>
+      {jobs.isFetching && <LoadingIndicator />}
+        <Stack direction='row' spacing={1} alignItems='center'>
+          <Icon status={status} /> 
+          <Typography color="primary" fontWeight='bolder'>
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </Typography>
+        </Stack>
+        {(!jobs.data || jobs.data?.length === 0) && <Typography color="gray" variant="caption">No jobs</Typography>}
+        {jobs.data?.map(job => {
+            return (
+              <Link key={job.id} href="#" onClick={() => open(job)}>
+                <JobRow {...{ job, handleCancel }} />
+              </Link>
+            );
+        })}
+      </Paper>
   );
 }
 const Icon = ({ status }: { status: string }) => {
