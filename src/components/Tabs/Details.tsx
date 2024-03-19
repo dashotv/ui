@@ -239,10 +239,10 @@ export function Details({
             </Stack>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
               <Link onClick={() => chooseCover()}>
-                <MediaCoverImage image={cover + '?updated=' + updated} />
+                <MediaCoverImage image={cover} updated={updated}/>
               </Link>
               <Link onClick={() => chooseBackground()}>
-                <MediaCoverImage image={background + '?updated=' + updated} background={true} />
+                <MediaCoverImage image={background} updated={updated} background={true} />
               </Link>
             </Stack>
           </Stack>
