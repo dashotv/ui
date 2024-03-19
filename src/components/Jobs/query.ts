@@ -10,8 +10,8 @@ export const getJobsFor = async (id: string, page: number) => {
   return response.data.jobs as Job[];
 };
 
-export const getJobs = async (page:number, status:string) => {
-  const response = await tower.get(`/jobs/?limit=250&page=${page}&status=${status}`);
+export const getJobs = async (page: number, status: string) => {
+  const response = await tower.get(`/jobs/?limit=25&page=${page}&status=${status}`);
   return response.data.jobs as Job[];
 };
 
