@@ -22,26 +22,6 @@ import { JobsDialog } from './Dialog';
 
 export function JobsList({ page, handleCancel }: { page: number; handleCancel: (id: string) => void }) {
   const [selected, setSelected] = React.useState<Job | null>(null);
-  const queryClient = useQueryClient();
-
-  useSub('tower.jobs', (data: EventJob) => {
-    // console.log('tower.jobs');
-    if (data.event === 'created') {
-      // console.log('job created', data.job);
-      queryClient.setQueryData(['jobs', page, data.job.status], (prev: Job[]) => {
-        if (!prev || prev.length === 0) return [data.job];
-        return [data.job, ...prev];
-      });
-      return;
-    }
-    if (data.event === 'updated') {
-      queryClient.setQueryData(['jobs', page, data.job.status], (prev: Job[]) => {
-        if (!prev || prev.length === 0) return [data.job];
-        return [...prev.map(job => (job.id === data.id ? data.job : job))];
-      });
-      return;
-    }
-  });
   const open = (job: Job) => {
     setSelected(job);
   };
@@ -72,6 +52,34 @@ const JobsListSection = ({
   handleCancel: (id: string) => void;
 }) => {
   const jobs = useJobsQuery(page, status);
+  const queryClient = useQueryClient();
+
+  useSub('tower.jobs', (data: EventJob) => {
+    // console.log('tower.jobs');
+    if (data.event === 'created') {
+      if (data.job.status !== status) return;
+      queryClient.setQueryData(['jobs', page, status], (prev: Job[]) => {
+        if (!prev || prev.length === 0) return [data.job];
+        return [data.job, ...prev];
+      });
+      return;
+    }
+    if (data.event === 'updated') {
+      if (data.job.status !== status) {
+        queryClient.setQueryData(['jobs', page, status], (prev: Job[]) => {
+          if (!prev || prev.length === 0) return prev;
+          return prev.filter(job => job.id !== data.id);
+        });
+        return;
+      }
+      queryClient.setQueryData(['jobs', page, status], (prev: Job[]) => {
+        if (!prev || prev.length === 0) return [data.job];
+        return [...prev.map(job => (job.id === data.id ? data.job : job))];
+      });
+      return;
+    }
+  });
+
   return (
     <Paper elevation={0} sx={{ minHeight: '75px', mb: 2 }}>
       {jobs.isFetching && <LoadingIndicator />}
