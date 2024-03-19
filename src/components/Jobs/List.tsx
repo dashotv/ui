@@ -28,13 +28,15 @@ export function JobsList({ page, handleCancel }: { page: number; handleCancel: (
     // console.log('tower.jobs');
     if (data.event === 'created') {
       // console.log('job created', data.job);
-      queryClient.setQueryData(['jobs', page], (prev: Job[]) => {
+      queryClient.setQueryData(['jobs', page, data.job.status], (prev: Job[]) => {
+        if (!prev || prev.length === 0) return [data.job];
         return [data.job, ...prev];
       });
       return;
     }
     if (data.event === 'updated') {
-      queryClient.setQueryData(['jobs', page], (prev: Job[]) => {
+      queryClient.setQueryData(['jobs', page, data.job.status], (prev: Job[]) => {
+        if (!prev || prev.length === 0) return [data.job];
         return [...prev.map(job => (job.id === data.id ? data.job : job))];
       });
       return;
@@ -71,7 +73,7 @@ const JobsListSection = ({
 }) => {
   const jobs = useJobsQuery(page, status);
   return (
-    <Paper elevation={0} sx={{ minHeight: '75px' }}>
+    <Paper elevation={0} sx={{ minHeight: '75px', mb: 2 }}>
       {jobs.isFetching && <LoadingIndicator />}
       <Stack direction="row" spacing={1} alignItems="center">
         <Icon status={status} />
