@@ -28,12 +28,46 @@ export function JobsList({ page, handleCancel }: { page: number; handleCancel: (
   const close = () => {
     setSelected(null);
   };
+  const jobs = useJobsQuery(page, '');
+  const queryClient = useQueryClient();
+
+  useSub('tower.jobs', (data: EventJob) => {
+    // console.log('tower.jobs', data.event, data.job.status, data.job.args);
+    if (data.event === 'updated') {
+      queryClient.setQueryData(['jobs', page, ''], (prev: Job[]) => {
+        if (prev.findIndex(job => job.id === data.id) > -1)
+          return [...prev.filter(job => job.id !== data.id), { ...data.job }];
+        return [...prev, { ...data.job }];
+      });
+      return;
+    }
+  });
   return (
     <Paper elevation={0}>
-      <JobsListSection page={page} status="queued" open={open} handleCancel={handleCancel} />
-      <JobsListSection page={page} status="running" open={open} handleCancel={handleCancel} />
-      <JobsListSection page={page} status="failed" open={open} handleCancel={handleCancel} />
-      <JobsListSection page={page} status="finished" open={open} handleCancel={handleCancel} />
+      <JobsListSection
+        jobs={jobs.data?.filter(j => j.status === 'queued')}
+        status="queued"
+        open={open}
+        handleCancel={handleCancel}
+      />
+      <JobsListSection
+        jobs={jobs.data?.filter(j => j.status === 'running')}
+        status="running"
+        open={open}
+        handleCancel={handleCancel}
+      />
+      <JobsListSection
+        jobs={jobs.data?.filter(j => j.status === 'failed')}
+        status="failed"
+        open={open}
+        handleCancel={handleCancel}
+      />
+      <JobsListSection
+        jobs={jobs.data?.filter(j => j.status === 'finished')}
+        status="finished"
+        open={open}
+        handleCancel={handleCancel}
+      />
 
       {selected && <JobsDialog job={selected} close={close} />}
     </Paper>
@@ -41,60 +75,30 @@ export function JobsList({ page, handleCancel }: { page: number; handleCancel: (
 }
 
 const JobsListSection = ({
-  page,
+  jobs,
   status,
   open,
   handleCancel,
 }: {
-  page: number;
+  jobs?: Job[];
   status: string;
   open: (job: Job) => void;
   handleCancel: (id: string) => void;
 }) => {
-  const jobs = useJobsQuery(page, status);
-  const queryClient = useQueryClient();
-
-  useSub('tower.jobs', (data: EventJob) => {
-    // console.log('tower.jobs');
-    if (data.event === 'created') {
-      if (data.job.status !== status) return;
-      queryClient.setQueryData(['jobs', page, status], (prev: Job[]) => {
-        if (!prev || prev.length === 0) return [data.job];
-        return [data.job, ...prev];
-      });
-      return;
-    }
-    if (data.event === 'updated') {
-      if (data.job.status !== status) {
-        queryClient.setQueryData(['jobs', page, status], (prev: Job[]) => {
-          if (!prev || prev.length === 0) return prev;
-          return prev.filter(job => job.id !== data.id);
-        });
-        return;
-      }
-      queryClient.setQueryData(['jobs', page, status], (prev: Job[]) => {
-        if (!prev || prev.length === 0) return [data.job];
-        return [...prev.map(job => (job.id === data.id ? data.job : job))];
-      });
-      return;
-    }
-  });
-
   return (
     <Paper elevation={0} sx={{ minHeight: '75px', mb: 2 }}>
-      {jobs.isFetching && <LoadingIndicator />}
       <Stack direction="row" spacing={1} alignItems="center">
         <Icon status={status} />
         <Typography color="primary" fontWeight="bolder">
           {status.charAt(0).toUpperCase() + status.slice(1)}
         </Typography>
       </Stack>
-      {(!jobs.data || jobs.data?.length === 0) && (
+      {(!jobs || jobs?.length === 0) && (
         <Typography color="gray" variant="caption">
           No jobs
         </Typography>
       )}
-      {jobs.data?.map(job => {
+      {jobs?.map(job => {
         return (
           <Link key={job.id} href="#" onClick={() => open(job)}>
             <JobRow {...{ job, handleCancel }} />
