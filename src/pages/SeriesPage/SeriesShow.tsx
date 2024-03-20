@@ -8,7 +8,7 @@ import { LoadingIndicator } from 'components/Common';
 import { Container } from 'components/Layout';
 import {
   Series,
-  putSeriesRefresh,
+  postSeriesJob,
   useEpisodeSettingMutation,
   useSeriesQuery,
   useSeriesSeasonEpisodesQuery,
@@ -25,11 +25,11 @@ export default function SeriesShow() {
   const queryClient = useQueryClient();
   const seriesSetting = useSeriesSettingMutation(id);
   const episodeSetting = useEpisodeSettingMutation();
-  const refresh = () => {
-    if (!id) {
+  const queue = (name: string) => {
+    if (!id || !name) {
       return;
     }
-    putSeriesRefresh(id);
+    postSeriesJob(id, name);
   };
 
   function changeSeason(season) {
@@ -75,7 +75,7 @@ export default function SeriesShow() {
             changeSeason={changeSeason}
             changeEpisode={changeEpisodeSetting}
             change={changeSeriesSetting}
-            refresh={refresh}
+            queue={queue}
           />
         )}
       </Container>

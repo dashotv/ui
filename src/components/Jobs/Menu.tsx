@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
-import { queueJob } from 'components/Jobs';
+import { queueJob } from '.';
 
 export const JobsMenu = ({ jobs }: { jobs: string[] }) => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);

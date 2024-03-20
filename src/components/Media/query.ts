@@ -39,10 +39,15 @@ export const getSeriesBackgrounds = async id => {
   return response.data.backgrounds;
 };
 
-export const putSeriesRefresh = async (id: string) => {
-  const response = await tower.put(`/series/${id}/refresh`);
+export const postSeriesJob = async (id: string, job: string) => {
+  const response = await tower.post(`/series/${id}/jobs?name=${job}`);
   return response.data;
 };
+
+// export const putSeriesRefresh = async (id: string) => {
+//   const response = await tower.put(`/series/${id}/refresh`);
+//   return response.data;
+// };
 
 export const putSeries = async (id: string, data: Medium) => {
   const response = await tower.put(`/series/${id}`, data);

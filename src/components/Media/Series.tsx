@@ -5,7 +5,10 @@ import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import RecommendIcon from '@mui/icons-material/Recommend';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import RepeatIcon from '@mui/icons-material/Repeat';
+import RepeatOnIcon from '@mui/icons-material/RepeatOn';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
+import RestorePageIcon from '@mui/icons-material/RestorePage';
 import StarsIcon from '@mui/icons-material/Stars';
 
 import { ButtonMapButton } from 'components/Common';
@@ -23,7 +26,7 @@ export type SeriesProps = {
   changeSeason: (season: number) => void;
   changeEpisode: (id: string, key: string, value) => void;
   change: (id: string, key: string, value) => void;
-  refresh: () => void;
+  queue: (name: string) => void;
 };
 export function Series({
   id,
@@ -33,7 +36,7 @@ export function Series({
   currentSeason,
   changeSeason,
   changeEpisode,
-  refresh,
+  queue,
   change,
 }: SeriesProps) {
   const navigate = useNavigate();
@@ -97,9 +100,25 @@ export function Series({
       Icon: ReplayCircleFilledIcon,
       color: 'primary',
       click: () => {
-        refresh();
+        queue('refresh');
       },
       title: 'refresh',
+    },
+    {
+      Icon: RepeatOnIcon,
+      color: 'warning',
+      click: () => {
+        queue('files');
+      },
+      title: 'files',
+    },
+    {
+      Icon: RestorePageIcon,
+      color: 'warning',
+      click: () => {
+        queue('paths');
+      },
+      title: 'paths',
     },
     {
       Icon: BuildCircleIcon,
