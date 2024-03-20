@@ -93,7 +93,7 @@ function PathsRow({ i, extension, local, type, size, resolution, updated_at }: {
         >
           {!matches && <PathIcon {...{ extension, type }} />}
           {!matches && <Resolution resolution={resolution} />}
-          {size && <Megabytes value={size} ord="bytes" />}
+          {size ? <Megabytes value={size} ord="bytes" /> : null}
           <Typography variant="subtitle2" noWrap color="gray">
             <Chrono fromNow>{updated_at?.toString()}</Chrono>
           </Typography>
