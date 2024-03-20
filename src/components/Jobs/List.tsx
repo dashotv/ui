@@ -36,8 +36,8 @@ export function JobsList({ page, handleCancel }: { page: number; handleCancel: (
     if (data.event === 'updated') {
       queryClient.setQueryData(['jobs', page, ''], (prev: Job[]) => {
         if (prev.findIndex(job => job.id === data.id) > -1)
-          return [...prev.filter(job => job.id !== data.id), { ...data.job }];
-        return [...prev, { ...data.job }];
+          return [...prev.map(job => (job.id !== data.id ? job : data.job))];
+        return [{ ...data.job }, ...prev];
       });
       return;
     }
