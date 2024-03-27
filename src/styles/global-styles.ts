@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
+// TODO: disable?
 /* istanbul ignore next */
 export const GlobalStyle = createGlobalStyle`
   html,

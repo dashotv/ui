@@ -39,6 +39,14 @@ const RunicAppWrapper = () => {
     </Suspense>
   );
 };
+const MinionApp = lazy(() => import('minion/App'));
+const MinionAppWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MinionApp />
+    </Suspense>
+  );
+};
 
 function fallbackRender({ error, resetErrorBoundary }) {
   return (
@@ -92,6 +100,7 @@ export function App() {
             <Route path="movies/*" element={withAuth(MoviesPage)} />
             <Route path="releases/*" element={withAuth(ReleasesPage)} />
             <Route path="runic/*" element={withAuth(RunicAppWrapper)} />
+            <Route path="minion/*" element={withAuth(MinionAppWrapper)} />
           </Routes>
         </Box>
       </ErrorBoundary>

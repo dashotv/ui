@@ -84,6 +84,12 @@ const pages: NavPageWithChildren[] = [
     ],
   },
   {
+    icon: <LinkIcon fontSize="small" />,
+    name: 'Minion',
+    page: '/minion',
+    children: [{ icon: <LinkIcon fontSize="small" />, name: 'Jobs', page: '/minion', exact: true }],
+  },
+  {
     icon: <Messages />,
     name: 'Admin',
     page: '/admin',

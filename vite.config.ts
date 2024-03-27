@@ -6,6 +6,7 @@ import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
 import federation from '@originjs/vite-plugin-federation';
 import react from '@vitejs/plugin-react';
 
+// https://vitejs.dev/config/
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
   return defineConfig({
@@ -19,22 +20,31 @@ export default ({ mode }) => {
       nodePolyfills(),
       viteTsconfigPaths(),
       federation({
-        name: 'runic',
+        name: 'remote',
         remotes: {
           runic: '/api/runic/assets/remote.js',
+          minion: '/api/minion/assets/remote.js',
         },
         shared: [
-          'react',
-          'react-dom',
-          'react-router-dom',
+          '@emotion/react',
+          '@emotion/styled',
+          '@mui/icons-material',
+          '@mui/material',
+          '@tanstack/react-query-devtools',
+          '@tanstack/react-query',
+          '@trivago/prettier-plugin-sort-imports',
           'axios',
-          'react-truncate-inside',
           'dayjs',
+          'notistack',
+          'prettier',
+          'react-dom',
+          'react-error-boundary',
           'react-helmet-async',
           'react-hook-form',
-          '@mui/material',
-          '@mui/icons-material',
-          '@tanstack/react-query',
+          'react-icons',
+          'react-router-dom',
+          'react-truncate-inside',
+          'react',
         ],
       }),
     ],
@@ -95,6 +105,13 @@ export default ({ mode }) => {
           secure: false,
           ws: true,
           rewrite: path => path.replace(/^\/api\/scry/, ''),
+        },
+        '/api/minion': {
+          target: 'http://localhost:59010',
+          changeOrigin: true,
+          secure: false,
+          ws: true,
+          rewrite: path => path.replace(/^\/api\/minion/, ''),
         },
         '/media-images': {
           target: 'http://seer.dasho.net/',

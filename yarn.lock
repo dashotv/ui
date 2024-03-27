@@ -1514,22 +1514,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@clerk/clerk-react@npm:4.26.6":
-  version: 4.26.6
-  resolution: "@clerk/clerk-react@npm:4.26.6"
+"@clerk/clerk-react@npm:^4.30.7":
+  version: 4.30.7
+  resolution: "@clerk/clerk-react@npm:4.30.7"
   dependencies:
-    "@clerk/shared": "npm:0.24.5"
-    "@clerk/types": "npm:3.56.1"
+    "@clerk/shared": "npm:1.3.3"
+    "@clerk/types": "npm:3.62.1"
     tslib: "npm:2.4.1"
   peerDependencies:
     react: ">=16"
-  checksum: 10c0/5c5b37bf36ad17701f524d9af833bfe1878e009db582cea03b14de70afc42d4d09298d7350dbfbc3ca8d883d8d9bf6abc5145e3d63507ec35d286df8c9c7246c
+  checksum: 10c0/92f7c9fdff16d33ed87915afab01464a193ffddb058bddd9aff7699ecc667b924dfcf333d47fe8ab656f4d78c22e1b2c4c62a7d81e41f6ed9fd9d47dfa5a91ba
   languageName: node
   linkType: hard
 
-"@clerk/shared@npm:0.24.5":
-  version: 0.24.5
-  resolution: "@clerk/shared@npm:0.24.5"
+"@clerk/shared@npm:1.3.3":
+  version: 1.3.3
+  resolution: "@clerk/shared@npm:1.3.3"
   dependencies:
     glob-to-regexp: "npm:0.4.1"
     js-cookie: "npm:3.0.1"
@@ -1539,7 +1539,7 @@ __metadata:
   peerDependenciesMeta:
     react:
       optional: true
-  checksum: 10c0/c3b67675be5a09971d8f4fc385505e97aec3d658753d94a9e29c08aaa725d03b0e254d154d9a5a681501ee8a1c102dae64b3f9251116261856108f7bac9b71ea
+  checksum: 10c0/a26b0f9a69305fd8b2aea57a80161671f466c5f3c6cbf629f3410252b48c3e5fa977c6841d38d834f01f2b76168558d774b8efa8c2eb1e177dfbd7c881ee4ebb
   languageName: node
   linkType: hard
 
@@ -1552,12 +1552,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@clerk/types@npm:3.56.1":
-  version: 3.56.1
-  resolution: "@clerk/types@npm:3.56.1"
+"@clerk/types@npm:3.62.1":
+  version: 3.62.1
+  resolution: "@clerk/types@npm:3.62.1"
   dependencies:
     csstype: "npm:3.1.1"
-  checksum: 10c0/43438d2c346a40ef013ded9d8623fff331202e35b51a4152e90d6f28cb7441f83582897e60722cfeececb2845d2902083268537d409ddb2619dcb08409054136
+  checksum: 10c0/fedaa915402a1288a5fe4a079fc50cccdc9c36542fd07d9d0c88aa5ad234e2ec4e22e6fc3f1327d2f9dd1a20b8dec4498e64173e12d556bd86f9edfe65c223d0
   languageName: node
   linkType: hard
 
@@ -6547,7 +6547,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "dashotv@workspace:."
   dependencies:
-    "@clerk/clerk-react": "npm:4.26.6"
+    "@clerk/clerk-react": "npm:^4.30.7"
     "@clerk/themes": "npm:1.7.8"
     "@emotion/react": "npm:11.11.1"
     "@emotion/styled": "npm:11.11.0"
