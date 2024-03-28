@@ -67,13 +67,12 @@ export function Download({
 
   const remove = useCallback((status: string) => {
     console.log('clicked remove');
+    changeSetting('status', status);
     torrentRemove.mutate(thash, {
       onSuccess: data => {
         if (data.error) {
           console.error('error: ', data.error);
-          return;
         }
-        changeSetting('status', status);
       },
     });
   }, []);
