@@ -47,6 +47,14 @@ const MinionAppWrapper = () => {
     </Suspense>
   );
 };
+const RiftApp = lazy(() => import('rift/App'));
+const RiftAppWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RiftApp />
+    </Suspense>
+  );
+};
 
 function fallbackRender({ error, resetErrorBoundary }) {
   return (
@@ -101,6 +109,7 @@ export function App() {
             <Route path="releases/*" element={withAuth(ReleasesPage)} />
             <Route path="runic/*" element={withAuth(RunicAppWrapper)} />
             <Route path="minion/*" element={withAuth(MinionAppWrapper)} />
+            <Route path="rift/*" element={withAuth(RiftAppWrapper)} />
           </Routes>
         </Box>
       </ErrorBoundary>

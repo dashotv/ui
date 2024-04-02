@@ -72,6 +72,15 @@ const pages: NavPageWithChildren[] = [
     ],
   },
   {
+    icon: <LinkIcon fontSize="small" />,
+    name: 'Rift',
+    page: '/rift',
+    children: [
+      { icon: <LinkIcon fontSize="small" />, name: 'Pages', page: '/rift', exact: true },
+      { icon: <LinkIcon fontSize="small" />, name: 'Videos', page: '/rift/videos', exact: true },
+    ],
+  },
+  {
     icon: <ArticleIcon fontSize="small" />,
     name: 'Releases',
     page: '/releases',
@@ -84,18 +93,12 @@ const pages: NavPageWithChildren[] = [
     ],
   },
   {
-    icon: <LinkIcon fontSize="small" />,
-    name: 'Minion',
-    page: '/minion',
-    children: [{ icon: <LinkIcon fontSize="small" />, name: 'Jobs', page: '/minion', exact: true }],
-  },
-  {
     icon: <Messages />,
     name: 'Admin',
     page: '/admin',
     exact: true,
     children: [
-      { icon: <WorkHistoryIcon fontSize="small" />, name: 'Jobs', page: '/admin', exact: true },
+      { icon: <WorkHistoryIcon fontSize="small" />, name: 'Jobs', page: '/minion', exact: true },
       { icon: <WysiwygIcon fontSize="small" />, name: 'Messages', page: '/admin/logs' },
       { icon: <RecordVoiceOverIcon fontSize="small" />, name: 'Requests', page: '/admin/requests' },
       { icon: <PersonIcon fontSize="small" />, name: 'Users', page: '/admin/users' },

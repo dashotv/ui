@@ -24,6 +24,7 @@ export default ({ mode }) => {
         remotes: {
           runic: '/api/runic/assets/remote.js',
           minion: '/api/minion/assets/remote.js',
+          rift: '/api/rift/assets/remote.js',
         },
         shared: [
           '@emotion/react',
@@ -112,6 +113,13 @@ export default ({ mode }) => {
           secure: false,
           ws: true,
           rewrite: path => path.replace(/^\/api\/minion/, ''),
+        },
+        '/api/rift': {
+          target: 'http://localhost:59006',
+          changeOrigin: true,
+          secure: false,
+          ws: true,
+          rewrite: path => path.replace(/^\/api\/rift/, ''),
         },
         '/media-images': {
           target: 'http://seer.dasho.net/',
