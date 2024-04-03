@@ -9,18 +9,69 @@ export interface CombinationsIndexResponse extends Response {
   result: Combination[];
   total: number;
 }
+export const CombinationsIndex = async (params: CombinationsIndexRequest) => {
+  const response = await towerClient.get(`/combinations/?page=${params.page}&limit=${params.limit}`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as CombinationsIndexResponse;
+};
+
 export interface CombinationsCreateRequest {
   subject: Combination;
 }
 export interface CombinationsCreateResponse extends Response {
   result: Combination;
 }
+export const CombinationsCreate = async (params: CombinationsCreateRequest) => {
+  const response = await towerClient.post(`/combinations/?`, params.subject);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as CombinationsCreateResponse;
+};
+
 export interface CombinationsShowRequest {
   id: string;
 }
 export interface CombinationsShowResponse extends Response {
   result: Combination;
 }
+export const CombinationsShow = async (params: CombinationsShowRequest) => {
+  const response = await towerClient.get(`/combinations/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as CombinationsShowResponse;
+};
+
 export interface CombinationsUpdateRequest {
   id: string;
   subject: Combination;
@@ -28,6 +79,23 @@ export interface CombinationsUpdateRequest {
 export interface CombinationsUpdateResponse extends Response {
   result: Combination;
 }
+export const CombinationsUpdate = async (params: CombinationsUpdateRequest) => {
+  const response = await towerClient.put(`/combinations/${params.id}?`, params.subject);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as CombinationsUpdateResponse;
+};
+
 export interface CombinationsSettingsRequest {
   id: string;
   setting: Setting;
@@ -35,34 +103,42 @@ export interface CombinationsSettingsRequest {
 export interface CombinationsSettingsResponse extends Response {
   result: Combination;
 }
+export const CombinationsSettings = async (params: CombinationsSettingsRequest) => {
+  const response = await towerClient.patch(`/combinations/${params.id}?`, params.setting);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as CombinationsSettingsResponse;
+};
+
 export interface CombinationsDeleteRequest {
   id: string;
 }
 export interface CombinationsDeleteResponse extends Response {
   result: Combination;
 }
-
-export const CombinationsIndex = async (params: CombinationsIndexRequest) => {
-  const response = await towerClient.get(`/combinations/?page=${params.page}&limit=${params.limit}`);
-  return response.data as CombinationsIndexResponse;
-};
-export const CombinationsCreate = async (params: CombinationsCreateRequest) => {
-  const response = await towerClient.post(`/combinations/?`, params.subject);
-  return response.data as CombinationsCreateResponse;
-};
-export const CombinationsShow = async (params: CombinationsShowRequest) => {
-  const response = await towerClient.get(`/combinations/${params.id}?`);
-  return response.data as CombinationsShowResponse;
-};
-export const CombinationsUpdate = async (params: CombinationsUpdateRequest) => {
-  const response = await towerClient.put(`/combinations/${params.id}?`, params.subject);
-  return response.data as CombinationsUpdateResponse;
-};
-export const CombinationsSettings = async (params: CombinationsSettingsRequest) => {
-  const response = await towerClient.patch(`/combinations/${params.id}?`, params.setting);
-  return response.data as CombinationsSettingsResponse;
-};
 export const CombinationsDelete = async (params: CombinationsDeleteRequest) => {
   const response = await towerClient.delete(`/combinations/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
   return response.data as CombinationsDeleteResponse;
 };

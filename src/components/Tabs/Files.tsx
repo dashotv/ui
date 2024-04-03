@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useCallback } from 'react';
 
+import { DownloadFile } from 'client/tower';
+
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
@@ -11,7 +13,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { ButtonMap, ButtonMapButton, Row } from 'components/Common';
-import { DownloadFile } from 'components/Downloads';
 import { useTorrentWantMutation } from 'query/releases';
 import { Torrent } from 'types/torrents';
 
@@ -34,15 +35,16 @@ export function Files({
     }
     if (torrent) {
       for (let i = 0; i < files.length; i++) {
-        files[i].torrent_file = torrent.Files[files[i].num];
+        const f = files[i];
+        f.torrent_file = torrent.Files[f.num!];
       }
-      const hasTorrentFiles = files.filter(f => f.torrent_file != null);
-      const noTorrentFiles = files.filter(f => f.torrent_file == null);
-      return hasTorrentFiles
-        .sort((a, b) => a.torrent_file!.name.localeCompare(b.torrent_file!.name))
-        .concat(noTorrentFiles.sort((a, b) => a.num - b.num));
+      const hasTorrentFiles = files.filter(f => f.torrent_file != null).sort((a, b) => a.num! - b.num!);
+      const noTorrentFiles = files
+        .filter(f => f.torrent_file == null)
+        .sort((a, b) => a.torrent_file!.name!.localeCompare(b.torrent_file!.name!));
+      return hasTorrentFiles.concat(noTorrentFiles);
     }
-    return files.sort((a, b) => a.num - b.num);
+    return files.sort((a, b) => (a.num || 0) - (b.num || 0));
   }, []);
 
   return (
@@ -87,13 +89,13 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
     {
       Icon: CancelIcon,
       color: 'warning',
-      click: () => clear(num),
+      click: () => clear(num || -1),
       title: 'unselect',
     },
     {
       Icon: PlaylistAddCircleIcon,
       color: medium ? 'secondary' : 'disabled',
-      click: () => open(num, name(torrent_file?.name)),
+      click: () => open(num || -1, name(torrent_file?.name)),
       title: 'select',
     },
     {
@@ -113,7 +115,7 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
         if (!torrent_file || !thash) {
           return;
         }
-        want({ hash: thash, id: torrent_file?.id });
+        want({ hash: thash, id: torrent_file?.id || -1 });
       },
       title: 'priority',
     },

@@ -14,7 +14,7 @@ import IconButton from '@mui/material/IconButton';
 
 import { DownloadStatus } from './types';
 
-export const DownloadGetIcon = (status: DownloadStatus) => {
+export const DownloadGetIcon = (status?: DownloadStatus) => {
   switch (status) {
     case 'searching':
       return SearchIcon;
@@ -39,7 +39,7 @@ export const DownloadGetIcon = (status: DownloadStatus) => {
   }
 };
 
-export const DownloadIcon = ({ status }: { status: DownloadStatus }) => {
+export const DownloadIcon = ({ status }: { status?: DownloadStatus }) => {
   return React.createElement(DownloadGetIcon(status), { fontSize: 'small' });
 };
 

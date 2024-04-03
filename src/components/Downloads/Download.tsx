@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import { DownloadFile, Download as DownloadType, Medium } from 'client/tower';
+
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -9,7 +11,7 @@ import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCirc
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 
 import { ButtonMapButton } from 'components/Common';
-import { MediaTo, Medium } from 'components/Media';
+import { MediaTo } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
 import { Release } from 'components/Releases';
 import { FilesWithSelector, MediumTabs, Nzbgeek, Torch } from 'components/Tabs';
@@ -17,7 +19,7 @@ import { useDownloadingId } from 'hooks/downloading';
 import { useTorrentRemoveMutation } from 'query/releases';
 import { Torrent } from 'types/torrents';
 
-import { DownloadBanner, DownloadFile, DownloadInfo, DownloadType } from '.';
+import { DownloadBanner, DownloadInfo } from '.';
 
 export type DownloadProps = {
   id: string;
@@ -26,7 +28,7 @@ export type DownloadProps = {
   type: string;
   files?: DownloadFile[];
   episodes?: Medium[];
-  selectMedium: (eid: number | null, num: number) => void;
+  selectMedium: (eid: string | null, num: number) => void;
   selectRelease: (selected: Release | NzbgeekType) => void;
   changeSetting: (name: string, value: string | boolean) => void;
   changeInfo: (info: Partial<DownloadType>) => void;
@@ -43,17 +45,8 @@ export function Download({
   changeSetting,
   changeInfo,
 }: DownloadProps) {
-  const {
-    status,
-    thash,
-    release_id,
-    url,
-    multi,
-    auto,
-    force,
-    medium,
-    medium: { cover, background, title, display, updated_at },
-  } = download;
+  const { status, thash, release_id, url, multi, auto, force, medium } = download;
+  const { cover, background, title, display, updated_at } = medium || {};
   const torrentRemove = useTorrentRemoveMutation();
   const { progress, eta, queue, torrent_state } = useDownloadingId(id);
   const [open, setOpen] = useState(false);
@@ -68,6 +61,9 @@ export function Download({
   const remove = useCallback((status: string) => {
     console.log('clicked remove');
     changeSetting('status', status);
+    if (!thash) {
+      return;
+    }
     torrentRemove.mutate(thash, {
       onSuccess: data => {
         if (data.error) {
@@ -81,7 +77,8 @@ export function Download({
     {
       Icon: ArrowCircleLeftIcon,
       color: 'primary',
-      click: () => navigate(MediaTo(medium.id, medium.type, medium.series_id)),
+      click: () =>
+        medium && medium.id && medium.type ? navigate(MediaTo(medium.id, medium.type, medium.series_id)) : undefined,
       title: 'Go to Media',
     },
     {

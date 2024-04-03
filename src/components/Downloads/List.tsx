@@ -1,17 +1,20 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+import { Download as DownloadType } from 'client/tower';
+
 import Grid from '@mui/material/Grid';
 
 import { useDownloading } from 'hooks/downloading';
 
-import { DownloadBanner, DownloadType } from '.';
+import { DownloadBanner } from '.';
 
 export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
   const { get } = useDownloading();
   return (
     <>
       {downloads?.map(({ id, status, multi, medium, updated_at }: DownloadType) => {
+        if (!id) return null;
         const {
           progress,
           eta,

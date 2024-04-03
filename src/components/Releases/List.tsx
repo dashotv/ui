@@ -28,7 +28,7 @@ import { Release, useReleaseSettingMutation } from '.';
 export type ReleasesListProps = {
   data: Release[];
   actions?: (row: Release) => JSX.Element;
-  selected?: { release_id: string; url: string };
+  selected?: { release_id?: string; url?: string };
 };
 export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
   const releaseUpdate = useReleaseSettingMutation();

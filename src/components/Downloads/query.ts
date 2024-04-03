@@ -1,52 +1,55 @@
-import { tower } from 'utils/axios';
+import * as tower from 'client/tower';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { Medium } from 'components/Media';
 import { Setting } from 'types/setting';
 
-import { DownloadSelection, DownloadType } from './types';
+import { DownloadSelection } from './types';
 
 export const getDownloadsActive = async () => {
-  const response = await tower.get('/downloads/');
-  return response.data as DownloadType[];
+  const response = await tower.DownloadsIndex({ page: 1, limit: 0 });
+  return response.result;
 };
 
-export const getDownloadsRecent = async (page: string, medium_id?: string) => {
-  const response = await tower.get(`/downloads/recent?page=${page}&medium_id=${medium_id ? medium_id : ''}`);
-  return response.data;
+export const getDownloadsRecent = async (page: number, medium_id?: string) => {
+  const response = await tower.DownloadsRecent({ page, medium_id: medium_id || '' });
+  return response;
 };
 
 export const getDownload = async (id: string) => {
-  const response = await tower.get(`/downloads/${id}`);
-  return response.data as DownloadType;
+  const response = await tower.DownloadsShow({ id });
+  return response.result;
 };
 
 export const getDownloadMedium = async (id: string) => {
-  const response = await tower.get(`/downloads/${id}/medium`);
-  return response.data as Medium[];
+  const response = await tower.DownloadsMedium({ id });
+  return response.result;
 };
 
 export const getDownloadsLast = async () => {
-  const response = await tower.get('/downloads/last');
-  return response.data.last as number;
+  const response = await tower.DownloadsLast();
+  return response.result;
 };
 
-export const putDownload = async (id: string, download: DownloadType) => {
-  const response = await tower.put(`/downloads/${id}`, download);
-  return response.data;
+export const putDownload = async (id: string, subject: tower.Download) => {
+  const response = await tower.DownloadsUpdate({ id, subject });
+  return response.result;
 };
+
 export const putDownloadSelect = async (id: string, data: DownloadSelection) => {
-  const response = await tower.put(`/downloads/${id}/select`, data);
-  return response.data as DownloadType;
+  const { mediumId: medium_id, num } = data;
+  const response = await tower.DownloadsSelect({ id, medium_id, num });
+  return response;
 };
+
 export const patchDownload = async (id: string, data: Setting) => {
-  const response = await tower.patch(`/downloads/${id}`, data);
-  return response.data as DownloadType;
+  const response = await tower.DownloadsSettings({ id, setting: { name: data.setting, value: data.value } });
+  return response.result;
 };
+
 export const createDownload = async (medium_id: string) => {
-  const response = await tower.post(`/downloads/`, { medium_id });
-  return response.data;
+  const response = await tower.DownloadsCreate({ subject: { medium_id } });
+  return response.result;
 };
 
 export const useDownloadsActiveQuery = () =>
@@ -65,14 +68,15 @@ export const useDownloadsLastQuery = () =>
     retry: false,
   });
 
-export const useDownloadsRecentQuery = page =>
+export const useDownloadsRecentQuery = (page: number) =>
   useQuery({
     queryKey: ['downloads', 'recent', page],
     queryFn: () => getDownloadsRecent(page),
     placeholderData: previousData => previousData,
     retry: false,
   });
-export const useDownloadsRecentMediaQuery = (page: string, medium_id: string) =>
+
+export const useDownloadsRecentMediaQuery = (page: number, medium_id: string) =>
   useQuery({
     queryKey: ['downloads', 'medium', medium_id, page],
     queryFn: () => getDownloadsRecent(page, medium_id),
@@ -99,7 +103,7 @@ export const useDownloadMediumQuery = id =>
 export const useDownloadMutation = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (download: DownloadType) => {
+    mutationFn: (download: tower.Download) => {
       return putDownload(id, download);
     },
     onSuccess: async () => {

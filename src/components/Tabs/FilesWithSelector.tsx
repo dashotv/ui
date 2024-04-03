@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
+import { DownloadFile, Medium } from 'client/tower';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -9,8 +11,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { WrapErrorBoundary } from 'components/Common';
-import { DownloadFile } from 'components/Downloads';
-import { Medium } from 'components/Media/types';
 import { Torrent } from 'types/torrents';
 
 import { Files } from './Files';
@@ -24,7 +24,7 @@ export function FilesWithSelector({
   files?: DownloadFile[];
   episodes?: Medium[];
   torrent?: Torrent;
-  updater: (id: number | null, num: number) => void;
+  updater: (id: string | null, num: number) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [dialogTitle, setDialogTitle] = useState('title');
@@ -99,7 +99,7 @@ export function FilesWithSelector({
     const newTracking = new Map<string, number>();
     for (const f of files) {
       if (f.medium_id !== null && f.medium_id !== '000000000000000000000000') {
-        newTracking.set(f.medium_id, f.num);
+        newTracking.set(f.medium_id!, f.num!);
       }
     }
     setTracking(newTracking);
@@ -136,7 +136,16 @@ export function FilesWithSelector({
                 sx={{ p: '3px', cursor: 'pointer', '&:hover': { backgroundColor: '#343434' } }}
               >
                 <CheckCircleIcon
-                  color={tracking.get(id) === selected ? 'primary' : tracking.has(id) ? 'secondary' : 'action'}
+                  color={
+                    // TODO: hacky as fukc
+                    id
+                      ? tracking.get(id) === selected
+                        ? 'primary'
+                        : tracking.has(id)
+                        ? 'secondary'
+                        : 'action'
+                      : 'disabled'
+                  }
                 />
                 <Typography minWidth="85px" textAlign="right" variant="button" color="secondary">
                   {season_number}x{episode_number}

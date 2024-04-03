@@ -45,6 +45,7 @@ export interface DownloadFile {
   medium_id?: string;
   medium?: Medium;
   num?: number;
+  torrent_file?: TorrentFile;
 }
 export interface Episode {
   id?: string;
@@ -191,6 +192,15 @@ export interface Movie {
   cover?: string;
   background?: string;
 }
+export interface NzbgetPayload {
+  id?: string;
+  name?: string;
+  category?: string;
+  dir?: string;
+  final_dir?: string;
+  file?: string;
+  status?: string;
+}
 export interface Path {
   id?: string;
   type?: string;
@@ -303,6 +313,14 @@ export interface Series {
   seasons?: number[];
   episodes?: Episode[];
   watches?: Watch[];
+}
+export interface TorrentFile {
+  id?: number;
+  is_send?: boolean;
+  name?: string;
+  priority?: number;
+  progress?: number;
+  size?: number;
 }
 export interface User {
   id?: string;

@@ -81,8 +81,8 @@ export default function DownloadsShowPage() {
   );
 
   const selectMedium = useCallback(
-    (eid: number | null, num: number) => {
-      downloadSelection.mutate({ mediumId: eid, num: num });
+    (eid: string | null, num: number) => {
+      downloadSelection.mutate({ mediumId: eid || '', num: num });
     },
     [downloadSelection],
   );
@@ -90,7 +90,7 @@ export default function DownloadsShowPage() {
   return (
     <>
       <Helmet>
-        <title>Series{download ? ` - ${download.medium.display}` : ''}</title>
+        <title>Series{download && download.medium ? ` - ${download.medium.display}` : ''}</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container>
@@ -98,8 +98,8 @@ export default function DownloadsShowPage() {
         {download && (
           <Download
             {...{ id, download, changeSetting, changeInfo, selectRelease, selectMedium }}
-            type={download.medium.type}
-            files={download.download_files}
+            type={download?.medium?.type || 'unknown'}
+            files={download.files || []}
             episodes={media}
             torrent={torrent}
           />

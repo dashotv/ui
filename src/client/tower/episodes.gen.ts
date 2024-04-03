@@ -5,19 +5,57 @@ export interface EpisodesSettingRequest {
   id: string;
 }
 
+export const EpisodesSetting = async (params: EpisodesSettingRequest) => {
+  const response = await towerClient.patch(`/episodes/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
+
 export interface EpisodesUpdateRequest {
   id: string;
 }
 
-export const EpisodesSetting = async (params: EpisodesSettingRequest) => {
-  const response = await towerClient.patch(`/episodes/${params.id}?`);
-  return response.data as Response;
-};
 export const EpisodesUpdate = async (params: EpisodesUpdateRequest) => {
   const response = await towerClient.put(`/episodes/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
   return response.data as Response;
 };
+
 export const EpisodesSettings = async () => {
   const response = await towerClient.post(`/episodes/settings?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
   return response.data as Response;
 };

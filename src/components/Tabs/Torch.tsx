@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { Medium } from 'client/tower';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 import Paper from '@mui/material/Paper';
 
 import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
-import { Medium } from 'components/Media/types';
 import { Release, ReleasesForm, ReleasesList, SearchForm, useReleasesQuery } from 'components/Releases';
 import { useQueryString } from 'hooks/queryString';
 
@@ -13,7 +14,7 @@ const pagesize = 25;
 
 const processSearch = (medium: Medium) => {
   const { kind, search, display, episode_number, absolute_number } = medium;
-  const isAnimeKind = ['anime', 'ecchi', 'donghua'].includes(kind);
+  const isAnimeKind = kind ? ['anime', 'ecchi', 'donghua'].includes(kind) : false;
   if (!search) {
     return { text: display, episode: episode_number };
   }
@@ -27,10 +28,27 @@ const processSearch = (medium: Medium) => {
   return { text, episode: absolute_number - minus };
 };
 
-const formdata = (medium: Medium): SearchForm => {
+const formdata = (medium?: Medium): SearchForm => {
+  if (!medium) {
+    return {
+      text: '',
+      year: '',
+      season: '',
+      episode: '',
+      group: '',
+      author: '',
+      resolution: '',
+      source: '',
+      type: '',
+      exact: false,
+      verified: false,
+      uncensored: false,
+      bluray: false,
+    };
+  }
   const { text, episode } = processSearch(medium);
   const { kind, season_number, search_params } = medium;
-  const isAnimeKind = ['anime', 'ecchi', 'donghua'].includes(kind);
+  const isAnimeKind = kind ? ['anime', 'ecchi', 'donghua'].includes(kind) : false;
 
   return {
     text: text || '',
@@ -42,7 +60,7 @@ const formdata = (medium: Medium): SearchForm => {
     resolution: search_params?.resolution || '',
     source: search_params?.source || '',
     type: search_params?.type || '',
-    exact: search_params?.exact || false,
+    exact: false,
     verified: search_params?.verified || false,
     uncensored: search_params?.uncensored || false,
     bluray: search_params?.bluray || false,
@@ -54,9 +72,9 @@ export function Torch({
   selector,
   selected,
 }: {
-  medium: Medium;
+  medium?: Medium;
   selector: (release: Release) => void;
-  selected?: { release_id: string; url: string };
+  selected?: { release_id?: string; url?: string };
 }) {
   const { queryString } = useQueryString();
   const [initial] = useState(() => formdata(medium));

@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { Medium } from 'client/tower';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 
 import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
-import { Medium } from 'components/Media/types';
 import {
   NzbgeekFormMovie,
   NzbgeekFormTv,
@@ -23,11 +24,11 @@ export const Nzbgeek = ({
   selector,
   selected,
 }: {
-  medium: Medium;
+  medium?: Medium;
   selector: (selected: Release | NzbgeekType) => void;
-  selected?: { release_id: string; url: string };
+  selected?: { release_id?: string; url?: string };
 }) => {
-  switch (medium.type) {
+  switch (medium?.type) {
     case 'Series':
     case 'Episode':
       return <NzbgeekTv {...{ medium, selector, selected }} />;
@@ -39,9 +40,9 @@ export const Nzbgeek = ({
 };
 
 export type NzbgeekTvProps = {
-  medium: Medium;
+  medium?: Medium;
   selector: (selected: Release | NzbgeekType) => void;
-  selected?: { release_id: string; url: string };
+  selected?: { release_id?: string; url?: string };
 };
 export function NzbgeekTv({ medium, selector, selected }: NzbgeekTvProps) {
   const { queryString } = useQueryString();
@@ -101,9 +102,9 @@ export function NzbgeekTv({ medium, selector, selected }: NzbgeekTvProps) {
 }
 
 export type NzbgeekMovieProps = {
-  medium: Medium;
+  medium?: Medium;
   selector: (selected: Release | NzbgeekType) => void;
-  selected?: { release_id: string; url: string };
+  selected?: { release_id?: string; url?: string };
 };
 export function NzbgeekMovie({ medium, selector, selected }: NzbgeekMovieProps) {
   const { queryString } = useQueryString();

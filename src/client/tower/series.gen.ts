@@ -9,18 +9,69 @@ export interface SeriesIndexResponse extends Response {
   result: Series[];
   total: number;
 }
+export const SeriesIndex = async (params: SeriesIndexRequest) => {
+  const response = await towerClient.get(`/series/?page=${params.page}&limit=${params.limit}`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as SeriesIndexResponse;
+};
+
 export interface SeriesCreateRequest {
   subject: Series;
 }
 export interface SeriesCreateResponse extends Response {
   result: Series;
 }
+export const SeriesCreate = async (params: SeriesCreateRequest) => {
+  const response = await towerClient.post(`/series/?`, params.subject);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as SeriesCreateResponse;
+};
+
 export interface SeriesShowRequest {
   id: string;
 }
 export interface SeriesShowResponse extends Response {
   result: Series;
 }
+export const SeriesShow = async (params: SeriesShowRequest) => {
+  const response = await towerClient.get(`/series/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as SeriesShowResponse;
+};
+
 export interface SeriesUpdateRequest {
   id: string;
   subject: Series;
@@ -28,6 +79,23 @@ export interface SeriesUpdateRequest {
 export interface SeriesUpdateResponse extends Response {
   result: Series;
 }
+export const SeriesUpdate = async (params: SeriesUpdateRequest) => {
+  const response = await towerClient.put(`/series/${params.id}?`, params.subject);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as SeriesUpdateResponse;
+};
+
 export interface SeriesSettingsRequest {
   id: string;
   setting: Setting;
@@ -35,107 +103,233 @@ export interface SeriesSettingsRequest {
 export interface SeriesSettingsResponse extends Response {
   result: Series;
 }
+export const SeriesSettings = async (params: SeriesSettingsRequest) => {
+  const response = await towerClient.patch(`/series/${params.id}?`, params.setting);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as SeriesSettingsResponse;
+};
+
 export interface SeriesDeleteRequest {
   id: string;
 }
 export interface SeriesDeleteResponse extends Response {
   result: Series;
 }
+export const SeriesDelete = async (params: SeriesDeleteRequest) => {
+  const response = await towerClient.delete(`/series/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as SeriesDeleteResponse;
+};
+
 export interface SeriesCurrentSeasonRequest {
   id: string;
 }
+
+export const SeriesCurrentSeason = async (params: SeriesCurrentSeasonRequest) => {
+  const response = await towerClient.get(`/series/${params.id}/currentseason?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
 
 export interface SeriesPathsRequest {
   id: string;
 }
 
+export const SeriesPaths = async (params: SeriesPathsRequest) => {
+  const response = await towerClient.get(`/series/${params.id}/paths?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
+
 export interface SeriesRefreshRequest {
   id: string;
 }
 
+export const SeriesRefresh = async (params: SeriesRefreshRequest) => {
+  const response = await towerClient.put(`/series/${params.id}/refresh?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
+
 export interface SeriesSeasonEpisodesAllRequest {
   id: string;
 }
+
+export const SeriesSeasonEpisodesAll = async (params: SeriesSeasonEpisodesAllRequest) => {
+  const response = await towerClient.get(`/series/${params.id}/seasons/all?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
 
 export interface SeriesSeasonEpisodesRequest {
   id: string;
   season: string;
 }
 
+export const SeriesSeasonEpisodes = async (params: SeriesSeasonEpisodesRequest) => {
+  const response = await towerClient.get(`/series/${params.id}/seasons/${params.season}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
+
 export interface SeriesWatchesRequest {
   id: string;
 }
+
+export const SeriesWatches = async (params: SeriesWatchesRequest) => {
+  const response = await towerClient.get(`/series/${params.id}/watches?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
 
 export interface SeriesCoversRequest {
   id: string;
 }
 
+export const SeriesCovers = async (params: SeriesCoversRequest) => {
+  const response = await towerClient.get(`/series/${params.id}/covers?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
+
 export interface SeriesBackgroundsRequest {
   id: string;
 }
+
+export const SeriesBackgrounds = async (params: SeriesBackgroundsRequest) => {
+  const response = await towerClient.get(`/series/${params.id}/backgrounds?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
 
 export interface SeriesJobsRequest {
   id: string;
   name: string;
 }
 
-export const SeriesIndex = async (params: SeriesIndexRequest) => {
-  const response = await towerClient.get(`/series/?page=${params.page}&limit=${params.limit}`);
-  return response.data as SeriesIndexResponse;
-};
-export const SeriesCreate = async (params: SeriesCreateRequest) => {
-  const response = await towerClient.post(`/series/?`, params.subject);
-  return response.data as SeriesCreateResponse;
-};
-export const SeriesShow = async (params: SeriesShowRequest) => {
-  const response = await towerClient.get(`/series/${params.id}?`);
-  return response.data as SeriesShowResponse;
-};
-export const SeriesUpdate = async (params: SeriesUpdateRequest) => {
-  const response = await towerClient.put(`/series/${params.id}?`, params.subject);
-  return response.data as SeriesUpdateResponse;
-};
-export const SeriesSettings = async (params: SeriesSettingsRequest) => {
-  const response = await towerClient.patch(`/series/${params.id}?`, params.setting);
-  return response.data as SeriesSettingsResponse;
-};
-export const SeriesDelete = async (params: SeriesDeleteRequest) => {
-  const response = await towerClient.delete(`/series/${params.id}?`);
-  return response.data as SeriesDeleteResponse;
-};
-export const SeriesCurrentSeason = async (params: SeriesCurrentSeasonRequest) => {
-  const response = await towerClient.get(`/series/${params.id}/currentseason?`);
-  return response.data as Response;
-};
-export const SeriesPaths = async (params: SeriesPathsRequest) => {
-  const response = await towerClient.get(`/series/${params.id}/paths?`);
-  return response.data as Response;
-};
-export const SeriesRefresh = async (params: SeriesRefreshRequest) => {
-  const response = await towerClient.put(`/series/${params.id}/refresh?`);
-  return response.data as Response;
-};
-export const SeriesSeasonEpisodesAll = async (params: SeriesSeasonEpisodesAllRequest) => {
-  const response = await towerClient.get(`/series/${params.id}/seasons/all?`);
-  return response.data as Response;
-};
-export const SeriesSeasonEpisodes = async (params: SeriesSeasonEpisodesRequest) => {
-  const response = await towerClient.get(`/series/${params.id}/seasons/${params.season}?`);
-  return response.data as Response;
-};
-export const SeriesWatches = async (params: SeriesWatchesRequest) => {
-  const response = await towerClient.get(`/series/${params.id}/watches?`);
-  return response.data as Response;
-};
-export const SeriesCovers = async (params: SeriesCoversRequest) => {
-  const response = await towerClient.get(`/series/${params.id}/covers?`);
-  return response.data as Response;
-};
-export const SeriesBackgrounds = async (params: SeriesBackgroundsRequest) => {
-  const response = await towerClient.get(`/series/${params.id}/backgrounds?`);
-  return response.data as Response;
-};
 export const SeriesJobs = async (params: SeriesJobsRequest) => {
   const response = await towerClient.post(`/series/${params.id}/jobs?name=${params.name}`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
   return response.data as Response;
 };

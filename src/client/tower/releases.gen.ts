@@ -9,18 +9,69 @@ export interface ReleasesIndexResponse extends Response {
   result: Release[];
   total: number;
 }
+export const ReleasesIndex = async (params: ReleasesIndexRequest) => {
+  const response = await towerClient.get(`/releases/?page=${params.page}&limit=${params.limit}`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as ReleasesIndexResponse;
+};
+
 export interface ReleasesCreateRequest {
   subject: Release;
 }
 export interface ReleasesCreateResponse extends Response {
   result: Release;
 }
+export const ReleasesCreate = async (params: ReleasesCreateRequest) => {
+  const response = await towerClient.post(`/releases/?`, params.subject);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as ReleasesCreateResponse;
+};
+
 export interface ReleasesShowRequest {
   id: string;
 }
 export interface ReleasesShowResponse extends Response {
   result: Release;
 }
+export const ReleasesShow = async (params: ReleasesShowRequest) => {
+  const response = await towerClient.get(`/releases/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as ReleasesShowResponse;
+};
+
 export interface ReleasesUpdateRequest {
   id: string;
   subject: Release;
@@ -28,6 +79,23 @@ export interface ReleasesUpdateRequest {
 export interface ReleasesUpdateResponse extends Response {
   result: Release;
 }
+export const ReleasesUpdate = async (params: ReleasesUpdateRequest) => {
+  const response = await towerClient.put(`/releases/${params.id}?`, params.subject);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as ReleasesUpdateResponse;
+};
+
 export interface ReleasesSettingsRequest {
   id: string;
   setting: Setting;
@@ -35,41 +103,63 @@ export interface ReleasesSettingsRequest {
 export interface ReleasesSettingsResponse extends Response {
   result: Release;
 }
+export const ReleasesSettings = async (params: ReleasesSettingsRequest) => {
+  const response = await towerClient.patch(`/releases/${params.id}?`, params.setting);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as ReleasesSettingsResponse;
+};
+
 export interface ReleasesDeleteRequest {
   id: string;
 }
 export interface ReleasesDeleteResponse extends Response {
   result: Release;
 }
+export const ReleasesDelete = async (params: ReleasesDeleteRequest) => {
+  const response = await towerClient.delete(`/releases/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as ReleasesDeleteResponse;
+};
+
 export interface ReleasesPopularRequest {
   interval: string;
 }
 
-export const ReleasesIndex = async (params: ReleasesIndexRequest) => {
-  const response = await towerClient.get(`/releases/?page=${params.page}&limit=${params.limit}`);
-  return response.data as ReleasesIndexResponse;
-};
-export const ReleasesCreate = async (params: ReleasesCreateRequest) => {
-  const response = await towerClient.post(`/releases/?`, params.subject);
-  return response.data as ReleasesCreateResponse;
-};
-export const ReleasesShow = async (params: ReleasesShowRequest) => {
-  const response = await towerClient.get(`/releases/${params.id}?`);
-  return response.data as ReleasesShowResponse;
-};
-export const ReleasesUpdate = async (params: ReleasesUpdateRequest) => {
-  const response = await towerClient.put(`/releases/${params.id}?`, params.subject);
-  return response.data as ReleasesUpdateResponse;
-};
-export const ReleasesSettings = async (params: ReleasesSettingsRequest) => {
-  const response = await towerClient.patch(`/releases/${params.id}?`, params.setting);
-  return response.data as ReleasesSettingsResponse;
-};
-export const ReleasesDelete = async (params: ReleasesDeleteRequest) => {
-  const response = await towerClient.delete(`/releases/${params.id}?`);
-  return response.data as ReleasesDeleteResponse;
-};
 export const ReleasesPopular = async (params: ReleasesPopularRequest) => {
   const response = await towerClient.get(`/releases/popular/${params.interval}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
   return response.data as Response;
 };

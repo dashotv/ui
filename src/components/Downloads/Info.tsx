@@ -1,6 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import { Download as DownloadType } from 'client/tower';
+
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -31,19 +33,20 @@ const statuses = [
   { label: <RemoveCircleIcon fontSize="small" />, value: 'deleted' },
   { label: <PendingIcon fontSize="small" />, value: 'hold' },
 ];
-export type DownloadInfoValues = {
-  thash: string;
-  status: string;
-  release_id: string;
-  url: string;
-};
+
+export interface DownloadInfoValues {
+  thash?: string;
+  status?: string;
+  release_id?: string;
+  url?: string;
+}
 export type DownloadInfoProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
-  thash: string;
-  status: string;
-  release_id: string;
-  url: string;
+  thash?: string;
+  status?: string;
+  release_id?: string;
+  url?: string;
   changer: (data: DownloadInfoValues) => void;
 };
 export const DownloadInfo = ({ open, setOpen, release_id, url, status, thash, changer }: DownloadInfoProps) => {

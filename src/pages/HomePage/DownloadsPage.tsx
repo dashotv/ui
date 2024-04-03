@@ -26,12 +26,12 @@ export default function DownloadsPage() {
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container>
-        <Pagination count={Math.ceil(recent?.data?.count ? recent.data.count / pagesize : 0)} onChange={handleChange} />
+        <Pagination count={Math.ceil(recent?.data?.total ? recent.data.total / pagesize : 0)} onChange={handleChange} />
       </Container>
       <Container>
         <Grid container spacing={1}>
           {recent.isFetching && <LoadingIndicator />}
-          {recent.data && <DownloadList downloads={recent.data?.results} />}
+          {recent.data && <DownloadList downloads={recent?.data?.result} />}
         </Grid>
       </Container>
     </>

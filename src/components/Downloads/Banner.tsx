@@ -11,8 +11,8 @@ import { Banner, ButtonMapButton, Chrono } from 'components/Common';
 import { DownloadIconButton, DownloadStatus } from 'components/Downloads';
 
 export type DownloadBannerProps = {
-  id: string;
-  title: string;
+  id?: string;
+  title?: string;
   extra?: string;
   subtitle?: string;
   cover?: string;
@@ -29,7 +29,7 @@ export type DownloadBannerProps = {
   multi?: boolean;
   files?: number;
   total?: number;
-  updated_at: string;
+  updated_at?: string;
 };
 export const DownloadBanner = ({
   id,
@@ -88,7 +88,7 @@ export const DownloadBanner = ({
   }
 
   const images: () => string[] = () => {
-    const updated = Date.parse(updated_at).valueOf() / 1000;
+    const updated = updated_at ? Date.parse(updated_at).valueOf() / 1000 : Date.now() / 1000;
     const out: string[] = [];
     if (background) {
       out.push(background + '?updated=' + updated);
@@ -99,6 +99,9 @@ export const DownloadBanner = ({
     return out;
   };
 
+  if (!id || !title) {
+    return null;
+  }
   return (
     <Banner
       id={id}

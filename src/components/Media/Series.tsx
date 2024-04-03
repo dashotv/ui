@@ -86,10 +86,6 @@ export function Series({
       click: () => {
         download.mutate(id, {
           onSuccess: data => {
-            if (data.error) {
-              console.error('error: ', data.error);
-              return;
-            }
             navigate(`/downloads/${data.id}`);
           },
         });

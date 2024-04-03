@@ -5,8 +5,19 @@ export interface UsersIndexResponse extends Response {
   result: User[];
   total: number;
 }
-
 export const UsersIndex = async () => {
   const response = await towerClient.get(`/users/?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
   return response.data as UsersIndexResponse;
 };

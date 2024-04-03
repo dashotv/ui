@@ -9,18 +9,69 @@ export interface MoviesIndexResponse extends Response {
   result: Movie[];
   total: number;
 }
+export const MoviesIndex = async (params: MoviesIndexRequest) => {
+  const response = await towerClient.get(`/movies/?page=${params.page}&limit=${params.limit}`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as MoviesIndexResponse;
+};
+
 export interface MoviesCreateRequest {
   subject: Movie;
 }
 export interface MoviesCreateResponse extends Response {
   result: Movie;
 }
+export const MoviesCreate = async (params: MoviesCreateRequest) => {
+  const response = await towerClient.post(`/movies/?`, params.subject);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as MoviesCreateResponse;
+};
+
 export interface MoviesShowRequest {
   id: string;
 }
 export interface MoviesShowResponse extends Response {
   result: Movie;
 }
+export const MoviesShow = async (params: MoviesShowRequest) => {
+  const response = await towerClient.get(`/movies/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as MoviesShowResponse;
+};
+
 export interface MoviesUpdateRequest {
   id: string;
   subject: Movie;
@@ -28,6 +79,23 @@ export interface MoviesUpdateRequest {
 export interface MoviesUpdateResponse extends Response {
   result: Movie;
 }
+export const MoviesUpdate = async (params: MoviesUpdateRequest) => {
+  const response = await towerClient.put(`/movies/${params.id}?`, params.subject);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as MoviesUpdateResponse;
+};
+
 export interface MoviesSettingsRequest {
   id: string;
   setting: Setting;
@@ -35,49 +103,84 @@ export interface MoviesSettingsRequest {
 export interface MoviesSettingsResponse extends Response {
   result: Movie;
 }
+export const MoviesSettings = async (params: MoviesSettingsRequest) => {
+  const response = await towerClient.patch(`/movies/${params.id}?`, params.setting);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as MoviesSettingsResponse;
+};
+
 export interface MoviesDeleteRequest {
   id: string;
 }
 export interface MoviesDeleteResponse extends Response {
   result: Movie;
 }
+export const MoviesDelete = async (params: MoviesDeleteRequest) => {
+  const response = await towerClient.delete(`/movies/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as MoviesDeleteResponse;
+};
+
 export interface MoviesRefreshRequest {
   id: string;
 }
+
+export const MoviesRefresh = async (params: MoviesRefreshRequest) => {
+  const response = await towerClient.put(`/movies/${params.id}/refresh?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
 
 export interface MoviesPathsRequest {
   id: string;
 }
 
-export const MoviesIndex = async (params: MoviesIndexRequest) => {
-  const response = await towerClient.get(`/movies/?page=${params.page}&limit=${params.limit}`);
-  return response.data as MoviesIndexResponse;
-};
-export const MoviesCreate = async (params: MoviesCreateRequest) => {
-  const response = await towerClient.post(`/movies/?`, params.subject);
-  return response.data as MoviesCreateResponse;
-};
-export const MoviesShow = async (params: MoviesShowRequest) => {
-  const response = await towerClient.get(`/movies/${params.id}?`);
-  return response.data as MoviesShowResponse;
-};
-export const MoviesUpdate = async (params: MoviesUpdateRequest) => {
-  const response = await towerClient.put(`/movies/${params.id}?`, params.subject);
-  return response.data as MoviesUpdateResponse;
-};
-export const MoviesSettings = async (params: MoviesSettingsRequest) => {
-  const response = await towerClient.patch(`/movies/${params.id}?`, params.setting);
-  return response.data as MoviesSettingsResponse;
-};
-export const MoviesDelete = async (params: MoviesDeleteRequest) => {
-  const response = await towerClient.delete(`/movies/${params.id}?`);
-  return response.data as MoviesDeleteResponse;
-};
-export const MoviesRefresh = async (params: MoviesRefreshRequest) => {
-  const response = await towerClient.put(`/movies/${params.id}/refresh?`);
-  return response.data as Response;
-};
 export const MoviesPaths = async (params: MoviesPathsRequest) => {
   const response = await towerClient.get(`/movies/${params.id}/paths?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
   return response.data as Response;
 };

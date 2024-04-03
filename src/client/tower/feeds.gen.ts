@@ -9,18 +9,69 @@ export interface FeedsIndexResponse extends Response {
   result: Feed[];
   total: number;
 }
+export const FeedsIndex = async (params: FeedsIndexRequest) => {
+  const response = await towerClient.get(`/feeds/?page=${params.page}&limit=${params.limit}`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as FeedsIndexResponse;
+};
+
 export interface FeedsCreateRequest {
   subject: Feed;
 }
 export interface FeedsCreateResponse extends Response {
   result: Feed;
 }
+export const FeedsCreate = async (params: FeedsCreateRequest) => {
+  const response = await towerClient.post(`/feeds/?`, params.subject);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as FeedsCreateResponse;
+};
+
 export interface FeedsShowRequest {
   id: string;
 }
 export interface FeedsShowResponse extends Response {
   result: Feed;
 }
+export const FeedsShow = async (params: FeedsShowRequest) => {
+  const response = await towerClient.get(`/feeds/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as FeedsShowResponse;
+};
+
 export interface FeedsUpdateRequest {
   id: string;
   subject: Feed;
@@ -28,6 +79,23 @@ export interface FeedsUpdateRequest {
 export interface FeedsUpdateResponse extends Response {
   result: Feed;
 }
+export const FeedsUpdate = async (params: FeedsUpdateRequest) => {
+  const response = await towerClient.put(`/feeds/${params.id}?`, params.subject);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as FeedsUpdateResponse;
+};
+
 export interface FeedsSettingsRequest {
   id: string;
   setting: Setting;
@@ -35,34 +103,42 @@ export interface FeedsSettingsRequest {
 export interface FeedsSettingsResponse extends Response {
   result: Feed;
 }
+export const FeedsSettings = async (params: FeedsSettingsRequest) => {
+  const response = await towerClient.patch(`/feeds/${params.id}?`, params.setting);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as FeedsSettingsResponse;
+};
+
 export interface FeedsDeleteRequest {
   id: string;
 }
 export interface FeedsDeleteResponse extends Response {
   result: Feed;
 }
-
-export const FeedsIndex = async (params: FeedsIndexRequest) => {
-  const response = await towerClient.get(`/feeds/?page=${params.page}&limit=${params.limit}`);
-  return response.data as FeedsIndexResponse;
-};
-export const FeedsCreate = async (params: FeedsCreateRequest) => {
-  const response = await towerClient.post(`/feeds/?`, params.subject);
-  return response.data as FeedsCreateResponse;
-};
-export const FeedsShow = async (params: FeedsShowRequest) => {
-  const response = await towerClient.get(`/feeds/${params.id}?`);
-  return response.data as FeedsShowResponse;
-};
-export const FeedsUpdate = async (params: FeedsUpdateRequest) => {
-  const response = await towerClient.put(`/feeds/${params.id}?`, params.subject);
-  return response.data as FeedsUpdateResponse;
-};
-export const FeedsSettings = async (params: FeedsSettingsRequest) => {
-  const response = await towerClient.patch(`/feeds/${params.id}?`, params.setting);
-  return response.data as FeedsSettingsResponse;
-};
 export const FeedsDelete = async (params: FeedsDeleteRequest) => {
   const response = await towerClient.delete(`/feeds/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.Message) {
+      throw new Error(response.data.Message);
+    }
+    throw new Error('unknown error');
+  }
+
   return response.data as FeedsDeleteResponse;
 };

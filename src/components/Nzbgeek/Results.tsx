@@ -12,7 +12,7 @@ import { Nzbgeek as NzbgeekType } from './types';
 export type NzbgeekResultsProps = {
   data: NzbgeekType[];
   actions: (row: NzbgeekType) => React.ReactNode;
-  selected?: { release_id: string; url: string };
+  selected?: { release_id?: string; url?: string };
 };
 export function NzbgeekResults({ data, actions, selected }: NzbgeekResultsProps) {
   return (
@@ -25,7 +25,7 @@ export function NzbgeekResults({ data, actions, selected }: NzbgeekResultsProps)
 export type NzbgeekResultsRowProps = {
   row: NzbgeekType;
   actions: (row: NzbgeekType) => React.ReactNode;
-  selected?: { release_id: string; url: string };
+  selected?: { release_id?: string; url?: string };
 };
 export function NzbgeekResultsRow({
   row,
