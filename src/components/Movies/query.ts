@@ -12,7 +12,7 @@ export const createMovie = async (option: Option) => {
     source: option.Source,
     source_id: option.ID,
     description: option.Description,
-    release_date: option.Date,
+    release_date: new Date(option.Date).toISOString(),
   };
   const response = await tower.MoviesCreate({ subject });
   return response;
