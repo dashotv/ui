@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { Movie as MovieType } from 'client/tower';
+
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
@@ -11,8 +13,6 @@ import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import { ButtonMapButton } from 'components/Common';
 import { useDownloadCreateMutation } from 'components/Downloads';
 import { MediumBanner } from 'components/Media';
-
-import { MovieType } from './types';
 
 export type MovieBannerProps = {
   id: string;

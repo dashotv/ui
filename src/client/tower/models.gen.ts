@@ -23,6 +23,25 @@ export interface Combination {
   name?: string;
   collections?: string[];
 }
+export interface CombinationChild {
+  rating_key?: string;
+  key?: string;
+  guid?: string;
+  type?: string;
+  title?: string;
+  library_id?: number;
+  library_title?: string;
+  library_key?: string;
+  summary?: string;
+  thumb?: string;
+  total?: number;
+  viewed?: number;
+  link?: string;
+  next?: string;
+  last_viewed_at?: number;
+  added_at?: number;
+  updated_at?: number;
+}
 export interface Download {
   id?: string;
   created_at?: string;
@@ -224,6 +243,17 @@ export interface Pin {
   product?: string;
   identifier?: string;
 }
+export interface Popular {
+  name?: string;
+  year?: number;
+  type?: string;
+  count?: number;
+}
+export interface PopularResponse {
+  tv?: Popular[];
+  anime?: Popular[];
+  movies?: Popular[];
+}
 export interface Release {
   id?: string;
   created_at?: string;
@@ -242,6 +272,7 @@ export interface Release {
   season?: number;
   episode?: number;
   volume?: number;
+  year?: number;
   checksum?: string;
   group?: string;
   author?: string;

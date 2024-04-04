@@ -1,10 +1,11 @@
-import { scry, tower } from 'utils/axios';
+import * as tower from 'client/tower';
+import { scry } from 'utils/axios';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Setting, SettingsArgs } from 'types/setting';
 
-import { Feed, PopularResponse, Release, ReleasesResponse } from './types';
+import { Feed, PopularResponse, ReleasesResponse } from './types';
 
 export const getReleasesPage = async (page, pagesize, qs) => {
   const start = (page - 1) * pagesize;
@@ -14,48 +15,48 @@ export const getReleasesPage = async (page, pagesize, qs) => {
 };
 
 export const getRelease = async id => {
-  const response = await tower.get(`/releases/${id}`);
-  return response.data;
+  const response = await tower.ReleasesShow({ id });
+  return response;
 };
 
-export const putRelease = async (id: string, release: Release) => {
-  const response = await tower.put(`/releases/${id}`, release);
-  return response.data;
+export const putRelease = async (id: string, subject: tower.Release) => {
+  const response = await tower.ReleasesUpdate({ id, subject });
+  return response;
 };
 
-export const patchRelease = async (id: string, setting: Setting) => {
-  const response = await tower.patch(`/releases/${id}`, setting);
-  return response.data;
+export const patchRelease = async (id: string, setting: tower.Setting) => {
+  const response = await tower.ReleasesSettings({ id, setting });
+  return response;
 };
 
 export const getPopular = async (interval: string) => {
-  const response = await tower.get(`/releases/popular/${interval}`);
-  return response.data as PopularResponse;
+  const response = await tower.ReleasesPopular({ interval });
+  return response;
 };
 
-export const getFeedsAll = async () => {
-  const response = await tower.get('/feeds/');
-  return response.data;
+export const getFeedsAll = async (page = 1, limit = 25) => {
+  const response = await tower.FeedsIndex({ page, limit });
+  return response;
 };
 
-export const getFeed = async id => {
-  const response = await tower.get(`/feeds/${id}`);
-  return response.data;
+export const getFeed = async (id: string) => {
+  const response = await tower.FeedsShow({ id });
+  return response;
 };
 
-export const postFeed = async (feed: Feed) => {
-  const response = await tower.post(`/feeds/`, feed);
-  return response.data;
+export const postFeed = async (subject: tower.Feed) => {
+  const response = await tower.FeedsCreate({ subject });
+  return response;
 };
 
-export const putFeed = async (id: string, feed: Feed) => {
-  const response = await tower.put(`/feeds/${id}`, feed);
-  return response.data;
+export const putFeed = async (id: string, subject: tower.Feed) => {
+  const response = await tower.FeedsUpdate({ id, subject });
+  return response;
 };
 
-export const patchFeed = async (id: string, setting: Setting) => {
-  const response = await tower.patch(`/feeds/${id}`, setting);
-  return response.data;
+export const patchFeed = async (id: string, setting: tower.Setting) => {
+  const response = await tower.FeedsSettings({ id, setting });
+  return response;
 };
 
 export const useReleasesQuery = (start, pagesize, queryString) =>
@@ -75,7 +76,7 @@ export const useReleaseQuery = id =>
 export const useReleaseMutation = id => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (release: Release) => putRelease(id, release),
+    mutationFn: (release: tower.Release) => putRelease(id, release),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['releases', id] });
     },
@@ -85,7 +86,7 @@ export const useReleaseMutation = id => {
 export const useReleaseSettingMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (args: SettingsArgs) => patchRelease(args.id, args.setting),
+    mutationFn: (args: { id: string; setting: tower.Setting }) => patchRelease(args.id, args.setting),
     onSuccess: async (data, args) => {
       await queryClient.invalidateQueries({ queryKey: ['releases', args.id] });
     },
@@ -117,7 +118,12 @@ export const useFeedQuery = id =>
 export const useFeedMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (feed: Feed) => putFeed(feed.id, feed),
+    mutationFn: (feed: tower.Feed) => {
+      if (!feed.id) {
+        throw new Error('Feed id is required');
+      }
+      return putFeed(feed.id, feed);
+    },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['feeds', 'all'] });
     },
@@ -127,7 +133,7 @@ export const useFeedMutation = () => {
 export const useFeedCreateMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (feed: Feed) => postFeed(feed),
+    mutationFn: (feed: tower.Feed) => postFeed(feed),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['feeds', 'all'] });
     },
@@ -137,7 +143,7 @@ export const useFeedCreateMutation = () => {
 export const useFeedSettingMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (args: SettingsArgs) => patchFeed(args.id, args.setting),
+    mutationFn: (args: { id: string; setting: tower.Setting }) => patchFeed(args.id, args.setting),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['feeds', 'all'] });
     },

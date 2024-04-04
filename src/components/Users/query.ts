@@ -1,12 +1,10 @@
-import { tower } from 'utils/axios';
+import * as tower from 'client/tower';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { User } from './types';
-
 export const getUsers = async () => {
-  const response = await tower.get('/users/');
-  return response.data as User[];
+  const response = await tower.UsersIndex();
+  return response;
 };
 
 export const useUsersQuery = () =>

@@ -35,7 +35,7 @@ export const PlexChooser = ({ setPlayer }: { setPlayer: (v: PlexClient | undefin
               <ListItemText primary="None" />
             </ListItemButton>
           </ListItem>
-          {players?.map(c => (
+          {players?.result.map(c => (
             <ListItem disableGutters key={c.clientIdentifier}>
               <ListItemButton onClick={() => handleChoose(c)}>
                 <ListItemText primary={c.name} />

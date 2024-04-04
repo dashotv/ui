@@ -1,25 +1,23 @@
-import { tower } from 'utils/axios';
+import * as tower from 'client/tower';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { PlexCollectionChild } from 'components/Plex';
 
-import { Combination } from './types';
-
 export const getCombinations = async () => {
-  const response = await tower.get('/combinations/');
-  return response.data as Combination[];
+  const response = await tower.CombinationsIndex({ page: 1, limit: 0 });
+  return response;
 };
 
 export const getCombination = async (name: string) => {
-  const response = await tower.get(`/combinations/${name}`);
-  return response.data as PlexCollectionChild[];
+  const response = await tower.CombinationsShow({ name });
+  return response;
 };
 
 export const postCombination = async (v: { name: string; collections: string[] }) => {
-  const response = await tower.post('/combinations/', v);
-  return response.data;
+  const response = await tower.CombinationsCreate({ subject: v });
+  return response;
 };
 
 export const useCombinationsQuery = () =>

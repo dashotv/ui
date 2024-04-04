@@ -1,41 +1,51 @@
-import { tower } from 'utils/axios';
+import * as tower from 'client/tower';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Medium, Option } from 'components/Media';
 import { Setting } from 'types/setting';
 
-export const createMovie = async (r: Option) => {
-  const response = await tower.post(`/movies/`, r);
-  return response.data;
+export const createMovie = async (option: Option) => {
+  const subject: tower.Movie = {
+    title: option.Title,
+    kind: option.Kind,
+    source: option.Source,
+    source_id: option.ID,
+    description: option.Description,
+    release_date: option.Date,
+  };
+  const response = await tower.MoviesCreate({ subject });
+  return response;
 };
 
 export const getMoviesAll = async (page: number, filters) => {
-  const qs = Object.keys(filters)
-    .map(key => `${key}=${filters[key]}`)
-    .join('&');
-  const response = await tower.get(`/movies/?page=${page}&${qs}`);
-  return response.data;
+  const kind = filters.kind || '';
+  const source = filters.source || '';
+  const completed = filters.completed || false;
+  const downloaded = filters.downloaded || false;
+  const broken = filters.broken || false;
+  const response = await tower.MoviesIndex({ page, limit: 25, kind, source, downloaded, completed, broken });
+  return response;
 };
 
 export const getMovie = async id => {
-  const response = await tower.get(`/movies/${id}`);
-  return response.data;
+  const response = await tower.MoviesShow({ id });
+  return response;
 };
 
-export const putMovie = async (id: string, data: Medium) => {
-  const response = await tower.put(`/movies/${id}`, data);
-  return response.data;
+export const putMovie = async (id: string, subject: tower.Movie) => {
+  const response = await tower.MoviesUpdate({ id, subject });
+  return response;
 };
 
 export const putMovieRefresh = async (id: string) => {
-  const response = await tower.put(`/movies/${id}/refresh`);
-  return response.data;
+  const response = await tower.MoviesRefresh({ id });
+  return response;
 };
 
-export const patchMovie = async (id: string, setting: Setting) => {
-  const response = await tower.patch(`/movies/${id}`, setting);
-  return response.data;
+export const patchMovie = async (id: string, setting: tower.Setting) => {
+  const response = await tower.MoviesSettings({ id, setting });
+  return response;
 };
 
 export const useMoviesAllQuery = (page: number, filters) =>
@@ -57,7 +67,7 @@ export const useMovieQuery = id =>
 export const useMovieSettingMutation = id => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (setting: Setting) => patchMovie(id, setting),
+    mutationFn: (setting: tower.Setting) => patchMovie(id, setting),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['movies', id] });
     },
@@ -77,7 +87,7 @@ export const useMovieCreateMutation = () => {
 export const useMovieUpdateMutation = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: Medium) => putMovie(id, data),
+    mutationFn: (data: tower.Movie) => putMovie(id, data),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['movies', id] });
     },

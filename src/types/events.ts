@@ -1,5 +1,4 @@
 import { DownloadType } from 'components/Downloads';
-import { Job } from 'components/Jobs';
 import { Log } from 'components/Logs';
 import { Episode, SeriesType } from 'components/Media';
 import { MovieType } from 'components/Movies';
@@ -30,9 +29,6 @@ export interface EventMovie extends EventBase {
 
 export interface EventLog extends EventBase {
   log: Log;
-}
-export interface EventJob extends EventBase {
-  job: Job;
 }
 export interface EventStats {
   [key: string]: EventStatsQueue;

@@ -13,8 +13,8 @@ export const UsersIndex = async () => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }

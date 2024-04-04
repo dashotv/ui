@@ -52,7 +52,7 @@ export default function CollectionsPage() {
               <Typography variant="h6" color="primary">
                 Collections
               </Typography>
-              <CreateDialog {...{ create }} libraries={libraries.data} />
+              <CreateDialog {...{ create }} libraries={libraries?.data?.result} />
             </Stack>
           </Grid>
           <Grid item xs={12} md={6}></Grid>

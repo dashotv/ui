@@ -4,6 +4,8 @@ import { SiUtorrent } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate-inside';
 
+import { Release } from 'client/tower';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import SportsBarIcon from '@mui/icons-material/SportsBar';
@@ -23,7 +25,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { Chrono, Group, Resolution, Row } from 'components/Common';
 
-import { Release, useReleaseSettingMutation } from '.';
+import { useReleaseSettingMutation } from '.';
 
 export type ReleasesListProps = {
   data: Release[];
@@ -37,7 +39,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
 
   const toggleVerified = row => {
     releaseUpdate.mutate(
-      { id: row.id, setting: { setting: 'verified', value: !row.verified } },
+      { id: row.id, setting: { name: 'verified', value: !row.verified } },
       {
         onSuccess: () => {
           row.verified = !row.verified;
@@ -116,7 +118,7 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
                 sx={{ pr: 1, '& a': { color: 'primary.main' } }}
               >
                 <Link to="#" onClick={() => view(row)} title={row.raw}>
-                  <Truncate text={row.display || row.name || ''} ellipsis=" ... " />
+                  <ReleaseTitle release={row} />
                 </Link>
               </Typography>
               <Stack
@@ -177,6 +179,27 @@ export function ReleasesList({ data, actions, selected }: ReleasesListProps) {
   );
 }
 
+export const ReleaseTitle = ({ release }: { release: Release }) => {
+  const { name, title, year, season, episode } = release;
+  return (
+    <Stack direction="row" spacing={0.5}>
+      <Truncate text={name || title || ''} ellipsis=" ... " />
+      <ReleaseYear year={year} />
+      <ReleaseSeasonEpisode season={season} episode={episode} />
+    </Stack>
+  );
+};
+export const ReleaseYear = ({ year }: { year?: number }) => {
+  return year ? <div>({year})</div> : null;
+};
+export const ReleaseSeasonEpisode = ({ season, episode }: { season?: number; episode?: number }) => {
+  return episode ? (
+    <div>
+      [{season}x{episode}]
+    </div>
+  ) : null;
+};
+
 export type ReleaseDialogProps = {
   open: boolean;
   handleClose: () => void;
@@ -190,7 +213,7 @@ export const ReleaseDialog = ({
   release,
   release: {
     title,
-    display,
+    name,
     raw,
     description,
     published_at,
@@ -208,7 +231,6 @@ export const ReleaseDialog = ({
     checksum,
     created_at,
     updated_at,
-    tags,
   },
 }: ReleaseDialogProps) => {
   const theme = useTheme();
@@ -217,7 +239,7 @@ export const ReleaseDialog = ({
     <Dialog open={open} onClose={handleClose} fullWidth fullScreen={fullScreen} maxWidth="md">
       <DialogTitle>
         <Typography noWrap color="primary" variant="h6">
-          {display || title}
+          {name || title}
         </Typography>
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
           <Stack width={{ xs: '100%', md: 'inherit' }} direction="row" alignItems="center">
@@ -328,9 +350,6 @@ export const ReleaseDialog = ({
           </Typography>
           <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
             Tags
-          </Typography>
-          <Typography minHeight="24px" variant="body1" color="primary">
-            {tags}
           </Typography>
           <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
             Created

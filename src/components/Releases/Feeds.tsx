@@ -1,6 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import { Feed } from 'client/tower';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import QueueIcon from '@mui/icons-material/Queue';
@@ -22,7 +24,7 @@ import { IconCheckbox, Select, Text } from 'components/Form';
 import { Container } from 'components/Layout';
 import { ReleaseSources, ReleaseTypes } from 'types/constants';
 
-import { Feed, useFeedCreateMutation, useFeedMutation, useFeedSettingMutation, useFeedsAllQuery } from '.';
+import { useFeedCreateMutation, useFeedMutation, useFeedSettingMutation, useFeedsAllQuery } from '.';
 
 export type FeedsListProps = {
   data: Feed[];
@@ -61,7 +63,7 @@ export function FeedsList() {
   };
 
   const toggle = (id: string, name: string, value: boolean) => {
-    setting.mutate({ id, setting: { setting: name, value: value } });
+    setting.mutate({ id, setting: { name: name, value: value } });
   };
 
   return (
@@ -84,7 +86,7 @@ export function FeedsList() {
       <Container>
         {isFetching && <LoadingIndicator />}
         <Paper elevation={0} sx={{ width: '100%' }}>
-          {data?.map((row: Feed) => (
+          {data?.result.map((row: Feed) => (
             <Row key={row.id}>
               <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
                 <Stack
@@ -95,7 +97,7 @@ export function FeedsList() {
                   pr="3px"
                   alignItems="center"
                 >
-                  <IconButton size="small" onClick={() => toggle(row.id, 'active', !row.active)} title="active">
+                  <IconButton size="small" onClick={() => toggle(row.id!, 'active', !row.active)} title="active">
                     <CheckCircleIcon color={row.active ? 'secondary' : 'disabled'} fontSize="small" />
                   </IconButton>
                   <Link href="#" onClick={() => view(row)}>

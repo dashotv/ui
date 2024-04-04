@@ -17,7 +17,7 @@ export default function WatchesPage() {
       </Helmet>
       <Container>
         {watches.isFetching && <LoadingIndicator />}
-        {watches.data && <WatchesList watches={watches.data} />}
+        {watches.data && <WatchesList watches={watches.data.result} />}
       </Container>
     </>
   );

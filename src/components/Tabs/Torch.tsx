@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Medium } from 'client/tower';
+import { Medium, Release } from 'client/tower';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 import Paper from '@mui/material/Paper';
 
 import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
-import { Release, ReleasesForm, ReleasesList, SearchForm, useReleasesQuery } from 'components/Releases';
+import { ReleasesForm, ReleasesList, SearchForm, useReleasesQuery } from 'components/Releases';
 import { useQueryString } from 'hooks/queryString';
 
 const pagesize = 25;
@@ -80,7 +80,7 @@ export function Torch({
   const [initial] = useState(() => formdata(medium));
   const [form, setForm] = useState(initial);
   const [qs, setQs] = useState(() => queryString(form));
-  const releases = useReleasesQuery(0, pagesize, qs);
+  const { isFetching, data } = useReleasesQuery(0, pagesize, qs);
 
   const click = useCallback(() => {
     console.log('click');
@@ -121,11 +121,11 @@ export function Torch({
 
   return (
     <WrapErrorBoundary>
-      {releases.isFetching && <LoadingIndicator />}
+      {isFetching && <LoadingIndicator />}
       <Paper sx={{ mb: 2, p: 2, width: '100%' }}>
         <ReleasesForm form={form} setForm={setForm} reset={() => setForm(initial)} />
       </Paper>
-      {releases.data && <ReleasesList data={releases.data?.Releases} actions={renderActions} selected={selected} />}
+      {data && <ReleasesList data={data?.Releases} actions={renderActions} selected={selected} />}
     </WrapErrorBoundary>
   );
 }

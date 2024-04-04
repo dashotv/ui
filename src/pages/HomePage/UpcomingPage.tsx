@@ -71,7 +71,7 @@ export default function UpcomingPage() {
         {(downloads.isFetching || upcoming.isFetching) && <LoadingIndicator />}
         <Grid container spacing={1}>
           {downloads.data && <DownloadList downloads={downloads.data} />}
-          {upcoming.data && <Media data={upcoming.data} type="series" />}
+          {upcoming.data && <Media data={upcoming.data.result} type="series" />}
         </Grid>
       </Container>
     </>

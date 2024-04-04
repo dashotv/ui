@@ -1,11 +1,12 @@
 import React from 'react';
 
+import { Medium } from 'client/tower';
+
 import { Typography } from '@mui/material';
 
 import { ButtonMapButton, Chrono } from 'components/Common';
 
 import { Banner } from '../Common/Banner';
-import { Medium } from './types';
 
 export type MediumBannerProps = {
   id: string;
@@ -40,7 +41,7 @@ export function MediumBanner({
   const large = variant === 'large';
 
   const images: () => string[] = () => {
-    const updated = Date.parse(updated_at).valueOf() / 1000;
+    const updated = Date.parse(updated_at || '').valueOf() / 1000;
     const out: string[] = [];
     if (background) {
       out.push(background + '?updated=' + updated);
@@ -71,7 +72,7 @@ export function MediumBanner({
   return (
     <Banner
       id={id}
-      title={type == 'Episode' ? title : display || title}
+      title={type == 'Episode' ? title || 'Unknown' : display || title || 'Unknown'}
       subtitle={subtitle()}
       tertiary={release_date && <Chrono special>{release_date.toString()}</Chrono>}
       images={images()}

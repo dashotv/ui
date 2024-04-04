@@ -53,11 +53,7 @@ export default function SuperSearch() {
   const createSeries = useCallback((option: Option) => {
     series.mutate(option, {
       onSuccess: data => {
-        if (data.error) {
-          console.error('error: ', data.error);
-          return;
-        }
-        navigate(`/series/${data.series.id}`);
+        navigate(`/series/${data.result.id}`);
       },
     });
   }, []);
@@ -65,11 +61,7 @@ export default function SuperSearch() {
   const createMovie = useCallback((option: Option) => {
     movie.mutate(option, {
       onSuccess: data => {
-        if (data.error) {
-          console.error('error: ', data.error);
-          return;
-        }
-        navigate(`/movies/${data.movie.id}`);
+        navigate(`/movies/${data.result.id}`);
       },
     });
   }, []);

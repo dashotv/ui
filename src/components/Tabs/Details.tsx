@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
+import { Medium } from 'client/tower';
+
 import SportsBarIcon from '@mui/icons-material/SportsBar';
 import SportsBarOutlinedIcon from '@mui/icons-material/SportsBarOutlined';
 import VerifiedIcon from '@mui/icons-material/Verified';
@@ -23,7 +25,6 @@ import { Chrono, Pill } from 'components/Common';
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
 import { getSeriesBackgrounds, getSeriesCovers, useSeriesUpdateMutation } from 'components/Media/query';
-import { Medium } from 'components/Media/types';
 import { useMovieUpdateMutation } from 'components/Movies/query';
 import { Kinds, ReleaseSources, ReleaseTypes, Resolutions, Sources } from 'types/constants';
 
@@ -45,7 +46,7 @@ export function Details({
   const [images, setImages] = React.useState<string[]>([]);
   const [coverOpen, setCoverOpen] = React.useState(false);
   const [backgroundOpen, setBackgroundOpen] = React.useState(false);
-  const [updated] = React.useState(Date.parse(updated_at).valueOf() / 1000);
+  const [updated] = React.useState(Date.parse(updated_at || '').valueOf() / 1000);
 
   const currentCover = () => {
     if (!medium.paths || medium.paths.length === 0) {
@@ -60,7 +61,7 @@ export function Details({
   const chooseCover = () => {
     setCoverOpen(true);
     getCovers()?.then(covers => {
-      setImages(covers);
+      setImages(covers.result);
     });
   };
   const selectCover = (url: string) => {
@@ -92,7 +93,7 @@ export function Details({
   const chooseBackground = () => {
     setBackgroundOpen(true);
     getBackgrounds()?.then(backgrounds => {
-      setImages(backgrounds);
+      setImages(backgrounds.result);
     });
   };
   const selectBackground = (url: string) => {
@@ -135,7 +136,7 @@ export function Details({
               <Text name="display" control={control} />
               <Text name="directory" control={control} />
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <Select name="kind" options={Kinds[type]} control={control} />
+                <Select name="kind" options={type ? Kinds[type] : ''} control={control} />
                 <Select name="source" options={Sources} control={control} />
                 <Text name="source_id" control={control} />
               </Stack>
@@ -239,7 +240,7 @@ export function Details({
             </Stack>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
               <Link onClick={() => chooseCover()}>
-                <MediaCoverImage image={cover} updated={updated}/>
+                <MediaCoverImage image={cover} updated={updated} />
               </Link>
               <Link onClick={() => chooseBackground()}>
                 <MediaCoverImage image={background} updated={updated} background={true} />

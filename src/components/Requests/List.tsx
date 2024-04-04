@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
+import { Request } from 'client/tower';
+
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -12,7 +14,6 @@ import Typography from '@mui/material/Typography';
 import { ButtonMap, ButtonMapButton, Chrono, Row } from 'components/Common';
 
 import { useRequestsStatusMutation } from './query';
-import { Request } from './types';
 
 export function RequestsList({ requests }: { requests: Request[] }) {
   return (
@@ -39,7 +40,8 @@ export function RequestStatus({ status }: { status: string }) {
   }
 }
 
-export function link({ source, source_id }: { source: string; source_id: string }) {
+export function link({ source, source_id }: { source?: string; source_id?: string }) {
+  if (!source || !source_id) return null;
   switch (source) {
     case 'tmdb':
       return `http://themoviedb.org/movie/${source_id}`;
@@ -94,7 +96,7 @@ export function RequestRow(initial: Request) {
     <Row key={id}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} width="100%" alignItems="center">
         <Stack width="100%" direction="row" spacing={1} alignItems="center">
-          <RequestStatus status={status} />
+          <RequestStatus status={status || 'unknown'} />
           <Typography variant="body1" color="primary" width="100%" noWrap>
             {title}
           </Typography>

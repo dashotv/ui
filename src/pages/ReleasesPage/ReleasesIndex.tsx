@@ -90,13 +90,13 @@ export default function ReleasesIndex() {
             </form>
           </Grid>
           <Grid item md={4} xs={12}>
-            {data && data.tv && <PopularList type="tv" data={data.tv} />}
+            {data?.result?.tv && <PopularList type="tv" data={data.result.tv} />}
           </Grid>
           <Grid item md={4} xs={12}>
-            {data && data.anime && <PopularList type="anime" data={data.anime} />}
+            {data?.result?.anime && <PopularList type="anime" data={data.result.anime} />}
           </Grid>
           <Grid item md={4} xs={12}>
-            {data && data.movies && <PopularList type="movies" data={data.movies} />}
+            {data?.result?.movies && <PopularList type="movies" data={data.result.movies} />}
           </Grid>
         </Grid>
       </Container>

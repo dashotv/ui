@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { Episode } from 'client/tower';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
@@ -13,7 +15,7 @@ import Typography from '@mui/material/Typography';
 
 import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from 'components/Common';
 import { useDownloadCreateMutation } from 'components/Downloads';
-import { Episode, useEpisodeBatchSettingMutation } from 'components/Media';
+import { useEpisodeBatchSettingMutation } from 'components/Media';
 
 export function Episodes({
   kind,
@@ -35,7 +37,7 @@ export function Episodes({
     if (!episodes) {
       return;
     }
-    setIds(() => episodes.map(episode => episode.id));
+    setIds(() => episodes.map(episode => episode.id || ''));
     setSkipped(() => episodes.filter(episode => episode.skipped).length === episodes.length);
     setDownloaded(() => episodes.filter(episode => episode.downloaded).length === episodes.length);
     setCompleted(() => episodes.filter(episode => episode.completed).length === episodes.length);
@@ -124,6 +126,9 @@ function EpisodeRow({
       Icon: CloudCircleIcon,
       color: 'primary',
       click: () => {
+        if (!id) {
+          return;
+        }
         download.mutate(id, {
           onSuccess: data => {
             navigate(`/downloads/${data.id}`);
@@ -136,6 +141,9 @@ function EpisodeRow({
       Icon: NextPlanIcon,
       color: skipped ? 'secondary' : 'disabled',
       click: () => {
+        if (!id) {
+          return;
+        }
         changeEpisode(id, 'skipped', !skipped);
         setSkipped(!skipped);
       },
@@ -145,6 +153,9 @@ function EpisodeRow({
       Icon: DownloadForOfflineIcon,
       color: downloaded ? 'secondary' : 'disabled',
       click: () => {
+        if (!id) {
+          return;
+        }
         changeEpisode(id, 'downloaded', !downloaded);
         setDownloaded(!downloaded);
       },
@@ -154,6 +165,9 @@ function EpisodeRow({
       Icon: CheckCircleIcon,
       color: completed ? 'secondary' : 'disabled',
       click: () => {
+        if (!id) {
+          return;
+        }
         changeEpisode(id, 'completed', !completed);
         setCompleted(!completed);
       },

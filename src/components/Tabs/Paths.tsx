@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { RiEditCircleFill } from 'react-icons/ri';
 
+import { Path } from 'client/tower';
+
 import CancelIcon from '@mui/icons-material/Cancel';
 import ClosedCaptionIcon from '@mui/icons-material/ClosedCaption';
 import ImageIcon from '@mui/icons-material/Image';
@@ -15,7 +17,6 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from 'components/Common';
-import { Path } from 'components/Media/types';
 
 export function Paths({ paths }: { paths?: Path[] }) {
   if (!paths) return null;

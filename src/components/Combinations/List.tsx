@@ -1,6 +1,8 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Combination } from 'client/tower';
+
 import EditIcon from '@mui/icons-material/Edit';
 import QueueIcon from '@mui/icons-material/Queue';
 import { Paper, Stack, Typography } from '@mui/material';
@@ -21,7 +23,6 @@ import { Chrono, LoadingIndicator, Row } from 'components/Common';
 import { Container } from 'components/Layout';
 
 import { useCombinationMutation, useCombinationsQuery } from './query';
-import { Combination } from './types';
 
 export const Combinations = () => {
   const [selected, setSelected] = useState<Combination | undefined>(undefined);
@@ -54,7 +55,7 @@ export const CombinationsList = ({ setSelected }: { setSelected: (v?: Combinatio
   return (
     <Paper elevation={0} sx={{ width: '100%' }}>
       {isFetching && <LoadingIndicator />}
-      {data?.map(combination => (
+      {data?.result.map(combination => (
         <Row key={combination.id}>
           <Stack spacing={1} direction="row" alignItems="center" width="100%" justifyContent="space-between">
             <Stack spacing={1} direction="row" alignItems="center" width="100%" justifyContent="flex-start">
@@ -104,6 +105,10 @@ const CombinationDialog = ({
   const [value, setValue] = useState<string>(combination?.name || '');
   const [selected, setSelected] = useState<string[]>(combination?.collections || []);
 
+  if (!combination?.id) {
+    return null;
+  }
+
   const onChange = (collectionId: string, checked: boolean) => {
     if (checked) {
       setSelected(prev => [...prev, collectionId]);
@@ -140,13 +145,15 @@ const CombinationDialog = ({
             }}
           />
           <FormGroup>
-            {collections?.results?.map(collection => (
+            {collections?.result?.map(collection => (
               <FormControlLabel
                 key={collection.id}
-                control={<Checkbox checked={selected.includes(collection.id)} />}
+                control={<Checkbox checked={collection?.id ? selected.includes(collection.id) : false} />}
                 label={collection.name}
                 value={collection.id}
-                onChange={(event: SyntheticEvent<Element, Event>, checked: boolean) => onChange(collection.id, checked)}
+                onChange={(event: SyntheticEvent<Element, Event>, checked: boolean) =>
+                  onChange(collection.id!, checked)
+                }
               />
             ))}
           </FormGroup>

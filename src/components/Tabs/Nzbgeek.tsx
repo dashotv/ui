@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Medium } from 'client/tower';
+import { Medium, Release } from 'client/tower';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
@@ -16,7 +16,6 @@ import {
   useNzbSearchMovieQuery,
   useNzbSearchTvQuery,
 } from 'components/Nzbgeek';
-import { Release } from 'components/Releases';
 import { useQueryString } from 'hooks/queryString';
 
 export const Nzbgeek = ({

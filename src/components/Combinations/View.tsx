@@ -14,7 +14,7 @@ export const CombinationsView = () => {
   return (
     <>
       {isFetching && <LoadingIndicator />}
-      {data && <PlexPlaylist list={data} />}
+      {data && <PlexPlaylist list={data?.result} />}
     </>
   );
 };

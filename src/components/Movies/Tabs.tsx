@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { Path } from 'components/Media';
-import { Details, Paths, RoutingTabs, RoutingTabsRoute, Watches } from 'components/Tabs';
+import { Movie as MovieType, Path } from 'client/tower';
 
-import { MovieType } from './types';
+import { Details, Paths, RoutingTabs, RoutingTabsRoute, Watches } from 'components/Tabs';
 
 export type MovieTabsProps = {
   id: string;
-  paths: Path[];
+  paths?: Path[];
   movie: MovieType;
 };
 export const MovieTabs = ({ id, paths, movie }: MovieTabsProps) => {

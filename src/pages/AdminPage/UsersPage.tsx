@@ -16,7 +16,7 @@ export default function UsersPage() {
       </Helmet>
       <Container>
         {users.isFetching && <LoadingIndicator />}
-        {users.data && <UsersList users={users.data} />}
+        {users.data && <UsersList users={users.data.result} />}
       </Container>
     </>
   );

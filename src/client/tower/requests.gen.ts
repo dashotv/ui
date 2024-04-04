@@ -17,8 +17,8 @@ export const RequestsIndex = async (params: RequestsIndexRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -40,8 +40,8 @@ export const RequestsCreate = async (params: RequestsCreateRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -63,8 +63,8 @@ export const RequestsShow = async (params: RequestsShowRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -87,8 +87,8 @@ export const RequestsUpdate = async (params: RequestsUpdateRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -111,8 +111,8 @@ export const RequestsSettings = async (params: RequestsSettingsRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -134,8 +134,8 @@ export const RequestsDelete = async (params: RequestsDeleteRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }

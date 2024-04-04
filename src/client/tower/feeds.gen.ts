@@ -17,8 +17,8 @@ export const FeedsIndex = async (params: FeedsIndexRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -40,8 +40,8 @@ export const FeedsCreate = async (params: FeedsCreateRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -63,8 +63,8 @@ export const FeedsShow = async (params: FeedsShowRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -87,8 +87,8 @@ export const FeedsUpdate = async (params: FeedsUpdateRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -111,8 +111,8 @@ export const FeedsSettings = async (params: FeedsSettingsRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -134,8 +134,8 @@ export const FeedsDelete = async (params: FeedsDeleteRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }

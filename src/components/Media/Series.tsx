@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { Episode, Series as SeriesType } from 'client/tower';
+
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import RecommendIcon from '@mui/icons-material/Recommend';
@@ -15,7 +17,7 @@ import { ButtonMapButton } from 'components/Common';
 import { useDownloadCreateMutation } from 'components/Downloads';
 import { Details, Downloads, Episodes, Paths, RoutingTabs, RoutingTabsRoute, Seasons, Watches } from 'components/Tabs';
 
-import { Episode, MediumBanner, SeriesType } from '.';
+import { MediumBanner } from '.';
 import './Media.scss';
 
 export type SeriesProps = {
@@ -47,8 +49,8 @@ export function Series({
       to: '',
       element: (
         <>
-          <Seasons current={currentSeason} seasons={seasons} changeSeason={changeSeason} />
-          <Episodes kind={kind} episodes={episodes} changeEpisode={changeEpisode} />
+          {seasons ? <Seasons current={currentSeason} seasons={seasons} changeSeason={changeSeason} /> : null}
+          {kind && episodes ? <Episodes kind={kind} episodes={episodes} changeEpisode={changeEpisode} /> : null}
         </>
       ),
     },

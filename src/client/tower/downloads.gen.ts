@@ -17,8 +17,8 @@ export const DownloadsIndex = async (params: DownloadsIndexRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -40,8 +40,8 @@ export const DownloadsCreate = async (params: DownloadsCreateRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -63,8 +63,8 @@ export const DownloadsShow = async (params: DownloadsShowRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -87,8 +87,8 @@ export const DownloadsUpdate = async (params: DownloadsUpdateRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -111,8 +111,8 @@ export const DownloadsSettings = async (params: DownloadsSettingsRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -134,8 +134,8 @@ export const DownloadsDelete = async (params: DownloadsDeleteRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -154,8 +154,8 @@ export const DownloadsLast = async () => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -177,8 +177,8 @@ export const DownloadsMedium = async (params: DownloadsMediumRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -201,8 +201,8 @@ export const DownloadsRecent = async (params: DownloadsRecentRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -226,8 +226,8 @@ export const DownloadsSelect = async (params: DownloadsSelectRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -247,8 +247,8 @@ export const DownloadsTorrent = async (params: DownloadsTorrentRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }

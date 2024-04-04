@@ -39,9 +39,9 @@ export default function SeriesIndex() {
   const { isFetching, data } = useSeriesAllQuery(page, filters);
 
   useEffect(() => {
-    if (!data?.count) return;
-    setCount(Math.ceil((data.count || 0) / pagesize)); // Math.ceil((data?.count || 0) / pagesize)
-  }, [data?.count]);
+    if (!data?.total) return;
+    setCount(Math.ceil((data.total || 0) / pagesize)); // Math.ceil((data?.count || 0) / pagesize)
+  }, [data?.total]);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -115,7 +115,7 @@ export default function SeriesIndex() {
       <Container>
         <Grid container spacing={1}>
           {isFetching && <LoadingIndicator />}
-          {data && <Media data={data.results} type="series" />}
+          {data && <Media data={data.result} type="series" />}
         </Grid>
       </Container>
     </>

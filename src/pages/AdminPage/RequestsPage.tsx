@@ -25,7 +25,7 @@ export default function RequestsPage() {
       </Helmet>
       <Container>
         {requests.isFetching && <LoadingIndicator />}
-        {requests.data && <RequestsList requests={requests.data} />}
+        {requests.data && <RequestsList requests={requests.data.result} />}
       </Container>
     </>
   );

@@ -17,7 +17,7 @@ export default function MoviesShow() {
   const movieSetting = useMovieSettingMutation(id);
 
   function changeMovieSetting(id, setting, value) {
-    movieSetting.mutate({ setting: setting, value: value });
+    movieSetting.mutate({ name: setting, value: value });
   }
 
   const refresh = () => {
@@ -37,12 +37,14 @@ export default function MoviesShow() {
   return (
     <>
       <Helmet>
-        <title>Movie{data ? ` - ${data.title}` : ''}</title>
+        <title>Movie{data ? ` - ${data?.result.title}` : ''}</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container>
         {isFetching && <LoadingIndicator />}
-        {data && <Movie id={data.id} movie={data} change={changeMovieSetting} refresh={refresh} />}
+        {data?.result?.id && (
+          <Movie id={data?.result.id} movie={data?.result} change={changeMovieSetting} refresh={refresh} />
+        )}
       </Container>
     </>
   );

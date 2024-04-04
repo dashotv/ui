@@ -19,9 +19,12 @@ import { EventSeries } from 'types/events';
 
 export default function SeriesShow() {
   const { id } = useParams();
+  if (!id) {
+    return null;
+  }
   const { isFetching, data: series } = useSeriesQuery(id);
   const [currentSeason, setCurrentSeason] = useState(1);
-  const { isFetching: episodesFetching, data: episodes } = useSeriesSeasonEpisodesQuery(id, currentSeason);
+  const { isFetching: episodesFetching, data: episodes } = useSeriesSeasonEpisodesQuery(id, currentSeason.toString());
   const queryClient = useQueryClient();
   const seriesSetting = useSeriesSettingMutation(id);
   const episodeSetting = useEpisodeSettingMutation();
@@ -37,19 +40,19 @@ export default function SeriesShow() {
   }
 
   function changeEpisodeSetting(id, key, value) {
-    episodeSetting.mutate({ id: id, setting: { setting: key, value: value } });
+    episodeSetting.mutate({ id: id, setting: { name: key, value: value } });
   }
 
   function changeSeriesSetting(id: string, key: string, value) {
-    seriesSetting.mutate({ setting: key, value: value });
+    seriesSetting.mutate({ name: key, value: value });
   }
 
   useEffect(() => {
-    if (!series || !series.currentSeason) {
+    if (!series?.result?.currentSeason) {
       return;
     }
-    setCurrentSeason(series.currentSeason);
-  }, [series, series?.currentSeason]);
+    setCurrentSeason(series.result.currentSeason);
+  }, [series, series?.result?.currentSeason]);
 
   useSub('tower.series', (data: EventSeries) => {
     if (data.id !== id) {
@@ -61,17 +64,17 @@ export default function SeriesShow() {
   return (
     <>
       <Helmet>
-        <title>Series{series ? ` - ${series.title}` : ''}</title>
+        <title>Series{series?.result ? ` - ${series?.result?.title}` : ''}</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container>
         {(isFetching || episodesFetching) && <LoadingIndicator />}
-        {series && (
+        {series?.result?.id && (
           <Series
-            id={series.id}
-            series={series}
+            id={series.result.id}
+            series={series.result}
             currentSeason={currentSeason}
-            episodes={episodes}
+            episodes={episodes?.result || []}
             changeSeason={changeSeason}
             changeEpisode={changeEpisodeSetting}
             change={changeSeriesSetting}

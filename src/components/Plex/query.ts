@@ -1,4 +1,5 @@
-import { tower } from 'utils/axios';
+import * as tower from 'client/tower';
+import * as plex from 'client/tower/plex';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -7,29 +8,28 @@ import { objectToQueryString } from 'hooks/queryString';
 import { PlexClient, PlexLibrary, PlexSearchResponse } from './types';
 
 export const getLibraries = async () => {
-  const response = await tower.get('/plex/libraries');
-  return response.data as PlexLibrary[];
+  const response = await tower.PlexLibraries();
+  return response;
 };
 
 export const getPlexSearch = async (search: string, library: string) => {
-  const qs = objectToQueryString({ query: search, section: library });
-  const response = await tower.get(`/plex/search?${qs}`);
-  return response.data as PlexSearchResponse[];
+  const response = await tower.PlexSearch({ query: search, section: library });
+  return response.result as plex.SearchResponse[];
 };
 
 export const getPlexPlayers = async () => {
-  const response = await tower.get(`/plex/resources`);
-  return response.data as PlexClient[];
+  const response = await tower.PlexResources();
+  return response;
 };
 
 export const getPlexPlay = async (player: string, ratingKey: string) => {
-  const response = await tower.get(`/plex/play?player=${player}&ratingKey=${ratingKey}`);
-  return response.data;
+  const response = await tower.PlexPlay({ player, ratingKey });
+  return response;
 };
 
 export const getPlexStop = async (session: string) => {
-  const response = await tower.get(`/plex/stop?session=${session}`);
-  return response.data;
+  const response = await tower.PlexStop({ session });
+  return response;
 };
 
 export const usePlexLibrariesQuery = () =>

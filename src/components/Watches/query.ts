@@ -1,12 +1,14 @@
-import { tower } from 'utils/axios';
+import * as tower from 'client/tower';
 
 import { useQuery } from '@tanstack/react-query';
 
 import { Watch } from './types';
 
-export const getWatches = async (page: number, medium_id?: string) => {
-  const response = await tower.get(`/watches/?page=${page}&medium_id=${medium_id ? medium_id : ''}`);
-  return response.data as Watch[];
+export const getWatches = async (page: number, mid?: string, user?: string) => {
+  const medium_id = mid || '';
+  const username = user || '';
+  const response = await tower.WatchesIndex({ username, medium_id });
+  return response;
 };
 
 export const useWatchesQuery = (page: number, medium_id?: string) =>

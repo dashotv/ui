@@ -1,3 +1,5 @@
+import { Release } from 'client/tower';
+
 export interface ReleasesResponse {
   Count: number;
   Releases: Release[];
@@ -16,34 +18,34 @@ export interface PopularResponse {
   [key: string]: Popular[];
 }
 
-export interface Release {
-  id: string;
-  name?: string;
-  display?: string;
-  type?: string;
-  source?: string;
-  season?: string;
-  episode?: string;
-  group?: string;
-  author?: string;
-  verified?: boolean;
-  nzb?: boolean;
-  title?: string;
-  raw?: string;
-  description?: string;
-  size?: string;
-  view?: string;
-  download?: string;
-  infohash?: string;
-  checksum?: string;
-  tags?: string[];
-  resolution?: number;
-  bluray?: boolean;
-  uncensored?: boolean;
-  created_at?: string;
-  updated_at?: string;
-  published_at?: string;
-}
+// export interface Release {
+//   id: string;
+//   name?: string;
+//   display?: string;
+//   type?: string;
+//   source?: string;
+//   season?: string;
+//   episode?: string;
+//   group?: string;
+//   author?: string;
+//   verified?: boolean;
+//   nzb?: boolean;
+//   title?: string;
+//   raw?: string;
+//   description?: string;
+//   size?: string;
+//   view?: string;
+//   download?: string;
+//   infohash?: string;
+//   checksum?: string;
+//   tags?: string[];
+//   resolution?: number;
+//   bluray?: boolean;
+//   uncensored?: boolean;
+//   created_at?: string;
+//   updated_at?: string;
+//   published_at?: string;
+// }
 
 export interface SearchForm {
   text: string;

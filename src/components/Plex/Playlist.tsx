@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { CombinationChild } from 'client/tower';
 import { useInterval } from 'usehooks-ts';
 
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
@@ -7,19 +8,12 @@ import { Chip, IconButton, Paper, Stack, Typography } from '@mui/material';
 
 import { Chrono, Row } from 'components/Common';
 import { Container } from 'components/Layout';
-import {
-  EventPlexSessions,
-  PlexChooser,
-  PlexClient,
-  PlexCollectionChild,
-  PlexSession,
-  usePlexPlayMutation,
-} from 'components/Plex';
+import { EventPlexSessions, PlexChooser, PlexClient, PlexSession, usePlexPlayMutation } from 'components/Plex';
 import { useSub } from 'hooks/sub';
 
 import { PlexPlayerView } from './Player';
 
-export const PlexPlaylist = ({ list }: { list: PlexCollectionChild[] }) => {
+export const PlexPlaylist = ({ list }: { list: CombinationChild[] }) => {
   const [player, setPlayer] = useState<PlexClient | undefined>(undefined);
   const [session, setSession] = useState<PlexSession | undefined>(undefined);
   const [sessions, setSessions] = useState<EventPlexSessions | undefined>(undefined);
@@ -38,8 +32,8 @@ export const PlexPlaylist = ({ list }: { list: PlexCollectionChild[] }) => {
     setPlaying(session?.ratingKey || '');
   }, [session]);
 
-  const play = (show: PlexCollectionChild) => {
-    if (!player || player.clientIdentifier === '') return;
+  const play = (show: CombinationChild) => {
+    if (!player || player.clientIdentifier === '' || !show.next) return;
     plexPlay({ player: player.clientIdentifier, ratingKey: show.next });
   };
 
@@ -62,9 +56,9 @@ const PlexList = ({
   playing,
   play,
 }: {
-  list: PlexCollectionChild[];
+  list: CombinationChild[];
   playing: string;
-  play: (show: PlexCollectionChild) => void;
+  play: (show: CombinationChild) => void;
 }) => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const [delay, setDelay] = useState<number | null>(null);
@@ -80,7 +74,7 @@ const PlexList = ({
     setDelay(0);
   }, [playing]);
 
-  const handlePlay = (show: PlexCollectionChild) => {
+  const handlePlay = (show: CombinationChild) => {
     console.log('handlePlay');
     play(show);
     setDisabled(true);
@@ -98,12 +92,12 @@ const PlexList = ({
                 <Typography variant="body1" fontWeight="bolder" noWrap minWidth="35px" color="primary">
                   {show.title}
                 </Typography>
-                <ShowDate unix={show.lastViewedAt} />
+                <ShowDate unix={show.last_viewed_at} />
               </Stack>
             </Stack>
             <Stack direction="row" spacing={1} alignItems="center" minWidth="125px" justifyContent="end">
               <Typography variant="caption" color="gray">
-                {show.librarySectionTitle}
+                {show.library_title}
               </Typography>
               <IconButton onClick={() => handlePlay(show)} disabled={disabled}>
                 <PlayCircleIcon color={disabled ? 'disabled' : 'primary'} />
@@ -116,15 +110,14 @@ const PlexList = ({
   );
 };
 
-const Unwatched = ({ viewed, total }: { viewed: string; total: string }) => {
-  const v = Number(viewed);
-  const t = Number(total);
-  if (v === t) return null;
-  const watched = t - v;
+const Unwatched = ({ viewed, total }: { viewed?: number; total?: number }) => {
+  if (!viewed || !total) return null;
+  if (viewed === total) return null;
+  const watched = total - viewed;
   return <Chip className="viewed" label={watched > 9 ? '+' : watched} />;
 };
 
-const ShowDate = ({ unix }: { unix: string }) => {
+const ShowDate = ({ unix }: { unix?: number }) => {
   if (!unix) return null;
 
   const string = new Date(Number(unix) * 1000).toString();

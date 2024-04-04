@@ -14,7 +14,6 @@ import Stack from '@mui/material/Stack';
 import { useNats } from '@quara-dev/react-nats-context';
 
 import { useDownloadsLastQuery } from 'components/Downloads';
-import { JobsMenu } from 'components/Jobs';
 import { useMetrics } from 'hooks/metrics';
 import { useSub } from 'hooks/sub';
 
@@ -46,24 +45,24 @@ export const NatsGauge = () => {
     </IconButton>
   );
 };
-
-export const AdminGauge = () => {
-  return (
-    <JobsMenu
-      jobs={[
-        'DownloadsProcess',
-        'CreateMediaFromRequests',
-        'CleanupLogs',
-        'CleanupJobs',
-        'CleanPlexPins',
-        'PlexPinToUsers',
-        'PlexUserUpdates',
-        'PlexWatchlistUpdates',
-        'UpdateIndexes',
-      ]}
-    />
-  );
-};
+//
+// export const AdminGauge = () => {
+//   return (
+//     <JobsMenu
+//       jobs={[
+//         'DownloadsProcess',
+//         'CreateMediaFromRequests',
+//         'CleanupLogs',
+//         'CleanupJobs',
+//         'CleanPlexPins',
+//         'PlexPinToUsers',
+//         'PlexUserUpdates',
+//         'PlexWatchlistUpdates',
+//         'UpdateIndexes',
+//       ]}
+//     />
+//   );
+// };
 
 function Countdown({ eventTime, interval, last }: { eventTime: number; interval: number; last: string }) {
   const [intervalValue] = useState<number>(interval);
@@ -147,7 +146,6 @@ export function Gauges() {
       <NzbsGauge value={nzbs} color="primary" />
       <TorrentsGauge value={torrents} color="primary" />
       <NatsGauge />
-      <AdminGauge />
     </Stack>
   );
 }

@@ -1,12 +1,10 @@
-import { tower } from 'utils/axios';
+import * as tower from 'client/tower';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { Log } from './types';
-
 export const getLogs = async (page: number) => {
-  const response = await tower.get(`/messages/?page=${page}`);
-  return response.data as Log[];
+  const response = await tower.MessagesIndex({ page, limit: 0 });
+  return response.result;
 };
 
 export const useLogsQuery = (page: number) =>

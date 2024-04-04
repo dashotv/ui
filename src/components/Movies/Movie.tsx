@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { Movie as MovieType } from 'client/tower';
+
 import { MovieBanner } from './Banner';
 import { MovieTabs } from './Tabs';
-import { MovieType } from './types';
 
 // TODO: watches
 

@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { DownloadFile, Download as DownloadType, Medium } from 'client/tower';
+import { DownloadFile, Download as DownloadType, Medium, Release } from 'client/tower';
 
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -13,7 +13,6 @@ import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import { ButtonMapButton } from 'components/Common';
 import { MediaTo } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
-import { Release } from 'components/Releases';
 import { FilesWithSelector, MediumTabs, Nzbgeek, Torch } from 'components/Tabs';
 import { useDownloadingId } from 'hooks/downloading';
 import { useTorrentRemoveMutation } from 'query/releases';

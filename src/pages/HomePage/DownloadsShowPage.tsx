@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
+import { Release } from 'client/tower';
+
 import { LoadingIndicator } from 'components/Common';
 import {
   Download,
@@ -12,7 +14,6 @@ import {
 } from 'components/Downloads';
 import { Container } from 'components/Layout';
 import { Nzbgeek } from 'components/Nzbgeek/types';
-import { Release } from 'components/Releases/types';
 import { useDownloadingId } from 'hooks/downloading';
 
 export default function DownloadsShowPage() {

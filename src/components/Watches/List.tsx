@@ -1,17 +1,17 @@
 import React from 'react';
 
+import { Watch } from 'client/tower';
+
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { Chrono, Row } from 'components/Common';
 
-import { Watch } from './types';
-
-export const WatchesList = ({ watches }: { watches: Watch[] }) => {
+export const WatchesList = ({ watches }: { watches?: Watch[] }) => {
   return (
     <Paper elevation={0}>
-      {watches.map(({ id, username, player, medium, watched_at }) => (
+      {watches?.map(({ id, username, player, medium, watched_at }) => (
         <Row key={id}>
           <Stack
             width="100%"
@@ -22,10 +22,10 @@ export const WatchesList = ({ watches }: { watches: Watch[] }) => {
           >
             <Stack width="100%" direction="row" spacing={1} alignItems="center" justifyContent="start">
               <Typography minWidth="0" maxWidth="200px" noWrap color="primary">
-                {medium.title}
+                {medium?.title}
               </Typography>
               <Typography minWidth="0" maxWidth="200px" noWrap color="primary.dark">
-                {medium.display}
+                {medium?.display}
               </Typography>
             </Stack>
             <Stack minWidth="390px" direction="row" spacing={1} alignItems="center" justifyContent="end">

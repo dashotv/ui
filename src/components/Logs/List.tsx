@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
+import { Message as Log } from 'client/tower';
+
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import { Chrono, Row } from 'components/Common';
-
-import { Log } from './types';
 
 export function LogsList({ logs }: { logs: Log[] }) {
   return (
@@ -18,7 +18,7 @@ export function LogsList({ logs }: { logs: Log[] }) {
   );
 }
 
-const Color = (level: string) => {
+const Color = (level?: string) => {
   switch (level) {
     case 'debug':
       return 'gray';
@@ -35,11 +35,13 @@ const Color = (level: string) => {
       return 'inherit';
   }
 };
-const Name = (facility: string) => {
+const Name = (facility?: string) => {
+  if (!facility) return 'unknown';
   const a = facility.split('::');
   return a[a.length - 1];
 };
-const LevelName = (level: string) => {
+const LevelName = (level?: string) => {
+  if (!level) return 'info';
   return level == 'warning' ? 'warn' : level;
 };
 

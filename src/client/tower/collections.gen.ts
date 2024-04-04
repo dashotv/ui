@@ -17,8 +17,8 @@ export const CollectionsIndex = async (params: CollectionsIndexRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -40,8 +40,8 @@ export const CollectionsCreate = async (params: CollectionsCreateRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -63,8 +63,8 @@ export const CollectionsShow = async (params: CollectionsShowRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -87,8 +87,8 @@ export const CollectionsUpdate = async (params: CollectionsUpdateRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -111,8 +111,8 @@ export const CollectionsSettings = async (params: CollectionsSettingsRequest) =>
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }
@@ -134,8 +134,8 @@ export const CollectionsDelete = async (params: CollectionsDeleteRequest) => {
   }
 
   if (response.data.error) {
-    if (response.data.Message) {
-      throw new Error(response.data.Message);
+    if (response.data.message) {
+      throw new Error(response.data.message);
     }
     throw new Error('unknown error');
   }

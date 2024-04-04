@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
+import { Popular } from 'client/tower';
+
 import Link from '@mui/material/Link';
 
 import { useQueryString } from 'hooks/queryString';
 
-import { Popular } from '.';
 import './popular.scss';
 
 export function PopularList({ data, type }: { data: Popular[]; type: string }) {
@@ -24,7 +25,7 @@ export function PopularList({ data, type }: { data: Popular[]; type: string }) {
             </Link>
           </span>
           <span className="number">
-            <RouterLink to={SearchURL(name, type)}>{count}</RouterLink>
+            <RouterLink to={name ? SearchURL(name, type) : '#'}>{count}</RouterLink>
           </span>
         </div>
       ))}

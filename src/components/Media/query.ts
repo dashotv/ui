@@ -1,70 +1,74 @@
-import { tower } from 'utils/axios';
+import * as tower from 'client/tower';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { Setting, SettingsArgs } from 'types/setting';
+import { Option } from './types';
 
-import { Medium, Option } from './types';
-
-export const createSeries = async (r: Option) => {
-  const response = await tower.post(`/series/`, r);
-  return response.data;
+export const createSeries = async (option: Option) => {
+  const subject: tower.Series = {
+    title: option.Title,
+    kind: option.Kind,
+    source: option.Source,
+    source_id: option.ID,
+    description: option.Description,
+    release_date: option.Date,
+  };
+  const response = await tower.SeriesCreate({ subject });
+  return response;
 };
 
 export const getSeriesAll = async (page: number, filters) => {
-  const qs = Object.keys(filters)
-    .map(key => `${key}=${filters[key]}`)
-    .join('&');
-  const response = await tower.get(`/series/?page=${page}&${qs}`);
-  return response.data;
+  const kind = filters.kind || '';
+  const source = filters.source || '';
+  const active = filters.active || false;
+  const favorite = filters.favorite || false;
+  const broken = filters.broken || false;
+  const response = await tower.SeriesIndex({ page, limit: 25, kind, source, active, favorite, broken });
+  return response;
 };
 
-export const getSeries = async id => {
-  const response = await tower.get(`/series/${id}`);
-  return response.data;
+export const getSeries = async (id: string) => {
+  const response = await tower.SeriesShow({ id });
+  return response;
 };
 
-export const getSeriesSeasonEpisodes = async (id, season) => {
-  const response = await tower.get(`/series/${id}/seasons/${season}`);
-  return response.data;
+export const getSeriesSeasonEpisodes = async (id: string, season: string) => {
+  const response = await tower.SeriesSeasonEpisodes({ id, season });
+  return response;
 };
 
-export const getSeriesCovers = async id => {
-  const response = await tower.get(`/series/${id}/covers`);
-  return response.data.covers;
+export const getSeriesCovers = async (id: string) => {
+  const response = await tower.SeriesCovers({ id });
+  return response;
 };
 
-export const getSeriesBackgrounds = async id => {
-  const response = await tower.get(`/series/${id}/backgrounds`);
-  return response.data.backgrounds;
+export const getSeriesBackgrounds = async (id: string) => {
+  const response = await tower.SeriesBackgrounds({ id });
+  return response;
 };
 
-export const postSeriesJob = async (id: string, job: string) => {
-  const response = await tower.post(`/series/${id}/jobs?name=${job}`);
-  return response.data;
+export const postSeriesJob = async (id: string, name: string) => {
+  const response = await tower.SeriesJobs({ id, name });
+  return response;
 };
 
-// export const putSeriesRefresh = async (id: string) => {
-//   const response = await tower.put(`/series/${id}/refresh`);
-//   return response.data;
-// };
-
-export const putSeries = async (id: string, data: Medium) => {
-  const response = await tower.put(`/series/${id}`, data);
-  return response.data;
+export const putSeries = async (id: string, data: tower.Series) => {
+  const response = await tower.SeriesUpdate({ id, subject: data });
+  return response;
 };
 
-export const patchSeries = async (id: string, setting: Setting) => {
-  const response = await tower.patch(`/series/${id}`, setting);
-  return response.data;
+export const patchSeries = async (id: string, setting: tower.Setting) => {
+  const response = await tower.SeriesSettings({ id, setting });
+  return response;
 };
-export const patchEpisode = async (id: string, setting: Setting) => {
-  const response = await tower.patch(`/episodes/${id}`, setting);
-  return response.data;
+export const patchEpisode = async (id: string, setting: tower.Setting) => {
+  const response = await tower.EpisodesSettings({ id, setting });
+  return response;
 };
-export const postEpisodeBatchSetting = async (ids: string[], field: string, value: boolean) => {
-  const response = await tower.post(`/episodes/settings`, { ids, field, value });
-  return response.data;
+export const postEpisodeBatchSetting = async (ids: string[], name: string, value: boolean) => {
+  const settings: tower.SettingsBatch = { ids, name, value };
+  const response = await tower.EpisodesSettingsBatch({ settings });
+  return response;
 };
 
 export const useSeriesAllQuery = (page: number, filters) =>
@@ -75,7 +79,7 @@ export const useSeriesAllQuery = (page: number, filters) =>
     retry: false,
   });
 
-export const useSeriesQuery = id =>
+export const useSeriesQuery = (id: string) =>
   useQuery({
     queryKey: ['series', id],
     queryFn: () => getSeries(id),
@@ -83,7 +87,7 @@ export const useSeriesQuery = id =>
     retry: false,
   });
 
-export const useSeriesSeasonEpisodesQuery = (id, season) =>
+export const useSeriesSeasonEpisodesQuery = (id: string, season: string) =>
   useQuery({
     queryKey: ['series', id, 'season', season],
     queryFn: () => getSeriesSeasonEpisodes(id, season),
@@ -92,10 +96,10 @@ export const useSeriesSeasonEpisodesQuery = (id, season) =>
     enabled: season !== null && season !== undefined,
   });
 
-export const useSeriesSettingMutation = id => {
+export const useSeriesSettingMutation = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (setting: Setting) => patchSeries(id, setting),
+    mutationFn: (setting: tower.Setting) => patchSeries(id, setting),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['series', id] });
     },
@@ -104,7 +108,7 @@ export const useSeriesSettingMutation = id => {
 
 export const useEpisodeSettingMutation = () => {
   return useMutation({
-    mutationFn: (args: SettingsArgs) => patchEpisode(args.id, args.setting),
+    mutationFn: (args: { id: string; setting: tower.Setting }) => patchEpisode(args.id, args.setting),
   });
 };
 export const useEpisodeBatchSettingMutation = () => {
@@ -125,7 +129,7 @@ export const useSeriesCreateMutation = () => {
 export const useSeriesUpdateMutation = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: Medium) => {
+    mutationFn: (data: tower.Medium) => {
       return putSeries(id, data);
     },
     onSuccess: async () => {

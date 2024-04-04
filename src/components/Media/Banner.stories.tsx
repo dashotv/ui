@@ -29,7 +29,6 @@ const meta: Meta<typeof MediumBanner> = {
       cover: 'http://localhost:3000/media-images/series-61b6f1383359bb870c54116a/cover.jpg',
       background: 'http://localhost:3000/media-images/series-61b6f1383359bb870c54116a/background.jpg',
       title: 'Eminence in Shadow',
-      name: 'Eminence in Shadow',
       display: '#5 blah blah blah',
       search: 'eminence in shadow s2:25',
       release_date: new Date('2022-10-05').toString(),

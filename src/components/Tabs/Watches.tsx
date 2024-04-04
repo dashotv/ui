@@ -8,7 +8,7 @@ export function Watches({ medium_id }: { medium_id: string }) {
   return (
     <WrapErrorBoundary>
       {isFetching && <LoadingIndicator />}
-      <WatchesList watches={data || []} />
+      <WatchesList watches={data?.result} />
     </WrapErrorBoundary>
   );
 }

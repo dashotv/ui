@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { Collection } from 'client/tower';
 import { useDebounce } from 'usehooks-ts';
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -25,26 +26,20 @@ import { Chrono, LoadingIndicator } from 'components/Common';
 import { Option } from 'components/Media';
 import { PlexLibrary, usePlexLibrariesQuery, usePlexSearchQuery } from 'components/Plex';
 
-import {
-  Collection,
-  CollectionDialog,
-  useCollectionDeleteMutation,
-  useCollectionUpdateMutation,
-  useCollectionsQuery,
-} from '.';
+import { CollectionDialog, useCollectionDeleteMutation, useCollectionUpdateMutation, useCollectionsQuery } from '.';
 
 export const CollectionList = ({ page }: { page: number }) => {
   const { isFetching, data } = useCollectionsQuery(page);
   const { data: libraries } = usePlexLibrariesQuery();
 
   const getLibrary = (key: string) => {
-    return libraries?.find(l => l.key === key);
+    return libraries?.result.find(l => l.key === key);
   };
 
   return (
     <Paper elevation={0} sx={{ width: '100%' }}>
       {isFetching && <LoadingIndicator />}
-      {data?.results?.map(collection => (
+      {data?.result?.map(collection => (
         <Paper key={collection.id} elevation={0} sx={{ mb: 1, width: '100%' }}>
           <Stack spacing={1} direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems="center">
             <Stack spacing={1} direction="row" alignItems="center" width="100%" justifyContent="flex-start">
@@ -52,7 +47,7 @@ export const CollectionList = ({ page }: { page: number }) => {
                 {collection.name}
               </Typography>
               <Typography variant="subtitle2" color="primary.dark" noWrap minWidth={0}>
-                {getLibrary(collection.library)?.title}
+                {collection?.library ? getLibrary(collection.library)?.title : null}
               </Typography>
               <Typography variant="subtitle2" color="gray" noWrap minWidth={0}>
                 {collection.rating_key}
@@ -65,7 +60,7 @@ export const CollectionList = ({ page }: { page: number }) => {
               <Typography variant="subtitle2" color="gray" noWrap minWidth="0">
                 <Chrono fromNow>{collection.created_at}</Chrono>
               </Typography>
-              <CollectionActions {...{ collection, libraries }} />
+              <CollectionActions {...{ collection, libraries: libraries?.result }} />
             </Stack>
           </Stack>
         </Paper>
@@ -78,9 +73,15 @@ export const CollectionActions = ({ collection, libraries }: { collection: Colle
   const queryClient = useQueryClient();
   const updater = useCollectionUpdateMutation();
   const deleter = useCollectionDeleteMutation();
+  if (!collection || !collection.id) {
+    return null;
+  }
   const remove = e => {
     e.preventDefault();
     e.stopPropagation();
+    if (!collection.id) {
+      return;
+    }
     deleter.mutate(collection.id, {
       onSuccess: data => {
         if (data.error) {
@@ -93,6 +94,9 @@ export const CollectionActions = ({ collection, libraries }: { collection: Colle
   };
 
   const update = (collection: Collection) => {
+    if (!collection) {
+      return;
+    }
     updater.mutate(collection, {
       onSuccess: data => {
         if (data.error) {

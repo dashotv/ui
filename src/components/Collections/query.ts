@@ -1,28 +1,29 @@
-import { tower } from 'utils/axios';
+import * as tower from 'client/tower';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { Collection, CollectionsResponse } from './types';
-
 export const getCollections = async (page: number) => {
-  const response = await tower.get(`/collections/?page=${page}`);
-  return response.data as CollectionsResponse;
+  const response = await tower.CollectionsIndex({ page, limit: 0 });
+  return response;
 };
 export const getCollection = async (id: string) => {
-  const response = await tower.get(`/collections/${id}`);
-  return response.data as Collection;
+  const response = await tower.CollectionsShow({ id });
+  return response;
 };
-export const postCollection = async (collection: { name: string; library: string }) => {
-  const response = await tower.post('/collections/', collection);
-  return response.data;
+export const postCollection = async (subject: tower.Collection) => {
+  const response = await tower.CollectionsCreate({ subject });
+  return response;
 };
-export const putCollection = async (collection: Collection) => {
-  const response = await tower.put(`/collections/${collection.id}`, collection);
-  return response.data;
+export const putCollection = async (subject: tower.Collection) => {
+  if (!subject.id) {
+    throw new Error('Collection id is required');
+  }
+  const response = await tower.CollectionsUpdate({ id: subject.id, subject });
+  return response;
 };
 export const deleteCollection = async (id: string) => {
-  const response = await tower.delete(`/collections/${id}`);
-  return response.data;
+  const response = await tower.CollectionsDelete({ id });
+  return response;
 };
 
 export const useCollectionsQuery = (page: number) =>
@@ -45,6 +46,6 @@ export const useCollectionDeleteMutation = () =>
   });
 export const useCollectionUpdateMutation = () =>
   useMutation({
-    mutationFn: (c: Collection) => putCollection(c),
+    mutationFn: (c: tower.Collection) => putCollection(c),
     retry: false,
   });

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Collection } from 'client/tower';
+
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
@@ -23,7 +25,6 @@ import { Chrono } from 'components/Common';
 import { Option } from 'components/Media';
 import { PlexLibrary } from 'components/Plex';
 
-import { Collection } from '.';
 import { AddDialog } from './List';
 
 export const CollectionDialog = ({
@@ -63,8 +64,9 @@ export const CollectionDialog = ({
     update(collection);
   };
 
-  const remove = (id: string) => {
+  const remove = (id?: string) => {
     if (!collection.media) return;
+    if (!id) return;
     collection.media = collection.media.filter(media => media.rating_key !== id);
     update(collection);
   };
