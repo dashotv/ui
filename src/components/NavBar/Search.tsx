@@ -44,6 +44,7 @@ export default function SuperSearch() {
   const navigate = useNavigate();
 
   useHotkeys('mod+k', () => setOpen(true), [open]);
+  useHotkeys('mod+/', () => setOpen(true), [open]);
 
   const showCreate = useCallback((option: Option) => {
     setOption(option);
