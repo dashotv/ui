@@ -6,7 +6,6 @@
   "dependencies": {
     "@clerk/clerk-react": "^4.30.7",
     "@clerk/themes": "1.7.8",
-    "@dashotv/components": "https://github.com/dashotv/components",
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@fontsource/material-icons": "^5.0.7",
