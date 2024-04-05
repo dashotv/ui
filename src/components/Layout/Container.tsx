@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MUIContainer from '@mui/material/Container';
+import { Box } from '@mui/material';
 
 import { WrapErrorBoundary } from 'components/Common';
 
@@ -9,8 +9,8 @@ export type ContainerProps = {
 };
 export const Container = ({ children }: ContainerProps) => {
   return (
-    <MUIContainer sx={{ overflow: 'hidden', pb: 1, pt: 1 }}>
+    <Box sx={{ mb: 2 }}>
       <WrapErrorBoundary>{children}</WrapErrorBoundary>
-    </MUIContainer>
+    </Box>
   );
 };

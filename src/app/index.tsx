@@ -11,6 +11,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
 
+import { Container } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
@@ -98,7 +99,7 @@ export function App() {
 
       <ErrorBoundary fallbackRender={fallbackRender}>
         <NavBar />
-        <Box sx={{ ml: { xs: 0, md: '235px' } }}>
+        <Box sx={{ ml: { xs: 0, md: '240px' }, p: 2 }}>
           <Routes>
             <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
             <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
