@@ -13,7 +13,7 @@ import {
   useDownloadSelectionMutation,
 } from 'components/Downloads';
 import { Container } from 'components/Layout';
-import { Nzbgeek } from 'components/Nzbgeek/types';
+import { Nzbgeek } from 'components/Nzbgeek';
 import { useDownloadingId } from 'hooks/downloading';
 
 export default function DownloadsShowPage() {
@@ -65,18 +65,11 @@ export default function DownloadsShowPage() {
   );
 
   const selectRelease = useCallback(
-    (selected: Release | Nzbgeek) => {
+    (url: string) => {
       if (!download) {
         return;
       }
-      if ((selected as Release).id) {
-        downloadUpdate.mutate({ ...download, status: 'loading', release_id: (selected as Release).id, url: '' });
-        return;
-      }
-      if ((selected as Nzbgeek).link) {
-        downloadUpdate.mutate({ ...download, status: 'loading', url: (selected as Nzbgeek).link, release_id: '' });
-        return;
-      }
+      downloadUpdate.mutate({ ...download, status: 'loading', url: url });
     },
     [downloadUpdate],
   );

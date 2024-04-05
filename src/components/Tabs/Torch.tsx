@@ -73,7 +73,7 @@ export function Torch({
   selected,
 }: {
   medium?: Medium;
-  selector: (release: Release) => void;
+  selector: (url: string) => void;
   selected?: { release_id?: string; url?: string };
 }) {
   const { queryString } = useQueryString();
@@ -88,7 +88,8 @@ export function Torch({
 
   const handleSelect = useCallback(
     (release: Release) => {
-      selector(release);
+      if (!release.download) return;
+      selector(release.download);
     },
     [selector],
   );

@@ -24,7 +24,7 @@ export const Nzbgeek = ({
   selected,
 }: {
   medium?: Medium;
-  selector: (selected: Release | NzbgeekType) => void;
+  selector: (url: string) => void;
   selected?: { release_id?: string; url?: string };
 }) => {
   switch (medium?.type) {
@@ -40,7 +40,7 @@ export const Nzbgeek = ({
 
 export type NzbgeekTvProps = {
   medium?: Medium;
-  selector: (selected: Release | NzbgeekType) => void;
+  selector: (url: string) => void;
   selected?: { release_id?: string; url?: string };
 };
 export function NzbgeekTv({ medium, selector, selected }: NzbgeekTvProps) {
@@ -59,8 +59,8 @@ export function NzbgeekTv({ medium, selector, selected }: NzbgeekTvProps) {
   }, [form, queryString]);
 
   const handleSelect = useCallback(
-    (selected: Release | NzbgeekType) => {
-      selector(selected);
+    (selected: NzbgeekType) => {
+      selector(selected.link);
     },
     [selector],
   );
@@ -102,7 +102,7 @@ export function NzbgeekTv({ medium, selector, selected }: NzbgeekTvProps) {
 
 export type NzbgeekMovieProps = {
   medium?: Medium;
-  selector: (selected: Release | NzbgeekType) => void;
+  selector: (url: string) => void;
   selected?: { release_id?: string; url?: string };
 };
 export function NzbgeekMovie({ medium, selector, selected }: NzbgeekMovieProps) {
@@ -122,8 +122,8 @@ export function NzbgeekMovie({ medium, selector, selected }: NzbgeekMovieProps) 
   }, [form, queryString]);
 
   const handleSelect = useCallback(
-    (selected: Release | NzbgeekType) => {
-      selector(selected);
+    (selected: NzbgeekType) => {
+      selector(selected.link);
     },
     [selector],
   );

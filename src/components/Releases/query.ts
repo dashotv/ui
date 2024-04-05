@@ -3,14 +3,19 @@ import { scry } from 'utils/axios';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { Setting, SettingsArgs } from 'types/setting';
-
-import { Feed, PopularResponse, ReleasesResponse } from './types';
+import { ReleasesResponse } from './types';
 
 export const getReleasesPage = async (page, pagesize, qs) => {
   const start = (page - 1) * pagesize;
   const response = await scry.get(`/releases/?start=${start}&limit=${pagesize}&${qs}`);
   console.log('getReleasesPage:', response);
+  return response.data as ReleasesResponse;
+};
+
+export const getRunicPage = async (page, pagesize, qs) => {
+  const start = (page - 1) * pagesize;
+  const response = await scry.get(`/runic/?start=${start}&limit=${pagesize}&${qs}`);
+  console.log('getRunicPage:', response);
   return response.data as ReleasesResponse;
 };
 
@@ -63,6 +68,14 @@ export const useReleasesQuery = (start, pagesize, queryString) =>
   useQuery({
     queryKey: ['releases', start, pagesize, queryString],
     queryFn: () => getReleasesPage(start, pagesize, queryString),
+    placeholderData: previousData => previousData,
+    retry: false,
+  });
+
+export const useRunicQuery = (start, pagesize, queryString) =>
+  useQuery({
+    queryKey: ['runic', start, pagesize, queryString],
+    queryFn: () => getRunicPage(start, pagesize, queryString),
     placeholderData: previousData => previousData,
     retry: false,
   });

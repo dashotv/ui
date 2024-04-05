@@ -14,6 +14,7 @@ import { ButtonMapButton } from 'components/Common';
 import { MediaTo } from 'components/Media';
 import { Nzbgeek as NzbgeekType } from 'components/Nzbgeek';
 import { FilesWithSelector, MediumTabs, Nzbgeek, Torch } from 'components/Tabs';
+import { Runic } from 'components/Tabs/Runic';
 import { useDownloadingId } from 'hooks/downloading';
 import { useTorrentRemoveMutation } from 'query/releases';
 import { Torrent } from 'types/torrents';
@@ -28,7 +29,7 @@ export type DownloadProps = {
   files?: DownloadFile[];
   episodes?: Medium[];
   selectMedium: (eid: string | null, num: number) => void;
-  selectRelease: (selected: Release | NzbgeekType) => void;
+  selectRelease: (url: string) => void;
   changeSetting: (name: string, value: string | boolean) => void;
   changeInfo: (info: Partial<DownloadType>) => void;
 };
@@ -54,6 +55,7 @@ export function Download({
   const tabsMap = {
     Files: <FilesWithSelector files={files} torrent={torrent} episodes={episodes} updater={selectMedium} />,
     Torch: <Torch medium={medium} selector={selectRelease} selected={{ release_id, url }} />,
+    Runic: <Runic medium={medium} selector={selectRelease} selected={{ release_id, url }} />,
     Nzbgeek: <Nzbgeek medium={medium} selector={selectRelease} selected={{ release_id, url }} />,
   };
 

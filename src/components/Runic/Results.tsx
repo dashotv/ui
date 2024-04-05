@@ -25,29 +25,17 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { Chrono, Group, Megabytes, Resolution, Row } from 'components/Common';
 
-import { useReleaseSettingMutation } from '.';
-
-export type ReleasesListProps = {
+export type RunicResultsProps = {
   data: Release[];
-  type?: 'default' | 'runic';
   actions?: (row: Release) => JSX.Element;
   selected?: { release_id?: string; url?: string };
 };
-export function ReleasesList({ data, actions, selected, type = 'default' }: ReleasesListProps) {
-  const releaseUpdate = useReleaseSettingMutation();
+export function RunicResults({ data, actions, selected }: RunicResultsProps) {
   const [open, setOpen] = React.useState(false);
   const [viewing, setViewing] = React.useState<Release | null>(null);
-  const runic: boolean = type === 'runic';
 
   const toggleVerified = row => {
-    releaseUpdate.mutate(
-      { id: row.id, setting: { name: 'verified', value: !row.verified } },
-      {
-        onSuccess: () => {
-          row.verified = !row.verified;
-        },
-      },
-    );
+    console.log('toggleVerified not supported on runic yet', row);
   };
 
   const handleClose = () => setOpen(false);
@@ -157,17 +145,7 @@ export function ReleasesList({ data, actions, selected, type = 'default' }: Rele
                 </Typography>
               </Stack>
               <Stack width={{ xs: '100%', md: 'auto' }} direction="row" spacing={1} alignItems="center">
-                {row.size && runic ? <Megabytes value={Number(row.size)} ord="bytes" /> : null}
-                {row.size && !runic ? (
-                  <Typography
-                    display={{ xs: 'none', md: 'inherit' }}
-                    variant="subtitle2"
-                    color="textSecondary"
-                    pl="3px"
-                  >
-                    {row.size}
-                  </Typography>
-                ) : null}
+                {row.size ? <Megabytes value={Number(row.size)} ord="bytes" /> : null}
                 <Typography noWrap variant="subtitle2" color="gray" pl="3px" width="100%">
                   {row.published_at && <Chrono fromNow>{row.published_at}</Chrono>}
                 </Typography>
