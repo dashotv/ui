@@ -3,7 +3,7 @@ import * as tower from 'client/tower';
 import { useQuery } from '@tanstack/react-query';
 
 export const getLogs = async (page: number) => {
-  const response = await tower.MessagesIndex({ page, limit: 0 });
+  const response = await tower.MessagesIndex({ page, limit: 250 });
   return response.result;
 };
 
