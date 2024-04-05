@@ -11,10 +11,12 @@ export interface Collection {
   synced_at?: string;
   media?: CollectionMedia[];
 }
+
 export interface CollectionMedia {
   rating_key?: string;
   title?: string;
 }
+
 export interface Combination {
   id?: string;
   created_at?: string;
@@ -23,6 +25,7 @@ export interface Combination {
   name?: string;
   collections?: string[];
 }
+
 export interface CombinationChild {
   rating_key?: string;
   key?: string;
@@ -42,6 +45,7 @@ export interface CombinationChild {
   added_at?: number;
   updated_at?: number;
 }
+
 export interface Download {
   id?: string;
   created_at?: string;
@@ -59,6 +63,7 @@ export interface Download {
   files?: DownloadFile[];
   medium?: Medium;
 }
+
 export interface DownloadFile {
   id?: string;
   medium_id?: string;
@@ -66,6 +71,7 @@ export interface DownloadFile {
   num?: number;
   torrent_file?: TorrentFile;
 }
+
 export interface Episode {
   id?: string;
   created_at?: string;
@@ -98,6 +104,7 @@ export interface Episode {
   kind?: string;
   source?: string;
 }
+
 export interface Feed {
   id?: string;
   created_at?: string;
@@ -110,6 +117,7 @@ export interface Feed {
   active?: boolean;
   processed?: string;
 }
+
 export interface File {
   id?: string;
   created_at?: string;
@@ -121,6 +129,7 @@ export interface File {
   modified_at?: number;
   medium_id?: string;
 }
+
 export interface Medium {
   id?: string;
   created_at?: string;
@@ -154,6 +163,7 @@ export interface Medium {
   episode_number?: number;
   absolute_number?: number;
 }
+
 export interface Message {
   id?: string;
   created_at?: string;
@@ -163,6 +173,7 @@ export interface Message {
   facility?: string;
   message?: string;
 }
+
 export interface Minion {
   id?: string;
   created_at?: string;
@@ -174,6 +185,7 @@ export interface Minion {
   queue?: string;
   attempts?: MinionAttempt[];
 }
+
 export interface MinionAttempt {
   started_at?: string;
   duration?: number;
@@ -181,6 +193,7 @@ export interface MinionAttempt {
   error?: string;
   stacktrace?: string[];
 }
+
 export interface Movie {
   id?: string;
   created_at?: string;
@@ -211,6 +224,7 @@ export interface Movie {
   cover?: string;
   background?: string;
 }
+
 export interface NzbgetPayload {
   id?: string;
   name?: string;
@@ -220,6 +234,7 @@ export interface NzbgetPayload {
   file?: string;
   status?: string;
 }
+
 export interface Path {
   id?: string;
   type?: string;
@@ -232,6 +247,7 @@ export interface Path {
   checksum?: string;
   updated_at?: string;
 }
+
 export interface Pin {
   id?: string;
   created_at?: string;
@@ -243,17 +259,20 @@ export interface Pin {
   product?: string;
   identifier?: string;
 }
+
 export interface Popular {
   name?: string;
   year?: number;
   type?: string;
   count?: number;
 }
+
 export interface PopularResponse {
   tv?: Popular[];
   anime?: Popular[];
   movies?: Popular[];
 }
+
 export interface Release {
   id?: string;
   created_at?: string;
@@ -286,6 +305,7 @@ export interface Release {
   quality?: string;
   published_at?: string;
 }
+
 export interface Request {
   id?: string;
   created_at?: string;
@@ -298,6 +318,7 @@ export interface Request {
   source_id?: string;
   status?: string;
 }
+
 export interface SearchParams {
   type?: string;
   verified?: boolean;
@@ -308,6 +329,7 @@ export interface SearchParams {
   uncensored?: boolean;
   bluray?: boolean;
 }
+
 export interface Series {
   id?: string;
   created_at?: string;
@@ -345,6 +367,7 @@ export interface Series {
   episodes?: Episode[];
   watches?: Watch[];
 }
+
 export interface TorrentFile {
   id?: number;
   is_send?: boolean;
@@ -353,6 +376,7 @@ export interface TorrentFile {
   progress?: number;
   size?: number;
 }
+
 export interface User {
   id?: string;
   created_at?: string;
@@ -365,6 +389,7 @@ export interface User {
   home?: boolean;
   admin?: boolean;
 }
+
 export interface Watch {
   id?: string;
   created_at?: string;
