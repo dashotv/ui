@@ -2,8 +2,6 @@ import React, { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
-import { Release } from 'client/tower';
-
 import { LoadingIndicator } from 'components/Common';
 import {
   Download,
@@ -12,8 +10,6 @@ import {
   useDownloadQuery,
   useDownloadSelectionMutation,
 } from 'components/Downloads';
-import { Container } from 'components/Layout';
-import { Nzbgeek } from 'components/Nzbgeek';
 import { useDownloadingId } from 'hooks/downloading';
 
 export default function DownloadsShowPage() {
@@ -87,18 +83,16 @@ export default function DownloadsShowPage() {
         <title>Series{download && download.medium ? ` - ${download.medium.display}` : ''}</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
-      <Container>
-        {(downloadFetching || mediaFetching) && <LoadingIndicator />}
-        {download && (
-          <Download
-            {...{ id, download, changeSetting, changeInfo, selectRelease, selectMedium }}
-            type={download?.medium?.type || 'unknown'}
-            files={download.files || []}
-            episodes={media}
-            torrent={torrent}
-          />
-        )}
-      </Container>
+      {(downloadFetching || mediaFetching) && <LoadingIndicator />}
+      {download && (
+        <Download
+          {...{ id, download, changeSetting, changeInfo, selectRelease, selectMedium }}
+          type={download?.medium?.type || 'unknown'}
+          files={download.files || []}
+          episodes={media}
+          torrent={torrent}
+        />
+      )}
     </>
   );
 }
