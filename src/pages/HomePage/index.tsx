@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
+import { Container } from 'components/Layout';
+
 import CollectionsPage from './CollectionsPage';
 import CombinationsPage from './CombinationsPage';
 import DownloadsPage from './DownloadsPage';
@@ -10,7 +12,7 @@ import UpcomingPage from './UpcomingPage';
 
 export default function HomePage() {
   return (
-    <>
+    <Container>
       <Routes>
         <Route path="" element={<UpcomingPage />} />
         <Route path="collections">
@@ -24,6 +26,6 @@ export default function HomePage() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Outlet />
-    </>
+    </Container>
   );
 }

@@ -8,6 +8,17 @@ towerClient.interceptors.request.use(config => {
   config.timeout = 30000;
   return config;
 });
+towerClient.interceptors.response.use(
+  response => {
+    return response;
+  },
+  error => {
+    if (error?.response?.data?.error && error?.response?.data?.message) {
+      return error.response;
+    }
+    throw new Error('unknown error');
+  },
+);
 
 export interface Response {
   error: boolean;
