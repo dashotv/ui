@@ -57,7 +57,7 @@ export function LogRow({ id, message, facility, level, created_at }: Log) {
           {message}
         </Typography>
         <Stack
-          minWidth="250px"
+          minWidth="300px"
           width={{ xs: '100%', md: 'auto' }}
           direction="row"
           spacing={1}
