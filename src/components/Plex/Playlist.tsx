@@ -111,10 +111,9 @@ const PlexList = ({
 };
 
 const Unwatched = ({ viewed, total }: { viewed?: number; total?: number }) => {
-  if (!viewed || !total) return null;
-  if (viewed === total) return null;
+  if (!viewed || !total || viewed === total) return <Chip className="viewed" label={0} />;
   const watched = total - viewed;
-  return <Chip className="viewed" label={watched > 9 ? '+' : watched} />;
+  return <Chip className="viewed" color="primary" label={watched > 9 ? '+' : watched} />;
 };
 
 const ShowDate = ({ unix }: { unix?: number }) => {
