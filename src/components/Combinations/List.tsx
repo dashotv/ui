@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Combination } from 'client/tower';
@@ -27,6 +27,10 @@ import { useCombinationMutation, useCombinationsQuery } from './query';
 export const Combinations = () => {
   const [selected, setSelected] = useState<Combination | undefined>(undefined);
 
+  useEffect(() => {
+    console.log('selection: ', selected);
+  }, [selected]);
+
   return (
     <>
       <Container>
@@ -45,7 +49,7 @@ export const Combinations = () => {
       <Container>
         <CombinationsList {...{ setSelected }} />
       </Container>
-      {!!selected && <CombinationDialog setOpen={setSelected} combination={selected} />}
+      {selected !== undefined && <CombinationDialog setOpen={setSelected} combination={selected} />}
     </>
   );
 };
@@ -85,8 +89,12 @@ export const CombinationsList = ({ setSelected }: { setSelected: (v?: Combinatio
 };
 
 const CreateDialog = ({ open }: { open: (v?: Combination) => void }) => {
+  const openDialog = () => {
+    console.log('openDialog');
+    open({ name: '', collections: [] });
+  };
   return (
-    <IconButton aria-label="refresh" color="primary" onClick={() => open({ name: '', collections: [] })}>
+    <IconButton aria-label="refresh" color="primary" onClick={() => openDialog()}>
       <QueueIcon />
     </IconButton>
   );
@@ -105,9 +113,9 @@ const CombinationDialog = ({
   const [value, setValue] = useState<string>(combination?.name || '');
   const [selected, setSelected] = useState<string[]>(combination?.collections || []);
 
-  if (!combination?.id) {
-    return null;
-  }
+  // if (!combination?.id) {
+  //   return null;
+  // }
 
   const onChange = (collectionId: string, checked: boolean) => {
     if (checked) {
