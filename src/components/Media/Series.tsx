@@ -14,10 +14,11 @@ import RestorePageIcon from '@mui/icons-material/RestorePage';
 import StarsIcon from '@mui/icons-material/Stars';
 
 import { ButtonMapButton } from 'components/Common';
+import { Confirm } from 'components/Common/Confirm';
 import { useDownloadCreateMutation } from 'components/Downloads';
 import { Details, Downloads, Episodes, Paths, RoutingTabs, RoutingTabsRoute, Seasons, Watches } from 'components/Tabs';
 
-import { MediumBanner } from '.';
+import { MediumBanner, useSeriesDeleteMutation } from '.';
 import './Media.scss';
 
 export type SeriesProps = {
@@ -41,8 +42,11 @@ export function Series({
   queue,
   change,
 }: SeriesProps) {
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState('');
   const navigate = useNavigate();
   const download = useDownloadCreateMutation();
+  const seriesDelete = useSeriesDeleteMutation();
   const tabsMap: RoutingTabsRoute[] = [
     {
       label: 'Episodes',
@@ -76,10 +80,19 @@ export function Series({
     },
   ];
 
-  const complete = useCallback(ev => {
-    console.log('clicked complete');
+  const deleteSeries = useCallback(ev => {
     ev.preventDefault(); // for the buttons inside the Link component
+    setMessage('Are you sure you want to delete this series?');
+    setOpen(true);
   }, []);
+
+  const deleteConfirm = useCallback(() => {
+    seriesDelete.mutate(id, {
+      onSuccess: () => {
+        navigate('/series');
+      },
+    });
+  }, [navigate]);
 
   const buttons: ButtonMapButton[] = [
     {
@@ -145,7 +158,7 @@ export function Series({
     {
       Icon: RemoveCircleIcon,
       color: 'error',
-      click: complete,
+      click: deleteSeries,
       title: 'delete',
     },
   ];
@@ -154,6 +167,7 @@ export function Series({
     <div className="medium large">
       <MediumBanner id={id} variant="large" medium={series} buttons={buttons} />
       <RoutingTabs data={tabsMap} route={`/series/${id}`} />
+      <Confirm {...{ open, setOpen, message, ok: deleteConfirm }} />
     </div>
   );
 }

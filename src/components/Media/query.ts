@@ -126,6 +126,13 @@ export const useSeriesCreateMutation = () => {
   });
 };
 
+export const useSeriesDeleteMutation = () => {
+  return useMutation({
+    mutationFn: (id: string) => {
+      return tower.SeriesDelete({ id });
+    },
+  });
+};
 export const useSeriesUpdateMutation = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
