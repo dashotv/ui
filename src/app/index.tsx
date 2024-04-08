@@ -52,7 +52,7 @@ const RiftApp = lazy(() => import('rift/App'));
 const RiftAppWrapper = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <RiftApp />
+      <RiftApp mount="/rift" />
     </Suspense>
   );
 };
@@ -99,7 +99,7 @@ export function App() {
 
       <ErrorBoundary fallbackRender={fallbackRender}>
         <NavBar />
-        <Box sx={{ ml: { xs: 0, md: '240px' }, p: 2 }}>
+        <Box sx={{ ml: { xs: 0, md: '240px' } }}>
           <Routes>
             <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
             <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
