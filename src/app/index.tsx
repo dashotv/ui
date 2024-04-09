@@ -42,7 +42,7 @@ const MinionApp = lazy(() => import('minion/App'));
 const MinionAppWrapper = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <MinionApp />
+      <MinionApp mount="/minion" />
     </Suspense>
   );
 };
