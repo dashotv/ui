@@ -12,6 +12,7 @@
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "5.14.14",
     "@mui/material": "5.14.14",
+    "@mui/utils": "^5.15.14",
     "@originjs/vite-plugin-commonjs": "1.0.3",
     "@originjs/vite-plugin-federation": "^1.3.5",
     "@quara-dev/react-nats-context": "^1.3.0",
