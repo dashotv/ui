@@ -120,42 +120,41 @@ export function FilesWithSelector({
           {dialogTitle}
         </DialogTitle>
         <DialogContent>
-          {episodes &&
-            episodes.map(({ id, episode_number, season_number, absolute_number, title }, i) => (
-              <Stack
-                key={i}
-                minWidth="0"
-                width="100%"
-                spacing={1}
-                direction="row"
-                alignItems="center"
-                onClick={() => {
-                  selector(id);
-                  handleDialogClose();
-                }}
-                sx={{ p: '3px', cursor: 'pointer', '&:hover': { backgroundColor: '#343434' } }}
-              >
-                <CheckCircleIcon
-                  color={
-                    // TODO: hacky as fukc
-                    id
-                      ? tracking.get(id) === selected
-                        ? 'primary'
-                        : tracking.has(id)
-                        ? 'secondary'
-                        : 'action'
-                      : 'disabled'
-                  }
-                />
-                <Typography minWidth="85px" textAlign="right" variant="button" color="secondary">
-                  {season_number}x{episode_number}
-                  {absolute_number ? ` #${absolute_number}` : ''}
-                </Typography>
-                <Typography noWrap variant="subtitle1" color="primary">
-                  {title}
-                </Typography>
-              </Stack>
-            ))}
+          {episodes?.map(({ id, episode_number, season_number, absolute_number, title }, i) => (
+            <Stack
+              key={i}
+              minWidth="0"
+              width="100%"
+              spacing={1}
+              direction="row"
+              alignItems="center"
+              onClick={() => {
+                selector(id);
+                handleDialogClose();
+              }}
+              sx={{ p: '3px', cursor: 'pointer', '&:hover': { backgroundColor: '#343434' } }}
+            >
+              <CheckCircleIcon
+                color={
+                  // TODO: hacky as fukc
+                  id
+                    ? tracking.get(id) === selected
+                      ? 'primary'
+                      : tracking.has(id)
+                      ? 'secondary'
+                      : 'action'
+                    : 'disabled'
+                }
+              />
+              <Typography minWidth="85px" textAlign="right" variant="button" color="secondary">
+                {season_number}x{episode_number}
+                {absolute_number ? ` #${absolute_number}` : ''}
+              </Typography>
+              <Typography noWrap variant="subtitle1" color="primary">
+                {title}
+              </Typography>
+            </Stack>
+          ))}
         </DialogContent>
       </Dialog>
     </WrapErrorBoundary>

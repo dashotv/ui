@@ -89,13 +89,13 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
     {
       Icon: CancelIcon,
       color: 'warning',
-      click: () => clear(num || -1),
+      click: () => clear(num !== undefined && num >= 0 ? num : -1),
       title: 'unselect',
     },
     {
       Icon: PlaylistAddCircleIcon,
       color: medium ? 'secondary' : 'disabled',
-      click: () => open(num || -1, name(torrent_file?.name)),
+      click: () => open(num !== undefined && num >= 0 ? num : -1, name(torrent_file?.name)),
       title: 'select',
     },
     {
