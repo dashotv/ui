@@ -5,13 +5,11 @@
  * This component is the skeleton around the actual pages, and should only
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
-import React from 'react';
-import { Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
 
-import { Container } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
@@ -36,7 +34,7 @@ const RunicApp = lazy(() => import('runic/App'));
 const RunicAppWrapper = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <RunicApp />
+      <RunicApp mount="/runic" />
     </Suspense>
   );
 };
