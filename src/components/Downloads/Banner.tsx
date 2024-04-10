@@ -99,14 +99,14 @@ export const DownloadBanner = ({
     return out;
   };
 
-  if (!id || !title) {
+  if (!id) {
     return null;
   }
   return (
     <Banner
       id={id}
       images={images()}
-      title={title}
+      title={title || 'unknown'}
       subtitle={subtitle}
       extra={extra}
       tertiary={tertiary()}

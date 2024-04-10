@@ -13,46 +13,38 @@ export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
   const { get } = useDownloading();
   return (
     <>
-      {downloads?.map(({ id, status, multi, medium, updated_at }: DownloadType) => {
-        if (!id) return null;
-        const {
-          progress,
-          eta,
-          queue,
-          torrent_state: torrentState,
-          files,
-          title,
-          display: subtitle,
-          cover,
-          background,
-        } = get(id);
-        const { completed, selected } = files || {};
+      {downloads?.map(
+        ({ id, title, display: subtitle, cover, background, status, multi, updated_at }: DownloadType) => {
+          if (!id) return null;
+          const { progress, eta, queue, torrent_state: torrentState, files } = get(id);
+          const { completed, selected } = files || {};
 
-        return (
-          <Grid item key={id} md={4} xs={12}>
-            <Link to={`/downloads/${id}`}>
-              <DownloadBanner
-                {...{
-                  id,
-                  title,
-                  subtitle,
-                  cover,
-                  background,
-                  status,
-                  torrentState,
-                  progress,
-                  eta,
-                  queue,
-                  multi,
-                  files: completed,
-                  total: selected,
-                  updated_at,
-                }}
-              />
-            </Link>
-          </Grid>
-        );
-      })}
+          return (
+            <Grid item key={id} md={4} xs={12}>
+              <Link to={`/downloads/${id}`}>
+                <DownloadBanner
+                  {...{
+                    id,
+                    title,
+                    subtitle,
+                    cover,
+                    background,
+                    status,
+                    torrentState,
+                    progress,
+                    eta,
+                    queue,
+                    multi,
+                    files: completed,
+                    total: selected,
+                    updated_at,
+                  }}
+                />
+              </Link>
+            </Grid>
+          );
+        },
+      )}
     </>
   );
 }
