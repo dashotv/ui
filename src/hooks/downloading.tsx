@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-import { Downloading, EventDownloading } from 'types/events';
+import { Downloading } from 'client/tower';
+
+import { EventDownloading } from 'types/events';
 
 import { useSub } from './sub';
 
@@ -21,6 +23,8 @@ export const useDownloading = () => {
     queue: 0,
     files: { completed: 0, selected: 0 },
     torrent_state: 'unknown',
+    title: '',
+    display: '',
   });
   const [event, setEvent] = useState<EventDownloading | null>(null);
 

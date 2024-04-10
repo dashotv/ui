@@ -20,7 +20,7 @@ export interface Torrent {
 
 export interface TorrentFile {
   id: number;
-  is_send: boolean;
+  // is_seed: boolean;
   name: string;
   priority: number;
   progress: number;

@@ -146,9 +146,10 @@ export const CoverRowDownload = ({ download, buttons }: { download: DownloadType
     progress,
     // eta,
     queue,
-    files: { completed: files, selected: total },
+    files,
     // torrent_state: torrentState,
   } = get(download.id);
+  const { completed, selected } = files || {};
   return (
     <CoverRow
       title={title}
@@ -157,8 +158,8 @@ export const CoverRowDownload = ({ download, buttons }: { download: DownloadType
       image={background}
       progress={Number(progress)}
       count={queue}
-      files={total}
-      completed={files}
+      files={selected}
+      completed={completed}
       buttons={buttons}
     />
   );

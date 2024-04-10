@@ -1,10 +1,12 @@
-import { DownloadType } from 'components/Downloads';
-import { Log } from 'components/Logs';
-import { Episode, SeriesType } from 'components/Media';
-import { MovieType } from 'components/Movies';
-import { Request } from 'components/Requests';
-
-import { Torrent } from './torrents';
+import {
+  Download as DownloadType,
+  Downloading,
+  Episode,
+  Message as Log,
+  Movie as MovieType,
+  Request,
+  Series as SeriesType,
+} from 'client/tower';
 
 export interface EventBase {
   id: string;
@@ -56,21 +58,6 @@ export interface EventDownloading {
     [key: string]: string;
   };
   metrics: Metrics;
-}
-export interface Downloading {
-  id: string;
-  medium_id: string;
-  multi: boolean;
-  infohash: string;
-  torrent?: Torrent;
-  queue: number;
-  progress: number;
-  eta: string;
-  torrent_state: string;
-  files: {
-    completed: number;
-    selected: number;
-  };
 }
 
 export interface Metrics {

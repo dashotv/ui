@@ -10,6 +10,7 @@ import { DownloadList, DownloadType, useDownloadsActiveQuery } from 'components/
 import { Container } from 'components/Layout';
 import { Media } from 'components/Media';
 import { Episode } from 'components/Media';
+import { UpcomingList } from 'components/Upcoming';
 import { useSub } from 'hooks/sub';
 import { useUpcomingQuery } from 'query/upcoming';
 import { EventDownload, EventEpisode } from 'types/events';
@@ -71,7 +72,7 @@ export default function UpcomingPage() {
         {(downloads.isFetching || upcoming.isFetching) && <LoadingIndicator />}
         <Grid container spacing={1}>
           {downloads.data && <DownloadList downloads={downloads.data} />}
-          {upcoming.data && <Media data={upcoming.data.result} type="series" />}
+          {upcoming.data && <UpcomingList data={upcoming.data.result} />}
         </Grid>
       </Container>
     </>

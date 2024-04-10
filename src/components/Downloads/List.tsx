@@ -19,10 +19,15 @@ export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
           progress,
           eta,
           queue,
-          files: { completed: files, selected: total },
           torrent_state: torrentState,
+          files,
+          title,
+          display: subtitle,
+          cover,
+          background,
         } = get(id);
-        const { title, display: subtitle, cover, background } = medium || {};
+        const { completed, selected } = files || {};
+
         return (
           <Grid item key={id} md={4} xs={12}>
             <Link to={`/downloads/${id}`}>
@@ -39,8 +44,8 @@ export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
                   eta,
                   queue,
                   multi,
-                  files,
-                  total,
+                  files: completed,
+                  total: selected,
                   updated_at,
                 }}
               />

@@ -7,20 +7,20 @@ import Grid from '@mui/material/Grid';
 
 import { MediumBanner } from '.';
 
-export function Media({ data }: { type: string; data: Medium[] }) {
-  const path = (type: string, id: string, series_id: string | undefined) => {
-    switch (type) {
-      case 'Series':
-        return `/series/${id}`;
-      case 'Episode':
-        return `/series/${series_id}`;
-      case 'Movie':
-        return `/movies/${id}`;
-      default:
-        return `/${type}/404`;
-    }
-  };
+const path = (type: string, id: string, series_id: string | undefined) => {
+  switch (type) {
+    case 'Series':
+      return `/series/${id}`;
+    case 'Episode':
+      return `/series/${series_id}`;
+    case 'Movie':
+      return `/movies/${id}`;
+    default:
+      return `/${type}/404`;
+  }
+};
 
+export function Media({ data }: { type: string; data: Medium[] }) {
   return (
     <>
       {data &&
