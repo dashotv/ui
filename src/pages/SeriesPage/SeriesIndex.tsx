@@ -16,7 +16,7 @@ import { Container } from 'components/Layout';
 import { Media, useSeriesAllQuery } from 'components/Media';
 
 const pagesize = 42;
-const types: Choice[] = [
+const kinds: Choice[] = [
   { name: 'All', type: '' },
   { name: 'TV', type: 'tv' },
   { name: 'News', type: 'news' },
@@ -30,7 +30,7 @@ const sources: Choice[] = [
   { name: 'The Movie DB', type: 'tmdb' },
 ];
 
-const filtersDefaults = { type: '', source: '', active: '', favorite: '', broken: '' };
+const filtersDefaults = { kind: '', source: '', active: '', favorite: '', broken: '' };
 
 export default function SeriesIndex() {
   const [page, setPage] = useState(1);
@@ -47,8 +47,8 @@ export default function SeriesIndex() {
     setPage(value);
   };
 
-  const setType = (type: string) => {
-    setFilters({ ...filters, type });
+  const setKind = (kind: string) => {
+    setFilters({ ...filters, kind });
   };
   const setSource = (source: string) => {
     setFilters({ ...filters, source });
@@ -73,7 +73,7 @@ export default function SeriesIndex() {
         <Grid container>
           <Grid item xs={12} md={6}>
             <Stack width="100%" direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center">
-              <FilterSelect name="Type" choices={types} choose={setType} selected={filters.type} />
+              <FilterSelect name="Kind" choices={kinds} choose={setKind} selected={filters.kind} />
               <FilterSelect name="Source" choices={sources} choose={setSource} selected={filters.source} />
               <Stack direction="row" spacing={0} alignItems="center">
                 <FilterCheckbox
