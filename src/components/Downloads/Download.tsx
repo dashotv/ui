@@ -45,8 +45,8 @@ export function Download({
   changeSetting,
   changeInfo,
 }: DownloadProps) {
-  const { status, thash, release_id, url, multi, auto, force, medium } = download;
-  const { cover, background, title, display, updated_at } = medium || {};
+  const { status, thash, release_id, url, multi, auto, force, medium, cover, background, title, display } = download;
+  const { updated_at } = medium || {};
   const torrentRemove = useTorrentRemoveMutation();
   const { progress, eta, queue, torrent_state } = useDownloadingId(id);
   const [open, setOpen] = useState(false);
