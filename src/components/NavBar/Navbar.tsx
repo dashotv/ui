@@ -6,6 +6,7 @@ import { useSnackbar } from 'notistack';
 import ArticleIcon from '@mui/icons-material/Article';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import DescriptionIcon from '@mui/icons-material/Description';
 import EventIcon from '@mui/icons-material/Event';
 import FeedIcon from '@mui/icons-material/Feed';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
@@ -16,9 +17,11 @@ import PersonIcon from '@mui/icons-material/Person';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import TodayIcon from '@mui/icons-material/Today';
+import TourIcon from '@mui/icons-material/Tour';
 import TvIcon from '@mui/icons-material/Tv';
 import UpcomingIcon from '@mui/icons-material/Upcoming';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+import VideocamIcon from '@mui/icons-material/Videocam';
 import WatchIcon from '@mui/icons-material/Watch';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import WysiwygIcon from '@mui/icons-material/Wysiwyg';
@@ -60,6 +63,7 @@ const pages: NavPageWithChildren[] = [
     children: [
       { icon: <TvIcon fontSize="small" />, name: 'Series', page: '/series' },
       { icon: <TheatersIcon fontSize="small" />, name: 'Movies', page: '/movies' },
+      { icon: <DescriptionIcon fontSize="small" />, name: 'Rift', page: '/rift' },
     ],
   },
   {
@@ -67,19 +71,21 @@ const pages: NavPageWithChildren[] = [
     name: 'Runic',
     page: '/runic',
     children: [
-      { icon: <LinkIcon fontSize="small" />, name: 'Releases', page: '/runic', exact: true },
-      { icon: <LinkIcon fontSize="small" />, name: 'Indexers', page: '/runic/indexers', exact: true },
+      { icon: <FindInPageIcon fontSize="small" />, name: 'Search', page: '/runic', exact: true },
+      { icon: <TodayIcon fontSize="small" />, name: 'Popular', page: '/runic/popular' },
+      { icon: <FeedIcon fontSize="small" />, name: 'Indexers', page: '/runic/indexers' },
     ],
   },
-  {
-    icon: <LinkIcon fontSize="small" />,
-    name: 'Rift',
-    page: '/rift',
-    children: [
-      { icon: <LinkIcon fontSize="small" />, name: 'Pages', page: '/rift', exact: true },
-      { icon: <LinkIcon fontSize="small" />, name: 'Videos', page: '/rift/videos', exact: true },
-    ],
-  },
+  // {
+  //   icon: <LinkIcon fontSize="small" />,
+  //   name: 'Rift',
+  //   page: '/rift',
+  //   children: [
+  //     { icon: <DescriptionIcon fontSize="small" />, name: 'Pages', page: '/rift', exact: true },
+  //     { icon: <TourIcon fontSize="small" />, name: 'Visits', page: '/rift/visits', exact: true },
+  //     { icon: <VideocamIcon fontSize="small" />, name: 'Videos', page: '/rift/videos', exact: true },
+  //   ],
+  // },
   {
     icon: <ArticleIcon fontSize="small" />,
     name: 'Releases',
