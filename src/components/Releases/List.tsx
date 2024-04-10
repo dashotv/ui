@@ -31,7 +31,7 @@ export type ReleasesListProps = {
   data: Release[];
   type?: 'default' | 'runic';
   actions?: (row: Release) => JSX.Element;
-  selected?: { release_id?: string; url?: string };
+  selected?: string;
 };
 export function ReleasesList({ data, actions, selected, type = 'default' }: ReleasesListProps) {
   const releaseUpdate = useReleaseSettingMutation();
@@ -61,7 +61,7 @@ export function ReleasesList({ data, actions, selected, type = 'default' }: Rele
     if (!selected) {
       return false;
     }
-    return row.id === selected.release_id || row.download === selected.url;
+    return row.download === selected;
   };
 
   return (

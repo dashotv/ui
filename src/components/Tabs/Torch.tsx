@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Medium, Release } from 'client/tower';
+import { DownloadSearch, Medium, Release } from 'client/tower';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
@@ -28,59 +28,38 @@ const processSearch = (medium: Medium) => {
   return { text, episode: absolute_number - minus };
 };
 
-const formdata = (medium?: Medium): SearchForm => {
-  if (!medium) {
-    return {
-      text: '',
-      year: '',
-      season: '',
-      episode: '',
-      group: '',
-      author: '',
-      resolution: '',
-      source: '',
-      type: '',
-      exact: false,
-      verified: false,
-      uncensored: false,
-      bluray: false,
-    };
-  }
-  const { text, episode } = processSearch(medium);
-  const { kind, season_number, search_params } = medium;
-  const isAnimeKind = kind ? ['anime', 'ecchi', 'donghua'].includes(kind) : false;
-
+const formdata = (search?: DownloadSearch): SearchForm => {
   return {
-    text: text || '',
-    year: '',
-    season: isAnimeKind ? '' : season_number || '',
-    episode: episode || '',
-    group: search_params?.group || '',
+    text: search?.title || '',
+    year: search?.year ? `${search.year}` : '',
+    season: search?.season || '',
+    episode: search?.episode || '',
+    group: search?.group || '',
     author: '',
-    resolution: search_params?.resolution || '',
-    source: search_params?.source || '',
-    type: search_params?.type || '',
-    exact: false,
-    verified: search_params?.verified || false,
-    uncensored: search_params?.uncensored || false,
-    bluray: search_params?.bluray || false,
+    resolution: search?.resolution || '',
+    source: search?.source || '',
+    type: search?.type || '',
+    exact: search?.exact || false,
+    verified: search?.verified || false,
+    uncensored: search?.uncensored || false,
+    bluray: search?.bluray || false,
   };
 };
 
 export function Torch({
-  medium,
+  search,
   selector,
   selected,
 }: {
-  medium?: Medium;
+  search?: DownloadSearch;
   selector: (url: string) => void;
-  selected?: { release_id?: string; url?: string };
+  selected?: string;
 }) {
   const { queryString } = useQueryString();
-  const [initial] = useState(() => formdata(medium));
+  const [initial] = useState(() => formdata(search));
   const [form, setForm] = useState(initial);
   const [qs, setQs] = useState(() => queryString(form));
-  const { isFetching, data } = useReleasesQuery(0, pagesize, qs);
+  const { isFetching, data } = useReleasesQuery(1, pagesize, qs);
 
   const click = useCallback(() => {
     console.log('click');

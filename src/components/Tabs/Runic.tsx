@@ -69,60 +69,17 @@ import { useQueryString } from 'hooks/queryString';
 // };
 
 export function Runic({
-  medium,
+  search,
   selector,
   selected,
 }: {
-  medium?: Medium;
+  search?: Medium;
   selector: (url: string) => void;
-  selected?: { release_id?: string; url?: string };
+  selected?: string;
 }) {
-  // const { queryString } = useQueryString();
-  // const [initial] = useState(() => formdata(medium));
-  // const [form, setForm] = useState(initial);
-  // const [qs, setQs] = useState(() => queryString(form));
-  // const { isFetching, data } = useRunicQuery(0, pagesize, qs);
-
-  // const click = useCallback(() => {
-  //   console.log('click');
-  // }, []);
-
-  // const handleSelect = useCallback(
-  //   (release: Release) => {
-  //     selector(release);
-  //   },
-  //   [selector],
-  // );
-
-  // useEffect(() => {
-  //   setQs(queryString(form));
-  // }, [form, setQs, queryString]);
-
-  // const renderActions = row => {
-  //   const buttons: ButtonMapButton[] = [
-  //     {
-  //       Icon: OutboundRoundedIcon,
-  //       color: 'primary',
-  //       click: click,
-  //       title: 'edit',
-  //     },
-  //     {
-  //       Icon: CheckCircleIcon,
-  //       color: 'primary',
-  //       click: () => handleSelect(row),
-  //       title: 're-process',
-  //     },
-  //   ];
-  //   return <ButtonMap buttons={buttons} size="small" />;
-  // };
-
-  // if (!releases.data) {
-  //   return;
-  // }
-
   return (
     <WrapErrorBoundary>
-      <RunicSearch {...{ medium, selector, selected }} />
+      <RunicSearch {...{ search, selector, selected }} />
     </WrapErrorBoundary>
   );
 }

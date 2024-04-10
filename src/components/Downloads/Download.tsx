@@ -54,9 +54,9 @@ export function Download({
 
   const tabsMap = {
     Files: <FilesWithSelector files={files} torrent={torrent} episodes={episodes} updater={selectMedium} />,
-    Torch: <Torch medium={medium} selector={selectRelease} selected={{ release_id, url }} />,
-    Runic: <Runic medium={medium} selector={selectRelease} selected={{ release_id, url }} />,
-    Nzbgeek: <Nzbgeek medium={medium} selector={selectRelease} selected={{ release_id, url }} />,
+    Torch: <Torch search={download.search} selector={selectRelease} selected={url} />,
+    Runic: <Runic search={download.search} selector={selectRelease} selected={url} />,
+    Nzbgeek: <Nzbgeek search={download.search} selector={selectRelease} selected={url} />,
   };
 
   const remove = useCallback((status: string) => {

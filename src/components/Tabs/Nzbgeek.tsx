@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Medium, Release } from 'client/tower';
+import { DownloadSearch, Release } from 'client/tower';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
@@ -19,37 +19,37 @@ import {
 import { useQueryString } from 'hooks/queryString';
 
 export const Nzbgeek = ({
-  medium,
+  search,
   selector,
   selected,
 }: {
-  medium?: Medium;
+  search?: DownloadSearch;
   selector: (url: string) => void;
-  selected?: { release_id?: string; url?: string };
+  selected?: string;
 }) => {
-  switch (medium?.type) {
-    case 'Series':
-    case 'Episode':
-      return <NzbgeekTv {...{ medium, selector, selected }} />;
-    case 'Movie':
-      return <NzbgeekMovie {...{ medium, selector, selected }} />;
+  switch (search?.type) {
+    case 'tv':
+    case 'anime':
+      return <NzbgeekTv {...{ search, selector, selected }} />;
+    case 'movies':
+      return <NzbgeekMovie {...{ search, selector, selected }} />;
     default:
       return <>wut?</>;
   }
 };
 
 export type NzbgeekTvProps = {
-  medium?: Medium;
+  search?: DownloadSearch;
   selector: (url: string) => void;
-  selected?: { release_id?: string; url?: string };
+  selected?: string;
 };
-export function NzbgeekTv({ medium, selector, selected }: NzbgeekTvProps) {
+export function NzbgeekTv({ search, selector, selected }: NzbgeekTvProps) {
   const { queryString } = useQueryString();
   // const [initial] = useState<NzbgeekFormTv | NzbgeekFormMovie | null>(null);
   const [form, setForm] = useState<NzbgeekFormTv>(() => {
-    if (!medium) return {};
-    const { source_id, season_number, episode_number } = medium;
-    return { tvdbid: source_id, season: season_number, episode: episode_number };
+    if (!search) return {};
+    const { source_id, season, episode } = search;
+    return { tvdbid: source_id, season: season || '', episode: episode || '' };
   });
   const [qs, setQs] = useState(queryString(form));
   const { isFetching, data: nzbs } = useNzbSearchTvQuery(qs);
@@ -101,17 +101,17 @@ export function NzbgeekTv({ medium, selector, selected }: NzbgeekTvProps) {
 }
 
 export type NzbgeekMovieProps = {
-  medium?: Medium;
+  search?: DownloadSearch;
   selector: (url: string) => void;
-  selected?: { release_id?: string; url?: string };
+  selected?: string;
 };
-export function NzbgeekMovie({ medium, selector, selected }: NzbgeekMovieProps) {
+export function NzbgeekMovie({ search, selector, selected }: NzbgeekMovieProps) {
   const { queryString } = useQueryString();
   // const [initial] = useState<NzbgeekFormTv | NzbgeekFormMovie | null>(null);
   const [form, setForm] = useState<NzbgeekFormMovie>(() => {
-    if (!medium) return {};
-    const { imdb_id, source_id } = medium;
-    return { imdbid: imdb_id, tmdbid: source_id };
+    if (!search) return {};
+    const { source_id } = search;
+    return { imdbid: source_id, tmdbid: source_id };
   });
   const [qs, setQs] = useState(queryString(form));
   const { isFetching, data: nzbs } = useNzbSearchMovieQuery(qs);

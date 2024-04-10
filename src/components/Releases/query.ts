@@ -64,10 +64,10 @@ export const patchFeed = async (id: string, setting: tower.Setting) => {
   return response;
 };
 
-export const useReleasesQuery = (start, pagesize, queryString) =>
+export const useReleasesQuery = (page, pagesize, queryString) =>
   useQuery({
-    queryKey: ['releases', start, pagesize, queryString],
-    queryFn: () => getReleasesPage(start, pagesize, queryString),
+    queryKey: ['releases', page, pagesize, queryString],
+    queryFn: () => getReleasesPage(page, pagesize, queryString),
     placeholderData: previousData => previousData,
     retry: false,
   });

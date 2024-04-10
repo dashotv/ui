@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Medium, Release } from 'client/tower';
+import { DownloadSearch, Medium, Release } from 'client/tower';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
@@ -28,50 +28,31 @@ import { RunicResults } from './Results';
 import { RunicForm } from './types';
 
 const pagesize = 25;
-const formData = (medium?: Medium): RunicForm => {
-  if (!medium) {
-    return {
-      text: '',
-      year: '',
-      season: '',
-      episode: '',
-      group: '',
-      website: '',
-      resolution: '',
-      source: '',
-      type: '',
-      exact: false,
-      verified: false,
-      uncensored: false,
-      bluray: false,
-    };
-  }
-
+const formData = (search?: DownloadSearch): RunicForm => {
   return {
-    text: medium.search || '',
-    year: '',
-    season: medium.season_number || '',
-    episode: medium.episode_number || '',
+    text: search?.title || '',
+    year: search?.year ? `${search.year}` : '',
+    season: search?.season || '',
+    episode: search?.episode || '',
+    website: search?.group || '',
     group: '',
-    website: medium.search_params?.group || '',
-    resolution: medium.search_params?.resolution || '',
-    source: medium.search_params?.source || '',
-    type: medium.search_params?.type || '',
-    exact: false,
-    verified: false,
-    uncensored: false,
-    bluray: false,
+    resolution: search?.resolution || '',
+    source: search?.source || '',
+    type: search?.type || '',
+    exact: search?.exact || false,
+    verified: search?.verified || false,
+    uncensored: search?.uncensored || false,
+    bluray: search?.bluray || false,
   };
 };
 
 export interface RunicSearchProps {
   selector: (url: string) => void;
-  selected?: { url?: string; release_id?: string };
-  medium?: Medium;
+  selected?: string;
+  search?: DownloadSearch;
 }
-
-export const RunicSearch = ({ medium, selector, selected }: RunicSearchProps) => {
-  const [rawForm] = useState<RunicForm>(formData(medium));
+export const RunicSearch = ({ search, selector, selected }: RunicSearchProps) => {
+  const [rawForm] = useState<RunicForm>(formData(search));
   const [form, setForm] = useState<RunicForm>(rawForm);
   const [defaultForm] = useState<RunicForm>(rawForm);
   const { handleSubmit, control } = useForm<RunicForm>({ values: form });
@@ -169,7 +150,7 @@ export const RunicSearch = ({ medium, selector, selected }: RunicSearchProps) =>
         </Box>
       </Paper>
       {isFetching ? <LoadingIndicator /> : null}
-      {data?.Releases ? <RunicResults data={data?.Releases} actions={actions} selected={undefined} /> : null}
+      {data?.Releases ? <RunicResults data={data?.Releases} actions={actions} selected={selected} /> : null}
     </>
   );
 };

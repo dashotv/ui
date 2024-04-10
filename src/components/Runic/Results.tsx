@@ -28,7 +28,7 @@ import { Chrono, Group, Megabytes, Resolution, Row } from 'components/Common';
 export type RunicResultsProps = {
   data: Release[];
   actions?: (row: Release) => JSX.Element;
-  selected?: { release_id?: string; url?: string };
+  selected?: string;
 };
 export function RunicResults({ data, actions, selected }: RunicResultsProps) {
   const [open, setOpen] = React.useState(false);
@@ -49,7 +49,7 @@ export function RunicResults({ data, actions, selected }: RunicResultsProps) {
     if (!selected) {
       return false;
     }
-    return row.id === selected.release_id || row.download === selected.url;
+    return row.download === selected || row.download == 'metube://' + selected;
   };
 
   return (

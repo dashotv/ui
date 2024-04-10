@@ -69,14 +69,13 @@ export interface Download {
   source?: string;
   source_id?: string;
   kind?: string;
-  search?: string;
   directory?: string;
-  search_params?: SearchParams;
   active?: boolean;
   favorite?: boolean;
   unwatched?: number;
   cover?: string;
   background?: string;
+  search?: DownloadSearch;
 }
 
 export interface DownloadFile {
@@ -85,6 +84,24 @@ export interface DownloadFile {
   medium?: Medium;
   num?: number;
   torrent_file?: TorrentFile;
+}
+
+export interface DownloadSearch {
+  type?: string;
+  source?: string;
+  source_id?: string;
+  title?: string;
+  year?: number;
+  season?: number;
+  episode?: number;
+  resolution?: number;
+  group?: string;
+  website?: string;
+  exact?: boolean;
+  verified?: boolean;
+  uncensored?: boolean;
+  bluray?: boolean;
+  three_d?: boolean;
 }
 
 export interface Downloading {
@@ -119,8 +136,6 @@ export interface Episode {
   source_id?: string;
   title?: string;
   description?: string;
-  directory?: string;
-  search?: string;
   season_number?: number;
   episode_number?: number;
   absolute_number?: number;

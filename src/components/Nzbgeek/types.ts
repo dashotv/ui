@@ -1,7 +1,7 @@
 export interface NzbgeekFormTv {
   tvdbid?: string;
-  season?: number;
-  episode?: number;
+  season?: number | '';
+  episode?: number | '';
 }
 export interface NzbgeekFormMovie {
   imdbid?: string;
