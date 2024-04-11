@@ -72,7 +72,7 @@ const pages: NavPageWithChildren[] = [
     page: '/runic',
     children: [
       { icon: <FindInPageIcon fontSize="small" />, name: 'Search', page: '/runic', exact: true },
-      { icon: <TodayIcon fontSize="small" />, name: 'Popular', page: '/runic/popular' },
+      { icon: <TodayIcon fontSize="small" />, name: 'Popular', page: '/runic/popular/*' },
       { icon: <FeedIcon fontSize="small" />, name: 'Indexers', page: '/runic/indexers' },
     ],
   },
