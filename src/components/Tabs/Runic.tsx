@@ -1,85 +1,46 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
 
-import { Medium, Release } from 'client/tower';
+import { DownloadSearch, Medium, Release } from 'client/tower';
 
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
-import Paper from '@mui/material/Paper';
+import { WrapErrorBoundary } from 'components/Common';
+import { RunicForm } from 'components/Runic';
 
-import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
-import { ReleasesForm, ReleasesList, SearchForm, useRunicQuery } from 'components/Releases';
-import { RunicResults, RunicSearch } from 'components/Runic';
-import { useQueryString } from 'hooks/queryString';
+const RunicSearch = lazy(() => import('runic/Search'));
+const RunicSearchWrapper = ({ search, selector, selected }: RunicSearchProps) => {
+  const [rawForm] = useState<RunicForm>(formData(search));
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RunicSearch {...{ rawForm, selector, selected }} />
+    </Suspense>
+  );
+};
 
-// const pagesize = 25;
-
-// const processSearch = (medium: Medium) => {
-//   const { kind, search, display, episode_number, absolute_number } = medium;
-//   const isAnimeKind = kind ? ['anime', 'ecchi', 'donghua'].includes(kind) : false;
-//   if (!search) {
-//     return { text: display, episode: episode_number };
-//   }
-//   if (!isAnimeKind || !search.includes(':') || !absolute_number || absolute_number === 0) {
-//     return { text: search, episode: episode_number };
-//   }
-//
-//   const s = search.split(':');
-//   const text = s[0];
-//   const minus = Number(s[1]) || 0;
-//   return { text, episode: absolute_number - minus };
-// };
-//
-// const formdata = (medium?: Medium): SearchForm => {
-//   if (!medium) {
-//     return {
-//       text: '',
-//       year: '',
-//       season: '',
-//       episode: '',
-//       group: '',
-//       author: '',
-//       resolution: '',
-//       source: '',
-//       type: '',
-//       exact: false,
-//       verified: false,
-//       uncensored: false,
-//       bluray: false,
-//     };
-//   }
-//   const { text, episode } = processSearch(medium);
-//   const { kind, season_number, search_params } = medium;
-//   const isAnimeKind = kind ? ['anime', 'ecchi', 'donghua'].includes(kind) : false;
-//
-//   return {
-//     text: text || '',
-//     year: '',
-//     season: isAnimeKind ? '' : season_number || '',
-//     episode: episode || '',
-//     group: search_params?.group || '',
-//     author: '',
-//     resolution: search_params?.resolution || '',
-//     source: search_params?.source || '',
-//     type: search_params?.type || '',
-//     exact: false,
-//     verified: false,
-//     uncensored: search_params?.uncensored || false,
-//     bluray: search_params?.bluray || false,
-//   };
-// };
-
-export function Runic({
-  search,
-  selector,
-  selected,
-}: {
-  search?: Medium;
+const formData = (search?: DownloadSearch): RunicForm => {
+  return {
+    text: search?.title || '',
+    year: search?.year ? `${search.year}` : '',
+    season: search?.season || '',
+    episode: search?.episode || '',
+    website: search?.group || '',
+    group: '',
+    resolution: search?.resolution || '',
+    source: search?.source || '',
+    type: search?.type || '',
+    exact: search?.exact || false,
+    verified: search?.verified || false,
+    uncensored: search?.uncensored || false,
+    bluray: search?.bluray || false,
+  };
+};
+export interface RunicSearchProps {
+  search?: DownloadSearch;
   selector: (url: string) => void;
   selected?: string;
-}) {
+}
+export function Runic({ search, selector, selected }: RunicSearchProps) {
   return (
     <WrapErrorBoundary>
-      <RunicSearch {...{ search, selector, selected }} />
+      <RunicSearchWrapper {...{ search, selector, selected }} />
     </WrapErrorBoundary>
   );
 }

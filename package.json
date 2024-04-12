@@ -79,7 +79,8 @@
     "docker:exec": "docker exec -it ui sh",
     "docker:push": "docker push dashotv/ui",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "update-clients": "cp -r ../runic/ui/src/client ./src/client/runic && cp -r ../rift/ui/src/client ./src/client/rift"
   },
   "eslintConfig": {
     "extends": "react-app"
