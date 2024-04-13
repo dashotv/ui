@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { NzbgeekFormMovie, NzbgeekFormTv, SearchResult } from 'client/scry/nzbgeek';
 import { DownloadSearch, Release } from 'client/tower';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -7,12 +8,9 @@ import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 
 import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
 import {
-  NzbgeekFormMovie,
-  NzbgeekFormTv,
   NzbgeekResults,
   NzbgeekSearchMovie,
   NzbgeekSearchTv,
-  Nzbgeek as NzbgeekType,
   useNzbSearchMovieQuery,
   useNzbSearchTvQuery,
 } from 'components/Nzbgeek';
@@ -51,15 +49,10 @@ export function NzbgeekTv({ search, selector, selected }: NzbgeekTvProps) {
     const { source_id, season, episode } = search;
     return { tvdbid: source_id, season: season || '', episode: episode || '' };
   });
-  const [qs, setQs] = useState(queryString(form));
-  const { isFetching, data: nzbs } = useNzbSearchTvQuery(qs);
-
-  useEffect(() => {
-    setQs(queryString(form));
-  }, [form, queryString]);
+  const { isFetching, data: nzbs } = useNzbSearchTvQuery(form);
 
   const handleSelect = useCallback(
-    (selected: NzbgeekType) => {
+    (selected: SearchResult) => {
       selector(selected.link);
     },
     [selector],
@@ -73,7 +66,7 @@ export function NzbgeekTv({ search, selector, selected }: NzbgeekTvProps) {
     console.log('click');
   }, []);
 
-  const renderActions = (row: NzbgeekType) => {
+  const renderActions = (row: SearchResult) => {
     const buttons: ButtonMapButton[] = [
       {
         Icon: OutboundRoundedIcon,
@@ -113,16 +106,10 @@ export function NzbgeekMovie({ search, selector, selected }: NzbgeekMovieProps) 
     const { source_id } = search;
     return { imdbid: source_id, tmdbid: source_id };
   });
-  const [qs, setQs] = useState(queryString(form));
-  const { isFetching, data: nzbs } = useNzbSearchMovieQuery(qs);
-
-  useEffect(() => {
-    if (!form.imdbid) return;
-    setQs(queryString(form));
-  }, [form, queryString]);
+  const { isFetching, data: nzbs } = useNzbSearchMovieQuery(form);
 
   const handleSelect = useCallback(
-    (selected: NzbgeekType) => {
+    (selected: SearchResult) => {
       selector(selected.link);
     },
     [selector],
@@ -136,7 +123,7 @@ export function NzbgeekMovie({ search, selector, selected }: NzbgeekMovieProps) 
     console.log('click');
   }, []);
 
-  const renderActions = (row: NzbgeekType) => {
+  const renderActions = (row: SearchResult) => {
     const buttons: ButtonMapButton[] = [
       {
         Icon: OutboundRoundedIcon,
