@@ -57,7 +57,7 @@ export function NzbgeekResultsRow({
         alignItems="center"
         justifyContent="space-between"
       >
-        <Stack width="100%" direction="row" spacing={1} alignItems="center" maxWidth={{ xs: '100%', md: '900px' }}>
+        <Stack width="100%" direction="row" spacing={1} alignItems="center" maxWidth={{ xs: '100%', md: '700px' }}>
           <ArticleIcon fontSize="small" />
           <Typography title={title} fontWeight="bolder" color="primary" noWrap>
             {title}
