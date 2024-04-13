@@ -1,31 +1,32 @@
 import React from 'react';
 
+import { SearchResult } from 'client/scry';
+
 import Stack from '@mui/material/Stack';
 
 import { MediaIcon } from './Icon';
 import './Media.scss';
-import { Option } from './types';
 
 export const MediaCover = ({
   option,
   type,
   imageOnly = false,
 }: {
-  option: Option;
+  option: SearchResult;
   type?: string;
   imageOnly?: boolean;
 }) => {
   return (
     <div className="mediaCover">
-      {option.Image && <MediaCoverImage image={option.Image} />}
+      {option.image && <MediaCoverImage image={option.image} />}
       {imageOnly || (
         <>
-          <div className="title">{option.Title}</div>
-          <div className="description">{option.Description}</div>
+          <div className="title">{option.title}</div>
+          <div className="description">{option.description}</div>
           <div className="release">
             <Stack direction="row" spacing={1}>
-              <MediaIcon type={type || option.Type} />
-              <span>{option.Date}</span>
+              <MediaIcon type={type || option.type} />
+              <span>{option.date}</span>
             </Stack>
           </div>
         </>
@@ -46,7 +47,13 @@ export const MediaCoverImage = ({
   selected?: boolean;
 }) => {
   if (!image || image === '') {
-    return <div className="mediaCover"><div className="image"><img src="/blank.png" /></div></div>;
+    return (
+      <div className="mediaCover">
+        <div className="image">
+          <img src="/blank.png" />
+        </div>
+      </div>
+    );
   }
   return (
     <div className="mediaCover">

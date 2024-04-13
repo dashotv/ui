@@ -1,17 +1,16 @@
+import { SearchResult } from 'client/scry';
 import * as tower from 'client/tower';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { Option } from './types';
-
-export const createSeries = async (option: Option) => {
+export const createSeries = async (option: SearchResult) => {
   const subject: tower.Series = {
-    title: option.Title,
-    kind: option.Kind,
-    source: option.Source,
-    source_id: option.ID,
-    description: option.Description,
-    release_date: new Date(option.Date).toISOString(),
+    title: option.title,
+    kind: option.kind,
+    source: option.source,
+    source_id: option.id,
+    description: option.description,
+    release_date: option.date && new Date(option.date).toISOString(),
   };
   const response = await tower.SeriesCreate({ subject });
   return response;
@@ -120,7 +119,7 @@ export const useEpisodeBatchSettingMutation = () => {
 
 export const useSeriesCreateMutation = () => {
   return useMutation({
-    mutationFn: (n: Option) => {
+    mutationFn: (n: SearchResult) => {
       return createSeries(n);
     },
   });
