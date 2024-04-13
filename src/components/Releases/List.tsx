@@ -78,32 +78,24 @@ export function ReleasesList({ data, actions, selected, type = 'default' }: Rele
               alignItems="center"
             >
               <Stack direction="row" alignItems="center" spacing={0}>
-                <IconButton size="small" sx={{ pr: '2px', pl: '2px' }}>
+                <IconButton size="small" sx={{ pr: '2px', pl: '2px' }} onClick={() => toggleVerified(row)}>
                   {row.nzb ? (
                     <SvgIcon
                       sx={{ width: '20px', height: '20px' }}
                       component={HiOutlineNewspaper}
                       inheritViewBox
+                      color={row.verified ? 'secondary' : 'disabled'}
                       fontSize="small"
-                      color="disabled"
                     />
                   ) : (
                     <SvgIcon
                       sx={{ width: '18px', height: '18px' }}
                       component={SiUtorrent}
                       inheritViewBox
+                      color={row.verified ? 'secondary' : 'disabled'}
                       fontSize="small"
-                      color="disabled"
                     />
                   )}
-                </IconButton>
-                <IconButton
-                  size="small"
-                  onClick={() => toggleVerified(row)}
-                  title="verified"
-                  sx={{ pr: '2px', pl: '2px' }}
-                >
-                  <CheckCircleIcon color={row.verified ? 'secondary' : 'disabled'} fontSize="small" />
                 </IconButton>
                 <IconButton size="small" title="bluray" sx={{ pr: '2px', pl: '2px' }}>
                   <VideocamIcon color={row.bluray ? 'secondary' : 'disabled'} fontSize="small" />
@@ -241,14 +233,11 @@ export const ReleaseDialog = ({
   return (
     <Dialog open={open} onClose={handleClose} fullWidth fullScreen={fullScreen} maxWidth="md">
       <DialogTitle>
-        <Typography noWrap color="primary" variant="h6">
+        <Typography noWrap color="primary" variant="body1">
           {name || title}
         </Typography>
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} alignItems="center">
           <Stack width={{ xs: '100%', md: 'inherit' }} direction="row" alignItems="center">
-            <IconButton size="small" title="verified">
-              <CheckCircleIcon color={verified ? 'secondary' : 'disabled'} fontSize="small" />
-            </IconButton>
             <IconButton size="small">
               {nzb ? (
                 <SvgIcon
@@ -256,7 +245,7 @@ export const ReleaseDialog = ({
                   component={HiOutlineNewspaper}
                   inheritViewBox
                   fontSize="small"
-                  color="disabled"
+                  color={verified ? 'secondary' : 'disabled'}
                 />
               ) : (
                 <SvgIcon
@@ -264,7 +253,7 @@ export const ReleaseDialog = ({
                   component={SiUtorrent}
                   inheritViewBox
                   fontSize="small"
-                  color="disabled"
+                  color={verified ? 'secondary' : 'disabled'}
                 />
               )}
             </IconButton>

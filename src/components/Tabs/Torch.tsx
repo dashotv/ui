@@ -11,22 +11,7 @@ import { ReleasesForm, ReleasesList, SearchForm, useReleasesQuery } from 'compon
 import { useQueryString } from 'hooks/queryString';
 
 const pagesize = 25;
-
-const processSearch = (medium: Medium) => {
-  const { kind, search, display, episode_number, absolute_number } = medium;
-  const isAnimeKind = kind ? ['anime', 'ecchi', 'donghua'].includes(kind) : false;
-  if (!search) {
-    return { text: display, episode: episode_number };
-  }
-  if (!isAnimeKind || !search.includes(':') || !absolute_number || absolute_number === 0) {
-    return { text: search, episode: episode_number };
-  }
-
-  const s = search.split(':');
-  const text = s[0];
-  const minus = Number(s[1]) || 0;
-  return { text, episode: absolute_number - minus };
-};
+const page = 1;
 
 const formdata = (search?: DownloadSearch): SearchForm => {
   return {
@@ -59,7 +44,7 @@ export function Torch({
   const [initial] = useState(() => formdata(search));
   const [form, setForm] = useState(initial);
   const [qs, setQs] = useState(() => queryString(form));
-  const { isFetching, data } = useReleasesQuery(1, pagesize, qs);
+  const { isFetching, data } = useReleasesQuery(page, pagesize, form);
 
   const click = useCallback(() => {
     console.log('click');

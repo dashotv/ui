@@ -45,7 +45,7 @@ export default function ReleasesSearchPage() {
   );
   const [page, setPage] = useState(1);
   const [qs, setQs] = useState(queryString(form));
-  const { isFetching, data } = useReleasesQuery(page, pagesize, qs);
+  const { isFetching, data } = useReleasesQuery(page, pagesize, form);
 
   const handleChange = useCallback((event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -55,10 +55,6 @@ export default function ReleasesSearchPage() {
     setForm(formDefaults);
     setPage(1);
   };
-
-  // const click = useCallback(() => {
-  //   console.log('click');
-  // }, []);
 
   useEffect(() => {
     setQs(queryString(form));
@@ -121,7 +117,7 @@ export default function ReleasesSearchPage() {
           </Stack>
         </Paper>
       </Container>
-      <Container>{data && <ReleasesList data={data.Releases} actions={renderActions} />}</Container>
+      <Container>{data && <ReleasesList data={data?.Releases} actions={renderActions} />}</Container>
     </>
   );
 }

@@ -1,22 +1,32 @@
+import * as scry from 'client/scry';
 import * as tower from 'client/tower';
-import { scry } from 'utils/axios';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { ReleasesResponse } from './types';
+import { SearchForm } from './types';
 
-export const getReleasesPage = async (page, pagesize, qs) => {
-  const start = (page - 1) * pagesize;
-  const response = await scry.get(`/releases/?start=${start}&limit=${pagesize}&${qs}`);
+export const getReleasesPage = async (page: number, limit: number, search: SearchForm) => {
+  const start = (page - 1) * limit;
+  const req = {
+    start,
+    limit,
+    text: search.text ? search.text : '',
+    year: search.year ? Number(search.year) : -1,
+    season: search.season ? Number(search.season) : -1,
+    episode: search.episode ? Number(search.episode) : -1,
+    group: search.group ? search.group : '',
+    author: '',
+    type: search.type ? search.type : '',
+    source: search.source ? search.source : '',
+    resolution: search.resolution ? Number(search.resolution) : -1,
+    uncensored: search.uncensored || false,
+    bluray: search.bluray || false,
+    verified: search.verified || false,
+    exact: search.exact || false,
+  };
+  const response = await scry.ReleasesIndex(req);
   console.log('getReleasesPage:', response);
-  return response.data as ReleasesResponse;
-};
-
-export const getRunicPage = async (page, pagesize, qs) => {
-  const start = (page - 1) * pagesize;
-  const response = await scry.get(`/runic/?start=${start}&limit=${pagesize}&${qs}`);
-  console.log('getRunicPage:', response);
-  return response.data as ReleasesResponse;
+  return response.result;
 };
 
 export const getRelease = async id => {
@@ -68,14 +78,6 @@ export const useReleasesQuery = (page, pagesize, queryString) =>
   useQuery({
     queryKey: ['releases', page, pagesize, queryString],
     queryFn: () => getReleasesPage(page, pagesize, queryString),
-    placeholderData: previousData => previousData,
-    retry: false,
-  });
-
-export const useRunicQuery = (start, pagesize, queryString) =>
-  useQuery({
-    queryKey: ['runic', start, pagesize, queryString],
-    queryFn: () => getRunicPage(start, pagesize, queryString),
     placeholderData: previousData => previousData,
     retry: false,
   });
