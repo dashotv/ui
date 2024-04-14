@@ -23,7 +23,9 @@ export default function UpcomingPage() {
   const updateDownloads = useCallback(
     (data: EventDownload) => {
       if (data.event === 'updated' && (data.download.status === 'done' || data.download.status === 'deleted')) {
-        queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) => prev.filter(e => e.id !== data.id));
+        queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) =>
+          prev ? prev.filter(e => e.id !== data.id) : [],
+        );
         return;
       }
       if (data.event === 'created' || data.event === 'new') {
@@ -46,7 +48,7 @@ export default function UpcomingPage() {
       if (data.event === 'updated') {
         if (data.episode.downloaded) {
           queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) =>
-            prev.filter(e => e.id !== data.episode.id),
+            prev ? prev.filter(e => e.id !== data.episode.id) : [],
           );
         } else {
           queryClient.setQueryData(['media', 'upcoming'], (prev: Episode[]) => {
