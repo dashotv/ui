@@ -7,7 +7,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
-import Grid2 from '@mui/material/Grid';
+import Grid from '@mui/material/Grid';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -93,11 +93,11 @@ const buttons: ButtonMapButton[] = [
 export const DownloadSmall: Story = {
   render: args => {
     return (
-      <Grid2 container>
-        <Grid2 item md={4} xs={12}>
+      <Grid container>
+        <Grid item md={4} xs={12}>
           <DownloadBanner {...args} />
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     );
   },
 };
@@ -105,17 +105,17 @@ export const DownloadSmall: Story = {
 export const DownloadState: Story = {
   render: args => {
     return (
-      <Grid2 container spacing={3}>
-        <Grid2 item md={4} xs={12}>
+      <Grid container spacing={3}>
+        <Grid item md={4} xs={12}>
           <DownloadBanner {...args} />
-        </Grid2>
-        <Grid2 item md={4} xs={12}>
+        </Grid>
+        <Grid item md={4} xs={12}>
           <DownloadBanner {...args} torrentState="error" />
-        </Grid2>
-        <Grid2 item md={4} xs={12}>
+        </Grid>
+        <Grid item md={4} xs={12}>
           <DownloadBanner {...args} torrentState="pausedDL" />
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     );
   },
 };
@@ -131,11 +131,11 @@ export const DownloadMulti: Story = {
     args.files = 19;
     args.total = 48;
     return (
-      <Grid2 container>
-        <Grid2 item width="400px">
+      <Grid container>
+        <Grid item width="400px">
           <DownloadBanner {...args} />
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     );
   },
 };

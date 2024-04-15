@@ -10,8 +10,8 @@ import { SnackbarProvider } from 'notistack';
 // Use consistent styling
 import 'sanitize.css/sanitize.css';
 
+import { ThemeProvider, createTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { ClerkProvider } from '@clerk/clerk-react';
 import { dark } from '@clerk/themes';

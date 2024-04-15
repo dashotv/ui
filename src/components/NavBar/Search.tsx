@@ -189,11 +189,9 @@ export function SuperSearchDialog({
         {data?.media?.error || data?.tvdb?.error || data?.tmdb?.error ? (
           <Alert severity="error">{data?.media?.error || data?.tvdb?.error || data?.tmdb?.error}</Alert>
         ) : null}
-        <SuperSearchAccordion name="Dasho.TV" data={data && data?.media?.results} select={select} />
-        {remote && (
-          <SuperSearchAccordion name="TVDB" type="series" data={data && data?.tvdb?.results} select={create} />
-        )}
-        {remote && <SuperSearchAccordion name="TMDB" type="movie" data={data && data?.tmdb?.results} select={create} />}
+        <SuperSearchAccordion name="Dasho.TV" data={data?.media?.results} select={select} />
+        {remote && <SuperSearchAccordion name="TVDB" type="series" data={data?.tvdb?.results} select={create} />}
+        {remote && <SuperSearchAccordion name="TMDB" type="movie" data={data?.tmdb?.results} select={create} />}
       </DialogContent>
     </Dialog>
   );

@@ -50,6 +50,7 @@ export default ({ mode }) => {
       }),
     ],
     optimizeDeps: {
+      include: ['@mui/material/Unstable_Grid2/Grid2'], // https://github.com/vitejs/vite/issues/12423#issuecomment-1779443566
       esbuildOptions: {
         plugins: [esbuildCommonjs(['react-moment'])],
       },

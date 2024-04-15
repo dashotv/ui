@@ -14,9 +14,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
+import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Unstable_Grid2';
 
 import { useCollectionsQuery } from 'components/Collections';
 import { Chrono, LoadingIndicator, Row } from 'components/Common';

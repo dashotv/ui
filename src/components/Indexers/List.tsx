@@ -5,12 +5,12 @@ import ClassIcon from '@mui/icons-material/Class';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PlayLessonIcon from '@mui/icons-material/PlayLesson';
 import QueueIcon from '@mui/icons-material/Queue';
+import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Unstable_Grid2';
 
 import { LoadingIndicator, Published, Row } from 'components/Common';
 import { Container } from 'components/Layout';
