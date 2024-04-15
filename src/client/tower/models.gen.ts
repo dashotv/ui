@@ -81,8 +81,8 @@ export interface Download {
 export interface DownloadFile {
   id?: string;
   medium_id?: string;
-  medium?: Medium;
   num?: number;
+  medium?: Medium;
   torrent_file?: TorrentFile;
 }
 
