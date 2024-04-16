@@ -15,4 +15,5 @@ export * from './requests.gen';
 export * from './series.gen';
 export * from './upcoming.gen';
 export * from './users.gen';
+export * from './want.gen';
 export * from './watches.gen';

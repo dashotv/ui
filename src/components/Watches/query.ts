@@ -1,6 +1,6 @@
 import * as tower from 'client/tower';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { Watch } from './types';
 
@@ -17,4 +17,10 @@ export const useWatchesQuery = (page: number, medium_id?: string) =>
     queryFn: () => getWatches(page, medium_id),
     placeholderData: previousData => previousData,
     retry: false,
+  });
+
+export const useWatchesCreateMutation = () =>
+  useMutation({
+    mutationFn: (watch: { medium_id: string; username?: string }) =>
+      tower.WatchesCreate({ username: watch.username || '', medium_id: watch.medium_id }),
   });

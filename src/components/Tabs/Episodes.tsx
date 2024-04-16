@@ -16,6 +16,8 @@ import Typography from '@mui/material/Typography';
 import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from 'components/Common';
 import { useDownloadCreateMutation } from 'components/Downloads';
 import { useEpisodeBatchSettingMutation } from 'components/Media';
+import { useWatchesCreateMutation } from 'components/Watches';
+import { myPlexUsername } from 'types/constants';
 
 export function Episodes({
   kind,
@@ -37,7 +39,7 @@ export function Episodes({
     if (!episodes) {
       return;
     }
-    setIds(() => episodes.map(episode => episode.id || ''));
+    setIds(() => episodes.map(episode => episode.id || '').filter(id => id));
     setSkipped(() => episodes.filter(episode => episode.skipped).length === episodes.length);
     setDownloaded(() => episodes.filter(episode => episode.downloaded).length === episodes.length);
     setCompleted(() => episodes.filter(episode => episode.completed).length === episodes.length);
@@ -89,8 +91,6 @@ function EpisodeRow({
     id,
     title,
     missing,
-    watched,
-    watched_any,
     episode_number: number,
     absolute_number: absolute,
     release_date: release,
@@ -106,10 +106,40 @@ function EpisodeRow({
 }) {
   const navigate = useNavigate();
   const download = useDownloadCreateMutation();
+  const [watched, setWatched] = useState(episode.watched);
+  const [watched_any, setWatchedAny] = useState(episode.watched_any);
   const [skipped, setSkipped] = useState(episode.skipped);
   const [completed, setCompleted] = useState(episode.completed);
   const [downloaded, setDownloaded] = useState(episode.downloaded);
   const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
+
+  const watch = useWatchesCreateMutation();
+  const watchCreate = (medium_id?: string) => {
+    let username = 'someone';
+    if (!medium_id) {
+      console.error('missing medium_id');
+      return;
+    }
+    if (watched) {
+      console.warn('already watched');
+      return;
+    }
+    if (watched_any) {
+      username = myPlexUsername;
+    }
+    watch.mutate(
+      { medium_id, username },
+      {
+        onSuccess: () => {
+          if (username === myPlexUsername) {
+            setWatched(true);
+          } else {
+            setWatchedAny(true);
+          }
+        },
+      },
+    );
+  };
 
   const watchedColor = (watched, watched_any) => {
     if (watched) {
@@ -176,9 +206,7 @@ function EpisodeRow({
     {
       Icon: VisibilityIcon,
       color: watchedColor(watched, watched_any),
-      click: () => {
-        console.log("can't change watched yet");
-      },
+      click: () => watchCreate(id),
       title: `watched ${watched}/${watched_any}`,
     },
   ];

@@ -473,6 +473,11 @@ export interface User {
   admin?: boolean;
 }
 
+export interface Wanted {
+  names?: string[];
+  episodes?: string[];
+}
+
 export interface Watch {
   id?: string;
   created_at?: string;
