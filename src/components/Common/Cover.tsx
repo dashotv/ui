@@ -5,7 +5,6 @@ import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 
 import { ButtonMap, ButtonMapButton } from 'components/Common';
@@ -56,7 +55,7 @@ export const Cover = ({
             </Typography>
           )}
         </Stack>
-        <Box sx={{ flex: 2, m: 0.5, overflow: 'hidden' }}>
+        <Box sx={{ flex: 2, ml: 0.5, mr: 0.5, overflow: 'hidden' }}>
           <Typography className="coverDescription" variant="body2" sx={{ display: 'none' }}>
             {description}
           </Typography>
@@ -151,8 +150,8 @@ export const FiCard = ({ children }: { children: React.ReactNode }) => (
   <Card
     sx={{
       cursor: 'pointer',
-      width: { xs: '100%', sm: '150px' },
-      height: { xs: '125px', sm: '225px' },
+      width: { xs: '110px', sm: '150px' },
+      height: { xs: '165px', sm: '225px' },
       position: 'relative',
       '&:hover': {
         '& .fiCardActions': { display: 'block' },

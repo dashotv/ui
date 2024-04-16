@@ -8,6 +8,7 @@ import { useDebounce } from 'usehooks-ts';
 
 import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Paper } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -190,9 +191,9 @@ export function SuperSearchDialog({
         {data?.media?.error || data?.tvdb?.error || data?.tmdb?.error ? (
           <Alert severity="error">{data?.media?.error || data?.tvdb?.error || data?.tmdb?.error}</Alert>
         ) : null}
-        <SuperSearchAccordion name="Dasho.TV" data={data?.media?.results} select={select} />
-        {remote && <SuperSearchAccordion name="TVDB" type="series" data={data?.tvdb?.results} select={create} />}
-        {remote && <SuperSearchAccordion name="TMDB" type="movie" data={data?.tmdb?.results} select={create} />}
+        <SuperSearchResults name="Dasho.TV" data={data?.media?.results} select={select} />
+        {remote && <SuperSearchResults name="TVDB" type="series" data={data?.tvdb?.results} select={create} />}
+        {remote && <SuperSearchResults name="TMDB" type="movie" data={data?.tmdb?.results} select={create} />}
       </DialogContent>
     </Dialog>
   );
@@ -323,6 +324,47 @@ const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordion
         </Grid>
       </AccordionDetails>
     </Accordion>
+  );
+};
+
+interface SuperSearchResultsProps {
+  name: string;
+  data?: SearchResult[];
+  select: (option: SearchResult) => void;
+  type?: string;
+}
+export const SuperSearchResults = ({ name, data, select, type }: SuperSearchResultsProps) => {
+  const [options, setOptions] = useState<SearchResult[]>([]);
+
+  useEffect(() => {
+    if (!data || data.length === 0) {
+      setOptions([]);
+      return;
+    }
+
+    setOptions(data);
+  }, [data]);
+
+  return (
+    <Paper elevation={1} sx={{ p: 0.5 }}>
+      <Stack direction="row" spacing={1} sx={{ p: 1 }}>
+        <Chip sx={{ mr: 2 }} color="primary" size="small" label={options.length} />
+        <Typography variant="button" color="primary">
+          {name}
+        </Typography>
+      </Stack>
+
+      <Grid container spacing={1} sx={{ p: 1 }}>
+        {options.map((option: SearchResult) => (
+          <Grid item key={option.id}>
+            {/* <MediaCover {...{ option, type }} /> */}
+            <Link title={option.title} underline="none" color="inherit" onClick={() => select(option)}>
+              <SearchCover option={option} />
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
+    </Paper>
   );
 };
 
