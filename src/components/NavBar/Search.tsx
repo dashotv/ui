@@ -30,6 +30,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import useTheme from '@mui/system/useTheme';
 
+import { Cover, CoverRow } from 'components/Common';
 import { MediaCover, useSeriesCreateMutation } from 'components/Media';
 import { useMovieCreateMutation } from 'components/Movies';
 import { Kinds } from 'types/constants';
@@ -185,7 +186,7 @@ export function SuperSearchDialog({
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent sx={{ height: '430px' }}>
+      <DialogContent sx={{ height: '600px' }}>
         {data?.media?.error || data?.tvdb?.error || data?.tmdb?.error ? (
           <Alert severity="error">{data?.media?.error || data?.tvdb?.error || data?.tmdb?.error}</Alert>
         ) : null}
@@ -302,16 +303,53 @@ const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordion
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Grid container spacing={2}>
+        {/* <Stack direction="column" spacing={1}>
+          {options.map((option: SearchResult) => (
+            <Link title={option.title} underline="none" color="inherit" onClick={() => select(option)}>
+              <SearchCoverRow option={option} />
+            </Link>
+          ))}
+        </Stack> */}
+
+        <Grid container spacing={1}>
           {options.map((option: SearchResult) => (
             <Grid item key={option.id}>
-              <Link underline="none" color="inherit" onClick={() => select(option)}>
-                <MediaCover {...{ option, type }} />
+              {/* <MediaCover {...{ option, type }} /> */}
+              <Link title={option.title} underline="none" color="inherit" onClick={() => select(option)}>
+                <SearchCover option={option} />
               </Link>
             </Grid>
           ))}
         </Grid>
       </AccordionDetails>
     </Accordion>
+  );
+};
+
+export const SearchCover = ({ option }: { option: SearchResult }) => {
+  return (
+    <Cover
+      title={option.title || 'unknown'}
+      subtitle={option.date}
+      description={option.description || 'no description'}
+      kind={option.type || 'tv'}
+      source={option.source}
+      source_id={option.id}
+      image={option.image}
+      actions={false}
+    />
+  );
+};
+
+export const SearchCoverRow = ({ option }: { option: SearchResult }) => {
+  return (
+    <CoverRow
+      title={option.title || 'unknown'}
+      subtitle={option.date}
+      kind={option.type || 'tv'}
+      source={option.source}
+      source_id={option.id}
+      image={option.image}
+    />
   );
 };

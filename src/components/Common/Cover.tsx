@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 
 import { ButtonMap, ButtonMapButton } from 'components/Common';
@@ -24,6 +25,7 @@ export interface CoverProps {
   buttons?: ButtonMapButton[];
   files?: number;
   completed?: number;
+  actions?: boolean;
 }
 export const Cover = ({
   title,
@@ -38,27 +40,30 @@ export const Cover = ({
   buttons,
   files,
   completed,
+  actions = true,
 }: CoverProps) => {
   return (
     <FiCard>
       {image && <FiCardMedia image={image} title={title} />}
       <FiCardContent>
-        <Stack direction="column" spacing={1} sx={{ m: 1 }}>
+        <Stack direction="column" spacing={0} sx={{ m: 0.5 }}>
           <Typography variant="body2" fontSize="large" fontWeight="bolder" component="div" noWrap minWidth="0">
             {title}
           </Typography>
           {subtitle && subtitle !== title && (
-            <Typography variant="body2" noWrap minWidth="0">
+            <Typography variant="caption" noWrap minWidth="0">
               {subtitle}
             </Typography>
           )}
         </Stack>
-        <Box sx={{ flexGrow: 1, m: 0.5, overflow: 'hidden' }}>
+        <Box sx={{ flex: 2, m: 0.5, overflow: 'hidden' }}>
           <Typography className="coverDescription" variant="body2" sx={{ display: 'none' }}>
             {description}
           </Typography>
         </Box>
-        <Stack direction="row" spacing={1} sx={{ m: 1 }} alignItems="center" justifyContent="space-between">
+      </FiCardContent>
+      <FiCardFooter>
+        <Stack direction="row" spacing={1} sx={{ m: 0.5 }} alignItems="center" justifyContent="space-between">
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography variant="body2" fontWeight="bolder" color="primary">
               {kind}
@@ -69,8 +74,8 @@ export const Cover = ({
           </Stack>
           {count && count > 0 && <Chip label={count} color="primary" size="small" />}
         </Stack>
-      </FiCardContent>
-      <FiCardActions>{buttons && <ButtonMap buttons={buttons} />}</FiCardActions>
+      </FiCardFooter>
+      {actions ? <FiCardActions>{buttons ? <ButtonMap buttons={buttons} /> : null}</FiCardActions> : null}
       <CardProgress progress={progress} files={files} completed={completed} />
     </FiCard>
   );
@@ -145,12 +150,14 @@ export const CardMultiBarFile = ({ completed }: { completed: boolean }) => {
 export const FiCard = ({ children }: { children: React.ReactNode }) => (
   <Card
     sx={{
+      cursor: 'pointer',
       width: { xs: '100%', sm: '150px' },
       height: { xs: '125px', sm: '225px' },
       position: 'relative',
       '&:hover': {
         '& .fiCardActions': { display: 'block' },
         '& .coverDescription': { display: 'block' },
+        '& .fiCardFooter': { display: 'none' },
         '& .fiCardContent': { backgroundColor: 'rgba(0,0,0,0.8)' },
       },
     }}
@@ -197,6 +204,38 @@ export const FiCardContent = ({ children }: { children: React.ReactNode }) => (
   </CardContent>
 );
 
+// export const FiCardHeader = ({ title, subtitle }: { title: string; subtitle?: string }) => (
+//   <CardHeader
+//     className="fiCardHeader"
+//     title={title}
+//     subheader={subtitle}
+//     // sx={{
+//     //   p: '3px',
+//     //   position: 'relative',
+//     //   backgroundColor: 'rgba(0,0,0,0.6)',
+//     //   height: '100%',
+//     //   display: 'flex',
+//     //   flexDirection: 'column',
+//     //   flex: 1,
+//     // }}
+//   />
+// );
+
+export const FiCardFooter = ({ children }: { children: React.ReactNode }) => (
+  <Box
+    className="fiCardFooter"
+    sx={{
+      position: 'absolute',
+      bottom: 4,
+      right: 0,
+      left: 0,
+      // pb: 1.5,
+      display: 'inherit',
+    }}
+  >
+    {children}
+  </Box>
+);
 export const FiCardMedia = ({ image, title }: { image: string; title: string }) => (
   <CardMedia
     className="fiCardMedia"
