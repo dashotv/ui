@@ -115,7 +115,7 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
         if (!torrent_file || !thash) {
           return;
         }
-        want({ hash: thash, id: torrent_file?.id || -1 });
+        want({ hash: thash, id: torrent_file?.id !== undefined ? torrent_file.id : -1 });
       },
       title: 'priority',
     },
