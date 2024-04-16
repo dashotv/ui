@@ -78,13 +78,37 @@ export function Episodes({
   ];
   return (
     <Paper elevation={0}>
-      <Row>
-        <ButtonMap buttons={buttons} size="small" />
-      </Row>
-      {episodes?.map(row => <EpisodeRow key={row.id} kind={kind} episode={row} changeEpisode={changeEpisode} />)}
+      <EpisodesList episodes={episodes} kind={kind} buttons={buttons} changeEpisode={changeEpisode} />
     </Paper>
   );
 }
+
+const EpisodesList = ({ episodes, kind, changeEpisode, buttons }) => {
+  let current = episodes[0]?.season_number !== undefined ? episodes[0].season_number - 1 : 0;
+  return (
+    <>
+      {episodes.map((row: Episode) => {
+        return (
+          <>
+            {current !== row.season_number
+              ? current++ !== undefined && (
+                  <Row>
+                    <Stack direction="row" spacing={1} justifyContent="space-between">
+                      <Typography variant="caption" color="gray">
+                        Season {row.season_number}
+                      </Typography>
+                      <ButtonMap buttons={buttons} size="small" />
+                    </Stack>
+                  </Row>
+                )
+              : null}
+            <EpisodeRow key={row.id} kind={kind} episode={row} changeEpisode={changeEpisode} />
+          </>
+        );
+      })}
+    </>
+  );
+};
 
 function EpisodeRow({
   episode: {
