@@ -1,33 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { LoadingIndicator } from '@dashotv/components';
-import { Container } from '@dashotv/components';
+import BuildCircleIcon from '@mui/icons-material/BuildCircle';
+import CloudCircleIcon from '@mui/icons-material/CloudCircle';
+import RecommendIcon from '@mui/icons-material/Recommend';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import RepeatOnIcon from '@mui/icons-material/RepeatOn';
+import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
+import RestorePageIcon from '@mui/icons-material/RestorePage';
+import StarsIcon from '@mui/icons-material/Stars';
+
+import { ButtonMapButton, Container, LoadingIndicator } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
-import {
-  Series,
-  postSeriesJob,
-  useEpisodeSettingMutation,
-  useSeriesQuery,
-  useSeriesSeasonEpisodesQuery,
-  useSeriesSettingMutation,
-} from 'components/Media';
+import { Confirm } from 'components/Common';
+import { useDownloadCreateMutation } from 'components/Downloads';
+import { MediumBanner } from 'components/Media';
+import { postSeriesJob, useSeriesDeleteMutation, useSeriesQuery, useSeriesSettingMutation } from 'components/Series';
+import { Details, Downloads, Episodes, Paths, RoutingTabs, RoutingTabsRoute, Watches } from 'components/Tabs';
 import { useSub } from 'hooks/sub';
 import { EventSeries } from 'types/events';
 
 export default function SeriesShow() {
   const { id } = useParams();
   if (!id) {
-    return null;
+    throw new Error('Series id is required');
   }
   const { isFetching, data: series } = useSeriesQuery(id);
-  const [currentSeason, setCurrentSeason] = useState(1);
-  const { isFetching: episodesFetching, data: episodes } = useSeriesSeasonEpisodesQuery(id, currentSeason.toString());
+  // const [currentSeason, setCurrentSeason] = useState(1);
+  // const { isFetching: episodesFetching, data: episodes } = useSeriesSeasonEpisodesQuery(id, currentSeason.toString());
   const queryClient = useQueryClient();
   const seriesSetting = useSeriesSettingMutation(id);
-  const episodeSetting = useEpisodeSettingMutation();
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState('');
+  const navigate = useNavigate();
+  const download = useDownloadCreateMutation();
+  const seriesDelete = useSeriesDeleteMutation();
+  // const episodeSetting = useEpisodeSettingMutation();
+  const { kind, active, broken, favorite, seasons, currentSeason, paths } = series?.result || {};
+
   const queue = (name: string) => {
     if (!id || !name) {
       return;
@@ -35,24 +47,27 @@ export default function SeriesShow() {
     postSeriesJob(id, name);
   };
 
-  function changeSeason(season) {
-    setCurrentSeason(season);
-  }
+  // function changeEpisodeSetting(id, key, value) {
+  //   episodeSetting.mutate({ id: id, setting: { name: key, value: value } });
+  // }
 
-  function changeEpisodeSetting(id, key, value) {
-    episodeSetting.mutate({ id: id, setting: { name: key, value: value } });
-  }
-
-  function changeSeriesSetting(id: string, key: string, value) {
+  function change(id: string, key: string, value) {
     seriesSetting.mutate({ name: key, value: value });
   }
 
-  useEffect(() => {
-    if (!series?.result?.currentSeason) {
-      return;
-    }
-    setCurrentSeason(series.result.currentSeason);
-  }, [series, series?.result?.currentSeason]);
+  const deleteSeries = useCallback(ev => {
+    ev.preventDefault(); // for the buttons inside the Link component
+    setMessage('Are you sure you want to delete this series?');
+    setOpen(true);
+  }, []);
+
+  const deleteConfirm = useCallback(() => {
+    seriesDelete.mutate(id, {
+      onSuccess: () => {
+        navigate('/series');
+      },
+    });
+  }, [navigate]);
 
   useSub('tower.series', (data: EventSeries) => {
     if (data.id !== id) {
@@ -61,6 +76,109 @@ export default function SeriesShow() {
     queryClient.invalidateQueries({ queryKey: ['series', id] });
   });
 
+  const tabsMap: RoutingTabsRoute[] = [
+    {
+      label: 'Episodes',
+      to: '',
+      element: (
+        <>
+          {kind && currentSeason && seasons ? (
+            <Episodes kind={kind} series_id={id} season={currentSeason} seasons={seasons} />
+          ) : null}
+        </>
+      ),
+    },
+    {
+      label: 'Paths',
+      to: `paths`,
+      element: <Paths paths={paths} />,
+    },
+    {
+      label: 'Details',
+      to: `details`,
+      element: <>{series?.result && <Details medium={series?.result} />}</>,
+    },
+    {
+      label: 'Downloads',
+      to: `downloads`,
+      element: <Downloads medium_id={id} />,
+    },
+    {
+      label: 'Watches',
+      to: `watches`,
+      element: <Watches medium_id={id} />,
+    },
+  ];
+
+  const buttons: ButtonMapButton[] = [
+    {
+      Icon: CloudCircleIcon,
+      color: 'primary',
+      click: () => {
+        download.mutate(id, {
+          onSuccess: data => {
+            navigate(`/downloads/${data.id}`);
+          },
+        });
+      },
+      title: 'create download',
+    },
+    {
+      Icon: ReplayCircleFilledIcon,
+      color: 'primary',
+      click: () => {
+        queue('refresh');
+      },
+      title: 'refresh',
+    },
+    {
+      Icon: RepeatOnIcon,
+      color: 'warning',
+      click: () => {
+        queue('files');
+      },
+      title: 'files',
+    },
+    {
+      Icon: RestorePageIcon,
+      color: 'warning',
+      click: () => {
+        queue('paths');
+      },
+      title: 'paths',
+    },
+    {
+      Icon: BuildCircleIcon,
+      color: broken ? 'secondary' : 'action',
+      click: () => {
+        change(id, 'broken', !broken);
+      },
+      title: 'broken',
+    },
+    {
+      Icon: RecommendIcon,
+      color: favorite ? 'secondary' : 'action',
+      click: () => {
+        change(id, 'favorite', !favorite);
+      },
+      title: 'favorite',
+    },
+    {
+      Icon: StarsIcon,
+      color: active ? 'secondary' : 'action',
+      click: () => {
+        change(id, 'active', !active);
+      },
+      title: 'active',
+    },
+    {
+      Icon: RemoveCircleIcon,
+      color: 'error',
+      click: deleteSeries,
+      title: 'delete',
+    },
+  ];
+
   return (
     <>
       <Helmet>
@@ -68,18 +186,13 @@ export default function SeriesShow() {
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container>
-        {(isFetching || episodesFetching) && <LoadingIndicator />}
+        {isFetching && <LoadingIndicator />}
         {series?.result?.id && (
-          <Series
-            id={series.result.id}
-            series={series.result}
-            currentSeason={currentSeason}
-            episodes={episodes?.result || []}
-            changeSeason={changeSeason}
-            changeEpisode={changeEpisodeSetting}
-            change={changeSeriesSetting}
-            queue={queue}
-          />
+          <div className="medium large">
+            <MediumBanner id={id} variant="large" medium={series?.result} buttons={buttons} />
+            <RoutingTabs data={tabsMap} route={`/series/${id}`} />
+            <Confirm {...{ open, setOpen, message, ok: deleteConfirm }} />
+          </div>
         )}
       </Container>
     </>

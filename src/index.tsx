@@ -15,7 +15,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import { ClerkProvider } from '@clerk/clerk-react';
 import { dark } from '@clerk/themes';
-import { NatsProvider } from '@quara-dev/react-nats-context';
+import { NatsProvider } from '@dashotv/react-nats-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 

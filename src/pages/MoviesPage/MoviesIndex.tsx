@@ -13,12 +13,11 @@ import IconButton from '@mui/material/IconButton';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-import { LoadingIndicator } from '@dashotv/components';
-import { Container } from '@dashotv/components';
+import { Container, LoadingIndicator } from '@dashotv/components';
 
 import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
-import { Media } from 'components/Media';
 import { useMoviesAllQuery } from 'components/Movies';
+import { MovieList } from 'components/Movies/Card';
 
 const pagesize = 42;
 const kinds: Choice[] = [
@@ -119,7 +118,7 @@ export default function MoviesIndex() {
       <Container>
         <Grid container spacing={1}>
           {isFetching && <LoadingIndicator />}
-          {data && <Media data={data.result} type="movies" />}
+          {data?.result && <MovieList data={data?.result} type="movie" />}
         </Grid>
       </Container>
     </>

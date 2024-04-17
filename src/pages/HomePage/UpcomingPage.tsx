@@ -1,20 +1,18 @@
 import React, { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { Upcoming } from 'client/tower';
+
 import Grid from '@mui/material/Grid';
 
-import { LoadingIndicator } from '@dashotv/components';
-import { Container } from '@dashotv/components';
+import { Container, LoadingIndicator } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { DownloadList, DownloadType, useDownloadsActiveQuery } from 'components/Downloads';
-import { Media } from 'components/Media';
-import { Episode } from 'components/Media';
 import { UpcomingList } from 'components/Upcoming';
 import { useSub } from 'hooks/sub';
 import { useUpcomingQuery } from 'query/upcoming';
 import { EventDownload, EventEpisode } from 'types/events';
-import { Upcoming, UpcomingIndexResponse } from 'client/tower';
 
 export default function UpcomingPage() {
   const queryClient = useQueryClient();

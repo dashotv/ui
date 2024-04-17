@@ -25,8 +25,8 @@ import { Chrono, Pill } from '@dashotv/components';
 
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
-import { getSeriesBackgrounds, getSeriesCovers, useSeriesUpdateMutation } from 'components/Media/query';
 import { useMovieUpdateMutation } from 'components/Movies/query';
+import { getSeriesBackgrounds, getSeriesCovers, useSeriesUpdateMutation } from 'components/Series';
 import { Kinds, ReleaseSources, ReleaseTypes, Resolutions, Sources } from 'types/constants';
 
 export type DetailsProps = {

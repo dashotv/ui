@@ -13,44 +13,63 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from '@dashotv/components';
+import { ButtonMap, ButtonMapButton, Chrono, LoadingIndicator, Megabytes, Resolution, Row } from '@dashotv/components';
 
 import { useDownloadCreateMutation } from 'components/Downloads';
-import { useEpisodeBatchSettingMutation } from 'components/Media';
+import {
+  useEpisodeBatchSettingMutation,
+  useEpisodeSettingMutation,
+  useSeriesSeasonEpisodesQuery,
+} from 'components/Series';
 import { useWatchesCreateMutation, useWatchesDeleteMediumMutation } from 'components/Watches';
 import { myPlexUsername } from 'types/constants';
-import { useQueryClient } from '@tanstack/react-query';
+
+import { Seasons } from './Seasons';
 
 export function Episodes({
+  series_id,
+  season,
+  seasons,
   kind,
-  episodes,
-  changeEpisode,
 }: {
+  series_id: string;
+  season: number;
+  seasons: number[];
   kind: string;
-  episodes: Episode[];
-  changeEpisode: (id: string, field: string, value: boolean) => void;
 }) {
+  const [currentSeason, setCurrentSeason] = useState(season);
+  const { isFetching, data } = useSeriesSeasonEpisodesQuery(series_id, currentSeason.toString());
   const [ids, setIds] = useState<string[]>([]);
   const [skipped, setSkipped] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [watched, setWatched] = useState(false);
+
+  const episodeSetting = useEpisodeSettingMutation();
   const settings = useEpisodeBatchSettingMutation();
 
-  useEffect(() => {
-    if (!episodes) {
-      return;
-    }
-    setIds(() => episodes.map(episode => episode.id || '').filter(id => id));
-    setSkipped(() => episodes.filter(episode => episode.skipped).length === episodes.length);
-    setDownloaded(() => episodes.filter(episode => episode.downloaded).length === episodes.length);
-    setCompleted(() => episodes.filter(episode => episode.completed).length === episodes.length);
-    setWatched(() => episodes.filter(episode => episode.watched).length === episodes.length);
-  }, [episodes]);
+  function changeSeason(season) {
+    setCurrentSeason(season);
+  }
+
+  function changeEpisode(id, key, value) {
+    episodeSetting.mutate({ id: id, setting: { name: key, value: value } });
+  }
 
   const updateSettings = (field: string, value: boolean) => {
     settings.mutate({ ids, field, value });
   };
+
+  useEffect(() => {
+    if (!data?.result) {
+      return;
+    }
+    setIds(() => data?.result.map(episode => episode.id || '').filter(id => id));
+    setSkipped(() => data?.result.filter(episode => episode.skipped).length === data?.result.length);
+    setDownloaded(() => data?.result.filter(episode => episode.downloaded).length === data?.result.length);
+    setCompleted(() => data?.result.filter(episode => episode.completed).length === data?.result.length);
+    setWatched(() => data?.result.filter(episode => episode.watched).length === data?.result.length);
+  }, [data?.result]);
 
   const buttons: ButtonMapButton[] = [
     {
@@ -75,26 +94,41 @@ export function Episodes({
       Icon: VisibilityIcon,
       color: watched ? 'secondary' : 'disabled',
       click: () => updateSettings('watched', !watched),
-      title: `watched`,
+      title: 'watched',
     },
   ];
+
   return (
     <Paper elevation={0}>
-      <EpisodesList episodes={episodes} kind={kind} buttons={buttons} changeEpisode={changeEpisode} />
+      {isFetching && <LoadingIndicator />}
+      {seasons ? <Seasons current={currentSeason} seasons={seasons} changeSeason={changeSeason} /> : null}
+      {data?.result ? (
+        <EpisodesList episodes={data?.result} kind={kind} buttons={buttons} changeEpisode={changeEpisode} />
+      ) : null}
     </Paper>
   );
 }
 
-const EpisodesList = ({ episodes, kind, changeEpisode, buttons }) => {
+const EpisodesList = ({
+  episodes,
+  kind,
+  changeEpisode,
+  buttons,
+}: {
+  episodes: Episode[];
+  kind: string;
+  changeEpisode: (id: string, field: string, value: boolean) => void;
+  buttons: ButtonMapButton[];
+}) => {
   let current = episodes[0]?.season_number !== undefined ? episodes[0].season_number - 1 : 0;
   return (
     <>
       {episodes.map((row: Episode) => {
         return (
-          <>
+          <React.Fragment key={row.id}>
             {current !== row.season_number
               ? current++ !== undefined && (
-                  <Row>
+                  <Row key={row.season_number}>
                     <Stack direction="row" spacing={1} justifyContent="space-between">
                       <Typography variant="caption" color="gray">
                         Season {row.season_number}
@@ -105,7 +139,7 @@ const EpisodesList = ({ episodes, kind, changeEpisode, buttons }) => {
                 )
               : null}
             <EpisodeRow key={row.id} kind={kind} episode={row} changeEpisode={changeEpisode} />
-          </>
+          </React.Fragment>
         );
       })}
     </>
@@ -138,7 +172,6 @@ function EpisodeRow({
   const [completed, setCompleted] = useState(episode.completed);
   const [downloaded, setDownloaded] = useState(episode.downloaded);
   const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
-  const queryClient = useQueryClient();
   const watch = useWatchesCreateMutation();
   const watchDelete = useWatchesDeleteMediumMutation();
   const watchClick = (medium_id?: string) => {
@@ -153,7 +186,7 @@ function EpisodeRow({
           setWatched(false);
           setWatchedAny(false);
         },
-      })
+      });
       return;
     }
     if (watched_any) {
@@ -281,7 +314,7 @@ function EpisodeRow({
   };
 
   return (
-    <Row>
+    <Row key={id}>
       <Stack width="100%" minWidth="0" direction={{ xs: 'column', md: 'row' }} spacing={0} alignItems="center">
         <Stack width="100%" minWidth="0" direction="row" spacing={1} alignItems="center">
           <Typography

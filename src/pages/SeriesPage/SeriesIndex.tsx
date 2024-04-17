@@ -14,7 +14,7 @@ import { LoadingIndicator } from '@dashotv/components';
 import { Container } from '@dashotv/components';
 
 import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
-import { Media, useSeriesAllQuery } from 'components/Media';
+import { SeriesList, useSeriesAllQuery } from 'components/Series';
 
 const pagesize = 42;
 const kinds: Choice[] = [
@@ -116,7 +116,7 @@ export default function SeriesIndex() {
       <Container>
         <Grid container spacing={1}>
           {isFetching && <LoadingIndicator />}
-          {data && <Media data={data.result} type="series" />}
+          {data && <SeriesList data={data.result} type="series" />}
         </Grid>
       </Container>
     </>

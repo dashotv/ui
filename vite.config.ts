@@ -1,7 +1,8 @@
 import { defineConfig, loadEnv } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import svgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
-import svgr from "vite-plugin-svgr";
+
 import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs';
 import federation from '@originjs/vite-plugin-federation';
 import react from '@vitejs/plugin-react';
@@ -43,7 +44,6 @@ export default ({ mode }) => {
           'react-error-boundary',
           'react-helmet-async',
           'react-hook-form',
-          'react-icons',
           'react-router-dom',
           'react-truncate-inside',
           'react',

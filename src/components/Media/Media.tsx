@@ -5,7 +5,7 @@ import { Medium } from 'client/tower';
 
 import Grid from '@mui/material/Grid';
 
-import { MediumBanner } from '.';
+import { MediaCard } from 'components/Common';
 
 const path = (type: string, id: string, series_id: string | undefined) => {
   switch (type) {
@@ -20,19 +20,43 @@ const path = (type: string, id: string, series_id: string | undefined) => {
   }
 };
 
-export function Media({ data }: { type: string; data: Medium[] }) {
+export function Media({ data, type }: { type: string; data: Medium[] }) {
   return (
     <>
       {data &&
         data.map((medium: Medium) => {
-          const { type, id, series_id } = medium;
-          if (!type || !id) {
+          const {
+            id,
+            type: medium_type,
+            series_id,
+            title,
+            display,
+            description,
+            cover,
+            kind,
+            source,
+            source_id,
+            unwatched,
+          } = medium;
+          if (!medium_type || !id) {
             throw new Error('Media type and id is required');
           }
           return (
             <Grid item key={id} md={4} xs={12}>
-              <Link to={path(type, id, series_id)}>
-                <MediumBanner {...{ id, medium }} />
+              <Link to={path(medium_type, id, series_id)}>
+                <MediaCard
+                  id={id}
+                  type={type}
+                  title={title || 'unknown'}
+                  subtitle={display}
+                  description={description}
+                  image={cover}
+                  kind={kind || 'tv'}
+                  source={source}
+                  source_id={source_id}
+                  count={unwatched}
+                  actions={false}
+                />
               </Link>
             </Grid>
           );

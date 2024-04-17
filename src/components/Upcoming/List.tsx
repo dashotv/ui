@@ -5,7 +5,7 @@ import { Upcoming } from 'client/tower';
 
 import Grid from '@mui/material/Grid';
 
-import { UpcomingBanner } from './Banner';
+import { UpcomingCard } from 'components/Common';
 
 const path = (type: string, id: string, series_id: string | undefined) => {
   switch (type) {
@@ -31,7 +31,8 @@ export const UpcomingList = ({ data }: { data: Upcoming[] }) => {
         return (
           <Grid item key={id} md={4} xs={12}>
             <Link to={path(type, id, series_id)}>
-              <UpcomingBanner {...{ id, upcoming }} />
+              {/* <UpcomingBanner {...{ id, upcoming }} /> */}
+              <UpcomingCard upcoming={upcoming} />
             </Link>
           </Grid>
         );

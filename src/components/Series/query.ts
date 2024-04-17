@@ -60,15 +60,6 @@ export const patchSeries = async (id: string, setting: tower.Setting) => {
   const response = await tower.SeriesSettings({ id, setting });
   return response;
 };
-export const patchEpisode = async (id: string, setting: tower.Setting) => {
-  const response = await tower.EpisodesSettings({ id, setting });
-  return response;
-};
-export const postEpisodeBatchSetting = async (ids: string[], name: string, value: boolean) => {
-  const settings: tower.SettingsBatch = { ids, name, value };
-  const response = await tower.EpisodesSettingsBatch({ settings });
-  return response;
-};
 
 export const useSeriesAllQuery = (page: number, filters) =>
   useQuery({
@@ -105,18 +96,6 @@ export const useSeriesSettingMutation = (id: string) => {
   });
 };
 
-export const useEpisodeSettingMutation = () => {
-  return useMutation({
-    mutationFn: (args: { id: string; setting: tower.Setting }) => patchEpisode(args.id, args.setting),
-  });
-};
-export const useEpisodeBatchSettingMutation = () => {
-  return useMutation({
-    mutationFn: ({ ids, field, value }: { ids: string[]; field: string; value: boolean }) =>
-      postEpisodeBatchSetting(ids, field, value),
-  });
-};
-
 export const useSeriesCreateMutation = () => {
   return useMutation({
     mutationFn: (n: SearchResult) => {
@@ -132,6 +111,7 @@ export const useSeriesDeleteMutation = () => {
     },
   });
 };
+
 export const useSeriesUpdateMutation = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -141,5 +121,27 @@ export const useSeriesUpdateMutation = (id: string) => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['series', id] });
     },
+  });
+};
+
+export const patchEpisode = async (id: string, setting: tower.Setting) => {
+  const response = await tower.EpisodesSettings({ id, setting });
+  return response;
+};
+export const postEpisodeBatchSetting = async (ids: string[], name: string, value: boolean) => {
+  const settings: tower.SettingsBatch = { ids, name, value };
+  const response = await tower.EpisodesSettingsBatch({ settings });
+  return response;
+};
+
+export const useEpisodeSettingMutation = () => {
+  return useMutation({
+    mutationFn: (args: { id: string; setting: tower.Setting }) => patchEpisode(args.id, args.setting),
+  });
+};
+export const useEpisodeBatchSettingMutation = () => {
+  return useMutation({
+    mutationFn: ({ ids, field, value }: { ids: string[]; field: string; value: boolean }) =>
+      postEpisodeBatchSetting(ids, field, value),
   });
 };

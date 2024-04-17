@@ -2,8 +2,8 @@ import { useCallback } from 'react';
 
 import { JSONCodec, NatsError } from 'nats.ws';
 
-import { useSubscription } from '@quara-dev/react-nats-context';
-import { Msg } from '@quara-dev/react-nats-context';
+import { useSubscription } from '@dashotv/react-nats-context';
+import { Msg } from '@dashotv/react-nats-context';
 
 export const useSub = (topic: string, callback: (data) => void) => {
   // console.log('useSub:', topic);

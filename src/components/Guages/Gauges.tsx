@@ -11,7 +11,7 @@ import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 
-import { useNats } from '@quara-dev/react-nats-context';
+import { useNats } from '@dashotv/react-nats-context';
 
 import { useDownloadsLastQuery } from 'components/Downloads';
 import { useMetrics } from 'hooks/metrics';

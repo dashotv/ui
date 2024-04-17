@@ -32,8 +32,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import useTheme from '@mui/system/useTheme';
 
 import { Cover, CoverRow } from 'components/Common';
-import { MediaCover, useSeriesCreateMutation } from 'components/Media';
+import { MediaCover } from 'components/Media';
 import { useMovieCreateMutation } from 'components/Movies';
+import { useSeriesCreateMutation } from 'components/Series';
 import { Kinds } from 'types/constants';
 
 import { useSearchAllQuery } from './query';
