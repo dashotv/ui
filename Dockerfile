@@ -7,19 +7,7 @@ ENV GITHUB_TOKEN=$GITHUB_TOKEN
 
 WORKDIR /app
 COPY package*.json yarn.lock .yarn .npmrc ./
-COPY <<EOF .yarnrc.yml
-nodeLinker: node-modules
-npmScopes:
-  dashotv:
-    npmAlwaysAuth: true
-    npmAuthToken: ${GITHUB_TOKEN:-}
-    npmRegistryServer: "https://npm.pkg.github.com"
-
-npmRegistries:
-  "https://npm.pkg.github.com":
-    npmAuthToken: ${GITHUB_TOKEN:-}
-    npmAlwaysAuth: true
-EOF
+COPY .yarnrc.docker.yml .yarnrc.yml
 RUN yarn set version stable
 RUN yarn -v
 RUN --mount=type=cache,target=/app/node_modules yarn install
