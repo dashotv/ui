@@ -2,10 +2,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
+import { LoadingIndicator } from '@dashotv/components';
+import { Container } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { LoadingIndicator } from 'components/Common';
-import { Container } from 'components/Layout';
 import { Movie, putMovieRefresh, useMovieQuery, useMovieSettingMutation } from 'components/Movies';
 import { useSub } from 'hooks/sub';
 import { EventMovie } from 'types/events';

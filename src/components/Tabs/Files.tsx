@@ -12,7 +12,8 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap, ButtonMapButton, Row } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Row } from '@dashotv/components';
+
 import { useTorrentWantMutation } from 'query/releases';
 import { Torrent } from 'types/torrents';
 

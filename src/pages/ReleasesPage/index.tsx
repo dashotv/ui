@@ -1,7 +1,8 @@
 import React from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
-import { Container } from 'components/Layout';
+import { Container } from '@dashotv/components';
+
 import FeedsIndex from 'pages/ReleasesPage/FeedsIndex';
 import ReleasesIndex from 'pages/ReleasesPage/ReleasesIndex';
 import ReleasesSearch from 'pages/ReleasesPage/ReleasesSearch';

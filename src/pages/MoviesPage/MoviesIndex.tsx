@@ -13,9 +13,10 @@ import IconButton from '@mui/material/IconButton';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-import { LoadingIndicator } from 'components/Common';
+import { LoadingIndicator } from '@dashotv/components';
+import { Container } from '@dashotv/components';
+
 import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
-import { Container } from 'components/Layout';
 import { Media } from 'components/Media';
 import { useMoviesAllQuery } from 'components/Movies';
 

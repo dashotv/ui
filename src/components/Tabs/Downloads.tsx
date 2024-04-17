@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { LoadingIndicator, WrapErrorBoundary } from 'components/Common';
+import { LoadingIndicator, WrapErrorBoundary } from '@dashotv/components';
+
 import { DownloadRows, useDownloadsRecentMediaQuery } from 'components/Downloads';
 
 export const Downloads = ({ medium_id }: { medium_id: string }) => {

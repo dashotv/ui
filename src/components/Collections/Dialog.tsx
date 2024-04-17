@@ -21,7 +21,8 @@ import {
 import useMediaQuery from '@mui/material/useMediaQuery';
 import useTheme from '@mui/system/useTheme';
 
-import { Chrono } from 'components/Common';
+import { Chrono } from '@dashotv/components';
+
 import { Option } from 'components/Media';
 import { PlexLibrary } from 'components/Plex';
 

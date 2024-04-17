@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { LoadingIndicator } from '@dashotv/components';
+import { Container } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { LoadingIndicator } from 'components/Common';
-import { Container } from 'components/Layout';
 import { RequestsList, useRequestsQuery } from 'components/Requests';
 import { useSub } from 'hooks/sub';
 

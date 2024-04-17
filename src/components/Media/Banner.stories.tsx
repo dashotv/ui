@@ -8,9 +8,8 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import StarsIcon from '@mui/icons-material/Stars';
 
+import { ButtonMapButton } from '@dashotv/components';
 import type { Meta, StoryObj } from '@storybook/react';
-
-import { ButtonMapButton } from 'components/Common';
 
 import { MediumBanner } from './Banner';
 

@@ -2,7 +2,8 @@ import React, { Suspense, lazy, useState } from 'react';
 
 import { DownloadSearch, Medium, Release } from 'client/tower';
 
-import { WrapErrorBoundary } from 'components/Common';
+import { WrapErrorBoundary } from '@dashotv/components';
+
 import { RunicForm } from 'components/Runic';
 
 const RunicSearch = lazy(() => import('runic/Search'));

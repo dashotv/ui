@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Box, Chip, LinearProgress, Stack, Typography, useTheme } from '@mui/material';
 
-import { ButtonMap, ButtonMapButton, Row } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Row } from '@dashotv/components';
+
 import { DownloadType } from 'components/Downloads';
 import { useDownloading } from 'hooks/downloading';
 

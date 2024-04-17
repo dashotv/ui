@@ -10,7 +10,8 @@ import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
-import { ButtonMapButton } from 'components/Common';
+import { ButtonMapButton } from '@dashotv/components';
+
 import { useDownloadCreateMutation } from 'components/Downloads';
 import { MediumBanner } from 'components/Media';
 

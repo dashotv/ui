@@ -14,11 +14,11 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
+import { Container } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { CollectionList, useCollectionMutation } from 'components/Collections';
 import { Combinations } from 'components/Combinations';
-import { Container } from 'components/Layout';
 import { PlexLibrary, usePlexLibrariesQuery } from 'components/Plex';
 
 export default function CollectionsPage() {

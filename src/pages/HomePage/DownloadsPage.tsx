@@ -4,9 +4,10 @@ import { Helmet } from 'react-helmet-async';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 
-import { LoadingIndicator } from 'components/Common';
+import { LoadingIndicator } from '@dashotv/components';
+import { Container } from '@dashotv/components';
+
 import { DownloadList, useDownloadsRecentQuery } from 'components/Downloads';
-import { Container } from 'components/Layout';
 
 const pagesize = 42;
 

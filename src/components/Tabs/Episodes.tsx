@@ -13,7 +13,8 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from 'components/Common';
+import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from '@dashotv/components';
+
 import { useDownloadCreateMutation } from 'components/Downloads';
 import { useEpisodeBatchSettingMutation } from 'components/Media';
 import { useWatchesCreateMutation } from 'components/Watches';

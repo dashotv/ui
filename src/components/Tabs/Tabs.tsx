@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
-import { WrapErrorBoundary } from 'components/Common';
+import { WrapErrorBoundary } from '@dashotv/components';
 
 import { TabPanel } from '.';
 

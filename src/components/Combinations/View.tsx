@@ -1,7 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import { LoadingIndicator } from 'components/Common';
+import { LoadingIndicator } from '@dashotv/components';
+
 import { PlexPlaylist } from 'components/Plex';
 
 import './View.scss';

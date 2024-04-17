@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Box, Chip, Link } from '@mui/material';
 
-import { Chrono } from 'components/Common';
+import { Chrono } from '@dashotv/components';
+
 import { PlexCollectionChild } from 'components/Plex';
 
 export const Show = ({ show, play }: { show: PlexCollectionChild; play: (show: PlexCollectionChild) => void }) => {

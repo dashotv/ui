@@ -4,9 +4,9 @@ import { Medium } from 'client/tower';
 
 import { Typography } from '@mui/material';
 
-import { ButtonMapButton, Chrono } from 'components/Common';
+import { ButtonMapButton, Chrono } from '@dashotv/components';
 
-import { Banner } from '../Common/Banner';
+import { Banner } from 'components/Common';
 
 export type MediumBannerProps = {
   id: string;

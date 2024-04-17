@@ -2,7 +2,8 @@ import React, { useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
-import { LoadingIndicator } from 'components/Common';
+import { LoadingIndicator } from '@dashotv/components';
+
 import {
   Download,
   useDownloadMediumQuery,

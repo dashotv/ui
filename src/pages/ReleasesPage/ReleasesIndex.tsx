@@ -8,8 +8,9 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { LoadingIndicator } from 'components/Common';
-import { Container } from 'components/Layout';
+import { LoadingIndicator } from '@dashotv/components';
+import { Container } from '@dashotv/components';
+
 import { PopularList, usePopularQuery } from 'components/Releases';
 
 export default function ReleasesIndex() {

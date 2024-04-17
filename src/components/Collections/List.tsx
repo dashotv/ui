@@ -20,9 +20,9 @@ import {
 import useMediaQuery from '@mui/material/useMediaQuery';
 import useTheme from '@mui/system/useTheme';
 
+import { Chrono, LoadingIndicator } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Chrono, LoadingIndicator } from 'components/Common';
 import { Option } from 'components/Media';
 import { PlexLibrary, usePlexLibrariesQuery, usePlexSearchQuery } from 'components/Plex';
 

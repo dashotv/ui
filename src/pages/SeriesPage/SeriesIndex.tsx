@@ -10,9 +10,10 @@ import StarsOutlinedIcon from '@mui/icons-material/StarsOutlined';
 import UndoIcon from '@mui/icons-material/Undo';
 import { Grid, IconButton, Pagination, Stack } from '@mui/material';
 
-import { LoadingIndicator } from 'components/Common';
+import { LoadingIndicator } from '@dashotv/components';
+import { Container } from '@dashotv/components';
+
 import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
-import { Container } from 'components/Layout';
 import { Media, useSeriesAllQuery } from 'components/Media';
 
 const pagesize = 42;

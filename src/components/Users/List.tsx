@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { Chrono, Row } from 'components/Common';
+import { Chrono, Row } from '@dashotv/components';
 
 export function UsersList({ users }: { users: User[] }) {
   return <Paper elevation={0}>{users && users.map((user: User) => <UserRow key={user.id} {...user} />)}</Paper>;

@@ -6,7 +6,8 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 import Paper from '@mui/material/Paper';
 
-import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
+import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from '@dashotv/components';
+
 import { ReleasesForm, ReleasesList, SearchForm, useReleasesQuery } from 'components/Releases';
 import { useQueryString } from 'hooks/queryString';
 

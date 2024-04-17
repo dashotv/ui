@@ -6,8 +6,9 @@ import Pagination from '@mui/material/Pagination';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
-import { LoadingIndicator } from 'components/Common';
-import { Container } from 'components/Layout';
+import { LoadingIndicator } from '@dashotv/components';
+import { Container } from '@dashotv/components';
+
 import { ReleasesForm, ReleasesList, ReleasesPresets, SearchForm, useReleasesQuery } from 'components/Releases';
 import { useQueryString } from 'hooks/queryString';
 

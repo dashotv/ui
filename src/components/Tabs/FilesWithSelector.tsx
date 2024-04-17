@@ -10,7 +10,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { WrapErrorBoundary } from 'components/Common';
+import { WrapErrorBoundary } from '@dashotv/components';
+
 import { Torrent } from 'types/torrents';
 
 import { Files } from './Files';

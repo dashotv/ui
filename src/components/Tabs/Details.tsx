@@ -21,7 +21,8 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { Chrono, Pill } from 'components/Common';
+import { Chrono, Pill } from '@dashotv/components';
+
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
 import { getSeriesBackgrounds, getSeriesCovers, useSeriesUpdateMutation } from 'components/Media/query';

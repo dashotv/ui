@@ -5,7 +5,7 @@ import { Download as DownloadType } from 'client/tower';
 
 import { Paper, Stack, Typography } from '@mui/material';
 
-import { Chrono, Row } from 'components/Common';
+import { Chrono, Row } from '@dashotv/components';
 
 import { DownloadIcon } from '.';
 

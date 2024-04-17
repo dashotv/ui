@@ -9,9 +9,8 @@ import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCirc
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import Grid from '@mui/material/Grid';
 
+import type { ButtonMapButton } from '@dashotv/components';
 import type { Meta, StoryObj } from '@storybook/react';
-
-import type { ButtonMapButton } from 'components/Common/ButtonMap';
 
 import { DownloadBanner } from './Banner';
 

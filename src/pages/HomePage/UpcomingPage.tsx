@@ -3,11 +3,11 @@ import { Helmet } from 'react-helmet-async';
 
 import Grid from '@mui/material/Grid';
 
+import { LoadingIndicator } from '@dashotv/components';
+import { Container } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { LoadingIndicator } from 'components/Common';
 import { DownloadList, DownloadType, useDownloadsActiveQuery } from 'components/Downloads';
-import { Container } from 'components/Layout';
 import { Media } from 'components/Media';
 import { Episode } from 'components/Media';
 import { UpcomingList } from 'components/Upcoming';

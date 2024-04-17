@@ -6,7 +6,8 @@ import { DownloadSearch, Release } from 'client/tower';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
 
-import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from 'components/Common';
+import { ButtonMap, ButtonMapButton, LoadingIndicator, WrapErrorBoundary } from '@dashotv/components';
+
 import {
   NzbgeekResults,
   NzbgeekSearchMovie,

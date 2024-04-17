@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
-import { WrapErrorBoundary } from 'components/Common';
+import { WrapErrorBoundary } from '@dashotv/components';
 
 export interface RoutingTabsRoute {
   label: string;

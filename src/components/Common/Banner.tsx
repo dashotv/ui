@@ -10,7 +10,8 @@ import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
-import { ButtonMap, ButtonMapButton } from '.';
+import { ButtonMap, ButtonMapButton } from '@dashotv/components';
+
 import './Banner.scss';
 
 // TODO: generalize this?

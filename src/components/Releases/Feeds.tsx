@@ -18,10 +18,11 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { LoadingIndicator } from 'components/Common';
-import { Published, Row } from 'components/Common';
+import { LoadingIndicator } from '@dashotv/components';
+import { Published, Row } from '@dashotv/components';
+import { Container } from '@dashotv/components';
+
 import { IconCheckbox, Select, Text } from 'components/Form';
-import { Container } from 'components/Layout';
 import { ReleaseSources, ReleaseTypes } from 'types/constants';
 
 import { useFeedCreateMutation, useFeedMutation, useFeedSettingMutation, useFeedsAllQuery } from '.';

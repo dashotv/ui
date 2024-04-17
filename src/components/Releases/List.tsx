@@ -23,7 +23,7 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { Chrono, Group, Megabytes, Resolution, Row } from 'components/Common';
+import { Chrono, Group, Megabytes, Resolution, Row } from '@dashotv/components';
 
 import { useReleaseSettingMutation } from '.';
 

@@ -7,7 +7,9 @@ import { useTheme } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-import { Banner, ButtonMapButton, Chrono } from 'components/Common';
+import { ButtonMapButton, Chrono } from '@dashotv/components';
+
+import { Banner } from 'components/Common';
 import { DownloadIconButton, DownloadStatus } from 'components/Downloads';
 
 export type DownloadBannerProps = {

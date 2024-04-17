@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
-import { Container } from 'components/Layout';
+import { Container } from '@dashotv/components';
 
 import CollectionsPage from './CollectionsPage';
 import CombinationsPage from './CombinationsPage';

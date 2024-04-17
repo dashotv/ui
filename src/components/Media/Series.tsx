@@ -13,8 +13,9 @@ import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import RestorePageIcon from '@mui/icons-material/RestorePage';
 import StarsIcon from '@mui/icons-material/Stars';
 
-import { ButtonMapButton } from 'components/Common';
-import { Confirm } from 'components/Common/Confirm';
+import { ButtonMapButton } from '@dashotv/components';
+
+import { Confirm } from 'components/Common';
 import { useDownloadCreateMutation } from 'components/Downloads';
 import { Details, Downloads, Episodes, Paths, RoutingTabs, RoutingTabsRoute, Seasons, Watches } from 'components/Tabs';
 

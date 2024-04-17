@@ -7,7 +7,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 
-import { ButtonMap, ButtonMapButton } from 'components/Common';
+import { ButtonMap, ButtonMapButton } from '@dashotv/components';
+
 import { DownloadType } from 'components/Downloads';
 import { useDownloading } from 'hooks/downloading';
 
