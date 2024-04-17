@@ -227,26 +227,6 @@ export interface Message {
   message?: string;
 }
 
-export interface Minion {
-  id?: string;
-  created_at?: string;
-  updated_at?: string;
-
-  kind?: string;
-  args?: string;
-  status?: string;
-  queue?: string;
-  attempts?: MinionAttempt[];
-}
-
-export interface MinionAttempt {
-  started_at?: string;
-  duration?: number;
-  status?: string;
-  error?: string;
-  stacktrace?: string[];
-}
-
 export interface Movie {
   id?: string;
   created_at?: string;

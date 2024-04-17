@@ -17,8 +17,9 @@ import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from '
 
 import { useDownloadCreateMutation } from 'components/Downloads';
 import { useEpisodeBatchSettingMutation } from 'components/Media';
-import { useWatchesCreateMutation } from 'components/Watches';
+import { useWatchesCreateMutation, useWatchesDeleteMediumMutation } from 'components/Watches';
 import { myPlexUsername } from 'types/constants';
+import { useQueryClient } from '@tanstack/react-query';
 
 export function Episodes({
   kind,
@@ -137,16 +138,22 @@ function EpisodeRow({
   const [completed, setCompleted] = useState(episode.completed);
   const [downloaded, setDownloaded] = useState(episode.downloaded);
   const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
-
+  const queryClient = useQueryClient();
   const watch = useWatchesCreateMutation();
-  const watchCreate = (medium_id?: string) => {
+  const watchDelete = useWatchesDeleteMediumMutation();
+  const watchClick = (medium_id?: string) => {
     let username = 'someone';
     if (!medium_id) {
       console.error('missing medium_id');
       return;
     }
     if (watched) {
-      console.warn('already watched');
+      watchDelete.mutate(medium_id, {
+        onSuccess: () => {
+          setWatched(false);
+          setWatchedAny(false);
+        },
+      })
       return;
     }
     if (watched_any) {
@@ -231,7 +238,7 @@ function EpisodeRow({
     {
       Icon: VisibilityIcon,
       color: watchedColor(watched, watched_any),
-      click: () => watchCreate(id),
+      click: () => watchClick(id),
       title: `watched ${watched}/${watched_any}`,
     },
   ];

@@ -49,3 +49,45 @@ export const WatchesCreate = async (params: WatchesCreateRequest) => {
 
   return response.data as WatchesCreateResponse;
 };
+
+export interface WatchesDeleteRequest {
+  id: string;
+}
+
+export const WatchesDelete = async (params: WatchesDeleteRequest) => {
+  const response = await towerClient.delete(`/watches/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
+
+export interface WatchesDeleteMediumRequest {
+  medium_id: string;
+}
+
+export const WatchesDeleteMedium = async (params: WatchesDeleteMediumRequest) => {
+  const response = await towerClient.delete(`/watches/medium?medium_id=${params.medium_id}`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
