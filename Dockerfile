@@ -7,20 +7,19 @@ ENV GITHUB_TOKEN=$GITHUB_TOKEN
 
 WORKDIR /app
 COPY package*.json yarn.lock .yarn .npmrc ./
-# drone doesn't support HEREDOC for some reason...
-RUN echo \
-  "nodeLinker: node-modules\n" \
-  "npmScopes:\n" \
-  "  dashotv:\n" \
-  "    npmAlwaysAuth: true\n" \
-  "    npmAuthToken: $GITHUB_TOKEN\n" \
-  "    npmRegistryServer: 'https://npm.pkg.github.com'\n" \
-  "\n" \
-  "npmRegistries:\n" \
-  "  'https://npm.pkg.github.com':\n" \
-  "    npmAuthToken: $GITHUB_TOKEN\n" \
-  "    npmAlwaysAuth: true\n" \
-  "" > ./.yarnrc.yml
+COPY <<EOF .yarnrc.yml
+nodeLinker: node-modules
+npmScopes:
+  dashotv:
+    npmAlwaysAuth: true
+    npmAuthToken: ${GITHUB_TOKEN:-}
+    npmRegistryServer: "https://npm.pkg.github.com"
+
+npmRegistries:
+  "https://npm.pkg.github.com":
+    npmAuthToken: ${GITHUB_TOKEN:-}
+    npmAlwaysAuth: true
+EOF
 RUN yarn set version stable
 RUN yarn -v
 RUN --mount=type=cache,target=/app/node_modules yarn install
