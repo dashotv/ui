@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export const getMediaUpcoming = async () => {
   const response = await tower.UpcomingIndex();
-  return response;
+  return response?.result || [];
 };
 
 export const useUpcomingQuery = () =>

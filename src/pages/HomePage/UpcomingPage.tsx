@@ -14,6 +14,7 @@ import { UpcomingList } from 'components/Upcoming';
 import { useSub } from 'hooks/sub';
 import { useUpcomingQuery } from 'query/upcoming';
 import { EventDownload, EventEpisode } from 'types/events';
+import { Upcoming, UpcomingIndexResponse } from 'client/tower';
 
 export default function UpcomingPage() {
   const queryClient = useQueryClient();
@@ -47,11 +48,11 @@ export default function UpcomingPage() {
     (data: EventEpisode) => {
       if (data.event === 'updated') {
         if (data.episode.downloaded) {
-          queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) =>
-            prev ? prev.filter(e => e.id !== data.episode.id) : [],
-          );
+          queryClient.setQueryData(['media', 'upcoming'], (prev: Upcoming[]) => {
+            return prev ? prev.filter(e => e.id !== data.episode.id) : [];
+          });
         } else {
-          queryClient.setQueryData(['media', 'upcoming'], (prev: Episode[]) => {
+          queryClient.setQueryData(['media', 'upcoming'], (prev: Upcoming[]) => {
             if (prev.filter(e => e.id === data.id).length === 0) {
               return [...prev, data.episode];
             }
@@ -74,7 +75,7 @@ export default function UpcomingPage() {
         {(downloads.isFetching || upcoming.isFetching) && <LoadingIndicator />}
         <Grid container spacing={1}>
           {downloads.data && <DownloadList downloads={downloads.data} />}
-          {upcoming.data && <UpcomingList data={upcoming.data.result} />}
+          {upcoming.data && <UpcomingList data={upcoming.data} />}
         </Grid>
       </Container>
     </>
