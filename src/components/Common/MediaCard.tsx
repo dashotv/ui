@@ -423,6 +423,8 @@ export const UpcomingCard = ({
     series_source,
     source_id,
     release_date,
+    series_active,
+    series_favorite,
     series_unwatched,
   },
 }: {
@@ -443,6 +445,7 @@ export const UpcomingCard = ({
       source={series_source}
       source_id={source_id}
       release_date={release_date}
+      icons={{ active: series_active, favorite: series_favorite }}
       count={series_unwatched}
       actions={false}
     />
@@ -460,13 +463,13 @@ export const DownloadCard = ({
 }) => {
   const { progress, queue, files, eta } = useDownloadingId(id);
   const { selected, completed } = files || {};
-  const { background, status } = download || {};
+  const { title, display, background, status } = download || {};
   return (
     <MediaCard
       id={id}
       type="download"
-      title={download.title || 'unknown'}
-      subtitle={download.display}
+      title={title || 'unknown'}
+      subtitle={display}
       image={background}
       progress={progress}
       files={selected}
