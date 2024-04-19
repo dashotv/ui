@@ -9,9 +9,8 @@ import { Container, LoadingIndicator } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { DownloadList, DownloadType, useDownloadsActiveQuery } from 'components/Downloads';
-import { UpcomingList } from 'components/Upcoming';
+import { UpcomingList, useUpcomingQuery } from 'components/Upcoming';
 import { useSub } from 'hooks/sub';
-import { useUpcomingQuery } from 'query/upcoming';
 import { EventDownload, EventEpisode } from 'types/events';
 
 export default function UpcomingPage() {

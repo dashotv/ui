@@ -5,7 +5,7 @@ import { Download as DownloadType } from 'client/tower';
 
 import Grid from '@mui/material/Grid';
 
-import { DownloadCard } from 'components/Common';
+import { DownloadCard } from './Card';
 
 export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
   return (

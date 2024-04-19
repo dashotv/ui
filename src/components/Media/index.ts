@@ -3,5 +3,4 @@ export * from './Cover';
 export * from './Icon';
 export * from './Image';
 export * from './Link';
-export * from './Media';
 export * from './types';

@@ -5,7 +5,7 @@ import { Upcoming } from 'client/tower';
 
 import Grid from '@mui/material/Grid';
 
-import { UpcomingCard } from 'components/Common';
+import { UpcomingCard } from './Card';
 
 const path = (type: string, id: string, series_id: string | undefined) => {
   switch (type) {

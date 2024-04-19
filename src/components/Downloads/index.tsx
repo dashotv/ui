@@ -1,4 +1,5 @@
 export * from './Banner';
+export * from './Card';
 export * from './Download';
 export * from './Icon';
 export * from './Info';
