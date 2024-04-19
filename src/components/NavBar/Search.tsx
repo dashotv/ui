@@ -226,7 +226,7 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
   return (
     <Dialog open={open} onClose={() => confirm(null)} maxWidth="md">
       <DialogTitle>Create {option.type}?</DialogTitle>
-      <DialogContent sx={{ minWidth: '900px' }}>
+      <DialogContent>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
           <MediaCover {...{ option }} imageOnly={true} />
           <Stack direction="column" spacing={1}>
