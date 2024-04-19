@@ -40,8 +40,9 @@ export const SeriesCard = ({
     release_date,
     cover,
     background,
-    downloaded,
-    completed,
+    active,
+    favorite,
+    broken,
   },
 }: {
   series: Series;
@@ -61,7 +62,7 @@ export const SeriesCard = ({
       source={source}
       source_id={source_id}
       release_date={release_date}
-      icons={{ downloaded, completed }}
+      icons={{ active, favorite, broken }}
       actions={false}
     />
   );
