@@ -1,0 +1,175 @@
+.medium.large {
+  margin-top: 8px;
+  min-height: 400px;
+
+  .details {
+    .images {
+      //position: absolute;
+      //top: 0px;
+      //right: 0px;
+
+      .cover-sm {
+        height: 100px;
+        //position: absolute;
+        //right: 180px;
+        //top: 0px;
+        float: left;
+        padding: 5px;
+
+        img {
+          height: 100px;
+        }
+      }
+
+      .background-sm {
+        height: 100px;
+        //position: absolute;
+        //right: 0px;
+        //top: 0px;
+        float: left;
+        padding: 5px;
+
+        img {
+          height: 100px;
+        }
+      }
+    }
+  }
+
+  .files {
+    td.name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis ellipsis;
+
+      div {
+        width: 100px;
+      }
+
+      div.media {
+        display: none;
+        padding-left: 10px;
+      }
+    }
+
+    td.name:hover {
+      div.media {
+        display: inherit;
+      }
+    }
+  }
+}
+
+.seasons {
+  padding-bottom: 8px;
+}
+
+:root {
+  --height: 200px;
+  --width: 136px;
+  --backgroundHeight: 200px;
+  --backgroundWidth: 356px;
+}
+
+@media (max-width: 410px) {
+  :root {
+    --height: 150px;
+    --width: 100px;
+    --backgroundHeight: 150px;
+    --backgroundWidth: 266px;
+  }
+}
+
+.mediaCover:has(div.image-background) {
+  height: var(--backgroundHeight);
+  width: var(--backgroundWidth);
+}
+
+.mediaCover {
+  position: relative;
+  overflow: hidden;
+  height: var(--height);
+  width: var(--width);
+  min-width: var(--width);
+  margin: 5px;
+  cursor: pointer;
+
+  .image {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 99;
+
+    object,
+    img {
+      height: var(--height);
+      width: var(--width);
+    }
+
+    border: 1px solid transparent;
+  }
+
+  .image-background {
+
+    object,
+    img {
+      height: var(--backgroundHeight);
+      width: var(--backgroundWidth);
+    }
+  }
+
+  .title {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    padding: 2px;
+  }
+
+  .release {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 28px;
+    padding: 2px;
+
+    span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-weight: bold;
+    }
+  }
+
+  .description {
+    position: absolute;
+    display: none;
+    top: 28px;
+    bottom: 28px;
+    right: 0px;
+    left: 0px;
+    z-index: 102;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    overflow: hidden;
+    padding: 2px;
+  }
+}
+
+.mediaCover:hover {
+  .description {
+    display: block;
+  }
+}

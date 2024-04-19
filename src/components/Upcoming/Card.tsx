@@ -39,7 +39,6 @@ export const UpcomingCard = ({
       release_date={release_date}
       icons={{ active: series_active, favorite: series_favorite }}
       count={series_unwatched}
-      actions={false}
     />
   );
 };

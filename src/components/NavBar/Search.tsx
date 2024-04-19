@@ -27,7 +27,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import useTheme from '@mui/system/useTheme';
 
-import { Cover, CoverRow } from 'components/Common';
+import { CoverRow, MediaCard } from 'components/Common';
 import { MediaCover } from 'components/Media';
 import { useMovieCreateMutation } from 'components/Movies';
 import { useSeriesCreateMutation } from 'components/Series';
@@ -366,13 +366,16 @@ export const SuperSearchResults = ({ name, data, select }: SuperSearchResultsPro
 
 export const SearchCover = ({ option }: { option: SearchResult }) => {
   return (
-    <Cover
+    <MediaCard
+      id={option.id || 'unknown'}
+      type={option.type || 'tv'}
+      variant="cover"
       title={option.title || 'unknown'}
       subtitle={option.date}
       description={option.description || 'no description'}
       kind={option.kind || 'tv'}
       image={option.image}
-      // icons={{ completed: option.completed }} // TODO: add completed icon
+      icons={{ completed: option.completed }}
       actions={false}
     />
   );

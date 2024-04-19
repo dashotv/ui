@@ -7,7 +7,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 
-export const FiCard = ({ variant = 'defaut', children }: { variant?: string; children: React.ReactNode }) => {
+export const FiCard = ({ variant = 'cover', children }: { variant?: string; children: React.ReactNode }) => {
   let width: { xs: string; sm: string } = { xs: '110px', sm: '150px' };
   let height: { xs: string; sm: string } = { xs: '165px', sm: '225px' };
 

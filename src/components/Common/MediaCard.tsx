@@ -9,7 +9,7 @@ import RecommendIcon from '@mui/icons-material/Recommend';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import StarsIcon from '@mui/icons-material/Stars';
-import { Chip, Stack, Typography } from '@mui/material';
+import { Box, Chip, Stack, Typography } from '@mui/material';
 
 import { ButtonMap, ButtonMapButton, Chrono } from '@dashotv/components';
 
@@ -21,6 +21,7 @@ import { FiCard, FiCardActions, FiCardContent, FiCardFooter, FiCardMedia } from 
 export interface MediaCardProps {
   id: string;
   type: string;
+  variant?: 'banner' | 'cover';
   image?: string;
   title: string;
   subtitle?: React.ReactNode;
@@ -44,11 +45,12 @@ export interface MediaCardProps {
   actions?: boolean;
 }
 export const MediaCard = ({
+  variant = 'banner',
   id,
   type,
   title,
   subtitle,
-  // description,
+  description,
   kind,
   source,
   source_id,
@@ -62,9 +64,10 @@ export const MediaCard = ({
   eta,
   status,
   icons,
+  actions = true,
 }: MediaCardProps) => {
   return (
-    <FiCard variant="banner">
+    <FiCard variant={variant}>
       {image && <FiCardMedia image={image} title={title} />}
       <FiCardContent>
         <Stack direction="column" spacing={0} sx={{ m: 0.5 }}>
@@ -86,11 +89,11 @@ export const MediaCard = ({
               </Typography>
             </Stack>
           ) : null}
-          {/* <Box sx={{ flex: 2, ml: 0.5, mr: 0.5, overflow: 'hidden' }}>
+          <Box sx={{ flex: 2, overflow: 'hidden' }}>
             <Typography className="coverDescription" variant="body2" sx={{ display: 'none' }}>
               {description}
             </Typography>
-          </Box> */}
+          </Box>
         </Stack>
       </FiCardContent>
       <FiCardFooter>
@@ -118,9 +121,7 @@ export const MediaCard = ({
           )}
         </Stack>
       </FiCardFooter>
-      <FiCardActions>
-        <MediaCardButtons {...{ id, type, icons }} />
-      </FiCardActions>
+      <FiCardActions>{actions ? <MediaCardButtons {...{ id, type, icons }} /> : null}</FiCardActions>
       <CardProgress progress={progress} files={files} completed={completed} />
     </FiCard>
   );

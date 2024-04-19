@@ -62,7 +62,6 @@ export const MovieCard = ({
       source_id={source_id}
       release_date={release_date}
       icons={{ downloaded, completed }}
-      actions={false}
     />
   );
 };
