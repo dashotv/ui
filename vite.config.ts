@@ -47,6 +47,7 @@ export default ({ mode }) => {
           'react-router-dom',
           'react-truncate-inside',
           'react',
+          'styled-components',
         ],
       }),
     ],
