@@ -7,11 +7,7 @@ import { SearchAllResponse, SearchResult } from 'client/scry';
 import { useDebounce } from 'usehooks-ts';
 
 import CloseIcon from '@mui/icons-material/Close';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Paper } from '@mui/material';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
@@ -117,7 +113,6 @@ export function SuperSearchController({ open, setOpen, confirm }: SuperSearchCon
   const navigate = useNavigate();
 
   const select = useCallback((option: SearchResult) => {
-    setValue('');
     setOpen(false);
     navigate(`/${option.type == 'movie' ? 'movies' : option.type}/${option.id}`);
   }, []);
@@ -276,57 +271,57 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
   );
 }
 
-interface SuperSearchAccordionProps {
-  name: string;
-  data?: SearchResult[];
-  select: (option: SearchResult) => void;
-  type?: string;
-}
-const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordionProps) => {
-  const [options, setOptions] = useState<SearchResult[]>([]);
-
-  useEffect(() => {
-    if (!data || data.length === 0) {
-      setOptions([]);
-      return;
-    }
-
-    setOptions(data);
-  }, [data]);
-
-  return (
-    // Accordion matches dialog sx={{ backgroundColor: '#343434' }}
-    // sx={{ backgroundColor: '#242424' }}
-    <Accordion defaultExpanded disableGutters expanded={options.length > 0}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-        <Chip sx={{ mr: 2 }} color="primary" size="small" label={options.length} />
-        <Typography variant="button" color="primary">
-          {name}
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        {/* <Stack direction="column" spacing={1}>
-          {options.map((option: SearchResult) => (
-            <Link title={option.title} underline="none" color="inherit" onClick={() => select(option)}>
-              <SearchCoverRow option={option} />
-            </Link>
-          ))}
-        </Stack> */}
-
-        <Grid container spacing={1}>
-          {options.map((option: SearchResult) => (
-            <Grid item key={option.id}>
-              {/* <MediaCover {...{ option, type }} /> */}
-              <Link title={option.title} underline="none" color="inherit" onClick={() => select(option)}>
-                <SearchCover option={option} />
-              </Link>
-            </Grid>
-          ))}
-        </Grid>
-      </AccordionDetails>
-    </Accordion>
-  );
-};
+// interface SuperSearchAccordionProps {
+//   name: string;
+//   data?: SearchResult[];
+//   select: (option: SearchResult) => void;
+//   type?: string;
+// }
+// const SuperSearchAccordion = ({ name, data, select, type }: SuperSearchAccordionProps) => {
+//   const [options, setOptions] = useState<SearchResult[]>([]);
+//
+//   useEffect(() => {
+//     if (!data || data.length === 0) {
+//       setOptions([]);
+//       return;
+//     }
+//
+//     setOptions(data);
+//   }, [data]);
+//
+//   return (
+//     // Accordion matches dialog sx={{ backgroundColor: '#343434' }}
+//     // sx={{ backgroundColor: '#242424' }}
+//     <Accordion defaultExpanded disableGutters expanded={options.length > 0}>
+//       <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+//         <Chip sx={{ mr: 2 }} color="primary" size="small" label={options.length} />
+//         <Typography variant="button" color="primary">
+//           {name}
+//         </Typography>
+//       </AccordionSummary>
+//       <AccordionDetails>
+//         {/* <Stack direction="column" spacing={1}>
+//           {options.map((option: SearchResult) => (
+//             <Link title={option.title} underline="none" color="inherit" onClick={() => select(option)}>
+//               <SearchCoverRow option={option} />
+//             </Link>
+//           ))}
+//         </Stack> */}
+//
+//         <Grid container spacing={1}>
+//           {options.map((option: SearchResult) => (
+//             <Grid item key={option.id}>
+//               {/* <MediaCover {...{ option, type }} /> */}
+//               <Link title={option.title} underline="none" color="inherit" onClick={() => select(option)}>
+//                 <SearchCover option={option} />
+//               </Link>
+//             </Grid>
+//           ))}
+//         </Grid>
+//       </AccordionDetails>
+//     </Accordion>
+//   );
+// };
 
 interface SuperSearchResultsProps {
   name: string;
@@ -334,7 +329,7 @@ interface SuperSearchResultsProps {
   select: (option: SearchResult) => void;
   type?: string;
 }
-export const SuperSearchResults = ({ name, data, select, type }: SuperSearchResultsProps) => {
+export const SuperSearchResults = ({ name, data, select }: SuperSearchResultsProps) => {
   const [options, setOptions] = useState<SearchResult[]>([]);
 
   useEffect(() => {
@@ -375,10 +370,9 @@ export const SearchCover = ({ option }: { option: SearchResult }) => {
       title={option.title || 'unknown'}
       subtitle={option.date}
       description={option.description || 'no description'}
-      kind={option.type || 'tv'}
-      source={option.source}
-      source_id={option.id}
+      kind={option.kind || 'tv'}
       image={option.image}
+      // icons={{ completed: option.completed }} // TODO: add completed icon
       actions={false}
     />
   );

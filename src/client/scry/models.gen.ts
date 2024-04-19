@@ -20,4 +20,5 @@ export interface SearchResult {
   date?: string;
   source?: string;
   image?: string;
+  completed?: boolean;
 }
