@@ -191,3 +191,25 @@ export const MoviesPaths = async (params: MoviesPathsRequest) => {
 
   return response.data as MoviesPathsResponse;
 };
+
+export interface MoviesJobsRequest {
+  id: string;
+  name: string;
+}
+
+export const MoviesJobs = async (params: MoviesJobsRequest) => {
+  const response = await towerClient.post(`/movies/${params.id}/jobs?name=${params.name}`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};

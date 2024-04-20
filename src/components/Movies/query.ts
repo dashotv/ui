@@ -46,6 +46,11 @@ export const patchMovie = async (id: string, setting: tower.Setting) => {
   return response;
 };
 
+export const postMovieJob = async (id: string, name: string) => {
+  const response = await tower.MoviesJobs({ id, name });
+  return response;
+};
+
 export const useMoviesAllQuery = (page: number, filters) =>
   useQuery({
     queryKey: ['movies', 'all', page, filters],

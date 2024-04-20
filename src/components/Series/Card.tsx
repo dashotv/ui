@@ -1,16 +1,21 @@
 import React from 'react';
 
+import { Series } from 'client/tower';
+import { clickHandler } from 'utils/handler';
+
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import RecommendIcon from '@mui/icons-material/Recommend';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import StarsIcon from '@mui/icons-material/Stars';
 
 import { ButtonMapButton } from '@dashotv/components';
-import { Series } from 'client/tower';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { MediaCard } from 'components/Common';
+import { useDownloadCreateMutation } from 'components/Downloads';
+
+import { postSeriesJob, useSeriesSettingMutation } from './query';
 
 export const SeriesCard = ({
   id,
@@ -19,44 +24,60 @@ export const SeriesCard = ({
   id: string;
   series: Series;
 }) => {
+  const queryClient = useQueryClient();
+  const series = useSeriesSettingMutation(id);
+  const download = useDownloadCreateMutation();
+
+  const seriesFlag = (name: string, value: boolean) => {
+    series.mutate(
+      { name, value },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['series'] });
+        },
+      },
+    );
+  };
+  const seriesJob = (name: string) => {
+    postSeriesJob(id, name);
+  };
+  const downloadCreate = () => {
+    download.mutate(id);
+  };
+
   const buttons: ButtonMapButton[] = [
-        {
-          Icon: BuildCircleIcon,
-          color: broken ? 'secondary' : 'disabled',
-          click: () => console.log('click', id),
-          title: 'Broken',
-        },
-        {
-          Icon: RecommendIcon,
-          color: favorite ? 'secondary' : 'disabled',
-          click: () => console.log('click', id),
-          title: 'Favorite',
-        },
-        {
-          Icon: StarsIcon,
-          color: active ? 'secondary' : 'disabled',
-          click: () => console.log('click', id),
-          title: 'Active',
-        },
-        {
-          Icon: CloudCircleIcon,
-          color: 'primary',
-          click: () => console.log('click', id),
-          title: 'Download',
-        },
-        {
-          Icon: ReplayCircleFilledIcon,
-          color: 'primary',
-          click: () => console.log('click', id),
-          title: 'Update',
-        },
-        {
-          Icon: RemoveCircleIcon,
-          color: 'error',
-          click: () => console.log('click', id),
-          title: 'Delete',
-        },
-      ];
+    {
+      Icon: BuildCircleIcon,
+      color: broken ? 'secondary' : 'disabled',
+      click: clickHandler(() => seriesFlag('broken', !broken)),
+      title: 'Broken',
+    },
+    {
+      Icon: RecommendIcon,
+      color: favorite ? 'secondary' : 'disabled',
+      click: clickHandler(() => seriesFlag('favorite', !favorite)),
+      title: 'Favorite',
+    },
+    {
+      Icon: StarsIcon,
+      color: active ? 'secondary' : 'disabled',
+      click: clickHandler(() => seriesFlag('active', !active)),
+      title: 'Active',
+    },
+    {
+      Icon: CloudCircleIcon,
+      color: 'primary',
+      click: clickHandler(() => downloadCreate()),
+      title: 'Download',
+    },
+    {
+      Icon: ReplayCircleFilledIcon,
+      color: 'primary',
+      click: clickHandler(() => seriesJob('refresh')),
+      title: 'Update',
+    },
+  ];
+
   return (
     <MediaCard
       id={id}

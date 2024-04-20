@@ -1,17 +1,21 @@
 import React from 'react';
 
+import { Movie } from 'client/tower';
+import { clickHandler } from 'utils/handler';
+
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
 import { ButtonMapButton } from '@dashotv/components';
-
-import { Movie } from 'client/tower';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { MediaCard } from 'components/Common';
+import { useDownloadCreateMutation } from 'components/Downloads';
+
+import { postMovieJob, useMovieSettingMutation } from './query';
 
 export const MovieCard = ({
   id,
@@ -33,44 +37,58 @@ export const MovieCard = ({
   id: string;
   movie: Movie;
 }) => {
+  const queryClient = useQueryClient();
+  const movie = useMovieSettingMutation(id);
+  const download = useDownloadCreateMutation();
+
+  const movieFlag = (name: string, value: boolean) => {
+    movie.mutate(
+      { name, value },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['movies'] });
+        },
+      },
+    );
+  };
+  const movieJob = (name: string) => {
+    postMovieJob(id, name);
+  };
+  const downloadCreate = () => {
+    download.mutate(id);
+  };
   const buttons: ButtonMapButton[] = [
-        {
-          Icon: BuildCircleIcon,
-          color: broken ? 'secondary' : 'disabled',
-          click: () => console.log('click', id),
-          title: 'Broken',
-        },
-        {
-          Icon: DownloadForOfflineIcon,
-          color: downloaded ? 'secondary' : 'disabled',
-          click: () => console.log('click', id),
-          title: 'Broken',
-        },
-        {
-          Icon: CheckCircleIcon,
-          color: completed ? 'secondary' : 'disabled',
-          click: () => console.log('click', id),
-          title: 'Broken',
-        },
-        {
-          Icon: CloudCircleIcon,
-          color: 'primary',
-          click: () => console.log('click', id),
-          title: 'Download',
-        },
-        {
-          Icon: ReplayCircleFilledIcon,
-          color: 'primary',
-          click: () => console.log('click', id),
-          title: 'Update',
-        },
-        {
-          Icon: RemoveCircleIcon,
-          color: 'error',
-          click: () => console.log('click', id),
-          title: 'Delete',
-        },
-      ];
+    {
+      Icon: BuildCircleIcon,
+      color: broken ? 'secondary' : 'disabled',
+      click: clickHandler(() => movieFlag('broken', !broken)),
+      title: 'Broken',
+    },
+    {
+      Icon: DownloadForOfflineIcon,
+      color: downloaded ? 'secondary' : 'disabled',
+      click: clickHandler(() => movieFlag('downloaded', !downloaded)),
+      title: 'Broken',
+    },
+    {
+      Icon: CheckCircleIcon,
+      color: completed ? 'secondary' : 'disabled',
+      click: clickHandler(() => movieFlag('completed', !completed)),
+      title: 'Broken',
+    },
+    {
+      Icon: CloudCircleIcon,
+      color: 'primary',
+      click: clickHandler(() => downloadCreate()),
+      title: 'Download',
+    },
+    {
+      Icon: ReplayCircleFilledIcon,
+      color: 'primary',
+      click: clickHandler(() => movieJob('refresh')),
+      title: 'Update',
+    },
+  ];
   return (
     <MediaCard
       id={id}
