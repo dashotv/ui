@@ -1,46 +1,33 @@
 import React from 'react';
 
+import { Download } from 'client/tower';
+import { clickHandler } from 'utils/handler';
+
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import { ButtonMapButton } from '@dashotv/components';
 
-import { Download } from 'client/tower';
-
 import { MediaCard } from 'components/Common';
 import { useDownloadingId } from 'hooks/downloading';
+
 import { useDownloadMutation } from './query';
 
-export const DownloadCard = ({
-  id,
-  download,
-}: {
-  id: string;
-  download: Download;
-}) => {
+export const DownloadCard = ({ id, download }: { id: string; download: Download }) => {
   const { progress, queue, files, eta } = useDownloadingId(id);
   const { selected, completed } = files || {};
   const { title, display, background, status } = download || {};
 
   const updater = useDownloadMutation(id);
 
-  const clickHandler = (handler) => {
-    return (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    event.nativeEvent.stopImmediatePropagation();
-    handler();
-    }
-  }
-
   const downloadDone = (id: string) => {
     console.log('download done', id);
-    updater.mutate({ ...download, status: 'done' })
-  }
+    updater.mutate({ ...download, status: 'done' });
+  };
   const downloadDelete = (id: string) => {
     console.log('download delete', id);
-    updater.mutate({ ...download, status: 'deleted' })
-  }
+    updater.mutate({ ...download, status: 'deleted' });
+  };
 
   const buttons: ButtonMapButton[] = [
     {
