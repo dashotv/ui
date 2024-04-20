@@ -17,7 +17,7 @@ import { Container, LoadingIndicator } from '@dashotv/components';
 
 import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
 import { useMoviesAllQuery } from 'components/Movies';
-import { MovieList } from 'components/Movies/Card';
+import { MoviesList } from 'components/Movies';
 
 const pagesize = 42;
 const kinds: Choice[] = [
@@ -118,7 +118,7 @@ export default function MoviesIndex() {
       <Container>
         <Grid container spacing={1}>
           {isFetching && <LoadingIndicator />}
-          {data?.result && <MovieList data={data?.result} type="movie" />}
+          {data?.result && <MoviesList data={data?.result} type="movie" />}
         </Grid>
       </Container>
     </>

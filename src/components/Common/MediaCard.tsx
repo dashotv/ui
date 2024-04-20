@@ -46,8 +46,6 @@ export interface MediaCardProps {
 }
 export const MediaCard = ({
   variant = 'banner',
-  id,
-  type,
   title,
   subtitle,
   description,
@@ -64,6 +62,7 @@ export const MediaCard = ({
   eta,
   status,
   icons,
+  buttons,
   actions = true,
 }: MediaCardProps) => {
   return (
@@ -89,7 +88,7 @@ export const MediaCard = ({
               </Typography>
             </Stack>
           ) : null}
-          <Box sx={{ flex: 2, overflow: 'hidden' }}>
+          <Box sx={{ maxHeight: '37px', overflow: 'hidden' }}>
             <Typography className="coverDescription" variant="body2" sx={{ display: 'none' }}>
               {description}
             </Typography>
@@ -121,7 +120,7 @@ export const MediaCard = ({
           )}
         </Stack>
       </FiCardFooter>
-      <FiCardActions>{actions ? <MediaCardButtons {...{ id, type, icons }} /> : null}</FiCardActions>
+      <FiCardActions>{actions && buttons?.length ? <ButtonMap buttons={buttons} size='small' /> : null}</FiCardActions>
       <CardProgress progress={progress} files={files} completed={completed} />
     </FiCard>
   );

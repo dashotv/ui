@@ -1,36 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import { Medium, Movie } from 'client/tower';
+import BuildCircleIcon from '@mui/icons-material/BuildCircle';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloudCircleIcon from '@mui/icons-material/CloudCircle';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 
-import { Grid } from '@mui/material';
+import { ButtonMapButton } from '@dashotv/components';
+
+import { Movie } from 'client/tower';
 
 import { MediaCard } from 'components/Common';
 
-export function MovieList({ data }: { type: string; data: Medium[] }) {
-  return (
-    <>
-      {data &&
-        data.map((medium: Medium) => {
-          const { id, type: medium_type } = medium;
-          if (!medium_type || !id) {
-            throw new Error('Media type and id is required');
-          }
-          return (
-            <Grid item key={id} md={4} xs={12}>
-              <Link to={`/movies/${id}`}>
-                <MovieCard movie={medium} />
-              </Link>
-            </Grid>
-          );
-        })}
-    </>
-  );
-}
-
 export const MovieCard = ({
+  id,
   movie: {
-    id,
     title,
     display,
     description,
@@ -40,15 +25,52 @@ export const MovieCard = ({
     release_date,
     cover,
     background,
+    broken,
     downloaded,
     completed,
   },
 }: {
+  id: string;
   movie: Movie;
 }) => {
-  if (!id) {
-    throw new Error('Media type and id is required');
-  }
+  const buttons: ButtonMapButton[] = [
+        {
+          Icon: BuildCircleIcon,
+          color: broken ? 'secondary' : 'disabled',
+          click: () => console.log('click', id),
+          title: 'Broken',
+        },
+        {
+          Icon: DownloadForOfflineIcon,
+          color: downloaded ? 'secondary' : 'disabled',
+          click: () => console.log('click', id),
+          title: 'Broken',
+        },
+        {
+          Icon: CheckCircleIcon,
+          color: completed ? 'secondary' : 'disabled',
+          click: () => console.log('click', id),
+          title: 'Broken',
+        },
+        {
+          Icon: CloudCircleIcon,
+          color: 'primary',
+          click: () => console.log('click', id),
+          title: 'Download',
+        },
+        {
+          Icon: ReplayCircleFilledIcon,
+          color: 'primary',
+          click: () => console.log('click', id),
+          title: 'Update',
+        },
+        {
+          Icon: RemoveCircleIcon,
+          color: 'error',
+          click: () => console.log('click', id),
+          title: 'Delete',
+        },
+      ];
   return (
     <MediaCard
       id={id}
@@ -62,6 +84,7 @@ export const MovieCard = ({
       source_id={source_id}
       release_date={release_date}
       icons={{ downloaded, completed }}
+      buttons={buttons}
     />
   );
 };

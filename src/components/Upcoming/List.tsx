@@ -32,7 +32,7 @@ export const UpcomingList = ({ data }: { data: Upcoming[] }) => {
           <Grid item key={id} md={4} xs={12}>
             <Link to={path(type, id, series_id)}>
               {/* <UpcomingBanner {...{ id, upcoming }} /> */}
-              <UpcomingCard upcoming={upcoming} />
+              <UpcomingCard id={id} upcoming={upcoming} />
             </Link>
           </Grid>
         );

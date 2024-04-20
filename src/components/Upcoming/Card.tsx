@@ -1,12 +1,15 @@
 import React from 'react';
 
+import CloudCircleIcon from '@mui/icons-material/CloudCircle';
+import StarsIcon from '@mui/icons-material/Stars';
 import { Upcoming } from 'client/tower';
 
+import { ButtonMapButton } from '@dashotv/components';
 import { MediaCard } from 'components/Common';
 
 export const UpcomingCard = ({
+  id,
   upcoming: {
-    id,
     title,
     display,
     description,
@@ -20,11 +23,23 @@ export const UpcomingCard = ({
     series_unwatched,
   },
 }: {
+  id: string;
   upcoming: Upcoming;
 }) => {
-  if (!id) {
-    throw new Error('UpcomingCard requires an id');
-  }
+  const buttons: ButtonMapButton[] = [
+    {
+      Icon: StarsIcon,
+      color: series_active ? 'secondary' : 'disabled',
+      click: () => console.log('click', id),
+      title: 'Active',
+    },
+    {
+      Icon: CloudCircleIcon,
+      color: 'primary',
+      click: () => console.log('click', id),
+      title: 'Download',
+    },
+  ];
   return (
     <MediaCard
       id={id}
@@ -38,6 +53,7 @@ export const UpcomingCard = ({
       source_id={source_id}
       release_date={release_date}
       icons={{ active: series_active, favorite: series_favorite }}
+      buttons={buttons}
       count={series_unwatched}
     />
   );
