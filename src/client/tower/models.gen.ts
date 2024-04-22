@@ -48,6 +48,14 @@ export interface CombinationChild {
   updated_at?: number;
 }
 
+export interface DestinationTemplate {
+  id?: string;
+  created_at?: string;
+  updated_at?: string;
+
+  name?: string;
+}
+
 export interface Download {
   id?: string;
   created_at?: string;
@@ -181,6 +189,17 @@ export interface File {
   size?: number;
   modified_at?: number;
   medium_id?: string;
+}
+
+export interface Library {
+  id?: string;
+  created_at?: string;
+  updated_at?: string;
+
+  name?: string;
+  path?: string;
+  release_type_id?: string;
+  destination_template_id?: string;
 }
 
 export interface Medium {
@@ -337,6 +356,14 @@ export interface Release {
   encoding?: string;
   quality?: string;
   published_at?: string;
+}
+
+export interface ReleaseType {
+  id?: string;
+  created_at?: string;
+  updated_at?: string;
+
+  name?: string;
 }
 
 export interface Request {

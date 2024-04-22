@@ -15,13 +15,12 @@ import LinkIcon from '@mui/icons-material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import SettingsIcon from '@mui/icons-material/Settings';
 import TheatersIcon from '@mui/icons-material/Theaters';
 import TodayIcon from '@mui/icons-material/Today';
-import TourIcon from '@mui/icons-material/Tour';
 import TvIcon from '@mui/icons-material/Tv';
 import UpcomingIcon from '@mui/icons-material/Upcoming';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
-import VideocamIcon from '@mui/icons-material/Videocam';
 import WatchIcon from '@mui/icons-material/Watch';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import WysiwygIcon from '@mui/icons-material/Wysiwyg';
@@ -109,6 +108,7 @@ const pages: NavPageWithChildren[] = [
       { icon: <RecordVoiceOverIcon fontSize="small" />, name: 'Requests', page: '/admin/requests' },
       { icon: <PersonIcon fontSize="small" />, name: 'Users', page: '/admin/users' },
       { icon: <WatchIcon fontSize="small" />, name: 'Watches', page: '/admin/watches' },
+      { icon: <SettingsIcon fontSize="small" />, name: 'Settings', page: '/admin/settings' },
     ],
   },
 ];
