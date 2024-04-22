@@ -62,7 +62,6 @@ const pages: NavPageWithChildren[] = [
     children: [
       { icon: <TvIcon fontSize="small" />, name: 'Series', page: '/series' },
       { icon: <TheatersIcon fontSize="small" />, name: 'Movies', page: '/movies' },
-      { icon: <DescriptionIcon fontSize="small" />, name: 'Rift', page: '/rift' },
     ],
   },
   {
@@ -73,6 +72,7 @@ const pages: NavPageWithChildren[] = [
       { icon: <TodayIcon fontSize="small" />, name: 'Popular', page: '/runic/popular' },
       { icon: <FindInPageIcon fontSize="small" />, name: 'Search', page: '/runic', exact: true },
       { icon: <FeedIcon fontSize="small" />, name: 'Indexers', page: '/runic/indexers' },
+      { icon: <DescriptionIcon fontSize="small" />, name: 'Rift', page: '/rift' },
     ],
   },
   // {
