@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 
 import { UserButton } from '@clerk/clerk-react';
 
@@ -11,13 +12,11 @@ import SuperSearch from './Search';
 export const Admin = () => {
   return (
     <>
-      <Box sx={{ height: 51, width: 37 }}>
+      <Stack direction="row" spacing={-1.5}>
         <SuperSearch />
-      </Box>
-      <Box sx={{ height: 51, width: 37 }}>
         <NavbarMenu />
-      </Box>
-      <Box sx={{ height: 51, pt: 1.3 }}>{import.meta.env.PROD && <UserButton />}</Box>
+      </Stack>
+      <Box sx={{ height: 51, pl: 1, pt: 1.3 }}>{import.meta.env.PROD && <UserButton />}</Box>
     </>
   );
 };
