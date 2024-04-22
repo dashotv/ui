@@ -22,6 +22,7 @@ export const UpcomingCard = ({
     release_date,
     series_id,
     series_background,
+    series_cover,
     series_kind,
     series_source,
     series_active,
@@ -64,7 +65,7 @@ export const UpcomingCard = ({
       title={title || 'unknown'}
       subtitle={display}
       description={description}
-      image={series_background}
+      image={series_background || series_cover || '/blank.png'}
       kind={series_kind}
       source={series_source}
       source_id={source_id}
