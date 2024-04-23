@@ -65,7 +65,7 @@ export const LibraryTypesList = () => {
       {(data || []).map((libraryType, index) => (
         <Row key={index}>
           <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
-            <Typography variant="body1" fontWeight="bolder">
+            <Typography variant="body1" fontWeight="bolder" color="primary">
               {libraryType.name}
             </Typography>
             <Stack direction="row" spacing={1}>

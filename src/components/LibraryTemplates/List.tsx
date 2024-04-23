@@ -66,10 +66,10 @@ export const LibraryTemplatesList = () => {
         <Row key={index}>
           <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
             <Stack direction="row" spacing={1} alignItems="baseline">
-              <Typography variant="body1" fontWeight="bolder" minWidth="100px">
+              <Typography variant="body1" fontWeight="bolder" minWidth="100px" color="primary">
                 {libraryTemplate.name}
               </Typography>
-              <Typography variant="body2" fontWeight="bolder" color="gray">
+              <Typography variant="body2" fontWeight="bolder" color="primary.dark">
                 {libraryTemplate.template}
               </Typography>
             </Stack>
