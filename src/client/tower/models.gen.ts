@@ -201,6 +201,8 @@ export interface Library {
   path?: string;
   release_type_id?: string;
   destination_template_id?: string;
+  release_type?: ReleaseType;
+  destination_template?: DestinationTemplate;
 }
 
 export interface Medium {
