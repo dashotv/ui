@@ -32,9 +32,13 @@ export const LibraryTemplatesDialog = ({
             <Text control={control} name="name" />
             <Text control={control} name="template" />
           </Stack>
-          <Stack direction="row" spacing={1}>
-            <Button onClick={() => close(null)}>Cancel</Button>
-            <Button type="submit">Submit</Button>
+          <Stack direction="row" spacing={1} pt={3} justifyContent="end">
+            <Button variant="contained" onClick={() => close(null)}>
+              Cancel
+            </Button>
+            <Button variant="contained" type="submit">
+              Submit
+            </Button>
           </Stack>
         </Box>
       </DialogContent>
