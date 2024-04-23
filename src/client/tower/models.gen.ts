@@ -54,6 +54,7 @@ export interface DestinationTemplate {
   updated_at?: string;
 
   name?: string;
+  template?: string;
 }
 
 export interface Download {
