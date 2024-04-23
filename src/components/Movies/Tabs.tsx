@@ -14,7 +14,7 @@ export const MovieTabs = ({ id, paths, movie }: MovieTabsProps) => {
     {
       label: 'Paths',
       to: '',
-      element: <Paths paths={paths} />,
+      element: <Paths paths={paths} medium_id={id} />,
     },
     {
       label: 'Details',

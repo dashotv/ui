@@ -12,6 +12,7 @@ export * from './library_template.gen';
 export * from './library_type.gen';
 export * from './messages.gen';
 export * from './movies.gen';
+export * from './paths.gen';
 export * from './plex.gen';
 export * from './releases.gen';
 export * from './requests.gen';

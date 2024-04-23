@@ -91,7 +91,7 @@ export default function SeriesShow() {
     {
       label: 'Paths',
       to: `paths`,
-      element: <Paths paths={paths} />,
+      element: <Paths paths={paths} medium_id={id} />,
     },
     {
       label: 'Details',
