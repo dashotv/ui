@@ -6,12 +6,17 @@ import { useDebounce } from 'usehooks-ts';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import QueueIcon from '@mui/icons-material/Queue';
 import {
+  Button,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
+  Grid,
   IconButton,
   Link,
+  MenuItem,
   Paper,
   Stack,
   TextField,
@@ -20,52 +25,94 @@ import {
 import useMediaQuery from '@mui/material/useMediaQuery';
 import useTheme from '@mui/system/useTheme';
 
-import { Chrono, LoadingIndicator } from '@dashotv/components';
+import { Chrono, Container, LoadingIndicator, Row } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { Option } from 'components/Media';
 import { PlexLibrary, usePlexLibrariesQuery, usePlexSearchQuery } from 'components/Plex';
 
-import { CollectionDialog, useCollectionDeleteMutation, useCollectionUpdateMutation, useCollectionsQuery } from '.';
+import {
+  CollectionDialog,
+  useCollectionDeleteMutation,
+  useCollectionMutation,
+  useCollectionUpdateMutation,
+  useCollectionsQuery,
+} from '.';
 
 export const CollectionList = ({ page }: { page: number }) => {
   const { isFetching, data } = useCollectionsQuery(page);
   const { data: libraries } = usePlexLibrariesQuery();
+  const queryClient = useQueryClient();
+  const collection = useCollectionMutation();
+  const create = (name: string, library: string) => {
+    const col = { name, library };
+    collection.mutate(col, {
+      onSuccess: data => {
+        if (data.error) {
+          console.error('error: ', data.error);
+          return;
+        }
+        queryClient.invalidateQueries({ queryKey: ['collections', page] });
+      },
+    });
+  };
 
   const getLibrary = (key: string) => {
     return libraries?.result.find(l => l.key === key);
   };
 
   return (
-    <Paper elevation={0} sx={{ width: '100%' }}>
-      {isFetching && <LoadingIndicator />}
-      {data?.result?.map(collection => (
-        <Paper key={collection.id} elevation={0} sx={{ mb: 1, width: '100%' }}>
-          <Stack spacing={1} direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" alignItems="center">
-            <Stack spacing={1} direction="row" alignItems="center" width="100%" justifyContent="flex-start">
-              <Typography color="primary" noWrap minWidth={0}>
-                {collection.name}
+    <>
+      <Container>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Stack spacing={1} direction="row" justifyContent="start" alignItems="center">
+              <Typography variant="h6" color="primary">
+                Collections
               </Typography>
-              <Typography variant="subtitle2" color="primary.dark" noWrap minWidth={0}>
-                {collection?.library ? getLibrary(collection.library)?.title : null}
-              </Typography>
-              <Typography variant="subtitle2" color="gray" noWrap minWidth={0}>
-                {collection.rating_key}
-              </Typography>
+              <CreateDialog {...{ create }} libraries={libraries?.result} />
             </Stack>
-            <Stack spacing={1} direction="row" justifyContent="flex-end" alignItems="center" width="100%">
-              <Typography noWrap fontWeight="bolder" color="action" pr={1}>
-                {collection.media ? collection.media.length : 0}
-              </Typography>
-              <Typography variant="subtitle2" color="gray" noWrap minWidth="0">
-                <Chrono fromNow>{collection.created_at}</Chrono>
-              </Typography>
-              <CollectionActions {...{ collection, libraries: libraries?.result }} />
-            </Stack>
-          </Stack>
+          </Grid>
+          <Grid item xs={12} md={6}></Grid>
+        </Grid>
+      </Container>
+      <Container>
+        <Paper elevation={0} sx={{ width: '100%' }}>
+          {isFetching && <LoadingIndicator />}
+          {data?.result?.map(collection => (
+            <Row key={collection.id}>
+              <Stack
+                spacing={1}
+                direction={{ xs: 'column', md: 'row' }}
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Stack spacing={1} direction="row" alignItems="center" width="100%" justifyContent="flex-start">
+                  <Typography color="primary" noWrap minWidth={0}>
+                    {collection.name}
+                  </Typography>
+                  <Typography variant="subtitle2" color="primary.dark" noWrap minWidth={0}>
+                    {collection?.library ? getLibrary(collection.library)?.title : null}
+                  </Typography>
+                  <Typography variant="subtitle2" color="gray" noWrap minWidth={0}>
+                    {collection.rating_key}
+                  </Typography>
+                </Stack>
+                <Stack spacing={1} direction="row" justifyContent="flex-end" alignItems="center" width="100%">
+                  <Typography noWrap fontWeight="bolder" color="action" pr={1}>
+                    {collection.media ? collection.media.length : 0}
+                  </Typography>
+                  <Typography variant="subtitle2" color="gray" noWrap minWidth="0">
+                    <Chrono fromNow>{collection.created_at}</Chrono>
+                  </Typography>
+                  <CollectionActions {...{ collection, libraries: libraries?.result }} />
+                </Stack>
+              </Stack>
+            </Row>
+          ))}
         </Paper>
-      ))}
-    </Paper>
+      </Container>
+    </>
   );
 };
 
@@ -115,6 +162,83 @@ export const CollectionActions = ({ collection, libraries }: { collection: Colle
         <DeleteForeverIcon fontSize="small" />
       </IconButton>
     </Stack>
+  );
+};
+
+const CreateDialog = ({
+  create,
+  libraries,
+}: {
+  create: (name: string, library: string) => void;
+  libraries?: PlexLibrary[];
+}) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<string>('');
+  const [library, setLibrary] = useState<string>('');
+
+  const handleCreate = () => {
+    if (!value || !library) {
+      return;
+    }
+
+    setOpen(false);
+    setValue('');
+    setLibrary('');
+    create(value, library);
+  };
+
+  return (
+    <>
+      <IconButton aria-label="refresh" color="primary" onClick={() => setOpen(true)}>
+        <QueueIcon />
+      </IconButton>
+      {open && (
+        <Dialog onClose={() => setOpen(false)} open={open} fullWidth maxWidth="sm">
+          <DialogTitle>Create Collection</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              fullWidth
+              error={value === ''}
+              id="name"
+              label="Name"
+              margin="dense"
+              type="search"
+              variant="standard"
+              value={value}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setValue(event.target.value);
+              }}
+            />
+            <TextField
+              fullWidth
+              select
+              error={library === ''}
+              id="library"
+              label="Library"
+              margin="dense"
+              type="search"
+              variant="standard"
+              value={library}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setLibrary(event.target.value);
+              }}
+            >
+              <MenuItem value="">None</MenuItem>
+              {libraries?.map(l => (
+                <MenuItem key={l.key} value={l.key}>
+                  {l.title}
+                </MenuItem>
+              ))}
+            </TextField>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpen(false)}>Cancel</Button>
+            <Button onClick={() => handleCreate()}>Create</Button>
+          </DialogActions>
+        </Dialog>
+      )}
+    </>
   );
 };
 

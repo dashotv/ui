@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { Combination } from 'client/tower';
 
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import QueueIcon from '@mui/icons-material/Queue';
 import { Paper, Stack, Typography } from '@mui/material';
@@ -22,7 +23,12 @@ import { Chrono, Container, LoadingIndicator, Row } from '@dashotv/components';
 
 import { useCollectionsQuery } from 'components/Collections';
 
-import { useCombinationMutation, useCombinationsQuery } from './query';
+import {
+  useCombinationCreateMutation,
+  useCombinationDeleteMutation,
+  useCombinationMutation,
+  useCombinationsQuery,
+} from './query';
 
 export const Combinations = () => {
   const [selected, setSelected] = useState<Combination | undefined>(undefined);
@@ -35,7 +41,7 @@ export const Combinations = () => {
     <>
       <Container>
         <Grid container spacing={2}>
-          <Grid xs={12} md={6}>
+          <Grid item xs={12} md={6}>
             <Stack spacing={1} direction="row" justifyContent="start" alignItems="center">
               <Typography variant="h6" color="primary">
                 Combinations
@@ -43,7 +49,7 @@ export const Combinations = () => {
               <CreateDialog open={setSelected} />
             </Stack>
           </Grid>
-          <Grid xs={12} md={6}></Grid>
+          <Grid item xs={12} md={6}></Grid>
         </Grid>
       </Container>
       <Container>
@@ -56,6 +62,10 @@ export const Combinations = () => {
 
 export const CombinationsList = ({ setSelected }: { setSelected: (v?: Combination) => void }) => {
   const { isFetching, data } = useCombinationsQuery();
+  const remover = useCombinationDeleteMutation();
+  const remove = (id: string) => {
+    remover.mutate(id);
+  };
   return (
     <Paper elevation={0} sx={{ width: '100%' }}>
       {isFetching && <LoadingIndicator />}
@@ -79,6 +89,14 @@ export const CombinationsList = ({ setSelected }: { setSelected: (v?: Combinatio
               </Typography>
               <IconButton aria-label="refresh" color="primary" size="small" onClick={() => setSelected(combination)}>
                 <EditIcon fontSize="small" />
+              </IconButton>
+              <IconButton
+                aria-label="refresh"
+                color="error"
+                size="small"
+                onClick={() => combination.id && remove(combination.id)}
+              >
+                <DeleteForeverIcon fontSize="small" />
               </IconButton>
             </Stack>
           </Stack>
@@ -107,7 +125,8 @@ const CombinationDialog = ({
   setOpen: (v?: Combination) => void;
   combination?: Combination;
 }) => {
-  const create = useCombinationMutation();
+  const update = useCombinationMutation();
+  const create = useCombinationCreateMutation();
   const { data: collections } = useCollectionsQuery(1);
 
   const [value, setValue] = useState<string>(combination?.name || '');
@@ -130,7 +149,11 @@ const CombinationDialog = ({
       return;
     }
 
-    create.mutate({ name: value, collections: selected }, { onSuccess: () => setOpen() });
+    if (!combination?.id) {
+      create.mutate({ name: value, collections: selected }, { onSuccess: () => setOpen() });
+      return;
+    }
+    update.mutate({ id: combination.id, name: value, collections: selected }, { onSuccess: () => setOpen() });
   };
 
   return (
@@ -168,7 +191,7 @@ const CombinationDialog = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen()}>Cancel</Button>
-          <Button onClick={() => handleCreate()}>Create</Button>
+          <Button onClick={() => handleCreate()}>Save</Button>
         </DialogActions>
       </Dialog>
     </>

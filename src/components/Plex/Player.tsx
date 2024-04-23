@@ -10,7 +10,7 @@ import { PlexTrack } from './Track';
 
 export const PlexPlayerView = ({ player, session }: { player?: PlexClient; session?: PlexSession }) => {
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={1} sx={{ mt: 1 }}>
       <Grid xs={12} md={8}>
         <PlexTrack {...{ player, session }} />
       </Grid>

@@ -69,3 +69,46 @@ export const CombinationsCreate = async (params: CombinationsCreateRequest) => {
 
   return response.data as Response;
 };
+
+export interface CombinationsUpdateRequest {
+  id: string;
+  subject: Combination;
+}
+
+export const CombinationsUpdate = async (params: CombinationsUpdateRequest) => {
+  const response = await towerClient.put(`/combinations/${params.id}?`, params.subject);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
+
+export interface CombinationsDeleteRequest {
+  id: string;
+}
+
+export const CombinationsDelete = async (params: CombinationsDeleteRequest) => {
+  const response = await towerClient.delete(`/combinations/${params.id}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};

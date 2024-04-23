@@ -90,7 +90,7 @@ const PlexList = ({
             <Stack direction="row" spacing={1} alignItems="center">
               <Unwatched viewed={show.viewed} total={show.total} />
               <Stack direction="column" spacing={0} width={{ xs: '165px', md: 'auto' }}>
-                <Typography variant="body1" fontWeight="bolder" noWrap minWidth="35px" color="primary">
+                <Typography variant="body1" fontWeight="bolder" noWrap minWidth="35px" maxWidth="700px" color="primary">
                   {show.title}
                 </Typography>
                 <ShowDate unix={show.last_viewed_at} />
