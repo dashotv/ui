@@ -51,7 +51,7 @@ export const LibrariesList = () => {
       {isFetching && <LoadingIndicator />}
       <Stack direction="row" spacing={1}>
         <Typography variant="h6" color="primary">
-          Libraries
+          Libraries (Kinds)
         </Typography>
         <IconButton size="small" onClick={() => setEditing({ name: '' })}>
           <QueueIcon fontSize="small" color="primary" />
