@@ -296,3 +296,87 @@ export interface User {
   thumb: string;
   title: string;
 }
+/*
+
+type WebhookPayload struct {
+	Event    string                  `json:"event"`
+	User     bool                    `json:"user"`
+	Owner    bool                    `json:"owner"`
+	Account  *Account                `json:"Account"`
+	Server   *Server                 `json:"Server"`
+	Player   *Player                 `json:"Player"`
+	Metadata *WebhookPayloadMetadata `json:"Metadata"`
+}
+
+type WebhookPayloadMetadata struct {
+	LibrarySectionType   string `json:"librarySectionType"`
+	RatingKey            string `json:"ratingKey"`
+	Key                  string `json:"key"`
+	ParentRatingKey      string `json:"parentRatingKey"`
+	GrandparentRatingKey string `json:"grandparentRatingKey"`
+	GUID                 string `json:"guid"`
+	LibrarySectionID     int64  `json:"librarySectionID"`
+	Type                 string `json:"type"`
+	Title                string `json:"title"`
+	GrandparentKey       string `json:"grandparentKey"`
+	ParentKey            string `json:"parentKey"`
+	GrandparentTitle     string `json:"grandparentTitle"`
+	ParentTitle          string `json:"parentTitle"`
+	Summary              string `json:"summary"`
+	Index                int64  `json:"index"`
+	ParentIndex          int64  `json:"parentIndex"`
+	RatingCount          int64  `json:"ratingCount"`
+	Thumb                string `json:"thumb"`
+	Art                  string `json:"art"`
+	ParentThumb          string `json:"parentThumb"`
+	GrandparentThumb     string `json:"grandparentThumb"`
+	GrandparentArt       string `json:"grandparentArt"`
+	AddedAt              int64  `json:"addedAt"`
+	UpdatedAt            int64  `json:"updatedAt"`
+}
+*/
+export interface WebhookPayload {
+  event: string;
+  user: boolean;
+  owner: boolean;
+  Account: Account;
+  Server: Server;
+  Player: Player;
+  Metadata: WebhookPayloadMetadata;
+}
+export interface Account {
+  id: string;
+  thumb: string;
+  title: string;
+}
+export interface Server {
+  id: string;
+  thumb: string;
+  title: string;
+}
+export interface WebhookPayloadMetadata {
+  librarySectionType: string;
+  ratingKey: string;
+  key: string;
+  parentRatingKey: string;
+  grandparentRatingKey: string;
+  GUID: string;
+  librarySectionID: number;
+  type: string;
+  title: string;
+  grandparentKey: string;
+  parentKey: string;
+  grandparentTitle: string;
+  parentTitle: string;
+  summary: string;
+  index: number;
+  parentIndex: number;
+  ratingCount: number;
+  thumb: string;
+  art: string;
+  parentThumb: string;
+  grandparentThumb: string;
+  grandparentArt: string;
+  addedAt: number;
+  updatedAt: number;
+}

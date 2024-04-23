@@ -2,7 +2,7 @@
 import { NzbgetPayload, Response, towerClient } from '.';
 
 export const HooksPlex = async () => {
-  const response = await towerClient.get(`/hooks/plex?`);
+  const response = await towerClient.post(`/hooks/plex?`);
 
   if (!response.data) {
     throw new Error('response empty?');
