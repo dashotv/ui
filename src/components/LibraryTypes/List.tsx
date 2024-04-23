@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ReleaseType } from 'client/tower';
+import { LibraryType } from 'client/tower';
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
@@ -10,33 +10,33 @@ import { Stack } from '@mui/system';
 
 import { LoadingIndicator, Row } from '@dashotv/components';
 
-import { ReleaseTypesDialog } from './Dialog';
+import { LibraryTypesDialog } from './Dialog';
 import {
-  useMutationReleaseType,
-  useMutationReleaseTypeCreate,
-  useMutationReleaseTypeDelete,
-  useQueryReleaseTypes,
+  useMutationLibraryType,
+  useMutationLibraryTypeCreate,
+  useMutationLibraryTypeDelete,
+  useQueryLibraryTypes,
 } from './query';
 
-export const ReleaseTypesList = () => {
-  const [editing, setEditing] = React.useState<ReleaseType | null>(null);
-  const { data, isFetching } = useQueryReleaseTypes();
-  const creator = useMutationReleaseTypeCreate();
-  const deleter = useMutationReleaseTypeDelete();
-  const updater = useMutationReleaseType();
+export const LibraryTypesList = () => {
+  const [editing, setEditing] = React.useState<LibraryType | null>(null);
+  const { data, isFetching } = useQueryLibraryTypes();
+  const creator = useMutationLibraryTypeCreate();
+  const deleter = useMutationLibraryTypeDelete();
+  const updater = useMutationLibraryType();
 
-  const create = (data: ReleaseType) => {
+  const create = (data: LibraryType) => {
     setEditing(null);
     creator.mutate(data);
   };
-  const update = (data: ReleaseType) => {
+  const update = (data: LibraryType) => {
     setEditing(null);
     if (!data.id) {
       throw new Error('ID must be set');
     }
     updater.mutate({ id: data.id, data });
   };
-  const save = (data: ReleaseType | null) => {
+  const save = (data: LibraryType | null) => {
     setEditing(null);
     if (!data) {
       return;
@@ -56,30 +56,30 @@ export const ReleaseTypesList = () => {
       {isFetching && <LoadingIndicator />}
       <Stack direction="row" spacing={1}>
         <Typography variant="h6" color="primary">
-          Release Types
+          Types
         </Typography>
         <IconButton size="small" onClick={() => setEditing({ name: '' })}>
           <QueueIcon fontSize="small" color="primary" />
         </IconButton>
       </Stack>
-      {(data || []).map((releaseType, index) => (
+      {(data || []).map((libraryType, index) => (
         <Row key={index}>
           <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
             <Typography variant="body1" fontWeight="bolder">
-              {releaseType.name}
+              {libraryType.name}
             </Typography>
             <Stack direction="row" spacing={1}>
-              <IconButton size="small" onClick={() => setEditing(releaseType)}>
+              <IconButton size="small" onClick={() => setEditing(libraryType)}>
                 <EditIcon fontSize="small" color="primary" />
               </IconButton>
-              <IconButton size="small" onClick={() => releaseType?.id && remove(releaseType.id)}>
+              <IconButton size="small" onClick={() => libraryType?.id && remove(libraryType.id)}>
                 <DeleteForeverIcon fontSize="small" color="error" />
               </IconButton>
             </Stack>
           </Stack>
         </Row>
       ))}
-      {editing && <ReleaseTypesDialog releaseType={editing} submit={save} />}
+      {editing && <LibraryTypesDialog libraryType={editing} submit={save} />}
     </Paper>
   );
 };

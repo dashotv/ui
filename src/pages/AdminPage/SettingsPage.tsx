@@ -2,16 +2,16 @@ import React from 'react';
 
 import { Container } from '@dashotv/components';
 
-import { DestinationTemplatesList } from 'components/DestinationTemplates';
-import { LibrarysList } from 'components/Libraries';
-import { ReleaseTypesList } from 'components/ReleaseTypes';
+import { LibrariesList } from 'components/Libraries';
+import { LibraryTemplatesList } from 'components/LibraryTemplates';
+import { LibraryTypesList } from 'components/LibraryTypes';
 
 export const SettingsPage = () => {
   return (
     <Container>
-      <ReleaseTypesList />
-      <DestinationTemplatesList />
-      <LibrarysList />
+      <LibrariesList />
+      <LibraryTypesList />
+      <LibraryTemplatesList />
     </Container>
   );
 };

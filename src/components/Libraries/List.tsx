@@ -13,7 +13,7 @@ import { LoadingIndicator, Row } from '@dashotv/components';
 import { LibrariesDialog } from './Dialog';
 import { useMutationLibrary, useMutationLibraryCreate, useMutationLibraryDelete, useQueryLibraries } from './query';
 
-export const LibrarysList = () => {
+export const LibrariesList = () => {
   const [editing, setEditing] = React.useState<Library | null>(null);
   const { data, isFetching } = useQueryLibraries();
   const creator = useMutationLibraryCreate();
@@ -64,27 +64,27 @@ export const LibrarysList = () => {
               <Typography variant="body1" fontWeight="bolder" minWidth="100px" color="primary">
                 {library.name}
               </Typography>
-              <Typography variant="caption" fontWeight="bolder" color="primary.dark">
+              <Typography variant="body2" fontWeight="bolder" color="primary.dark">
                 {library.path}
               </Typography>
-              <Stack direction="row" spacing={0.5}>
-                <Typography variant="caption" fontWeight="bolder" color="secondary">
+              <Stack direction="row" spacing={0.5} alignItems="baseline">
+                <Typography variant="body2" fontWeight="bolder" color="secondary">
                   type:
                 </Typography>
-                <Typography variant="caption" fontWeight="bolder" color="secondary.dark">
-                  {library.release_type?.name}
+                <Typography variant="body2" fontWeight="bolder" color="secondary.dark">
+                  {library.library_type?.name}
                 </Typography>
               </Stack>
-              <Stack direction="row" spacing={0.5}>
-                <Typography variant="caption" fontWeight="bolder" color="secondary">
+              <Stack direction="row" spacing={0.5} alignItems="baseline">
+                <Typography variant="body2" fontWeight="bolder" color="secondary">
                   template:
                 </Typography>
-                <Typography variant="caption" fontWeight="bolder" color="secondary.dark">
-                  {library.destination_template?.name}
+                <Typography variant="body2" fontWeight="bolder" color="secondary.dark">
+                  {library.library_template?.name}
                 </Typography>
               </Stack>
             </Stack>
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" spacing={1} alignItems="center">
               <IconButton size="small" onClick={() => setEditing(library)}>
                 <EditIcon fontSize="small" color="primary" />
               </IconButton>

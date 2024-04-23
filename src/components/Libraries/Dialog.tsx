@@ -8,16 +8,16 @@ import { Stack } from '@mui/system';
 
 import { Option, Select, Text } from '@dashotv/components';
 
-import { useQueryDestinationTemplates } from 'components/DestinationTemplates';
-import { useQueryReleaseTypes } from 'components/ReleaseTypes';
+import { useQueryLibraryTemplates } from 'components/LibraryTemplates';
+import { useQueryLibraryTypes } from 'components/LibraryTypes';
 
 export const LibrariesDialog = ({ library, submit }: { library: Library; submit: (data: Library | null) => void }) => {
   const [open, setOpen] = useState(true);
-  const [releaseTypes, setReleaseTypes] = useState<Option[]>([]);
-  const [destTemplates, setDestTemplates] = useState<Option[]>([]);
+  const [libraryTypes, setLibraryTypes] = useState<Option[]>([]);
+  const [templates, setDestTemplates] = useState<Option[]>([]);
   const { control, handleSubmit } = useForm<Library>({ values: library });
-  const { data: releaseTypesData } = useQueryReleaseTypes();
-  const { data: destTemplatesData } = useQueryDestinationTemplates();
+  const { data: libraryTypesData } = useQueryLibraryTypes();
+  const { data: templatesData } = useQueryLibraryTemplates();
 
   const close = (data: Library | null) => {
     submit(data);
@@ -25,18 +25,18 @@ export const LibrariesDialog = ({ library, submit }: { library: Library; submit:
   };
 
   useEffect(() => {
-    if (!releaseTypesData) {
+    if (!libraryTypesData) {
       return;
     }
-    setReleaseTypes(releaseTypesData.map(item => ({ label: item.name!, value: item.id! }) as Option));
-  }, [releaseTypesData]);
+    setLibraryTypes(libraryTypesData.map(item => ({ label: item.name!, value: item.id! }) as Option));
+  }, [libraryTypesData]);
 
   useEffect(() => {
-    if (!destTemplatesData) {
+    if (!templatesData) {
       return;
     }
-    setDestTemplates(destTemplatesData.map(item => ({ label: item.name!, value: item.id! }) as Option));
-  }, [destTemplatesData]);
+    setDestTemplates(templatesData.map(item => ({ label: item.name!, value: item.id! }) as Option));
+  }, [templatesData]);
 
   return (
     <Dialog open={open} maxWidth="md" fullWidth>
@@ -46,12 +46,16 @@ export const LibrariesDialog = ({ library, submit }: { library: Library; submit:
           <Stack direction="column" spacing={2}>
             <Text control={control} name="name" />
             <Text control={control} name="path" />
-            <Select control={control} name="release_type_id" options={releaseTypes} />
-            <Select control={control} name="destination_template_id" options={destTemplates} />
+            <Select control={control} name="library_type_id" options={libraryTypes} />
+            <Select control={control} name="library_template_id" options={templates} />
           </Stack>
-          <Stack direction="row" spacing={1}>
-            <Button onClick={() => close(null)}>Cancel</Button>
-            <Button type="submit">Submit</Button>
+          <Stack direction="row" spacing={1} pt={3} justifyContent="end">
+            <Button variant="contained" onClick={() => close(null)}>
+              Cancel
+            </Button>
+            <Button variant="contained" type="submit">
+              Submit
+            </Button>
           </Stack>
         </Box>
       </DialogContent>

@@ -48,15 +48,6 @@ export interface CombinationChild {
   updated_at?: number;
 }
 
-export interface DestinationTemplate {
-  id?: string;
-  created_at?: string;
-  updated_at?: string;
-
-  name?: string;
-  template?: string;
-}
-
 export interface Download {
   id?: string;
   created_at?: string;
@@ -199,10 +190,27 @@ export interface Library {
 
   name?: string;
   path?: string;
-  release_type_id?: string;
-  destination_template_id?: string;
-  release_type?: ReleaseType;
-  destination_template?: DestinationTemplate;
+  library_type_id?: string;
+  library_template_id?: string;
+  library_type?: LibraryType;
+  library_template?: LibraryTemplate;
+}
+
+export interface LibraryTemplate {
+  id?: string;
+  created_at?: string;
+  updated_at?: string;
+
+  name?: string;
+  template?: string;
+}
+
+export interface LibraryType {
+  id?: string;
+  created_at?: string;
+  updated_at?: string;
+
+  name?: string;
 }
 
 export interface Medium {
@@ -359,14 +367,6 @@ export interface Release {
   encoding?: string;
   quality?: string;
   published_at?: string;
-}
-
-export interface ReleaseType {
-  id?: string;
-  created_at?: string;
-  updated_at?: string;
-
-  name?: string;
 }
 
 export interface Request {

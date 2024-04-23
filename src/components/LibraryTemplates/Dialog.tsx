@@ -1,24 +1,24 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { DestinationTemplate } from 'client/tower';
+import { LibraryTemplate } from 'client/tower';
 
 import { Box, Button, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { Stack } from '@mui/system';
 
 import { Text } from '@dashotv/components';
 
-export const DestinationTemplatesDialog = ({
-  destinationTemplate,
+export const LibraryTemplatesDialog = ({
+  libraryTemplate,
   submit,
 }: {
-  destinationTemplate: DestinationTemplate;
-  submit: (data: DestinationTemplate | null) => void;
+  libraryTemplate: LibraryTemplate;
+  submit: (data: LibraryTemplate | null) => void;
 }) => {
   const [open, setOpen] = React.useState(true);
-  const { control, handleSubmit } = useForm<DestinationTemplate>({ values: destinationTemplate });
+  const { control, handleSubmit } = useForm<LibraryTemplate>({ values: libraryTemplate });
 
-  const close = (data: DestinationTemplate | null) => {
+  const close = (data: LibraryTemplate | null) => {
     submit(data);
     setOpen(false);
   };

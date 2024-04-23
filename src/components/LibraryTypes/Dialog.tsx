@@ -1,24 +1,24 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { ReleaseType } from 'client/tower';
+import { LibraryType } from 'client/tower';
 
 import { Box, Button, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { Stack } from '@mui/system';
 
 import { Text } from '@dashotv/components';
 
-export const ReleaseTypesDialog = ({
-  releaseType,
+export const LibraryTypesDialog = ({
+  libraryType,
   submit,
 }: {
-  releaseType: ReleaseType;
-  submit: (data: ReleaseType | null) => void;
+  libraryType: LibraryType;
+  submit: (data: LibraryType | null) => void;
 }) => {
   const [open, setOpen] = React.useState(true);
-  const { control, handleSubmit } = useForm<ReleaseType>({ values: releaseType });
+  const { control, handleSubmit } = useForm<LibraryType>({ values: libraryType });
 
-  const close = (data: ReleaseType | null) => {
+  const close = (data: LibraryType | null) => {
     submit(data);
     setOpen(false);
   };
