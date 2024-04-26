@@ -8,10 +8,9 @@ import RecommendOutlinedIcon from '@mui/icons-material/RecommendOutlined';
 import StarsIcon from '@mui/icons-material/Stars';
 import StarsOutlinedIcon from '@mui/icons-material/StarsOutlined';
 import UndoIcon from '@mui/icons-material/Undo';
-import { Grid, IconButton, Pagination, Stack } from '@mui/material';
+import { Grid, IconButton, Stack } from '@mui/material';
 
-import { LoadingIndicator } from '@dashotv/components';
-import { Container } from '@dashotv/components';
+import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
 
 import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
 import { SeriesList, useSeriesAllQuery } from 'components/Series';
@@ -36,12 +35,14 @@ const filtersDefaults = { kind: '', source: '', active: '', favorite: '', broken
 export default function SeriesIndex() {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
+  const [total, setTotal] = useState(0);
   const [filters, setFilters] = useState(filtersDefaults);
   const { isFetching, data } = useSeriesAllQuery(page, filters);
 
   useEffect(() => {
     if (!data?.total) return;
     setCount(Math.ceil((data.total || 0) / pagesize)); // Math.ceil((data?.count || 0) / pagesize)
+    setTotal(data.total);
   }, [data?.total]);
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -102,14 +103,15 @@ export default function SeriesIndex() {
             </Stack>
           </Grid>
           <Grid item xs={12} md={6}>
-            {data && (
+            {data ? (
               <Pagination
                 sx={{ display: 'flex', justifyContent: 'end', height: '48px' }}
                 page={page}
                 count={count}
+                total={total}
                 onChange={handleChange}
               />
-            )}
+            ) : null}
           </Grid>
         </Grid>
       </Container>
