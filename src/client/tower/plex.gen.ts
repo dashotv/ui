@@ -285,3 +285,20 @@ export const PlexStop = async (params: PlexStopRequest) => {
 
   return response.data as Response;
 };
+
+export const PlexFiles = async () => {
+  const response = await towerClient.get(`/plex/files?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};
