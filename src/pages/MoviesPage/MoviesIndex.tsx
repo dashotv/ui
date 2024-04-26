@@ -10,16 +10,15 @@ import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOffli
 import UndoIcon from '@mui/icons-material/Undo';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-import { Container, LoadingIndicator } from '@dashotv/components';
+import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
 
 import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
 import { useMoviesAllQuery } from 'components/Movies';
 import { MoviesList } from 'components/Movies';
 
-const pagesize = 42;
+const pagesize = 25;
 const kinds: Choice[] = [
   { name: 'All', type: '' },
   { name: 'Movies', type: 'movies' },
@@ -38,12 +37,14 @@ const filtersDefaults = { kind: '', source: '', completed: '', downloaded: '', b
 export default function MoviesIndex() {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
+  const [total, setTotal] = useState(0);
   const [filters, setFilters] = useState(filtersDefaults);
   const { isFetching, data } = useMoviesAllQuery(page, filters);
 
   useEffect(() => {
     if (!data?.total) return;
     setCount(Math.ceil((data?.total || 0) / pagesize)); // Math.ceil((data?.count || 0) / pagesize)
+    setTotal(data.total);
   }, [data?.total]);
 
   const handleChange = (event: unknown, value: number) => {
@@ -103,15 +104,8 @@ export default function MoviesIndex() {
               </Stack>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={6} sx={{ pt: 2 }}>
-            {data && (
-              <Pagination
-                sx={{ display: 'flex', justifyContent: 'end' }}
-                page={page}
-                count={count}
-                onChange={handleChange}
-              />
-            )}
+          <Grid item xs={12} md={6}>
+            {data ? <Pagination page={page} count={count} total={total} onChange={handleChange} /> : null}
           </Grid>
         </Grid>
       </Container>

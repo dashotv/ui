@@ -15,7 +15,7 @@ import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
 import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
 import { SeriesList, useSeriesAllQuery } from 'components/Series';
 
-const pagesize = 42;
+const pagesize = 25;
 const kinds: Choice[] = [
   { name: 'All', type: '' },
   { name: 'TV', type: 'tv' },
@@ -103,15 +103,7 @@ export default function SeriesIndex() {
             </Stack>
           </Grid>
           <Grid item xs={12} md={6}>
-            {data ? (
-              <Pagination
-                sx={{ display: 'flex', justifyContent: 'end', height: '48px' }}
-                page={page}
-                count={count}
-                total={total}
-                onChange={handleChange}
-              />
-            ) : null}
+            {data ? <Pagination page={page} count={count} total={total} onChange={handleChange} /> : null}
           </Grid>
         </Grid>
       </Container>

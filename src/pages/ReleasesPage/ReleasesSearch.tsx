@@ -2,15 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useSearchParams } from 'react-router-dom';
 
-import Pagination from '@mui/material/Pagination';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 
-import { LoadingIndicator } from '@dashotv/components';
-import { Container } from '@dashotv/components';
+import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
 
 import { ReleasesForm, ReleasesList, ReleasesPresets, SearchForm, useReleasesQuery } from 'components/Releases';
-import { useQueryString } from 'hooks/queryString';
 
 const pagesize = 25;
 const formDefaults: SearchForm = {
@@ -31,7 +28,6 @@ const formDefaults: SearchForm = {
 
 // TODO: useForm and @hookform/devtools, see: https://www.youtube.com/watch?v=sD9fZxMO1us
 export default function ReleasesSearchPage() {
-  const { queryString } = useQueryString();
   const [searchParams] = useSearchParams();
   const [form, setForm] = useState<SearchForm>(
     Object.assign(formDefaults, {
@@ -45,7 +41,9 @@ export default function ReleasesSearchPage() {
     }),
   );
   const [page, setPage] = useState(1);
-  const [qs, setQs] = useState(queryString(form));
+  const [count, setCount] = useState(0);
+  const [total, setTotal] = useState(0);
+  // const [qs, setQs] = useState(queryString(form));
   const { isFetching, data } = useReleasesQuery(page, pagesize, form);
 
   const handleChange = useCallback((event: React.ChangeEvent<unknown>, value: number) => {
@@ -58,8 +56,14 @@ export default function ReleasesSearchPage() {
   };
 
   useEffect(() => {
-    setQs(queryString(form));
-  }, [form, queryString]);
+    if (!data?.Total) return;
+    setCount(Math.ceil((data.Total || 0) / pagesize)); // Math.ceil((data?.count || 0) / pagesize)
+    setTotal(data.Total);
+  }, [data?.Total]);
+
+  // useEffect(() => {
+  //   setQs(queryString(form));
+  // }, [form, queryString]);
 
   const renderActions = () => {
     // const buttons: ButtonMapButton[] = [
@@ -111,8 +115,10 @@ export default function ReleasesSearchPage() {
             <ReleasesPresets {...{ setForm, setPage, formDefaults }} />
             <Pagination
               boundaryCount={0}
+              siblingCount={0}
               page={page}
-              count={Math.ceil((data?.Total || 0) / pagesize)}
+              total={total}
+              count={count}
               onChange={handleChange}
             />
           </Stack>
