@@ -1,13 +1,9 @@
 import React from 'react';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import RecommendIcon from '@mui/icons-material/Recommend';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import StarsIcon from '@mui/icons-material/Stars';
 import { Box, Chip, Stack, Typography } from '@mui/material';
 

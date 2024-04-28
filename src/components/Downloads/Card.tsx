@@ -16,7 +16,7 @@ import { useDownloadMutation } from './query';
 export const DownloadCard = ({ id, download }: { id: string; download: Download }) => {
   const { progress, queue, files, eta } = useDownloadingId(id);
   const { selected, completed } = files || {};
-  const { title, display, background, cover, status, kind, source } = download || {};
+  const { title, display, background, cover, status } = download || {};
   const { release_date } = download?.medium || {};
 
   const updater = useDownloadMutation(id);
