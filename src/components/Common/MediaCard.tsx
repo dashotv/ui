@@ -46,6 +46,7 @@ export interface MediaCardProps {
 }
 export const MediaCard = ({
   variant = 'banner',
+  type,
   title,
   subtitle,
   description,
@@ -78,16 +79,23 @@ export const MediaCard = ({
               {subtitle}
             </Typography>
           )}
-          {kind ? (
-            <Stack direction="row" spacing={1}>
+          <Stack direction="row" spacing={1}>
+            {kind ? (
               <Typography variant="body2" fontWeight="bolder" color="primary">
                 {kind}
               </Typography>
+            ) : null}
+            {source ? (
               <Typography variant="body2" fontWeight="bolder" color="secondary" title={source_id}>
                 {source}
               </Typography>
-            </Stack>
-          ) : null}
+            ) : null}
+            {type === 'download' && release_date ? (
+              <Typography variant="body2" color="gray">
+                <Chrono fromNow special stamp={release_date} />
+              </Typography>
+            ) : null}
+          </Stack>
           <Box sx={{ maxHeight: '37px', overflow: 'hidden' }}>
             <Typography className="coverDescription" variant="body2" sx={{ display: 'none' }}>
               {description}
@@ -97,20 +105,16 @@ export const MediaCard = ({
       </FiCardContent>
       <FiCardFooter>
         <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
-          {status ? (
-            <>
-              <Stack direction="row" spacing={1} alignItems="center">
-                {queue ? <Chip label={queue} size="small" color="secondary" /> : null}
-                <DownloadIcon status={status} />
-                {progress ? <span>{progress.toFixed(1)}%</span> : null}
-                {eta ? <Chrono fromNow>{eta}</Chrono> : null}
-              </Stack>
-              <Stack direction="row" spacing={1} alignItems="center"></Stack>
-            </>
+          {type === 'download' && status ? (
+            <MediaCardStatus status={status} queue={queue} progress={progress} eta={eta} />
           ) : (
             <>
               <Stack direction="row" spacing={1} alignItems="center">
-                {release_date ? <Chrono fromNow special stamp={release_date} /> : null}
+                {release_date ? (
+                  <Typography variant="body2" color="gray">
+                    <Chrono fromNow special stamp={release_date} />
+                  </Typography>
+                ) : null}
               </Stack>
               <Stack direction="row" spacing={1} alignItems="center">
                 <MediaCardIcons {...icons} />
@@ -120,7 +124,7 @@ export const MediaCard = ({
           )}
         </Stack>
       </FiCardFooter>
-      <FiCardActions>{actions && buttons?.length ? <ButtonMap buttons={buttons} size='small' /> : null}</FiCardActions>
+      <FiCardActions>{actions && buttons?.length ? <ButtonMap buttons={buttons} size="small" /> : null}</FiCardActions>
       <CardProgress progress={progress} files={files} completed={completed} />
     </FiCard>
   );
@@ -145,130 +149,151 @@ export function MediaCardIcons({ active, favorite, broken, completed, downloaded
   );
 }
 
-export const MediaCardButtons = ({ id, type, icons }: { id: string; type: string; icons?: MediaCardIconsProps }) => {
-  let buttons: ButtonMapButton[] = [];
-
-  switch (type.toLowerCase()) {
-    case 'upcoming':
-      buttons = [
-        {
-          Icon: StarsIcon,
-          color: icons?.active ? 'secondary' : 'disabled',
-          click: () => console.log('click', id, type),
-          title: 'Active',
-        },
-        {
-          Icon: CloudCircleIcon,
-          color: 'primary',
-          click: () => console.log('click', id, type),
-          title: 'Download',
-        },
-      ];
-      break;
-    case 'download':
-      buttons = [
-        {
-          Icon: CheckCircleIcon,
-          color: 'primary',
-          click: () => console.log('click', id, type),
-          title: 'Done',
-        },
-        {
-          Icon: CancelIcon,
-          color: 'error',
-          click: () => console.log('click', id, type),
-          title: 'Delete',
-        },
-      ];
-      break;
-    case 'series':
-      buttons = [
-        {
-          Icon: BuildCircleIcon,
-          color: icons?.broken ? 'secondary' : 'disabled',
-          click: () => console.log('click', id, type),
-          title: 'Broken',
-        },
-        {
-          Icon: RecommendIcon,
-          color: icons?.favorite ? 'secondary' : 'disabled',
-          click: () => console.log('click', id, type),
-          title: 'Favorite',
-        },
-        {
-          Icon: StarsIcon,
-          color: icons?.active ? 'secondary' : 'disabled',
-          click: () => console.log('click', id, type),
-          title: 'Active',
-        },
-        {
-          Icon: CloudCircleIcon,
-          color: 'primary',
-          click: () => console.log('click', id, type),
-          title: 'Download',
-        },
-        {
-          Icon: ReplayCircleFilledIcon,
-          color: 'primary',
-          click: () => console.log('click', id, type),
-          title: 'Update',
-        },
-        {
-          Icon: RemoveCircleIcon,
-          color: 'error',
-          click: () => console.log('click', id, type),
-          title: 'Delete',
-        },
-      ];
-      break;
-    case 'movie':
-      buttons = [
-        {
-          Icon: BuildCircleIcon,
-          color: icons?.broken ? 'secondary' : 'disabled',
-          click: () => console.log('click', id, type),
-          title: 'Broken',
-        },
-        {
-          Icon: DownloadForOfflineIcon,
-          color: icons?.downloaded ? 'secondary' : 'disabled',
-          click: () => console.log('click', id, type),
-          title: 'Broken',
-        },
-        {
-          Icon: CheckCircleIcon,
-          color: icons?.completed ? 'secondary' : 'disabled',
-          click: () => console.log('click', id, type),
-          title: 'Broken',
-        },
-        {
-          Icon: CloudCircleIcon,
-          color: 'primary',
-          click: () => console.log('click', id, type),
-          title: 'Download',
-        },
-        {
-          Icon: ReplayCircleFilledIcon,
-          color: 'primary',
-          click: () => console.log('click', id, type),
-          title: 'Update',
-        },
-        {
-          Icon: RemoveCircleIcon,
-          color: 'error',
-          click: () => console.log('click', id, type),
-          title: 'Delete',
-        },
-      ];
-      break;
-    default:
-      buttons = [];
-  }
-  if (!buttons.length) {
-    return null;
-  }
-  return <ButtonMap buttons={buttons} size="small" />;
+export const MediaCardStatus = ({
+  status,
+  queue,
+  progress,
+  eta,
+}: {
+  status?: string;
+  queue?: string | number;
+  progress?: number;
+  eta?: string;
+}) => {
+  return (
+    <Stack direction="row" spacing={1} alignItems="center">
+      {queue ? <Chip label={queue} size="small" color="secondary" /> : null}
+      <DownloadIcon status={status} />
+      {progress ? <span>{progress.toFixed(1)}%</span> : null}
+      {eta ? <Chrono fromNow>{eta}</Chrono> : null}
+    </Stack>
+  );
 };
+
+// export const MediaCardButtons = ({ id, type, icons }: { id: string; type: string; icons?: MediaCardIconsProps }) => {
+//   let buttons: ButtonMapButton[] = [];
+//
+//   switch (type.toLowerCase()) {
+//     case 'upcoming':
+//       buttons = [
+//         {
+//           Icon: StarsIcon,
+//           color: icons?.active ? 'secondary' : 'disabled',
+//           click: () => console.log('click', id, type),
+//           title: 'Active',
+//         },
+//         {
+//           Icon: CloudCircleIcon,
+//           color: 'primary',
+//           click: () => console.log('click', id, type),
+//           title: 'Download',
+//         },
+//       ];
+//       break;
+//     case 'download':
+//       buttons = [
+//         {
+//           Icon: CheckCircleIcon,
+//           color: 'primary',
+//           click: () => console.log('click', id, type),
+//           title: 'Done',
+//         },
+//         {
+//           Icon: CancelIcon,
+//           color: 'error',
+//           click: () => console.log('click', id, type),
+//           title: 'Delete',
+//         },
+//       ];
+//       break;
+//     case 'series':
+//       buttons = [
+//         {
+//           Icon: BuildCircleIcon,
+//           color: icons?.broken ? 'secondary' : 'disabled',
+//           click: () => console.log('click', id, type),
+//           title: 'Broken',
+//         },
+//         {
+//           Icon: RecommendIcon,
+//           color: icons?.favorite ? 'secondary' : 'disabled',
+//           click: () => console.log('click', id, type),
+//           title: 'Favorite',
+//         },
+//         {
+//           Icon: StarsIcon,
+//           color: icons?.active ? 'secondary' : 'disabled',
+//           click: () => console.log('click', id, type),
+//           title: 'Active',
+//         },
+//         {
+//           Icon: CloudCircleIcon,
+//           color: 'primary',
+//           click: () => console.log('click', id, type),
+//           title: 'Download',
+//         },
+//         {
+//           Icon: ReplayCircleFilledIcon,
+//           color: 'primary',
+//           click: () => console.log('click', id, type),
+//           title: 'Update',
+//         },
+//         {
+//           Icon: RemoveCircleIcon,
+//           color: 'error',
+//           click: () => console.log('click', id, type),
+//           title: 'Delete',
+//         },
+//       ];
+//       break;
+//     case 'movie':
+//       buttons = [
+//         {
+//           Icon: BuildCircleIcon,
+//           color: icons?.broken ? 'secondary' : 'disabled',
+//           click: () => console.log('click', id, type),
+//           title: 'Broken',
+//         },
+//         {
+//           Icon: DownloadForOfflineIcon,
+//           color: icons?.downloaded ? 'secondary' : 'disabled',
+//           click: () => console.log('click', id, type),
+//           title: 'Broken',
+//         },
+//         {
+//           Icon: CheckCircleIcon,
+//           color: icons?.completed ? 'secondary' : 'disabled',
+//           click: () => console.log('click', id, type),
+//           title: 'Broken',
+//         },
+//         {
+//           Icon: CloudCircleIcon,
+//           color: 'primary',
+//           click: () => console.log('click', id, type),
+//           title: 'Download',
+//         },
+//         {
+//           Icon: ReplayCircleFilledIcon,
+//           color: 'primary',
+//           click: () => console.log('click', id, type),
+//           title: 'Update',
+//         },
+//         {
+//           Icon: RemoveCircleIcon,
+//           color: 'error',
+//           click: () => console.log('click', id, type),
+//           title: 'Delete',
+//         },
+//       ];
+//       break;
+//     default:
+//       buttons = [];
+//   }
+//   if (!buttons.length) {
+//     return null;
+//   }
+//   return <ButtonMap buttons={buttons} size="small" />;
+// };
 
 // export const MediaCardMenu = ({ id, type }: { id: string; type: string }) => {
 //   // const [icon, setIcon] = React.useState<React.ReactNode>(<MoreVertIcon fontSize="small" />);
