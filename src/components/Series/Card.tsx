@@ -19,7 +19,20 @@ import { postSeriesJob, useSeriesSettingMutation } from './query';
 
 export const SeriesCard = ({
   id,
-  series: { title, display, kind, source, source_id, release_date, cover, background, active, favorite, broken },
+  series: {
+    title,
+    display,
+    kind,
+    source,
+    source_id,
+    release_date,
+    cover,
+    background,
+    active,
+    favorite,
+    broken,
+    unwatched,
+  },
 }: {
   id: string;
   series: Series;
@@ -90,6 +103,7 @@ export const SeriesCard = ({
       source={source}
       source_id={source_id}
       release_date={release_date}
+      count={unwatched}
       icons={{ active, favorite, broken }}
       buttons={buttons}
     />
