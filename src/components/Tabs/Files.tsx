@@ -39,7 +39,9 @@ export function Files({
         const f = files[i];
         f.torrent_file = torrent.Files[f.num!];
       }
-      const hasTorrentFiles = files.filter(f => f.torrent_file != null).sort((a, b) => a.num! - b.num!);
+      const hasTorrentFiles = files
+        .filter(f => f.torrent_file != null && f.torrent_file.name != null)
+        .sort((a, b) => (a.torrent_file?.name! > b.torrent_file?.name! ? 1 : -1));
       const noTorrentFiles = files
         .filter(f => f.torrent_file == null)
         .sort((a, b) => a.torrent_file!.name!.localeCompare(b.torrent_file!.name!));
