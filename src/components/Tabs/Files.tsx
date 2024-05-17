@@ -116,13 +116,17 @@ export function Files({
   ];
 
   return (
-    <Paper elevation={0}>
-      <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
-        <TextField label="Filter" variant="standard" onChange={setName} />
-        <ButtonMap buttons={buttons} size="small" />
-      </Stack>
-      {sortedFiles?.map(row => <FilesRow key={row.num} file={row} thash={torrent?.Hash} open={open} clear={clear} />)}
-    </Paper>
+    <>
+      <Paper elevation={1} sx={{ p: 1 }}>
+        <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
+          <TextField label="Filter" variant="outlined" size="small" onChange={setName} />
+          <ButtonMap buttons={buttons} size="small" />
+        </Stack>
+      </Paper>
+      <Paper elevation={0}>
+        {sortedFiles?.map(row => <FilesRow key={row.num} file={row} thash={torrent?.Hash} open={open} clear={clear} />)}
+      </Paper>
+    </>
   );
 }
 
