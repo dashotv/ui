@@ -75,6 +75,9 @@ export default function SuperSearch() {
     }
     console.log('create: ', option);
     if (option) {
+      if (option.date === '') {
+        option.date = '1900-01-01';
+      }
       switch (option.type) {
         case 'series':
           createSeries(option);
