@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { DownloadFile } from 'client/tower';
 
@@ -8,6 +8,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import StarsIcon from '@mui/icons-material/Stars';
+import { TextField } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -16,6 +17,8 @@ import { ButtonMap, ButtonMapButton, Row } from '@dashotv/components';
 
 import { useTorrentWantMutation } from 'query/releases';
 import { Torrent } from 'types/torrents';
+
+const filtersDefaults = { name: '' };
 
 export function Files({
   files,
@@ -28,11 +31,13 @@ export function Files({
   open: (num: number, name: string | undefined) => void;
   clear: (num: number) => void;
 }) {
-  // console.log('files:', props.files);
-  // console.log('torrent:', props.torrent);
-  const sortedFiles = useCallback((files?: DownloadFile[], torrent?: Torrent) => {
+  const [filters, setFilters] = useState(filtersDefaults);
+  const [sortedFiles, setSortedFiles] = useState(files);
+  const { mutate: want } = useTorrentWantMutation();
+
+  useEffect(() => {
     if (!files) {
-      return [];
+      return;
     }
     if (torrent) {
       for (let i = 0; i < files.length; i++) {
@@ -45,16 +50,78 @@ export function Files({
       const noTorrentFiles = files
         .filter(f => f.torrent_file == null)
         .sort((a, b) => a.torrent_file!.name!.localeCompare(b.torrent_file!.name!));
-      return hasTorrentFiles.concat(noTorrentFiles);
+      let list = hasTorrentFiles.concat(noTorrentFiles);
+      if (filters.name !== '') {
+        list = list.filter(f => f.torrent_file?.name?.includes(filters.name));
+      }
+      setSortedFiles(list);
+      return;
     }
-    return files.sort((a, b) => (a.num || 0) - (b.num || 0));
-  }, []);
+    setSortedFiles(files.sort((a, b) => (a.num || 0) - (b.num || 0)));
+  }, [files, torrent]);
+
+  const setName = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFilters({ ...filters, name: e.target.value });
+    },
+    [filters],
+  );
+
+  const clearVisible = () => {
+    const list = sortedFiles?.filter(f => f.torrent_file != null && f.num !== undefined && f.num >= 0);
+    if (!list) {
+      return;
+    }
+    list.forEach(f => clear(f.num!));
+  };
+
+  const wantVisible = () => {
+    const list = sortedFiles?.filter(f => f.torrent_file != null && f.num !== undefined && f.num >= 0);
+    if (!list) {
+      return;
+    }
+    list.forEach(
+      f => torrent && want({ hash: torrent?.Hash, id: f.torrent_file?.id !== undefined ? f.torrent_file.id : -1 }),
+    );
+  };
+
+  const buttons: ButtonMapButton[] = [
+    {
+      Icon: CancelIcon,
+      color: 'warning',
+      click: () => clearVisible(),
+      title: 'unselect',
+    },
+    {
+      Icon: PlaylistAddCircleIcon,
+      color: 'disabled',
+      title: 'select',
+    },
+    {
+      Icon: DownloadForOfflineIcon,
+      color: 'disabled',
+      title: 'downloaded',
+    },
+    {
+      Icon: CheckCircleIcon,
+      color: 'disabled',
+      title: 'downloaded',
+    },
+    {
+      Icon: StarsIcon,
+      color: 'primary',
+      click: () => wantVisible(),
+      title: 'priority',
+    },
+  ];
 
   return (
     <Paper elevation={0}>
-      {sortedFiles(files, torrent).map(row => (
-        <FilesRow key={row.num} file={row} thash={torrent?.Hash} open={open} clear={clear} />
-      ))}
+      <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
+        <TextField label="Filter" variant="standard" onChange={setName} />
+        <ButtonMap buttons={buttons} size="small" />
+      </Stack>
+      {sortedFiles?.map(row => <FilesRow key={row.num} file={row} thash={torrent?.Hash} open={open} clear={clear} />)}
     </Paper>
   );
 }

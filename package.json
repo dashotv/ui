@@ -72,6 +72,7 @@
     "preview": "yarn build && vite preview",
     "test": "vitest",
     "test:coverage": "vitest run --coverage --watch=false",
+    "watch": "tsc --watch",
     "checkTs": "tsc --noEmit",
     "eslint": "eslint --ext js,ts,tsx",
     "lint": "yarn run eslint src",
