@@ -295,7 +295,12 @@ export const ImageDialog = ({
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ minHeight: '50px' }}>
+        {images.length === 0 && (
+          <Typography variant="body2" color="gray">
+            No images found
+          </Typography>
+        )}
         <Grid container spacing={2}>
           {images.map((image, index) => (
             <Grid item key={index}>
