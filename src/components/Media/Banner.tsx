@@ -6,12 +6,13 @@ import { Typography } from '@mui/material';
 
 import { ButtonMapButton, Chrono } from '@dashotv/components';
 
-import { Banner } from 'components/Common';
+import { Banner, MenuMapItem } from 'components/Common';
 
 export type MediumBannerProps = {
   id: string;
   variant?: 'small' | 'large' | undefined;
   buttons?: ButtonMapButton[];
+  menu?: MenuMapItem[];
   medium: Medium;
 };
 
@@ -19,6 +20,7 @@ export function MediumBanner({
   id,
   variant,
   buttons,
+  menu,
   medium: {
     type,
     kind,
@@ -78,6 +80,7 @@ export function MediumBanner({
       images={images()}
       flags={!large ? { active, broken, completed, favorite } : undefined}
       buttons={large ? buttons : undefined}
+      menu={large ? menu : undefined}
       unwatched={unwatched}
     />
   );

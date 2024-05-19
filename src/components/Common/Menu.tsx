@@ -4,17 +4,34 @@ import { useNavigate } from 'react-router-dom';
 
 import { clickHandler } from 'utils/handler';
 
-import { IconButton, Menu, MenuItem, SvgIcon } from '@mui/material';
+import LinkIcon from '@mui/icons-material/Link';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, SvgIcon } from '@mui/material';
 
 export interface MenuMapItem {
   name: string;
+  icon?: React.ReactNode;
   url?: string;
   path?: string;
   action?: () => void;
 }
 
+const icon = (item: MenuMapItem) => {
+  if (item.icon) {
+    return item.icon;
+  }
+  if (item.url) {
+    return <OpenInNewIcon fontSize="small" />;
+  }
+  if (item.path) {
+    return <LinkIcon fontSize="small" />;
+  }
+  return <RadioButtonCheckedIcon fontSize="small" />;
+};
+
 // TODO: change icon when open?
-export const MenuMap = ({ items }: { items: MenuMapItem[] }) => {
+export const MenuMap = ({ size = 'large', items }: { size?: 'small' | 'medium' | 'large'; items: MenuMapItem[] }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -43,8 +60,8 @@ export const MenuMap = ({ items }: { items: MenuMapItem[] }) => {
   };
   return (
     <>
-      <IconButton onClick={clickHandler(event => handleClick(event))}>
-        <SvgIcon component={IoEllipsisVerticalCircleSharp} inheritViewBox fontSize="large" color="primary" />
+      <IconButton size="small" onClick={clickHandler(event => handleClick(event))}>
+        <SvgIcon component={IoEllipsisVerticalCircleSharp} inheritViewBox fontSize={size} color="primary" />
       </IconButton>
       <Menu
         id="basic-menu"
@@ -57,7 +74,8 @@ export const MenuMap = ({ items }: { items: MenuMapItem[] }) => {
       >
         {items?.map((item, index) => (
           <MenuItem key={index} onClick={clickHandler(() => handleClickItem(item))}>
-            {item.name}
+            <ListItemIcon>{icon(item)}</ListItemIcon>
+            <ListItemText>{item.name}</ListItemText>
           </MenuItem>
         ))}
       </Menu>

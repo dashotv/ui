@@ -13,13 +13,18 @@ import Stack from '@mui/material/Stack';
 import { ButtonMap, ButtonMapButton } from '@dashotv/components';
 
 import './Banner.scss';
+import { MenuMap, MenuMapItem } from './Menu';
 
 // TODO: generalize this?
 function Unwatched({ count }: { count?: number }) {
   if (count === undefined || count === 0) {
     return <></>;
   }
-  return <Chip label={count > 9 ? '9+' : count} variant="filled" size="small" color="secondary" />;
+  return (
+    <Stack direction="row" spacing={1} sx={{ height: '34px' }} alignItems="center">
+      <Chip label={count > 9 ? '9+' : count} variant="filled" size="small" color="secondary" />
+    </Stack>
+  );
 }
 
 export type BannerIconsProps = {
@@ -43,13 +48,15 @@ export type BannerActionsProps = {
   unwatched?: number;
   flags?: BannerIconsProps;
   buttons?: ButtonMapButton[];
+  menu?: MenuMapItem[];
 };
-export function BannerActions({ unwatched, buttons, flags }: BannerActionsProps) {
+export function BannerActions({ unwatched, buttons, flags, menu }: BannerActionsProps) {
   const { active, broken, favorite, completed } = flags || {};
   return (
     <Stack spacing={'2px'} direction="row">
       {buttons && <ButtonMap size="medium" buttons={buttons} />}
       {flags && <BannerIcons {...{ active, broken, favorite, completed }} />}
+      {menu && <MenuMap size="medium" items={menu} />}
       <Unwatched count={unwatched} />
     </Stack>
   );
@@ -69,6 +76,7 @@ export type BannerProps = {
   tertiary?: React.ReactNode;
   images?: string[];
   buttons?: ButtonMapButton[];
+  menu?: MenuMapItem[];
   flags?: BannerIconsProps;
   unwatched?: number;
   adornments?: React.ReactNode;
@@ -80,6 +88,7 @@ export function Banner({
   tertiary,
   images,
   buttons,
+  menu,
   flags,
   unwatched,
   adornments,
@@ -97,7 +106,7 @@ export function Banner({
           </div>
           <div className="download">{tertiary}</div>
           <div className="actions">
-            <BannerActions {...{ buttons, flags, unwatched }} />
+            <BannerActions {...{ buttons, flags, unwatched, menu }} />
           </div>
           {adornments && <div className="adornments">{adornments}</div>}
         </div>

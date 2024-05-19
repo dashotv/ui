@@ -14,7 +14,7 @@ import StarsIcon from '@mui/icons-material/Stars';
 import { ButtonMapButton, Container, LoadingIndicator } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Confirm } from 'components/Common';
+import { Confirm, MenuMapItem } from 'components/Common';
 import { useDownloadCreateMutation } from 'components/Downloads';
 import { MediumBanner } from 'components/Media';
 import { postSeriesJob, useSeriesDeleteMutation, useSeriesQuery, useSeriesSettingMutation } from 'components/Series';
@@ -132,22 +132,6 @@ export default function SeriesShow() {
       title: 'refresh',
     },
     {
-      Icon: RepeatOnIcon,
-      color: 'warning',
-      click: () => {
-        queue('files');
-      },
-      title: 'files',
-    },
-    {
-      Icon: RestorePageIcon,
-      color: 'warning',
-      click: () => {
-        queue('paths');
-      },
-      title: 'paths',
-    },
-    {
       Icon: BuildCircleIcon,
       color: broken ? 'secondary' : 'action',
       click: () => {
@@ -171,11 +155,27 @@ export default function SeriesShow() {
       },
       title: 'active',
     },
+  ];
+
+  const menu: MenuMapItem[] = [
     {
-      Icon: RemoveCircleIcon,
-      color: 'error',
-      click: deleteSeries,
-      title: 'delete',
+      name: 'Files',
+      icon: <RepeatOnIcon fontSize="small" color="warning" />,
+      action: () => {
+        queue('files');
+      },
+    },
+    {
+      name: 'Paths',
+      icon: <RestorePageIcon fontSize="small" color="warning" />,
+      action: () => {
+        queue('paths');
+      },
+    },
+    {
+      name: 'Delete',
+      icon: <RemoveCircleIcon fontSize="small" color="error" />,
+      action: () => deleteSeries,
     },
   ];
 
@@ -189,7 +189,7 @@ export default function SeriesShow() {
         {isFetching && <LoadingIndicator />}
         {series?.result?.id && (
           <div className="medium large">
-            <MediumBanner id={id} variant="large" medium={series?.result} buttons={buttons} />
+            <MediumBanner id={id} variant="large" medium={series?.result} buttons={buttons} menu={menu} />
             <RoutingTabs data={tabsMap} route={`/series/${id}`} />
             <Confirm {...{ open, setOpen, message, ok: deleteConfirm }} />
           </div>
