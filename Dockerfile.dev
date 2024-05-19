@@ -1,0 +1,8 @@
+FROM node:latest
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN corepack enable
+RUN yarn install

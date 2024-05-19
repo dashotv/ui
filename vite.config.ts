@@ -74,6 +74,7 @@ export default ({ mode }) => {
       open: true,
       // this sets a default port to 3000
       port: 3000,
+      host: true,
       proxy: {
         '/thumbs': {
           target: process.env.VITE_APP_PLEX_URL,
@@ -83,42 +84,42 @@ export default ({ mode }) => {
           rewrite: path => path.replace(/^\/thumbs\/(.*)/, '/$1?' + process.env.VITE_APP_PLEX_QUERY),
         },
         '/api/tower': {
-          target: 'http://localhost:59000',
+          target: 'http://host.docker.internal:59000',
           changeOrigin: true,
           secure: false,
           ws: true,
           rewrite: path => path.replace(/^\/api\/tower/, ''),
         },
         '/api/flame': {
-          target: 'http://localhost:59001',
+          target: 'http://host.docker.internal:59001',
           changeOrigin: true,
           secure: false,
           ws: true,
           rewrite: path => path.replace(/^\/api\/flame/, ''),
         },
         '/api/runic': {
-          target: 'http://localhost:59002',
+          target: 'http://host.docker.internal:59002',
           changeOrigin: true,
           secure: false,
           ws: true,
           rewrite: path => path.replace(/^\/api\/runic/, ''),
         },
         '/api/scry': {
-          target: 'http://localhost:59003',
+          target: 'http://host.docker.internal:59003',
           changeOrigin: true,
           secure: false,
           ws: true,
           rewrite: path => path.replace(/^\/api\/scry/, ''),
         },
         '/api/minion': {
-          target: 'http://localhost:59010',
+          target: 'http://host.docker.internal:59010',
           changeOrigin: true,
           secure: false,
           ws: true,
           rewrite: path => path.replace(/^\/api\/minion/, ''),
         },
         '/api/rift': {
-          target: 'http://localhost:59006',
+          target: 'http://host.docker.internal:59006',
           changeOrigin: true,
           secure: false,
           ws: true,
