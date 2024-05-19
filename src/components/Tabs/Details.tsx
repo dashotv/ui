@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { Medium } from 'client/tower';
 
+import CloseIcon from '@mui/icons-material/Close';
 import SportsBarIcon from '@mui/icons-material/SportsBar';
 import SportsBarOutlinedIcon from '@mui/icons-material/SportsBarOutlined';
 import VerifiedIcon from '@mui/icons-material/Verified';
@@ -16,6 +17,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -278,7 +280,21 @@ export const ImageDialog = ({
 }) => {
   return (
     <Dialog open={open} onClose={() => close('')} maxWidth="md" fullWidth={true}>
-      <DialogTitle>Choose Image</DialogTitle>
+      <DialogTitle>
+        Choose {`${background ? 'Background' : 'Cover'}`}
+        <IconButton
+          aria-label="close"
+          onClick={() => close('')}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: theme => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
           {images.map((image, index) => (
