@@ -226,6 +226,7 @@ export interface Medium {
   paths?: Path[];
   cover?: string;
   background?: string;
+  status?: string;
   series_id?: string;
   season_number?: number;
   episode_number?: number;

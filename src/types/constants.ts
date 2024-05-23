@@ -1,7 +1,7 @@
 export const myPlexUsername = 'xenonsoul';
 
 export const Resolutions = [
-  { label: '', value: '' },
+  { label: '', value: 0 },
   { label: '2160p', value: 2160 },
   { label: '1080p', value: 1080 },
   { label: '720p', value: 720 },
