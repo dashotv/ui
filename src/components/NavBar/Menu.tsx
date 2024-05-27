@@ -14,7 +14,7 @@ export const NavbarMenu = () => {
     },
     {
       name: 'Metube',
-      url: 'http://10.0.4.41:10003',
+      url: 'http://10.0.4.62:10003',
     },
   ];
   return <MenuMap items={items} />;
