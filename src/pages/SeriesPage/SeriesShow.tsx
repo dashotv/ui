@@ -55,8 +55,9 @@ export default function SeriesShow() {
     seriesSetting.mutate({ name: key, value: value });
   }
 
-  const deleteSeries = useCallback(ev => {
-    ev.preventDefault(); // for the buttons inside the Link component
+  const deleteSeries = useCallback(() => {
+    // ev.preventDefault(); // for the buttons inside the Link component
+    console.log('deleteSeries');
     setMessage('Are you sure you want to delete this series?');
     setOpen(true);
   }, []);
@@ -175,7 +176,7 @@ export default function SeriesShow() {
     {
       name: 'Delete',
       icon: <RemoveCircleIcon fontSize="small" color="error" />,
-      action: () => deleteSeries,
+      action: () => deleteSeries(),
     },
   ];
 
