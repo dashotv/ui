@@ -51,6 +51,11 @@ export const postMovieJob = async (id: string, name: string) => {
   return response;
 };
 
+export const deleteMovie = async (id: string) => {
+  const response = await tower.MoviesDelete({ id });
+  return response;
+};
+
 export const useMoviesAllQuery = (page: number, filters) =>
   useQuery({
     queryKey: ['movies', 'all', page, filters],
@@ -94,5 +99,14 @@ export const useMovieUpdateMutation = (id: string) => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['movies', id] });
     },
+  });
+};
+
+export const useMovieDeleteMutation = () => {
+  return useMutation({
+    mutationFn: (id: string) => deleteMovie(id),
+    // onSuccess: async () => {
+    //   await queryClient.invalidateQueries({ queryKey: ['movies', id] });
+    // },
   });
 };
