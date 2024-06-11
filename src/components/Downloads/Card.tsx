@@ -9,14 +9,23 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { ButtonMapButton } from '@dashotv/components';
 
 import { MediaCard } from 'components/Common';
-import { useDownloadingId } from 'hooks/downloading';
 
 import { useDownloadMutation } from './query';
 
 export const DownloadCard = ({ id, download }: { id: string; download: Download }) => {
-  const { progress, queue, files, eta } = useDownloadingId(id);
-  const { selected, completed } = files || {};
-  const { title, display, background, cover, status } = download || {};
+  const {
+    title,
+    display,
+    background,
+    cover,
+    status,
+    eta,
+    progress,
+    queue,
+    files_selected,
+    files_completed,
+    files_wanted,
+  } = download || {};
   const { release_date } = download?.medium || {};
 
   const updater = useDownloadMutation(id);
@@ -44,6 +53,7 @@ export const DownloadCard = ({ id, download }: { id: string; download: Download 
       title: 'Delete',
     },
   ];
+
   return (
     <MediaCard
       id={id}
@@ -51,10 +61,11 @@ export const DownloadCard = ({ id, download }: { id: string; download: Download 
       title={title || 'unknown'}
       subtitle={display}
       image={background || cover || '/blank.png'}
-      progress={progress}
-      files={selected}
       buttons={buttons}
-      completed={completed}
+      progress={progress}
+      filesSelected={files_selected}
+      filesCompleted={files_completed}
+      filesWanted={files_wanted}
       queue={queue}
       status={status}
       release_date={release_date}

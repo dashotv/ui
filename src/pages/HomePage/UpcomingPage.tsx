@@ -8,10 +8,10 @@ import Grid from '@mui/material/Grid';
 import { Container, LoadingIndicator } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { DownloadList, DownloadType, useDownloadsActiveQuery } from 'components/Downloads';
+import { DownloadList, useDownloadsActiveQuery } from 'components/Downloads';
 import { UpcomingList, useUpcomingQuery } from 'components/Upcoming';
 import { useSub } from 'hooks/sub';
-import { EventDownload, EventEpisode } from 'types/events';
+import { EventDownloading, EventEpisode } from 'types/events';
 
 export default function UpcomingPage() {
   const queryClient = useQueryClient();
@@ -19,27 +19,12 @@ export default function UpcomingPage() {
   const upcoming = useUpcomingQuery();
 
   const updateDownloads = useCallback(
-    (data: EventDownload) => {
-      if (data.event === 'updated' && (data.download.status === 'done' || data.download.status === 'deleted')) {
-        queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) =>
-          prev ? prev.filter(e => e.id !== data.id) : [],
-        );
-        return;
-      }
-      if (data.event === 'created' || data.event === 'new') {
-        queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) => [...prev, data.download]);
-        return;
-      }
-      if (data.event === 'updated') {
-        queryClient.setQueryData(['downloads', 'active'], (prev: DownloadType[]) =>
-          prev.map(e => (e.id === data.id ? data.download : e)),
-        );
-        return;
-      }
+    (event: EventDownloading) => {
+      queryClient.setQueryData(['downloads', 'active'], () => event.downloads);
     },
     [queryClient],
   );
-  useSub('tower.downloads', updateDownloads);
+  useSub('tower.downloading', updateDownloads);
 
   const updateUpcoming = useCallback(
     (data: EventEpisode) => {

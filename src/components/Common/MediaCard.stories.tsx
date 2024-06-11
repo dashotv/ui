@@ -125,8 +125,8 @@ export const Default: Story = {
               queue={3}
               progress={43.7}
               eta={eta}
-              completed={4}
-              files={16}
+              filesCompleted={4}
+              filesSelected={16}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -148,8 +148,8 @@ export const Default: Story = {
               queue={2215}
               progress={33.3}
               eta={eta}
-              files={2}
-              completed={1}
+              filesCompleted={1}
+              filesSelected={2}
             />
           </Grid>
         </Grid>

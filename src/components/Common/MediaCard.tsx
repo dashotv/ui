@@ -28,9 +28,11 @@ export interface MediaCardProps {
   release_date?: string;
   count?: number;
   // downloads
+  multi?: boolean;
   progress?: number;
-  files?: number;
-  completed?: number;
+  filesSelected?: number;
+  filesCompleted?: number;
+  filesWanted?: number;
   queue?: string | number;
   status?: string;
   eta?: string;
@@ -53,8 +55,9 @@ export const MediaCard = ({
   image,
   count,
   progress,
-  files,
-  completed,
+  filesSelected,
+  filesCompleted,
+  filesWanted,
   queue,
   eta,
   status,
@@ -121,7 +124,7 @@ export const MediaCard = ({
         </Stack>
       </FiCardFooter>
       <FiCardActions>{actions && buttons?.length ? <ButtonMap buttons={buttons} size="small" /> : null}</FiCardActions>
-      <CardProgress progress={progress} files={files} completed={completed} />
+      <CardProgress progress={progress} files={filesSelected} completed={filesCompleted} wanted={filesWanted} />
     </FiCard>
   );
 };

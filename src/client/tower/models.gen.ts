@@ -72,6 +72,14 @@ export interface Download {
   cover?: string;
   background?: string;
   search?: DownloadSearch;
+  torrent?: qbt.TorrentJSON;
+  torrent_state?: string;
+  eta?: string;
+  progress?: number;
+  queue?: number;
+  files_completed?: number;
+  files_selected?: number;
+  files_wanted?: number;
 }
 export interface DownloadFile {
   id?: string;

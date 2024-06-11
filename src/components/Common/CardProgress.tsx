@@ -6,14 +6,17 @@ export const CardProgress = ({
   progress,
   files,
   completed,
+  wanted,
 }: {
+  multi?: boolean;
   progress?: number;
   files?: number;
   completed?: number;
+  wanted?: number;
 }) => {
   return (
     <>
-      {files && completed && <CardMultiBar files={files} completed={completed} />}
+      <CardMultiBar files={files} completed={completed} wanted={wanted} />
       {progress && <CardProgressBar progress={progress} />}
     </>
   );
@@ -42,12 +45,20 @@ export const CardProgressBar = ({ progress }: { progress: number }) => {
   );
 };
 
-export const CardMultiBar = ({ files, completed }: { files: number; completed: number }) => {
+export const CardMultiBar = ({
+  files = 0,
+  completed = 0,
+  wanted = 0,
+}: {
+  files?: number;
+  completed?: number;
+  wanted?: number;
+}) => {
   if (files === 0 || files > 48) return null;
 
   const rows: React.ReactElement[] = [];
   for (let i = 0; i < files; i++) {
-    rows.push(<CardMultiBarFile completed={i < completed} />);
+    rows.push(<CardMultiBarFile key={i} completed={i < completed} wanted={i < completed + wanted} />);
   }
   return (
     <>
@@ -59,11 +70,11 @@ export const CardMultiBar = ({ files, completed }: { files: number; completed: n
     </>
   );
 };
-export const CardMultiBarFile = ({ completed }: { completed: boolean }) => {
+export const CardMultiBarFile = ({ completed, wanted }: { completed: boolean; wanted: boolean }) => {
   const theme = useTheme();
-  const secondary = theme.palette.secondary.main;
+  const c = theme.palette.secondary.main;
+  const w = theme.palette.secondary.dark;
   const grey = theme.palette.grey[700];
-  return (
-    <Box sx={{ height: '5px', width: '100%', backgroundColor: completed ? secondary : grey }} className="file"></Box>
-  );
+  const color = completed ? c : wanted ? w : grey;
+  return <Box sx={{ height: '5px', width: '100%', backgroundColor: color }} className="file"></Box>;
 };
