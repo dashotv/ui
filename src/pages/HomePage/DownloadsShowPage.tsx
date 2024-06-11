@@ -16,7 +16,7 @@ import { useDownloadingId } from 'hooks/downloading';
 export default function DownloadsShowPage() {
   const { id } = useParams();
   if (!id) {
-    return <></>;
+    throw new Error('id is required');
   }
 
   const { isFetching: downloadFetching, data: download } = useDownloadQuery(id);

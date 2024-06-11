@@ -16,7 +16,6 @@ import { MediaTo } from 'components/Media';
 import { FilesWithSelector, MediumTabs, Nzbgeek, Torch } from 'components/Tabs';
 import { Runic } from 'components/Tabs/Runic';
 import { useDownloadingId } from 'hooks/downloading';
-import { useTorrentRemoveMutation } from 'query/releases';
 import { Torrent } from 'types/torrents';
 
 import { DownloadBanner, DownloadInfo } from '.';
@@ -47,7 +46,6 @@ export function Download({
 }: DownloadProps) {
   const { status, thash, release_id, url, multi, auto, force, medium, cover, background, title, display } = download;
   const { updated_at } = medium || {};
-  const torrentRemove = useTorrentRemoveMutation();
   const { progress, eta, queue, torrent_state } = useDownloadingId(id);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -62,16 +60,6 @@ export function Download({
   const remove = useCallback((status: string) => {
     console.log('clicked remove');
     changeSetting('status', status);
-    if (!thash) {
-      return;
-    }
-    torrentRemove.mutate(thash, {
-      onSuccess: data => {
-        if (data.error) {
-          console.error('error: ', data.error);
-        }
-      },
-    });
   }, []);
 
   const buttons: ButtonMapButton[] = [
