@@ -46,6 +46,9 @@ export default function DownloadsShowPage() {
 
   const updateDownload = useCallback(
     (data: Download) => {
+      if (!data) {
+        return;
+      }
       queryClient.setQueryData(['downloads', id], data);
     },
     [queryClient],
@@ -105,8 +108,14 @@ export default function DownloadsShowPage() {
     [downloadUpdate],
   );
 
+  const remove = useCallback((status: string) => {
+    console.log('clicked remove');
+    changeSetting('status', status);
+  }, []);
+
   const changeSetting = useCallback(
     (setting: string, value: boolean | string) => {
+      console.log('setting', setting, value, download);
       if (!download) {
         return;
       }
@@ -142,11 +151,6 @@ export default function DownloadsShowPage() {
     Runic: <Runic search={search} selector={selectRelease} selected={url} />,
     Nzbgeek: <Nzbgeek search={search} selector={selectRelease} selected={url} />,
   };
-
-  const remove = useCallback((status: string) => {
-    console.log('clicked remove');
-    changeSetting('status', status);
-  }, []);
 
   const buttons: ButtonMapButton[] = [
     {
