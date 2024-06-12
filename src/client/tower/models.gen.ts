@@ -86,7 +86,7 @@ export interface DownloadFile {
   medium_id?: string;
   num?: number;
   medium?: Medium;
-  torrent_file?: TorrentFile;
+  torrent_file?: qbt.TorrentFile;
 }
 export interface DownloadSearch {
   type?: string;

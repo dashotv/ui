@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { DownloadFile } from 'client/tower';
 
@@ -32,33 +32,34 @@ export function Files({
   clear: (num: number) => void;
 }) {
   const [filters, setFilters] = useState(filtersDefaults);
-  const [sortedFiles, setSortedFiles] = useState(files);
   const { mutate: want } = useTorrentWantMutation();
 
-  useEffect(() => {
-    if (!files) {
-      return;
-    }
-    if (torrent) {
-      for (let i = 0; i < files.length; i++) {
-        const f = files[i];
-        f.torrent_file = torrent.Files[f.num!];
-      }
-      const hasTorrentFiles = files
-        .filter(f => f.torrent_file != null && f.torrent_file.name != null)
-        .sort((a, b) => (a.torrent_file?.name! > b.torrent_file?.name! ? 1 : -1));
-      const noTorrentFiles = files
-        .filter(f => f.torrent_file == null)
-        .sort((a, b) => a.torrent_file!.name!.localeCompare(b.torrent_file!.name!));
-      let list = hasTorrentFiles.concat(noTorrentFiles);
-      if (filters.name !== '') {
-        list = list.filter(f => f.torrent_file?.name?.includes(filters.name));
-      }
-      setSortedFiles(list);
-      return;
-    }
-    setSortedFiles(files.sort((a, b) => (a.num || 0) - (b.num || 0)));
-  }, [files, torrent]);
+  const filtered = filters.name != '' ? files?.filter(f => f.torrent_file?.name?.includes(filters.name)) : files;
+
+  // useEffect(() => {
+  //   if (!files) {
+  //     return;
+  //   }
+  //   if (torrent) {
+  //     for (let i = 0; i < files.length; i++) {
+  //       const f = files[i];
+  //       f.torrent_file = torrent.Files[f.num!];
+  //     }
+  //     const hasTorrentFiles = files
+  //       .filter(f => f.torrent_file != null && f.torrent_file.name != null)
+  //       .sort((a, b) => (a.torrent_file?.name! > b.torrent_file?.name! ? 1 : -1));
+  //     const noTorrentFiles = files
+  //       .filter(f => f.torrent_file == null)
+  //       .sort((a, b) => a.torrent_file!.name!.localeCompare(b.torrent_file!.name!));
+  //     let list = hasTorrentFiles.concat(noTorrentFiles);
+  //     if (filters.name !== '') {
+  //       list = list.filter(f => f.torrent_file?.name?.includes(filters.name));
+  //     }
+  //     setSortedFiles(list);
+  //     return;
+  //   }
+  //   setSortedFiles(files.sort((a, b) => (a.num || 0) - (b.num || 0)));
+  // }, [files, torrent]);
 
   const setName = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +69,7 @@ export function Files({
   );
 
   const clearVisible = () => {
-    const list = sortedFiles?.filter(f => f.torrent_file != null && f.num !== undefined && f.num >= 0);
+    const list = filtered?.filter(f => f.torrent_file != null && f.num !== undefined && f.num >= 0);
     if (!list) {
       return;
     }
@@ -76,7 +77,7 @@ export function Files({
   };
 
   const wantVisible = () => {
-    const list = sortedFiles?.filter(f => f.torrent_file != null && f.num !== undefined && f.num >= 0);
+    const list = filtered?.filter(f => f.torrent_file != null && f.num !== undefined && f.num >= 0);
     if (!list) {
       return;
     }
@@ -119,12 +120,12 @@ export function Files({
     <>
       <Paper elevation={1} sx={{ p: 1 }}>
         <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
-          <TextField label="Filter" variant="outlined" size="small" onChange={setName} />
+          <TextField type="search" label="Filter" variant="outlined" size="small" onChange={setName} />
           <ButtonMap buttons={buttons} size="small" />
         </Stack>
       </Paper>
       <Paper elevation={0}>
-        {sortedFiles?.map(row => <FilesRow key={row.num} file={row} thash={torrent?.Hash} open={open} clear={clear} />)}
+        {filtered?.map(row => <FilesRow key={row.num} file={row} thash={torrent?.Hash} open={open} clear={clear} />)}
       </Paper>
     </>
   );
@@ -194,6 +195,8 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
       title: 'priority',
     },
   ];
+
+  // console.log('filerow: ', num, torrent_file, medium);
 
   return (
     <Row>

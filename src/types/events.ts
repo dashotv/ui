@@ -1,6 +1,5 @@
 import {
   Download as DownloadType,
-  Downloading,
   Episode,
   Message as Log,
   Movie as MovieType,
@@ -51,9 +50,7 @@ export interface EventNotice {
 }
 
 export interface EventDownloading {
-  downloads: {
-    [key: string]: Downloading;
-  };
+  downloads: DownloadType[];
   hashes: {
     [key: string]: string;
   };
