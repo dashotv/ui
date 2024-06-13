@@ -104,11 +104,10 @@ export default function DownloadsShowPage() {
       }
       downloadUpdate.mutate({ ...download, ...info });
     },
-    [downloadUpdate],
+    [downloadUpdate, download],
   );
 
   const remove = useCallback((status: string) => {
-    console.log('clicked remove');
     changeSetting('status', status);
   }, []);
 
@@ -124,7 +123,7 @@ export default function DownloadsShowPage() {
       }
       downloadUpdate.mutate({ ...download, [setting]: value });
     },
-    [downloadUpdate],
+    [downloadUpdate, download],
   );
 
   const selectRelease = useCallback(
@@ -134,7 +133,7 @@ export default function DownloadsShowPage() {
       }
       downloadUpdate.mutate({ ...download, status: 'loading', url: url });
     },
-    [downloadUpdate],
+    [downloadUpdate, download],
   );
 
   const selectMedium = useCallback(
@@ -154,7 +153,7 @@ export default function DownloadsShowPage() {
   const buttons: ButtonMapButton[] = [
     {
       Icon: ArrowCircleLeftIcon,
-      color: 'primary',
+      color: download === undefined ? 'warning' : 'primary',
       click: () =>
         medium && medium.id && medium.type ? navigate(MediaTo(medium.id, medium.type, medium.series_id)) : undefined,
       title: 'Go to Media',
