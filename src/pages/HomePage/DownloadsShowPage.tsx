@@ -43,6 +43,27 @@ export default function DownloadsShowPage() {
   const { isFetching: mediaFetching, data: media } = useDownloadMediumQuery(id);
   const downloadUpdate = useDownloadMutation(id);
   const downloadSelection = useDownloadSelectionMutation(id);
+  const {
+    status,
+    thash,
+    url,
+    multi,
+    auto,
+    force,
+    medium,
+    cover,
+    background,
+    title,
+    display,
+    search,
+    files,
+    torrent,
+    torrent_state,
+    queue,
+    progress,
+    eta,
+  } = download || {};
+  const { updated_at } = medium || {};
 
   const updateDownload = useCallback(
     (data: Download) => {
@@ -75,28 +96,6 @@ export default function DownloadsShowPage() {
 
   useSub('tower.downloading', eventDownloading);
   useSub('tower.download', eventDownload);
-
-  const {
-    status,
-    thash,
-    url,
-    multi,
-    auto,
-    force,
-    medium,
-    cover,
-    background,
-    title,
-    display,
-    search,
-    files,
-    torrent,
-    torrent_state,
-    queue,
-    progress,
-    eta,
-  } = download || {};
-  const { updated_at } = medium || {};
 
   const changeInfo = useCallback(
     info => {
