@@ -56,13 +56,12 @@ export const MediaCoverImage = ({
     );
   }
   return (
-    <div className="mediaCover">
+    <div className={`mediaCover${selected ? ' mediaCoverSelected' : ''}`}>
       <div className={`image${background ? ' image-background' : ''}`}>
         <object data={`${image}?updated=${updated}`}>
           <img src="/blank.png" />
         </object>
       </div>
-      {selected ? <div className="title">current</div> : null}
     </div>
   );
 };
