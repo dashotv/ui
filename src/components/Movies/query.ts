@@ -46,6 +46,15 @@ export const patchMovie = async (id: string, setting: tower.Setting) => {
   return response;
 };
 
+export const getMovieCovers = async (id: string) => {
+  const response = await tower.MoviesCovers({ id });
+  return response;
+};
+export const getMovieBackgrounds = async (id: string) => {
+  const response = await tower.MoviesBackgrounds({ id });
+  return response;
+};
+
 export const postMovieJob = async (id: string, name: string) => {
   const response = await tower.MoviesJobs({ id, name });
   return response;

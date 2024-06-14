@@ -213,3 +213,49 @@ export const MoviesJobs = async (params: MoviesJobsRequest) => {
 
   return response.data as Response;
 };
+
+export interface MoviesCoversRequest {
+  id: string;
+}
+export interface MoviesCoversResponse extends Response {
+  result: string[];
+}
+export const MoviesCovers = async (params: MoviesCoversRequest) => {
+  const response = await towerClient.get(`/movies/${params.id}/covers?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as MoviesCoversResponse;
+};
+
+export interface MoviesBackgroundsRequest {
+  id: string;
+}
+export interface MoviesBackgroundsResponse extends Response {
+  result: string[];
+}
+export const MoviesBackgrounds = async (params: MoviesBackgroundsRequest) => {
+  const response = await towerClient.get(`/movies/${params.id}/backgrounds?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as MoviesBackgroundsResponse;
+};

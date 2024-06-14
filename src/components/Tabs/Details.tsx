@@ -27,7 +27,7 @@ import { Chrono, Pill } from '@dashotv/components';
 
 import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
-import { useMovieUpdateMutation } from 'components/Movies/query';
+import { getMovieBackgrounds, getMovieCovers, useMovieUpdateMutation } from 'components/Movies';
 import { getSeriesBackgrounds, getSeriesCovers, useSeriesUpdateMutation } from 'components/Series';
 import { Kinds, ReleaseSources, ReleaseTypes, Resolutions, Sources } from 'types/constants';
 
@@ -46,7 +46,8 @@ export function Details({
   const { handleSubmit, control } = useForm({ values: medium });
   const series = useSeriesUpdateMutation(id);
   const movie = useMovieUpdateMutation(id);
-  const [images, setImages] = React.useState<string[]>([]);
+  const [covers, setCovers] = React.useState<string[]>([]);
+  const [backgrounds, setBackgrounds] = React.useState<string[]>([]);
   const [coverOpen, setCoverOpen] = React.useState(false);
   const [backgroundOpen, setBackgroundOpen] = React.useState(false);
   const [updated] = React.useState(Date.parse(updated_at || '').valueOf() / 1000);
@@ -64,7 +65,7 @@ export function Details({
   const chooseCover = () => {
     setCoverOpen(true);
     getCovers()?.then(covers => {
-      setImages(covers.result);
+      setCovers(covers.result);
     });
   };
   const selectCover = (url: string) => {
@@ -78,8 +79,8 @@ export function Details({
     switch (type) {
       case 'Series':
         return getSeriesCovers(id);
-      // case 'Movie':
-      // return movieCovers();
+      case 'Movie':
+        return getMovieCovers(id);
     }
   };
 
@@ -96,7 +97,7 @@ export function Details({
   const chooseBackground = () => {
     setBackgroundOpen(true);
     getBackgrounds()?.then(backgrounds => {
-      setImages(backgrounds.result);
+      setBackgrounds(backgrounds.result);
     });
   };
   const selectBackground = (url: string) => {
@@ -110,8 +111,8 @@ export function Details({
     switch (type) {
       case 'Series':
         return getSeriesBackgrounds(id);
-      // case 'Movie':
-      // return movieCovers();
+      case 'Movie':
+        return getMovieBackgrounds(id);
     }
   };
 
@@ -253,12 +254,12 @@ export function Details({
         </Paper>
       </Stack>
 
-      <ImageDialog open={coverOpen} close={selectCover} current={currentCover()} images={images} background={false} />
+      <ImageDialog open={coverOpen} close={selectCover} current={currentCover()} images={covers} background={false} />
       <ImageDialog
         open={backgroundOpen}
         close={selectBackground}
         current={currentBackground()}
-        images={images}
+        images={backgrounds}
         background={true}
       />
     </Box>
