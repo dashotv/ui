@@ -1,6 +1,6 @@
 import { PathsDelete } from 'client/tower';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 export const useMutationPathRemove = () => {
   return useMutation({
