@@ -3,8 +3,11 @@ import React from 'react';
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
+import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import RecommendIcon from '@mui/icons-material/Recommend';
 import StarsIcon from '@mui/icons-material/Stars';
+import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import { Box, Chip, Stack, Typography } from '@mui/material';
 
 import { ButtonMap, ButtonMapButton, Chrono } from '@dashotv/components';
@@ -105,7 +108,10 @@ export const MediaCard = ({
       <FiCardFooter>
         <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
           {type === 'download' && status ? (
-            <MediaCardStatus status={status} queue={queue} progress={progress} eta={eta} />
+            <Stack direction="row" spacing={1} width="100%" alignItems="center" justifyContent="space-between">
+              <MediaCardStatus status={status} queue={queue} progress={progress} eta={eta} />
+              <MediaCardIcons {...icons} />
+            </Stack>
           ) : (
             <>
               <Stack direction="row" spacing={1} alignItems="center">
@@ -135,8 +141,20 @@ export type MediaCardIconsProps = {
   broken?: boolean;
   downloaded?: boolean;
   completed?: boolean;
+  auto?: boolean;
+  multi?: boolean;
+  force?: boolean;
 };
-export function MediaCardIcons({ active, favorite, broken, completed, downloaded }: MediaCardIconsProps) {
+export function MediaCardIcons({
+  active,
+  favorite,
+  broken,
+  completed,
+  downloaded,
+  auto,
+  multi,
+  force,
+}: MediaCardIconsProps) {
   return (
     <Stack spacing={'2px'} direction="row">
       {broken && <BuildCircleIcon fontSize="small" color="action" />}
@@ -144,6 +162,9 @@ export function MediaCardIcons({ active, favorite, broken, completed, downloaded
       {completed && <CheckCircleIcon fontSize="small" color="action" />}
       {favorite && <RecommendIcon fontSize="small" color="action" />}
       {active && <StarsIcon fontSize="small" color="action" />}
+      {auto && <OfflineBoltIcon fontSize="small" color="action" />}
+      {multi && <PlaylistAddCheckCircleIcon fontSize="small" color="action" />}
+      {force && <SwapHorizontalCircleIcon fontSize="small" color="action" />}
     </Stack>
   );
 }

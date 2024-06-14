@@ -22,6 +22,9 @@ export const DownloadCard = ({ id, download }: { id: string; download: Download 
     eta,
     progress,
     queue,
+    auto,
+    multi,
+    force,
     files_selected,
     files_completed,
     files_wanted,
@@ -61,6 +64,7 @@ export const DownloadCard = ({ id, download }: { id: string; download: Download 
       title={title || 'unknown'}
       subtitle={display}
       image={background || cover || '/blank.png'}
+      icons={{ auto, multi, force }}
       buttons={buttons}
       progress={progress}
       filesSelected={files_selected}
