@@ -19,6 +19,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import {
   DownloadBanner,
   DownloadInfo,
+  DownloadInfoValues,
   useDownloadMediumQuery,
   useDownloadMutation,
   useDownloadQuery,
@@ -98,7 +99,7 @@ export default function DownloadsShowPage() {
   useSub('tower.download', eventDownload);
 
   const changeInfo = useCallback(
-    info => {
+    (info: DownloadInfoValues) => {
       if (!download) {
         return;
       }
@@ -107,23 +108,22 @@ export default function DownloadsShowPage() {
     [downloadUpdate, download],
   );
 
-  const remove = useCallback((status: string) => {
-    changeSetting('status', status);
-  }, []);
-
   const changeSetting = useCallback(
     (setting: string, value: boolean | string) => {
       console.log('setting', setting, value, download);
       if (!download) {
         return;
       }
-      if (setting === 'status' && value === 'searching') {
-        downloadUpdate.mutate({ ...download, status: 'searching', release_id: '', url: '' });
-        return;
-      }
       downloadUpdate.mutate({ ...download, [setting]: value });
     },
     [downloadUpdate, download],
+  );
+
+  const remove = useCallback(
+    (status: string) => {
+      changeSetting('status', status);
+    },
+    [changeSetting],
   );
 
   const selectRelease = useCallback(
