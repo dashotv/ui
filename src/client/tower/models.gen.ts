@@ -173,11 +173,16 @@ export interface File {
   created_at?: string;
   updated_at?: string;
 
+  library_id?: string;
+  medium_id?: string;
   type?: string;
+  name?: string;
+  extension?: string;
   path?: string;
   size?: number;
+  resolution?: number;
+  checksum?: string;
   modified_at?: number;
-  medium_id?: string;
 }
 export interface Library {
   id?: string;
@@ -186,6 +191,7 @@ export interface Library {
 
   name?: string;
   path?: string;
+  count?: number;
   library_type_id?: string;
   library_template_id?: string;
   library_type?: LibraryType;

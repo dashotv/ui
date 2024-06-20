@@ -85,6 +85,9 @@ export const LibrariesList = () => {
               </Stack>
             </Stack>
             <Stack direction="row" spacing={1} alignItems="center">
+              <Typography variant="body2" fontWeight="bolder" color="gray">
+                {library.count}
+              </Typography>
               <IconButton size="small" onClick={() => setEditing(library)}>
                 <EditIcon fontSize="small" color="primary" />
               </IconButton>
