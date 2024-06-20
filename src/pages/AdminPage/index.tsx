@@ -3,7 +3,7 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 
 import { Container } from '@dashotv/components';
 
-import LogsPage from './LogsPage';
+import MessagesPage from './MessagesPage';
 import RequestsPage from './RequestsPage';
 import SettingsPage from './SettingsPage';
 import UsersPage from './UsersPage';
@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <Container>
       <Routes>
-        <Route path="logs" element={<LogsPage />} />
+        <Route path="logs" element={<MessagesPage />} />
         <Route path="requests" element={<RequestsPage />} />
         <Route path="users" element={<UsersPage />} />
         <Route path="watches" element={<WatchesPage />} />

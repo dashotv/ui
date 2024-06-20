@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Message as Log } from 'client/tower';
+import { Message } from 'client/tower';
 
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -8,11 +8,11 @@ import Typography from '@mui/material/Typography';
 
 import { Chrono, Row } from '@dashotv/components';
 
-export function LogsList({ logs }: { logs: Log[] }) {
+export function MessagesList({ data }: { data: Message[] }) {
   return (
     <Paper elevation={0}>
-      {logs.map((log: Log) => (
-        <LogRow key={log.id} {...log} />
+      {data.map((message: Message) => (
+        <MessageRow key={message.id} {...message} />
       ))}
     </Paper>
   );
@@ -45,7 +45,7 @@ const LevelName = (level?: string) => {
   return level == 'warning' ? 'warn' : level;
 };
 
-export function LogRow({ id, message, facility, level, created_at }: Log) {
+export function MessageRow({ id, message, facility, level, created_at }: Message) {
   const [name] = useState<string | undefined>(Name(facility));
   const [levelName] = useState<string | undefined>(LevelName(level));
   const [color] = useState<string | undefined>(Color(level));
