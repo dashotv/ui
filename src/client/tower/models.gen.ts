@@ -183,6 +183,7 @@ export interface File {
   resolution?: number;
   checksum?: string;
   modified_at?: number;
+  exists?: boolean;
 }
 export interface Library {
   id?: string;

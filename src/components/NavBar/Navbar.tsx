@@ -109,6 +109,7 @@ const pages: NavPageWithChildren[] = [
       { icon: <PersonIcon fontSize="small" />, name: 'Users', page: '/admin/users' },
       { icon: <WatchIcon fontSize="small" />, name: 'Watches', page: '/admin/watches' },
       { icon: <SettingsIcon fontSize="small" />, name: 'Settings', page: '/admin/settings' },
+      { icon: <SettingsIcon fontSize="small" />, name: 'Files', page: '/admin/files' },
     ],
   },
 ];

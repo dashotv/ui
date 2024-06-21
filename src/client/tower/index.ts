@@ -6,6 +6,7 @@ export * from './config.gen';
 export * from './downloads.gen';
 export * from './episodes.gen';
 export * from './feeds.gen';
+export * from './file.gen';
 export * from './hooks.gen';
 export * from './library.gen';
 export * from './library_template.gen';

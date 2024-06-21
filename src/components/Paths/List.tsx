@@ -15,6 +15,7 @@ import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { Box } from '@mui/system';
 
 import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from '@dashotv/components';
 
@@ -45,6 +46,13 @@ export function PathsList({ medium_id, paths }: { medium_id: string; paths?: Pat
   );
 }
 
+export const PathIcon = ({ extension, type }: { extension?: string; type?: string }) => {
+  if (extension === 'jpg') return <ImageIcon fontSize="small" color="disabled" />;
+  if (type === 'video') return <MovieIcon fontSize="small" color="disabled" />;
+  if (type === 'subtitle') return <ClosedCaptionIcon fontSize="small" color="disabled" />;
+  return <Box sx={{ width: '20px', height: '20px' }} />;
+};
+
 function PathsRow({
   i,
   medium_id,
@@ -73,12 +81,6 @@ function PathsRow({
       title: 'delete forever',
     },
   ];
-  const PathIcon = ({ extension, type }: { extension?: string; type?: string }) => {
-    if (extension === 'jpg') return <ImageIcon fontSize="small" color="disabled" />;
-    if (type === 'video') return <MovieIcon fontSize="small" color="disabled" />;
-    if (type === 'subtitle') return <ClosedCaptionIcon fontSize="small" color="disabled" />;
-    return null;
-  };
   const Path = ({ local, extension }: { local?: string; extension?: string }) => {
     if (!local) return null;
     const list = local.split('/');
