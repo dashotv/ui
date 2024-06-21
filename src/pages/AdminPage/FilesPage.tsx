@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Typography } from '@mui/material';
+import { Breadcrumbs, Grid, Link, Typography } from '@mui/material';
 
 import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
 
@@ -20,9 +20,12 @@ export const SettingsPage = () => {
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Typography variant="h6" color="primary">
-            Files
-          </Typography>
+          <Breadcrumbs aria-label="breadcrumb" sx={{ pt: 2 }}>
+            <Link underline="hover" color="inherit" href="/">
+              Files
+            </Link>
+            <Typography color="primary">All</Typography>
+          </Breadcrumbs>
         </Grid>
         <Grid item xs={12} md={6}>
           <Pagination count={pages} page={page} total={total} onChange={onChange} />

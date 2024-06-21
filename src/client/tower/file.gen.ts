@@ -142,3 +142,27 @@ export const FileDelete = async (params: FileDeleteRequest) => {
 
   return response.data as FileDeleteResponse;
 };
+
+export interface FileMissingRequest {
+  page: number;
+  limit: number;
+}
+export interface FileMissingResponse extends Response {
+  result: File[];
+}
+export const FileMissing = async (params: FileMissingRequest) => {
+  const response = await towerClient.get(`/file/missing?page=${params.page}&limit=${params.limit}`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as FileMissingResponse;
+};
