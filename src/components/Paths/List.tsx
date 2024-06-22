@@ -55,7 +55,7 @@ export const PathIcon = ({
   old?: boolean;
   rename?: boolean;
 }) => {
-  const color = rename ? 'warning' : old ? 'disabled' : 'info';
+  const color = old ? 'disabled' : rename ? 'warning' : 'info';
   if (extension === 'jpg') return <ImageIcon fontSize="small" color={color} />;
   if (type === 'video') return <MovieIcon fontSize="small" color={color} />;
   if (type === 'subtitle') return <ClosedCaptionIcon fontSize="small" color={color} />;
@@ -105,7 +105,6 @@ function PathsRow({
         <Stack minWidth="0" width="100%" direction="row" spacing={1} alignItems="center">
           {matches && <PathIcon {...{ extension, type, old, rename }} />}
           <Typography title={`${local}.${extension}`} fontWeight="bolder" noWrap color="primary">
-            {old && 'old'}
             <Path {...{ local, extension }} />
           </Typography>
           {matches && <Resolution resolution={resolution} />}
