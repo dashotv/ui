@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
+import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
 import RecommendIcon from '@mui/icons-material/Recommend';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import RepeatOnIcon from '@mui/icons-material/RepeatOn';
@@ -171,6 +172,13 @@ export default function SeriesShow() {
       icon: <RestorePageIcon fontSize="small" color="warning" />,
       action: () => {
         queue('paths');
+      },
+    },
+    {
+      name: 'Rename',
+      icon: <DriveFileMoveIcon fontSize="small" color="warning" />,
+      action: () => {
+        queue('rename');
       },
     },
     {
