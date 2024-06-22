@@ -306,6 +306,8 @@ export interface Path {
   bitrate?: number;
   checksum?: string;
   updated_at?: string;
+  old?: boolean;
+  rename?: boolean;
 }
 export interface Pin {
   id?: string;

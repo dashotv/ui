@@ -24,47 +24,53 @@ import { useMutationPathRemove } from './query';
 export function PathsList({ medium_id, paths }: { medium_id: string; paths?: Path[] }) {
   if (!paths) return null;
   const [hidden, setHidden] = useState(true);
+  const [showold, setShowold] = useState(true);
   const remover = useMutationPathRemove();
   const removePath = (id: string, medium_id: string) => {
     remover.mutate({ id, medium_id });
   };
   return (
     <Paper elevation={0}>
-      {paths.map(({ id, extension, local, type, size, resolution, updated_at }, i) => {
-        if (hidden && extension === 'jpg') return null;
-        return (
-          <PathsRow
-            key={i}
-            {...{ medium_id, i, id, extension, local, type, size, resolution, updated_at, removePath }}
-          />
-        );
-      })}
-      <Paper elevation={0} sx={{ width: '100%' }}>
+      <Stack direction="row" spacing={1} alignItems="center">
         <Button onClick={() => setHidden(!hidden)}>{hidden ? 'show' : 'hide'} images</Button>
-      </Paper>
+        <Button onClick={() => setShowold(!showold)}>{showold ? 'show' : 'hide'} old</Button>
+      </Stack>
+      {paths.map((path, i) => {
+        if (hidden && path.extension === 'jpg') return null;
+        if (showold && path.old) return null;
+        return <PathsRow key={i} {...{ medium_id, path, removePath }} />;
+      })}
     </Paper>
   );
 }
 
-export const PathIcon = ({ extension, type }: { extension?: string; type?: string }) => {
-  if (extension === 'jpg') return <ImageIcon fontSize="small" color="disabled" />;
-  if (type === 'video') return <MovieIcon fontSize="small" color="disabled" />;
-  if (type === 'subtitle') return <ClosedCaptionIcon fontSize="small" color="disabled" />;
+export const PathIcon = ({
+  extension,
+  type,
+  old,
+  rename,
+}: {
+  extension?: string;
+  type?: string;
+  old?: boolean;
+  rename?: boolean;
+}) => {
+  const color = rename ? 'warning' : old ? 'disabled' : 'info';
+  if (extension === 'jpg') return <ImageIcon fontSize="small" color={color} />;
+  if (type === 'video') return <MovieIcon fontSize="small" color={color} />;
+  if (type === 'subtitle') return <ClosedCaptionIcon fontSize="small" color={color} />;
   return <Box sx={{ width: '20px', height: '20px' }} />;
 };
 
 function PathsRow({
-  i,
+  path: { id, extension, local, type, size, resolution, old, rename, updated_at },
   medium_id,
-  id,
-  extension,
-  local,
-  type,
-  size,
-  resolution,
-  updated_at,
   removePath,
-}: { i: number; medium_id: string; removePath: (id: string, medium_id: string) => void } & Path) {
+}: {
+  path: Path;
+  medium_id: string;
+  removePath: (id: string, medium_id: string) => void;
+}) {
   const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'), { noSsr: true });
   const buttons: ButtonMapButton[] = [
     {
@@ -87,7 +93,7 @@ function PathsRow({
     return `${list[list.length - 1]}.${extension}`;
   };
   return (
-    <Row key={i}>
+    <Row>
       <Stack
         width="100%"
         minWidth="0"
@@ -97,8 +103,9 @@ function PathsRow({
         justifyContent="space-between"
       >
         <Stack minWidth="0" width="100%" direction="row" spacing={1} alignItems="center">
-          {matches && <PathIcon {...{ extension, type }} />}
+          {matches && <PathIcon {...{ extension, type, old, rename }} />}
           <Typography title={`${local}.${extension}`} fontWeight="bolder" noWrap color="primary">
+            {old && 'old'}
             <Path {...{ local, extension }} />
           </Typography>
           {matches && <Resolution resolution={resolution} />}
@@ -110,7 +117,7 @@ function PathsRow({
           alignItems="center"
           justifyContent="end"
         >
-          {!matches && <PathIcon {...{ extension, type }} />}
+          {!matches && <PathIcon {...{ extension, type, old, rename }} />}
           {!matches && <Resolution resolution={resolution} />}
           {size ? <Megabytes value={size} ord="bytes" /> : null}
           <Typography variant="subtitle2" noWrap color="gray">
