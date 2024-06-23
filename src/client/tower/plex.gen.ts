@@ -56,12 +56,16 @@ export const PlexUpdate = async () => {
 export interface PlexSearchRequest {
   query: string;
   section: string;
+  start: number;
+  limit: number;
 }
 export interface PlexSearchResponse extends Response {
   result: plex.SearchMetadata[];
 }
 export const PlexSearch = async (params: PlexSearchRequest) => {
-  const response = await towerClient.get(`/plex/search?query=${params.query}&section=${params.section}`);
+  const response = await towerClient.get(
+    `/plex/search?query=${params.query}&section=${params.section}&start=${params.start}&limit=${params.limit}`,
+  );
 
   if (!response.data) {
     throw new Error('response empty?');

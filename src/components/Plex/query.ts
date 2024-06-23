@@ -3,17 +3,13 @@ import * as plex from 'client/tower/plex';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { objectToQueryString } from 'hooks/queryString';
-
-import { PlexClient, PlexLibrary, PlexSearchResponse } from './types';
-
 export const getLibraries = async () => {
   const response = await tower.PlexLibraries();
   return response;
 };
 
 export const getPlexSearch = async (search: string, library: string) => {
-  const response = await tower.PlexSearch({ query: search, section: library });
+  const response = await tower.PlexSearch({ query: search, section: library, start: 0, limit: 25 });
   return response.result as plex.SearchResponse[];
 };
 
