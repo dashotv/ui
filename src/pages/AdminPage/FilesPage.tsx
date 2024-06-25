@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Outlet, Route, Routes, useParams } from 'react-router-dom';
 
+import TopicIcon from '@mui/icons-material/Topic';
 import { Breadcrumbs, Grid, Typography } from '@mui/material';
 
 import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
 
 import { DirectoriesList, useQueryDirectories } from 'components/Directories';
 import { FilesList, useQueryFiles } from 'components/Files';
+import { useQueryMedium } from 'components/Media';
 
 export const FilesRouter = () => {
   return (
@@ -24,7 +26,7 @@ export const FilesRouter = () => {
 };
 
 export const FilesPage = () => {
-  const { medium } = useParams();
+  const { library, medium } = useParams();
   const [page, setPage] = React.useState(1);
   const { data, isLoading } = useQueryFiles(page, medium);
   const total = data?.total || 0;
@@ -38,11 +40,7 @@ export const FilesPage = () => {
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ pt: 2 }}>
-            <Link to="/admin/files">Files</Link>
-            {medium ? <Typography color="primary">{medium}</Typography> : null}
-            {!medium ? <Typography color="primary">Libraries</Typography> : null}
-          </Breadcrumbs>
+          <FilesBreadcrumbs library={library} medium={medium} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Pagination count={pages} page={page} total={total} onChange={onChange} />
@@ -70,15 +68,10 @@ export const DirectoriesPage = () => {
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ pt: 2 }}>
-            <Link to="/admin/files">Files</Link>
-            {library ? <Typography color="primary">{library}</Typography> : null}
-            {medium ? <Typography color="primary">{medium}</Typography> : null}
-            {!library && !medium ? <Typography color="primary">Libraries</Typography> : null}
-          </Breadcrumbs>
+          <FilesBreadcrumbs library={library} medium={medium} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Pagination count={pages} page={page} total={total} onChange={onChange} />
+          <Pagination size="small" count={pages} page={page} total={total} onChange={onChange} />
         </Grid>
       </Grid>
       {isLoading ? <LoadingIndicator /> : null}
@@ -86,4 +79,42 @@ export const DirectoriesPage = () => {
     </Container>
   );
 };
+
+const FilesBreadcrumbs = ({ library, medium }: { library?: string; medium?: string }) => {
+  return (
+    <Breadcrumbs aria-label="breadcrumb" sx={{ pt: 2 }}>
+      <Link to="/admin/files">
+        <Typography variant="button" color="primary">
+          <TopicIcon fontSize="small" />
+        </Typography>
+      </Link>
+      {library ? (
+        <Link to={`/admin/files/${library}`}>
+          <Typography variant="button" color="primary">
+            {library}
+          </Typography>
+        </Link>
+      ) : null}
+      {medium ? <MediaTitle id={medium} /> : null}
+      {!library && !medium ? (
+        <Typography variant="button" color="primary">
+          Libraries
+        </Typography>
+      ) : null}
+    </Breadcrumbs>
+  );
+};
+
+const MediaTitle = ({ id }: { id?: string }) => {
+  if (!id) {
+    return <Typography>...</Typography>;
+  }
+  const { data } = useQueryMedium(id);
+  return (
+    <Typography variant="body1" noWrap width="300px">
+      {data?.result.display || data?.result.title || 'unknown'}
+    </Typography>
+  );
+};
+
 export default FilesRouter;

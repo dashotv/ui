@@ -8,17 +8,13 @@ import { clickHandler } from 'utils/handler';
 import CancelIcon from '@mui/icons-material/Cancel';
 import FolderIcon from '@mui/icons-material/Folder';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import { Paper, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
 
 import { ButtonMap, ButtonMapButton, Row } from '@dashotv/components';
 
 export const DirectoriesList = ({ data }: { data?: Directory[] }) => {
-  return (
-    <Paper elevation={0} sx={{ p: 1, mb: 2 }}>
-      {data?.map((dir: Directory) => <DirectoryRow key={dir.path} directory={dir} />)}
-    </Paper>
-  );
+  return <>{data?.map((dir: Directory) => <DirectoryRow key={dir.path} directory={dir} />)}</>;
 };
 const Icon = ({ count }: { count?: number }) => {
   if (count === 0) {

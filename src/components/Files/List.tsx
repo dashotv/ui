@@ -6,7 +6,6 @@ import { clickHandler } from 'utils/handler';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Theme } from '@mui/material';
-import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
@@ -17,18 +16,10 @@ import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from '
 import { PathIcon } from 'components/Paths';
 
 export const FilesList = ({ data }: { data?: File[] }) => {
-  return (
-    <Paper elevation={0} sx={{ p: 1, mb: 2 }}>
-      {data?.map((file: File) => <FileRow key={file.id} file={file} />)}
-    </Paper>
-  );
+  return <>{data?.map((file: File) => <FileRow key={file.id} file={file} />)}</>;
 };
 
-const FileRow = ({
-  file: { id, medium_id, library_id, name, extension, type, resolution, modified_at, path, size },
-}: {
-  file: File;
-}) => {
+const FileRow = ({ file: { name, extension, type, resolution, modified_at, path, size } }: { file: File }) => {
   const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'), { noSsr: true });
   const buttons: ButtonMapButton[] = [
     {

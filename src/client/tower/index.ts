@@ -12,6 +12,7 @@ export * from './hooks.gen';
 export * from './library.gen';
 export * from './library_template.gen';
 export * from './library_type.gen';
+export * from './medium.gen';
 export * from './messages.gen';
 export * from './movies.gen';
 export * from './paths.gen';
