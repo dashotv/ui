@@ -5,12 +5,10 @@ export interface SearchAllResponse {
   tmdb?: SearchResponse;
   tvdb?: SearchResponse;
 }
-
 export interface SearchResponse {
   results?: SearchResult[];
   error?: string;
 }
-
 export interface SearchResult {
   id?: string;
   title?: string;

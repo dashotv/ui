@@ -19,7 +19,7 @@ export default function HomePage() {
         <Route path="users" element={<UsersPage />} />
         <Route path="watches" element={<WatchesPage />} />
         <Route path="settings" element={<SettingsPage />} />
-        <Route path="files" element={<FilesPage />} />
+        <Route path="files/*" element={<FilesPage />} />
       </Routes>
 
       <Outlet />

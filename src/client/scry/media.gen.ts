@@ -11,6 +11,12 @@ export interface MediaIndexRequest {
   title: string;
   source: string;
   source_id: string;
+  season: number;
+  episode: number;
+  absolute: number;
+  downloaded: string;
+  completed: string;
+  skipped: string;
 }
 export interface MediaIndexResponse extends Response {
   result: search.MediaSearchResponse;
@@ -18,7 +24,7 @@ export interface MediaIndexResponse extends Response {
 }
 export const MediaIndex = async (params: MediaIndexRequest) => {
   const response = await scryClient.get(
-    `/media/?start=${params.start}&limit=${params.limit}&type=${params.type}&name=${params.name}&display=${params.display}&title=${params.title}&source=${params.source}&source_id=${params.source_id}`,
+    `/media/?start=${params.start}&limit=${params.limit}&type=${params.type}&name=${params.name}&display=${params.display}&title=${params.title}&source=${params.source}&source_id=${params.source_id}&season=${params.season}&episode=${params.episode}&absolute=${params.absolute}&downloaded=${params.downloaded}&completed=${params.completed}&skipped=${params.skipped}`,
   );
 
   if (!response.data) {

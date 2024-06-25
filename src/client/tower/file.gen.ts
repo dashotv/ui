@@ -146,12 +146,15 @@ export const FileDelete = async (params: FileDeleteRequest) => {
 export interface FileMissingRequest {
   page: number;
   limit: number;
+  medium_id: string;
 }
 export interface FileMissingResponse extends Response {
   result: File[];
 }
 export const FileMissing = async (params: FileMissingRequest) => {
-  const response = await towerClient.get(`/file/missing?page=${params.page}&limit=${params.limit}`);
+  const response = await towerClient.get(
+    `/file/missing?page=${params.page}&limit=${params.limit}&medium_id=${params.medium_id}`,
+  );
 
   if (!response.data) {
     throw new Error('response empty?');
@@ -165,4 +168,31 @@ export const FileMissing = async (params: FileMissingRequest) => {
   }
 
   return response.data as FileMissingResponse;
+};
+
+export interface FileListRequest {
+  page: number;
+  limit: number;
+  medium_id: string;
+}
+export interface FileListResponse extends Response {
+  result: File[];
+}
+export const FileList = async (params: FileListRequest) => {
+  const response = await towerClient.get(
+    `/file/list?page=${params.page}&limit=${params.limit}&medium_id=${params.medium_id}`,
+  );
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as FileListResponse;
 };

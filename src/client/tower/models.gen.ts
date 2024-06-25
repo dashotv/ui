@@ -43,6 +43,11 @@ export interface CombinationChild {
   added_at?: number;
   updated_at?: number;
 }
+export interface Directory {
+  name?: string;
+  path?: string;
+  count?: number;
+}
 export interface Download {
   id?: string;
   created_at?: string;

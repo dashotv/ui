@@ -58,3 +58,24 @@ export const EsRelease = async () => {
 
   return response.data as EsReleaseResponse;
 };
+
+export interface EsDeleteRequest {
+  index: string;
+}
+
+export const EsDelete = async (params: EsDeleteRequest) => {
+  const response = await scryClient.delete(`/es/${params.index}?`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};

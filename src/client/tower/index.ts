@@ -3,6 +3,7 @@ export * from './models.gen';
 export * from './collections.gen';
 export * from './combinations.gen';
 export * from './config.gen';
+export * from './directory.gen';
 export * from './downloads.gen';
 export * from './episodes.gen';
 export * from './feeds.gen';

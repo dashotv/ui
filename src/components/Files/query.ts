@@ -1,12 +1,12 @@
-import { FileIndex } from 'client/tower';
+import { FileList } from 'client/tower';
 
 import { useQuery } from '@tanstack/react-query';
 
-export const useQueryFiles = (page: number) => {
+export const useQueryFiles = (page: number, medium_id: string = '', limit: number = 50) => {
   return useQuery({
-    queryKey: ['files', page],
+    queryKey: ['files', page, medium_id],
     queryFn: async () => {
-      const response = await FileIndex({ page: page, limit: 50 });
+      const response = await FileList({ page, limit, medium_id });
       return response;
     },
   });
