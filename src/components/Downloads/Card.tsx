@@ -12,6 +12,25 @@ import { MediaCard } from 'components/Common';
 
 import { useDownloadMutation } from './query';
 
+const combinedStatus = (status?: string, torrentState?: string) => {
+  if (!torrentState) {
+    return status;
+  }
+  switch (torrentState) {
+    case 'error':
+      return 'error';
+    case 'checkingDL':
+    case 'checkingUP':
+    case 'checkingResumeData':
+      return 'checking';
+    case 'pausedDL':
+    case 'pausedUP':
+      return 'paused';
+    default:
+      return status;
+  }
+};
+
 export const DownloadCard = ({ id, download }: { id: string; download: Download }) => {
   const {
     title,
@@ -71,7 +90,7 @@ export const DownloadCard = ({ id, download }: { id: string; download: Download 
       filesCompleted={files_completed}
       filesWanted={files_wanted}
       queue={queue}
-      status={status}
+      status={combinedStatus(status, download.torrent?.State)}
       release_date={release_date}
       eta={eta}
     />

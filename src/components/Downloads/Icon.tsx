@@ -9,6 +9,7 @@ import PendingIcon from '@mui/icons-material/Pending';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import SearchIcon from '@mui/icons-material/Search';
+import WarningIcon from '@mui/icons-material/Warning';
 import YoutubeSearchedForIcon from '@mui/icons-material/YoutubeSearchedFor';
 import IconButton from '@mui/material/IconButton';
 
@@ -16,6 +17,14 @@ import { DownloadStatus } from './types';
 
 export const DownloadGetIcon = (status?: DownloadStatus) => {
   switch (status) {
+    // Torrent state
+    case 'checking':
+      return WarningIcon;
+    case 'paused':
+      return PauseCircleIcon;
+    case 'error':
+      return ErrorIcon;
+    // Download status
     case 'searching':
       return SearchIcon;
     case 'loading':
@@ -28,8 +37,6 @@ export const DownloadGetIcon = (status?: DownloadStatus) => {
       return CloudDownloadIcon;
     case 'done':
       return DownloadDoneIcon;
-    case 'paused':
-      return PauseCircleIcon;
     case 'deleted':
       return RemoveCircleIcon;
     case 'held':
