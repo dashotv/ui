@@ -8,7 +8,7 @@ $height: 120px;
     top: 0px;
     left: 0px;
     right: 0px;
-    z-index: 101;
+    z-index: 102;
 
     clear: both;
     overflow: hidden;
@@ -66,6 +66,7 @@ $height: 120px;
       left: 8px;
       text-align: left;
       font-weight: bold;
+      z-index: 103;
     }
 
     .actions {
@@ -73,6 +74,7 @@ $height: 120px;
       bottom: 10px;
       right: 8px;
       overflow: hidden;
+      z-index: 103;
     }
 
     .progressbar {
@@ -122,7 +124,7 @@ $height: 120px;
       left: 0px;
       right: 0px;
       top: 0;
-      z-index: 120;
+      z-index: 101;
       overflow: auto;
       margin: auto;
       display: flex;
