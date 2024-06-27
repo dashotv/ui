@@ -162,7 +162,7 @@ const DownloadState = ({ torrentState }: { torrentState?: string }) => {
         </div>
       );
     default:
-      return <div className="state"></div>;
+      return null;
   }
 };
 
