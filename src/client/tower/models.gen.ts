@@ -299,6 +299,9 @@ export interface NzbgetPayload {
   final_dir?: string;
   file?: string;
   status?: string;
+  status_detail?: string;
+  status_par?: string;
+  status_unpack?: string;
 }
 export interface Path {
   id?: string;
