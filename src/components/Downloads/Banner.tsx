@@ -54,30 +54,6 @@ export const DownloadBanner = ({
   total,
   updated_at,
 }: DownloadBannerProps) => {
-  const Queue = ({ queue }: { queue: string | number | undefined }) => {
-    if (!queue) {
-      return null;
-    }
-    return <Chip label={queue} size="small" />;
-  };
-  const Status = ({ status, action }: { status?: DownloadStatus; action?: () => void }) => {
-    if (!status) {
-      return null;
-    }
-    return <DownloadIconButton {...{ status, action }} />;
-  };
-  const Progress = ({ progress }: { progress?: string | number }) => {
-    if (!progress) {
-      return null;
-    }
-    return <span>{Number(progress).toFixed(1)}%</span>;
-  };
-  const Eta = ({ eta }: { eta?: string }) => {
-    if (!eta) {
-      return null;
-    }
-    return <Chrono fromNow>{eta}</Chrono>;
-  };
   function tertiary() {
     return (
       <Stack spacing={1} direction="row" alignItems="center">
@@ -118,6 +94,32 @@ export const DownloadBanner = ({
     />
   );
 };
+
+const Queue = ({ queue }: { queue: string | number | undefined }) => {
+  if (!queue) {
+    return null;
+  }
+  return <Chip label={queue} size="small" />;
+};
+const Status = ({ status, action }: { status?: DownloadStatus; action?: () => void }) => {
+  if (!status) {
+    return null;
+  }
+  return <DownloadIconButton {...{ status, action }} />;
+};
+const Progress = ({ progress }: { progress?: string | number }) => {
+  if (!progress) {
+    return null;
+  }
+  return <span>{Number(progress).toFixed(1)}%</span>;
+};
+const Eta = ({ eta }: { eta?: string }) => {
+  if (!eta) {
+    return null;
+  }
+  return <Chrono fromNow>{eta}</Chrono>;
+};
+
 export interface DownloadAdornmentProps {
   progressBar?: boolean;
   progress?: string | number;

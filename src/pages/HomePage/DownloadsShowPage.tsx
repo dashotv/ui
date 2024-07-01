@@ -110,11 +110,20 @@ export default function DownloadsShowPage() {
 
   const changeSetting = useCallback(
     (setting: string, value: boolean | string) => {
-      console.log('setting', setting, value, download);
+      // console.log('setting', setting, value, download);
       if (!download) {
         return;
       }
-      downloadUpdate.mutate({ ...download, [setting]: value });
+      downloadUpdate.mutate(
+        { ...download, [setting]: value },
+        {
+          onSuccess: () => {
+            queryClient.setQueryData(['downloads', id], (prev: Download) => {
+              return { ...prev, [setting]: value };
+            });
+          },
+        },
+      );
     },
     [downloadUpdate, download],
   );
