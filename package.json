@@ -8,6 +8,7 @@
     "@clerk/themes": "1.7.8",
     "@dashotv/components": "^0.1.10",
     "@dashotv/react-nats-context": "^1.4.4",
+    "@elastic/apm-rum": "5.16.0",
     "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.5",
     "@fontsource/material-icons": "^5.0.7",
@@ -134,6 +135,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1",
+    "@elastic/apm-rum-react": "2.0.2",
     "@hookform/devtools": "^4.3.1",
     "@storybook/addon-essentials": "^8.0.8",
     "@storybook/addon-interactions": "^8.0.8",

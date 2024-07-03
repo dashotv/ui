@@ -8,13 +8,14 @@
 import React, { Suspense, lazy } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet-async';
-import { Route, Routes } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
 
 import { RedirectToSignIn, SignIn, SignUp, SignedIn, SignedOut } from '@clerk/clerk-react';
+import { ApmRoutes } from '@elastic/apm-rum-react';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -98,7 +99,7 @@ export function App() {
       <ErrorBoundary fallbackRender={fallbackRender}>
         <NavBar />
         <Box sx={{ ml: { xs: 0, md: '240px' }, p: 1 }}>
-          <Routes>
+          <ApmRoutes>
             <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
             <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
             <Route path="/*" element={withAuth(HomePage)} />
@@ -109,7 +110,7 @@ export function App() {
             <Route path="runic/*" element={withAuth(RunicAppWrapper)} />
             <Route path="minion/*" element={withAuth(MinionAppWrapper)} />
             <Route path="rift/*" element={withAuth(RiftAppWrapper)} />
-          </Routes>
+          </ApmRoutes>
         </Box>
       </ErrorBoundary>
       {import.meta.env.PROD && (
