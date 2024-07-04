@@ -7,6 +7,7 @@ steps:
     image: plugins/docker
     environment:
       DOCKER_BUILDKIT: 1
+      VITE_APP_APM_SERVER_URL: http://10.0.4.62:8200/
       CLERK_KEY:
         from_secret: CLERK_KEY
       GITHUB_TOKEN:
