@@ -49,7 +49,7 @@ const apm = initApm({
   serviceName: 'ui-dev',
 
   // Set custom APM Server URL (default: http://localhost:8200)
-  serverUrl: import.meta.env.VITE_APP_APM_SERVER_URL || 'http://localhost:8200',
+  serverUrl: import.meta.env.VITE_APP_APM_SERVER_URL || 'http://10.0.4.62:8200',
 
   // Set service version (required for sourcemap feature)
   serviceVersion: '0.1.0',
