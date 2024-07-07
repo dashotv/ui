@@ -7,7 +7,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import RepeatOnIcon from '@mui/icons-material/RepeatOn';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import RestorePageIcon from '@mui/icons-material/RestorePage';
 
@@ -155,13 +154,6 @@ export default function MoviesShow() {
   ];
 
   const menu: MenuMapItem[] = [
-    {
-      name: 'Files',
-      icon: <RepeatOnIcon fontSize="small" color="warning" />,
-      action: () => {
-        queue('files');
-      },
-    },
     {
       name: 'Paths',
       icon: <RestorePageIcon fontSize="small" color="warning" />,
