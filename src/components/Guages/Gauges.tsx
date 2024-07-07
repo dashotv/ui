@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useCountdown } from 'usehooks-ts';
+import { useInterval } from 'usehooks-ts';
 
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import FeedIcon from '@mui/icons-material/Feed';
@@ -13,9 +13,7 @@ import Stack from '@mui/material/Stack';
 
 import { useNats } from '@dashotv/react-nats-context';
 
-import { useDownloadsLastQuery } from 'components/Downloads';
 import { useMetrics } from 'hooks/metrics';
-import { useSub } from 'hooks/sub';
 
 import './gauges.scss';
 
@@ -64,64 +62,69 @@ export const NatsGauge = () => {
 //   );
 // };
 
-function Countdown({ eventTime, interval, last }: { eventTime: number; interval: number; last: string }) {
-  const [intervalValue] = useState<number>(interval);
-  const [count, { startCountdown, resetCountdown }] = useCountdown({
-    countStart: eventTime,
-    intervalMs: intervalValue,
-  });
+export const Countdown = ({ interval = 250 }: { interval?: number }) => {
+  const [value, setValue] = useState<number>(60 - new Date().getSeconds());
 
-  const lastRef = useRef(last);
+  useInterval(() => {
+    setValue(60 - new Date().getSeconds());
+  }, interval);
 
-  useEffect(() => {
-    startCountdown();
-  });
+  return <div title={`${value}`}>{value > 0 ? value : 0}</div>;
+};
 
-  useEffect(() => {
-    if (lastRef.current !== last) {
-      lastRef.current = last;
-      resetCountdown();
-    }
-  }, [last, resetCountdown]);
-
-  return <div title={`${count}`}>{count > 0 ? count : 0}</div>;
-}
+// Countdown that resets every 300 seconds (when the download process job runs)
+// this is no longer used
+// function Countdown({ eventTime, interval, last }: { eventTime: number; interval: number; last: string }) {
+//   const [intervalValue] = useState<number>(interval);
+//   const [count, { startCountdown, resetCountdown }] = useCountdown({
+//     countStart: eventTime,
+//     intervalMs: intervalValue,
+//   });
+//
+//   const lastRef = useRef(last);
+//
+//   useEffect(() => {
+//     startCountdown();
+//   });
+//
+//   useEffect(() => {
+//     if (lastRef.current !== last) {
+//       lastRef.current = last;
+//       resetCountdown();
+//     }
+//   }, [last, resetCountdown]);
+//
+//   return <div title={`${count}`}>{count > 0 ? count : 0}</div>;
+// }
 
 function DiskGauge({ value, color }: GaugeProps) {
   return <BaseGauge icon={<DownloadForOfflineIcon />} value={value} color={color} />;
 }
 
 function CountdownGauge({ color }: GaugeProps) {
-  const [last, setLast] = useState('');
-  const [event, setEvent] = useState(300);
-  const initial = useDownloadsLastQuery();
+  // const [last, setLast] = useState('');
+  // const [event, setEvent] = useState(300);
+  // const initial = useDownloadsLastQuery();
 
-  useEffect(() => {
-    if (initial.data) {
-      const seconds = initial.data - Math.round(new Date().getTime() / 1000) + 300;
-      setLast(seconds.toString());
-      setEvent(seconds);
-    }
-  }, [initial.data]);
+  //   useEffect(() => {
+  //     if (initial.data) {
+  //       const seconds = initial.data - Math.round(new Date().getTime() / 1000) + 300;
+  //       setLast(seconds.toString());
+  //       setEvent(seconds);
+  //     }
+  //   }, [initial.data]);
+  //
+  //   useSub(
+  //     'tower.notices',
+  //     useCallback(({ message, time }: { message: string; time: string }) => {
+  //       if (message === 'processing downloads') {
+  //         setLast(time);
+  //         setEvent(300);
+  //       }
+  //     }, []),
+  //   );
 
-  useSub(
-    'tower.notices',
-    useCallback(({ message, time }: { message: string; time: string }) => {
-      if (message === 'processing downloads') {
-        setLast(time);
-        setEvent(300);
-      }
-    }, []),
-  );
-
-  return (
-    <BaseGauge
-      title="Countdown"
-      icon={<WatchLaterIcon />}
-      value={<Countdown eventTime={event} interval={1000} last={last} />}
-      color={initial.isFetching ? 'secondary' : color}
-    />
-  );
+  return <BaseGauge title="Countdown" icon={<WatchLaterIcon />} value={<Countdown />} color={color} />;
 }
 
 function NzbsGauge({ value, color }: GaugeProps) {
