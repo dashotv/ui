@@ -7,7 +7,6 @@ import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
 import RecommendIcon from '@mui/icons-material/Recommend';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import RepeatOnIcon from '@mui/icons-material/RepeatOn';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import RestorePageIcon from '@mui/icons-material/RestorePage';
 import StarsIcon from '@mui/icons-material/Stars';
@@ -160,13 +159,6 @@ export default function SeriesShow() {
   ];
 
   const menu: MenuMapItem[] = [
-    {
-      name: 'Files',
-      icon: <RepeatOnIcon fontSize="small" color="warning" />,
-      action: () => {
-        queue('files');
-      },
-    },
     {
       name: 'Paths',
       icon: <RestorePageIcon fontSize="small" color="warning" />,
