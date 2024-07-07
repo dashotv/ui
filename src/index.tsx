@@ -46,7 +46,7 @@ const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
 
 const apm = initApm({
   // Set required service name (allowed characters: a-z, A-Z, 0-9, -, _, and space)
-  serviceName: 'ui-dev',
+  serviceName: 'ui-' + import.meta.env.NODE_ENV,
 
   // Set custom APM Server URL (default: http://localhost:8200)
   serverUrl: '//apm.dasho.tv',
