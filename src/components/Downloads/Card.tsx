@@ -40,6 +40,7 @@ export const DownloadCard = ({ id, download }: { id: string; download: Download 
     display,
     background,
     cover,
+    url,
     status,
     eta,
     progress,
@@ -63,8 +64,8 @@ export const DownloadCard = ({ id, download }: { id: string; download: Download 
   const buttons: ButtonMapButton[] = [
     {
       Icon: ChangeCircleIcon,
-      color: 'warning',
-      click: clickHandler(() => downloadStatus(id, 'loading')),
+      color: url !== '' ? 'warning' : 'disabled',
+      click: clickHandler(() => (url !== '' ? downloadStatus(id, 'loading') : null)),
       title: 'Reloading',
     },
     {
@@ -117,11 +118,13 @@ export const DownloadCard = ({ id, download }: { id: string; download: Download 
 };
 
 const DownloadExtra = ({
+  multi,
   files_selected,
   files_completed,
   files_wanted,
   tag,
 }: {
+  multi?: boolean;
   files_selected?: number;
   files_completed?: number;
   files_wanted?: number;
@@ -129,21 +132,25 @@ const DownloadExtra = ({
 }) => {
   return (
     <Stack direction="row" spacing={1}>
-      <Typography variant="body1" color="secondary.dark" fontWeight="bold">
-        {files_wanted}
-      </Typography>
-      <Typography variant="body1" color="primary" fontWeight="bold">
-        /
-      </Typography>
-      <Typography variant="body1" color="secondary" fontWeight="bold">
-        {files_completed}
-      </Typography>
-      <Typography variant="body1" color="primary" fontWeight="bold">
-        /
-      </Typography>
-      <Typography variant="body1" color="gray" fontWeight="bold">
-        {files_selected}
-      </Typography>
+      {multi && (
+        <>
+          <Typography variant="body1" color="secondary.dark" fontWeight="bold">
+            {files_wanted}
+          </Typography>
+          <Typography variant="body1" color="gray" fontWeight="bold">
+            /
+          </Typography>
+          <Typography variant="body1" color="secondary" fontWeight="bold">
+            {files_completed}
+          </Typography>
+          <Typography variant="body1" color="gray" fontWeight="bold">
+            /
+          </Typography>
+          <Typography variant="body1" color="gray" fontWeight="bold">
+            {files_selected}
+          </Typography>
+        </>
+      )}
       <Typography variant="body1" color="disabled">
         {tag}
       </Typography>

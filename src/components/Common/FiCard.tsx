@@ -71,7 +71,9 @@ export const FiCardExtra = ({ children }: { children: React.ReactNode }) => (
       bottom: 0,
       left: 0,
       display: 'none',
-      pb: 1.5,
+      pb: 1.0,
+      pr: 1.0,
+      pl: 1.0,
     }}
   >
     {children}
