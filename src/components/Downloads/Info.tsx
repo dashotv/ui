@@ -1,8 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Download as DownloadType } from 'client/tower';
-
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import DownloadDoneIcon from '@mui/icons-material/DownloadDone';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -19,8 +17,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 
-import { Select, Text } from 'components/Form';
-import { Option } from 'components/Form';
+import { Option, Select, Text } from 'components/Form';
 
 const statuses = [
   { label: <SearchIcon fontSize="small" />, value: 'searching' },
@@ -37,7 +34,7 @@ const statuses = [
 export interface DownloadInfoValues {
   thash?: string;
   status?: string;
-  release_id?: string;
+  tag?: string;
   url?: string;
 }
 export type DownloadInfoProps = {
@@ -45,24 +42,23 @@ export type DownloadInfoProps = {
   setOpen: (open: boolean) => void;
   thash?: string;
   status?: string;
-  release_id?: string;
   url?: string;
+  tag?: string;
   changer: (data: DownloadInfoValues) => void;
 };
-export const DownloadInfo = ({ open, setOpen, release_id, url, status, thash, changer }: DownloadInfoProps) => {
+export const DownloadInfo = ({ open, setOpen, tag, url, status, thash, changer }: DownloadInfoProps) => {
   const {
     handleSubmit,
     control,
     // formState: { errors },
   } = useForm<DownloadInfoValues>({
-    values: { thash, status, release_id, url },
-    defaultValues: { thash: '', status: 'searching', release_id: '', url: '' },
+    values: { thash, status, tag, url },
+    defaultValues: { thash: '', status: 'searching', tag: '', url: '' },
   });
   // const [data, setData] = useState<DownloadInfoValues>(values);
   const submit = (data: DownloadInfoValues) => {
     setOpen(false);
     if (data.status === 'searching') {
-      data.release_id = '';
       data.url = '';
     }
     changer(data);
@@ -83,8 +79,8 @@ export const DownloadInfo = ({ open, setOpen, release_id, url, status, thash, ch
               <Select name="status" control={control} options={statuses} render={renderOption} />
               <Text name="thash" control={control} />
             </Stack>
-            <Text name="release_id" label="release" control={control} />
             <Text name="url" control={control} />
+            <Text name="tag" control={control} />
           </Stack>
           <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
             <Button variant="contained" fullWidth onClick={() => setOpen(false)}>

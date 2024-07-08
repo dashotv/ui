@@ -64,6 +64,7 @@ export interface Download {
   status?: string;
   files?: DownloadFile[];
   regex?: string;
+  tag?: string;
   medium?: Medium;
   title?: string;
   display?: string;

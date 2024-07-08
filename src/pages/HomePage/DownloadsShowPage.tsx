@@ -48,6 +48,7 @@ export default function DownloadsShowPage() {
     status,
     thash,
     url,
+    tag,
     multi,
     auto,
     force,
@@ -225,7 +226,7 @@ export default function DownloadsShowPage() {
             buttons={buttons}
             updated_at={updated_at}
           />
-          <DownloadInfo {...{ open, setOpen, status, thash, url }} changer={changeInfo} />
+          <DownloadInfo {...{ open, setOpen, status, thash, url, tag }} changer={changeInfo} />
           <MediumTabs data={tabsMap} />
         </div>
       )}
