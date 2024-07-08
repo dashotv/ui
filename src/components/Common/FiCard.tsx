@@ -31,6 +31,7 @@ export const FiCard = ({ variant = 'cover', children }: { variant?: string; chil
         position: 'relative',
         '&:hover': {
           '& .fiCardActions': { display: 'block' },
+          '& .fiCardExtra': { display: 'block' },
           '& .coverDescription': { display: 'block' },
           '& .fiCardFooter': { display: 'none' },
           '& .fiCardContent': { backgroundColor: 'rgba(0,0,0,0.8)' },
@@ -61,6 +62,20 @@ export const FiCardActions = ({ children }: { children: React.ReactNode }) => (
   >
     {children}
   </CardActions>
+);
+export const FiCardExtra = ({ children }: { children: React.ReactNode }) => (
+  <Box
+    className="fiCardExtra"
+    sx={{
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      display: 'none',
+      pb: 1.5,
+    }}
+  >
+    {children}
+  </Box>
 );
 
 export const FiCardContent = ({ children }: { children: React.ReactNode }) => (

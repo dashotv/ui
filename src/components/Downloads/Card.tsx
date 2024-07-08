@@ -4,7 +4,10 @@ import { Download } from 'client/tower';
 import { clickHandler } from 'utils/handler';
 
 import CancelIcon from '@mui/icons-material/Cancel';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
+import { Stack, Typography } from '@mui/material';
 
 import { ButtonMapButton } from '@dashotv/components';
 
@@ -44,6 +47,7 @@ export const DownloadCard = ({ id, download }: { id: string; download: Download 
     auto,
     multi,
     force,
+    tag,
     files_selected,
     files_completed,
     files_wanted,
@@ -52,26 +56,33 @@ export const DownloadCard = ({ id, download }: { id: string; download: Download 
 
   const updater = useDownloadMutation(id);
 
-  const downloadDone = (id: string) => {
-    console.log('download done', id);
-    updater.mutate({ ...download, status: 'done' });
-  };
-  const downloadDelete = (id: string) => {
-    console.log('download delete', id);
-    updater.mutate({ ...download, status: 'deleted' });
+  const downloadStatus = (id: string, status: string) => {
+    updater.mutate({ ...download, status: status });
   };
 
   const buttons: ButtonMapButton[] = [
     {
+      Icon: ChangeCircleIcon,
+      color: 'warning',
+      click: clickHandler(() => downloadStatus(id, 'loading')),
+      title: 'Reloading',
+    },
+    {
+      Icon: ErrorIcon,
+      color: 'warning',
+      click: clickHandler(() => downloadStatus(id, 'reviewing')),
+      title: 'Reviewing',
+    },
+    {
       Icon: CheckCircleIcon,
       color: 'primary',
-      click: clickHandler(() => downloadDone(id)),
+      click: clickHandler(() => downloadStatus(id, 'done')),
       title: 'Done',
     },
     {
       Icon: CancelIcon,
       color: 'error',
-      click: clickHandler(() => downloadDelete(id)),
+      click: clickHandler(() => downloadStatus(id, 'deleted')),
       title: 'Delete',
     },
   ];
@@ -93,6 +104,49 @@ export const DownloadCard = ({ id, download }: { id: string; download: Download 
       status={combinedStatus(status, download.torrent?.State)}
       release_date={release_date}
       eta={eta}
+      extra={
+        <DownloadExtra
+          files_selected={files_selected}
+          files_completed={files_completed}
+          files_wanted={files_wanted}
+          tag={tag}
+        />
+      }
     />
+  );
+};
+
+const DownloadExtra = ({
+  files_selected,
+  files_completed,
+  files_wanted,
+  tag,
+}: {
+  files_selected?: number;
+  files_completed?: number;
+  files_wanted?: number;
+  tag?: string;
+}) => {
+  return (
+    <Stack direction="row" spacing={1}>
+      <Typography variant="body1" color="secondary.dark" fontWeight="bold">
+        {files_wanted}
+      </Typography>
+      <Typography variant="body1" color="primary" fontWeight="bold">
+        /
+      </Typography>
+      <Typography variant="body1" color="secondary" fontWeight="bold">
+        {files_completed}
+      </Typography>
+      <Typography variant="body1" color="primary" fontWeight="bold">
+        /
+      </Typography>
+      <Typography variant="body1" color="gray" fontWeight="bold">
+        {files_selected}
+      </Typography>
+      <Typography variant="body1" color="disabled">
+        {tag}
+      </Typography>
+    </Stack>
   );
 };

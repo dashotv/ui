@@ -15,7 +15,7 @@ import { ButtonMap, ButtonMapButton, Chrono } from '@dashotv/components';
 import { DownloadIcon } from 'components/Downloads';
 
 import { CardProgress } from './CardProgress';
-import { FiCard, FiCardActions, FiCardContent, FiCardFooter, FiCardMedia } from './FiCard';
+import { FiCard, FiCardActions, FiCardContent, FiCardExtra, FiCardFooter, FiCardMedia } from './FiCard';
 
 export interface MediaCardProps {
   id: string;
@@ -30,6 +30,7 @@ export interface MediaCardProps {
   source_id?: string;
   release_date?: string;
   count?: number;
+  extra?: React.ReactNode;
   // downloads
   multi?: boolean;
   progress?: number;
@@ -57,6 +58,7 @@ export const MediaCard = ({
   release_date,
   image,
   count,
+  extra,
   progress,
   filesSelected,
   filesCompleted,
@@ -130,6 +132,7 @@ export const MediaCard = ({
         </Stack>
       </FiCardFooter>
       <FiCardActions>{actions && buttons?.length ? <ButtonMap buttons={buttons} size="small" /> : null}</FiCardActions>
+      <FiCardExtra>{extra}</FiCardExtra>
       <CardProgress progress={progress} files={filesSelected} completed={filesCompleted} wanted={filesWanted} />
     </FiCard>
   );
