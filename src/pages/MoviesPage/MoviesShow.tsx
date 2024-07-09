@@ -111,11 +111,14 @@ export default function MoviesShow() {
       Icon: CloudCircleIcon,
       color: 'primary',
       click: () => {
-        download.mutate(id, {
-          onSuccess: data => {
-            navigate(`/downloads/${data.id}`);
+        download.mutate(
+          { medium_id: id },
+          {
+            onSuccess: data => {
+              navigate(`/downloads/${data.id}`);
+            },
           },
-        });
+        );
       },
       title: 'create download',
     },

@@ -55,7 +55,7 @@ export const MovieCard = ({
     postMovieJob(id, name);
   };
   const downloadCreate = () => {
-    download.mutate(id);
+    download.mutate({ medium_id: id });
   };
   const buttons: ButtonMapButton[] = [
     {

@@ -116,11 +116,14 @@ export default function SeriesShow() {
       Icon: CloudCircleIcon,
       color: 'primary',
       click: () => {
-        download.mutate(id, {
-          onSuccess: data => {
-            navigate(`/downloads/${data.id}`);
+        download.mutate(
+          { medium_id: id, multi: true },
+          {
+            onSuccess: data => {
+              navigate(`/downloads/${data.id}`);
+            },
           },
-        });
+        );
       },
       title: 'create download',
     },

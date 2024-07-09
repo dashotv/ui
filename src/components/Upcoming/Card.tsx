@@ -40,7 +40,7 @@ export const UpcomingCard = ({
     series.mutate({ name: 'active', value: !series_active });
   };
   const downloadCreate = () => {
-    download.mutate(id);
+    download.mutate({ medium_id: id });
   };
 
   const buttons: ButtonMapButton[] = [

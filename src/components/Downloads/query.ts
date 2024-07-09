@@ -47,8 +47,8 @@ export const patchDownload = async (id: string, data: Setting) => {
   return response.result;
 };
 
-export const createDownload = async (medium_id: string) => {
-  const response = await tower.DownloadsCreate({ subject: { medium_id } });
+export const createDownload = async (subject: tower.Download) => {
+  const response = await tower.DownloadsCreate({ subject });
   return response.result;
 };
 
@@ -135,6 +135,6 @@ export const useDownloadSelectionMutation = id => {
 
 export const useDownloadCreateMutation = () => {
   return useMutation({
-    mutationFn: (medium_id: string) => createDownload(medium_id),
+    mutationFn: (subject: tower.Download) => createDownload(subject),
   });
 };

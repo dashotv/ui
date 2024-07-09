@@ -224,11 +224,14 @@ function EpisodeRow({
         if (!id) {
           return;
         }
-        download.mutate(id, {
-          onSuccess: data => {
-            navigate(`/downloads/${data.id}`);
+        download.mutate(
+          { medium_id: id },
+          {
+            onSuccess: data => {
+              navigate(`/downloads/${data.id}`);
+            },
           },
-        });
+        );
       },
       title: 'create download',
     },

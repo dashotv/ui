@@ -55,7 +55,7 @@ export const SeriesCard = ({
     postSeriesJob(id, name);
   };
   const downloadCreate = () => {
-    download.mutate(id);
+    download.mutate({ medium_id: id, multi: true });
   };
 
   const buttons: ButtonMapButton[] = [
