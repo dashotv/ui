@@ -77,10 +77,10 @@ export const DownloadInfo = ({ open, setOpen, tag, url, status, thash, changer }
           <Stack direction="column" spacing={1}>
             <Stack direction={{ xs: 'column', md: 'row' }} spacing={1}>
               <Select name="status" control={control} options={statuses} render={renderOption} />
+              <Text name="tag" label="Tags" control={control} />
               <Text name="thash" control={control} />
             </Stack>
             <Text name="url" control={control} />
-            <Text name="tag" control={control} />
           </Stack>
           <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
             <Button variant="contained" fullWidth onClick={() => setOpen(false)}>
