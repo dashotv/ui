@@ -5,18 +5,35 @@ import { Outlet, Route, Routes, useParams } from 'react-router-dom';
 import TopicIcon from '@mui/icons-material/Topic';
 import { Breadcrumbs, Grid, Typography } from '@mui/material';
 
-import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
+import { Container, LoadingIndicator, Pagination, RoutingTabs, RoutingTabsRoute } from '@dashotv/components';
 
 import { DirectoriesList, useQueryDirectories } from 'components/Directories';
-import { FilesList, useQueryFiles } from 'components/Files';
+import { FilesList, useQueryFiles, useQueryFilesMissing } from 'components/Files';
 import { useQueryMedium } from 'components/Media';
+
+export const FilesTabs = () => {
+  const tabsMap: RoutingTabsRoute[] = [
+    {
+      label: 'Missing',
+      to: 'missing',
+      element: <FilesMissingPage />,
+    },
+    {
+      label: 'Files',
+      to: '',
+      path: '/*',
+      element: <FilesRouter />,
+    },
+  ];
+  return <RoutingTabs data={tabsMap} mount={'/admin/files'} />;
+};
 
 export const FilesRouter = () => {
   return (
     <>
       <Routes>
         <Route path="" element={<DirectoriesPage />} />
-        <Route path="missing" element={<FilesPage />} />
+        <Route path="missing" element={<FilesMissingPage />} />
         <Route path=":library" element={<DirectoriesPage />} />
         <Route path=":library/:medium" element={<FilesPage />} />
       </Routes>
@@ -24,7 +41,6 @@ export const FilesRouter = () => {
     </>
   );
 };
-
 export const FilesPage = () => {
   const { library, medium } = useParams();
   const [page, setPage] = React.useState(1);
@@ -43,7 +59,34 @@ export const FilesPage = () => {
           <FilesBreadcrumbs library={library} medium={medium} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Pagination count={pages} page={page} total={total} onChange={onChange} />
+          <Pagination size="small" count={pages} page={page} total={total} onChange={onChange} />
+        </Grid>
+      </Grid>
+      {isLoading ? <LoadingIndicator /> : null}
+      <FilesList data={data?.result} />
+    </Container>
+  );
+};
+
+export const FilesMissingPage = () => {
+  const { medium } = useParams();
+  const [page, setPage] = React.useState(1);
+  const { data, isLoading } = useQueryFilesMissing(page, medium);
+  const total = data?.total || 0;
+  const pages = Math.ceil(total / 50);
+
+  const onChange = (e: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  return (
+    <Container>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <FilesBreadcrumbs library={'missing'} medium={medium} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Pagination size="small" count={pages} page={page} total={total} onChange={onChange} />
         </Grid>
       </Grid>
       {isLoading ? <LoadingIndicator /> : null}
@@ -117,4 +160,4 @@ const MediaTitle = ({ id }: { id?: string }) => {
   );
 };
 
-export default FilesRouter;
+export default FilesTabs;
