@@ -307,6 +307,7 @@ export interface NzbgetPayload {
 export interface Path {
   id?: string;
   type?: string;
+  tag?: string;
   remote?: string;
   local?: string;
   extension?: string;
