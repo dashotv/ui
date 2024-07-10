@@ -21,11 +21,13 @@ export function FilesWithSelector({
   episodes,
   torrent,
   updater,
+  clearer,
 }: {
   files?: DownloadFile[];
   episodes?: Medium[];
   torrent?: Torrent;
   updater: (id: string | null, num: number) => void;
+  clearer: (nums: number[]) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [dialogTitle, setDialogTitle] = useState('title');
@@ -68,24 +70,22 @@ export function FilesWithSelector({
   );
 
   const handleClickOpen = useCallback(
-    (num, title) => {
+    (num: number, title: string | undefined) => {
       setSelected(num);
-      setDialogTitle(title);
+      if (title) setDialogTitle(title);
       setOpen(true);
     },
     [setSelected, setDialogTitle, setOpen],
   );
 
   const handleClickClear = useCallback(
-    num => {
-      const f = getFile(num);
-      if (!f) {
+    (nums: number[] | undefined) => {
+      if (!nums || nums.length === 0) {
         return;
       }
-      f.medium = undefined;
-      updater(null, num);
+      clearer(nums);
     },
-    [getFile, updater],
+    [clearer],
   );
 
   const handleDialogClose = useCallback(() => {

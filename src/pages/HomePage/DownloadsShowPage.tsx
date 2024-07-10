@@ -20,6 +20,7 @@ import {
   DownloadBanner,
   DownloadInfo,
   DownloadInfoValues,
+  useDownloadClearMutation,
   useDownloadMediumQuery,
   useDownloadMutation,
   useDownloadQuery,
@@ -44,6 +45,7 @@ export default function DownloadsShowPage() {
   const { isFetching: mediaFetching, data: media } = useDownloadMediumQuery(id);
   const downloadUpdate = useDownloadMutation(id);
   const downloadSelection = useDownloadSelectionMutation(id);
+  const downloadClear = useDownloadClearMutation(id);
   const {
     status,
     thash,
@@ -153,8 +155,17 @@ export default function DownloadsShowPage() {
     [downloadSelection],
   );
 
+  const clearMedia = useCallback(
+    (nums: number[]) => {
+      downloadClear.mutate(nums);
+    },
+    [downloadClear],
+  );
+
   const tabsMap = {
-    Files: <FilesWithSelector files={files} torrent={torrent} episodes={media} updater={selectMedium} />,
+    Files: (
+      <FilesWithSelector files={files} torrent={torrent} episodes={media} updater={selectMedium} clearer={clearMedia} />
+    ),
     Torch: <Torch search={search} selector={selectRelease} selected={url} />,
     Runic: <Runic search={search} selector={selectRelease} selected={url} />,
     Nzbgeek: <Nzbgeek search={search} selector={selectRelease} selected={url} />,

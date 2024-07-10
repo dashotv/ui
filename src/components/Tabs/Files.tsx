@@ -29,7 +29,7 @@ export function Files({
   files?: DownloadFile[];
   torrent?: Torrent;
   open: (num: number, name: string | undefined) => void;
-  clear: (num: number) => void;
+  clear: (nums: number[] | undefined) => void;
 }) {
   const [filters, setFilters] = useState(filtersDefaults);
   const { mutate: want } = useTorrentWantMutation();
@@ -69,21 +69,35 @@ export function Files({
   );
 
   const clearVisible = () => {
-    const list = filtered?.filter(f => f.torrent_file != null && f.num !== undefined && f.num >= 0);
-    if (!list) {
+    if (!filtered || filtered.length === 0) {
       return;
     }
-    list.forEach(f => clear(f.num!));
+    const list = filtered?.filter(f => f.torrent_file != null && f.num !== undefined && f.num >= 0).map(f => f.num!);
+    if (!list || list.length === 0) {
+      return;
+    }
+    const nums = list.filter(f => f !== undefined && f >= 0);
+    clear(nums);
   };
 
   const wantVisible = () => {
-    const list = filtered?.filter(f => f.torrent_file != null && f.num !== undefined && f.num >= 0);
-    if (!list) {
+    if (!torrent || !torrent.Hash) {
       return;
     }
-    list.forEach(
-      f => torrent && want({ hash: torrent?.Hash, id: f.torrent_file?.id !== undefined ? f.torrent_file.id : -1 }),
-    );
+
+    const list = filtered?.filter(f => f.torrent_file != null && f.num !== undefined && f.num >= 0).map(f => f.num);
+    if (!list || list.length === 0) {
+      return;
+    }
+
+    want({ hash: torrent.Hash, id: list.join(',') });
+  };
+
+  const wantNone = () => {
+    if (!torrent || !torrent.Hash) {
+      return;
+    }
+    want({ hash: torrent.Hash, id: 'none' });
   };
 
   const buttons: ButtonMapButton[] = [
@@ -94,25 +108,16 @@ export function Files({
       title: 'unselect',
     },
     {
-      Icon: PlaylistAddCircleIcon,
-      color: 'disabled',
-      title: 'select',
-    },
-    {
-      Icon: DownloadForOfflineIcon,
-      color: 'disabled',
-      title: 'downloaded',
-    },
-    {
-      Icon: CheckCircleIcon,
-      color: 'disabled',
-      title: 'downloaded',
+      Icon: StarsIcon,
+      color: 'warning',
+      click: () => wantNone(),
+      title: 'want none',
     },
     {
       Icon: StarsIcon,
       color: 'primary',
       click: () => wantVisible(),
-      title: 'priority',
+      title: 'want visible',
     },
   ];
 
@@ -133,7 +138,7 @@ export function Files({
 
 interface FilesRowProps {
   open: (num: number, name: string | undefined) => void;
-  clear: (num: number) => void;
+  clear: (nums: number[] | undefined) => void;
   thash?: string;
   file: DownloadFile;
 }
@@ -164,7 +169,7 @@ function FilesRow({ open, clear, thash, file: { num, torrent_file, medium } }: F
     {
       Icon: CancelIcon,
       color: 'warning',
-      click: () => clear(num !== undefined && num >= 0 ? num : -1),
+      click: () => clear(num !== undefined && num >= 0 ? [num] : []),
       title: 'unselect',
     },
     {

@@ -255,3 +255,25 @@ export const DownloadsTorrent = async (params: DownloadsTorrentRequest) => {
 
   return response.data as Response;
 };
+
+export interface DownloadsClearRequest {
+  id: string;
+  nums: string;
+}
+
+export const DownloadsClear = async (params: DownloadsClearRequest) => {
+  const response = await towerClient.put(`/downloads/${params.id}/clear?id=${params.id}&nums=${params.nums}`);
+
+  if (!response.data) {
+    throw new Error('response empty?');
+  }
+
+  if (response.data.error) {
+    if (response.data.message) {
+      throw new Error(response.data.message);
+    }
+    throw new Error('unknown error');
+  }
+
+  return response.data as Response;
+};

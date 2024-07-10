@@ -42,6 +42,11 @@ export const putDownloadSelect = async (id: string, data: DownloadSelection) => 
   return response;
 };
 
+export const putDownloadClear = async (id: string, nums: number[]) => {
+  const response = await tower.DownloadsClear({ id, nums: nums.join(',') });
+  return response;
+};
+
 export const patchDownload = async (id: string, data: Setting) => {
   const response = await tower.DownloadsSettings({ id, setting: { name: data.setting, value: data.value } });
   return response.result;
@@ -84,7 +89,7 @@ export const useDownloadsRecentMediaQuery = (page: number, medium_id: string) =>
     retry: false,
   });
 
-export const useDownloadQuery = id =>
+export const useDownloadQuery = (id: string) =>
   useQuery({
     queryKey: ['downloads', id],
     queryFn: () => getDownload(id),
@@ -92,7 +97,7 @@ export const useDownloadQuery = id =>
     retry: false,
   });
 
-export const useDownloadMediumQuery = id =>
+export const useDownloadMediumQuery = (id: string) =>
   useQuery({
     queryKey: ['downloads', 'medium', id],
     queryFn: () => getDownloadMedium(id),
@@ -112,7 +117,7 @@ export const useDownloadMutation = (id: string) => {
   });
 };
 
-export const useDownloadSettingMutation = id => {
+export const useDownloadSettingMutation = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (setting: Setting) => patchDownload(id, setting),
@@ -123,7 +128,7 @@ export const useDownloadSettingMutation = id => {
   });
 };
 
-export const useDownloadSelectionMutation = id => {
+export const useDownloadSelectionMutation = (id: string) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (selection: DownloadSelection) => putDownloadSelect(id, selection),
@@ -132,7 +137,15 @@ export const useDownloadSelectionMutation = id => {
     },
   });
 };
-
+export const useDownloadClearMutation = (id: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (nums: number[]) => putDownloadClear(id, nums),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['downloads', id] });
+    },
+  });
+};
 export const useDownloadCreateMutation = () => {
   return useMutation({
     mutationFn: (subject: tower.Download) => createDownload(subject),
