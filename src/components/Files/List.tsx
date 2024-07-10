@@ -19,7 +19,7 @@ export const FilesList = ({ data }: { data?: File[] }) => {
   return <>{data?.map((file: File) => <FileRow key={file.id} file={file} />)}</>;
 };
 
-const FileRow = ({ file: { name, extension, type, resolution, modified_at, path, size } }: { file: File }) => {
+const FileRow = ({ file: { name, extension, type, resolution, modified_at, path, size, exists } }: { file: File }) => {
   const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'), { noSsr: true });
   const buttons: ButtonMapButton[] = [
     {
@@ -48,7 +48,7 @@ const FileRow = ({ file: { name, extension, type, resolution, modified_at, path,
         justifyContent="space-between"
       >
         <Stack minWidth="0" width="100%" direction="row" spacing={1} alignItems="center">
-          {matches && <PathIcon {...{ extension, type }} />}
+          {matches && <PathIcon {...{ extension, type, old: !exists }} />}
           <Typography title={`${name}.${extension}`} fontWeight="bolder" noWrap color="primary.dark">
             {name ? `${name}.${extension}` : path}
           </Typography>
