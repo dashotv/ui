@@ -14,9 +14,9 @@ import { useQueryMedium } from 'components/Media';
 export const FilesTabs = () => {
   const tabsMap: RoutingTabsRoute[] = [
     {
-      label: 'Missing',
-      to: 'missing',
-      element: <FilesMissingPage />,
+      label: 'Unmatched',
+      to: 'unmatched',
+      element: <FilesUnmatchedPage />,
     },
     {
       label: 'Files',
@@ -33,7 +33,6 @@ export const FilesRouter = () => {
     <>
       <Routes>
         <Route path="" element={<DirectoriesPage />} />
-        <Route path="missing" element={<FilesMissingPage />} />
         <Route path=":library" element={<DirectoriesPage />} />
         <Route path=":library/:medium" element={<FilesPage />} />
       </Routes>
@@ -68,7 +67,7 @@ export const FilesPage = () => {
   );
 };
 
-export const FilesMissingPage = () => {
+export const FilesUnmatchedPage = () => {
   const { medium } = useParams();
   const [page, setPage] = React.useState(1);
   const { data, isLoading } = useQueryFilesMissing(page, medium);
@@ -83,7 +82,7 @@ export const FilesMissingPage = () => {
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <FilesBreadcrumbs library={'missing'} medium={medium} />
+          <FilesBreadcrumbs library={'unmatched'} medium={medium} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Pagination size="small" count={pages} page={page} total={total} onChange={onChange} />
