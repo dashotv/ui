@@ -8,6 +8,5 @@ export * from './Panel';
 export * from './Paths';
 export * from './Seasons';
 export * from './Tabs';
-export * from './Torch';
 export * from './Watches';
 export * from './RoutingTabs';

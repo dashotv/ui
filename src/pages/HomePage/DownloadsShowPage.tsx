@@ -27,7 +27,7 @@ import {
   useDownloadSelectionMutation,
 } from 'components/Downloads';
 import { MediaTo } from 'components/Media';
-import { FilesWithSelector, MediumTabs, Nzbgeek, Torch } from 'components/Tabs';
+import { FilesWithSelector, MediumTabs, Nzbgeek } from 'components/Tabs';
 import { Runic } from 'components/Tabs/Runic';
 import { useSub } from 'hooks/sub';
 import { EventDownload, EventDownloading } from 'types/events';
@@ -166,7 +166,6 @@ export default function DownloadsShowPage() {
     Files: (
       <FilesWithSelector files={files} torrent={torrent} episodes={media} updater={selectMedium} clearer={clearMedia} />
     ),
-    Torch: <Torch search={search} selector={selectRelease} selected={url} />,
     Runic: <Runic search={search} selector={selectRelease} selected={url} />,
     Nzbgeek: <Nzbgeek search={search} selector={selectRelease} selected={url} />,
   };

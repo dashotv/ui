@@ -39,26 +39,6 @@ export const EsMedia = async () => {
   return response.data as EsMediaResponse;
 };
 
-export interface EsReleaseResponse extends Response {
-  result: elastic.IndexResponse;
-}
-export const EsRelease = async () => {
-  const response = await scryClient.get(`/es/release?`);
-
-  if (!response.data) {
-    throw new Error('response empty?');
-  }
-
-  if (response.data.error) {
-    if (response.data.message) {
-      throw new Error(response.data.message);
-    }
-    throw new Error('unknown error');
-  }
-
-  return response.data as EsReleaseResponse;
-};
-
 export interface EsDeleteRequest {
   index: string;
 }

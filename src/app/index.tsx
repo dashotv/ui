@@ -25,7 +25,6 @@ import { NavBar } from 'components/NavBar';
 import AdminPage from 'pages/AdminPage';
 import HomePage from 'pages/HomePage';
 import MoviesPage from 'pages/MoviesPage';
-import ReleasesPage from 'pages/ReleasesPage';
 import SeriesPage from 'pages/SeriesPage';
 import { GlobalStyle } from 'styles/global-styles';
 
@@ -106,7 +105,6 @@ export function App() {
             <Route path="admin/*" element={withAuth(AdminPage)} />
             <Route path="series/*" element={withAuth(SeriesPage)} />
             <Route path="movies/*" element={withAuth(MoviesPage)} />
-            <Route path="releases/*" element={withAuth(ReleasesPage)} />
             <Route path="runic/*" element={withAuth(RunicAppWrapper)} />
             <Route path="minion/*" element={withAuth(MinionAppWrapper)} />
             <Route path="rift/*" element={withAuth(RiftAppWrapper)} />

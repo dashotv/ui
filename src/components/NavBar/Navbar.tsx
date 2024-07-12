@@ -3,11 +3,9 @@ import { GrMultimedia } from 'react-icons/gr';
 
 import { useSnackbar } from 'notistack';
 
-import ArticleIcon from '@mui/icons-material/Article';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import DescriptionIcon from '@mui/icons-material/Description';
-import EventIcon from '@mui/icons-material/Event';
 import FeedIcon from '@mui/icons-material/Feed';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import HomeIcon from '@mui/icons-material/Home';
@@ -17,7 +15,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import SettingsIcon from '@mui/icons-material/Settings';
 import TheatersIcon from '@mui/icons-material/Theaters';
-import TodayIcon from '@mui/icons-material/Today';
 import TvIcon from '@mui/icons-material/Tv';
 import UpcomingIcon from '@mui/icons-material/Upcoming';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
@@ -69,7 +66,7 @@ const pages: NavPageWithChildren[] = [
     name: 'Runic',
     page: '/runic',
     children: [
-      { icon: <TodayIcon fontSize="small" />, name: 'Popular', page: '/runic/popular' },
+      { icon: <CalendarMonthIcon fontSize="small" />, name: 'Popular', page: '/runic/popular' },
       { icon: <FindInPageIcon fontSize="small" />, name: 'Search', page: '/runic', exact: true },
       { icon: <FeedIcon fontSize="small" />, name: 'Indexers', page: '/runic/indexers' },
       { icon: <DescriptionIcon fontSize="small" />, name: 'Rift', page: '/rift' },
@@ -85,18 +82,18 @@ const pages: NavPageWithChildren[] = [
   //     { icon: <VideocamIcon fontSize="small" />, name: 'Videos', page: '/rift/videos', exact: true },
   //   ],
   // },
-  {
-    icon: <ArticleIcon fontSize="small" />,
-    name: 'Releases',
-    page: '/releases',
-    children: [
-      { icon: <TodayIcon fontSize="small" />, name: 'Daily', page: '/releases', exact: true },
-      { icon: <EventIcon fontSize="small" />, name: 'Weekly', page: '/releases/weekly' },
-      { icon: <CalendarMonthIcon fontSize="small" />, name: 'Monthly', page: '/releases/monthly' },
-      { icon: <FindInPageIcon fontSize="small" />, name: 'Search', page: '/releases/search' },
-      { icon: <FeedIcon fontSize="small" />, name: 'Feeds', page: '/releases/feeds' },
-    ],
-  },
+  // {
+  //   icon: <ArticleIcon fontSize="small" />,
+  //   name: 'Releases',
+  //   page: '/releases',
+  //   children: [
+  //     { icon: <TodayIcon fontSize="small" />, name: 'Daily', page: '/releases', exact: true },
+  //     { icon: <EventIcon fontSize="small" />, name: 'Weekly', page: '/releases/weekly' },
+  //     { icon: <CalendarMonthIcon fontSize="small" />, name: 'Monthly', page: '/releases/monthly' },
+  //     { icon: <FindInPageIcon fontSize="small" />, name: 'Search', page: '/releases/search' },
+  //     { icon: <FeedIcon fontSize="small" />, name: 'Feeds', page: '/releases/feeds' },
+  //   ],
+  // },
   {
     icon: <Messages />,
     name: 'Admin',
