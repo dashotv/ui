@@ -7,6 +7,8 @@ import Grid from '@mui/material/Grid';
 
 import { DownloadCard } from './Card';
 
+// import { CoverRowDownload } from './CoverRow';
+
 export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
   return (
     <>
@@ -16,6 +18,7 @@ export function DownloadList({ downloads }: { downloads: DownloadType[] }) {
           <Grid item key={download.id} md={4} xs={12}>
             <Link to={`/downloads/${download.id}`}>
               <DownloadCard id={download.id} download={download} />
+              {/* <CoverRowDownload {...{ download }} /> */}
             </Link>
           </Grid>
         );

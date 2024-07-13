@@ -4,9 +4,6 @@ import { Box, Chip, LinearProgress, Stack, Typography, useTheme } from '@mui/mat
 
 import { ButtonMap, ButtonMapButton, Row } from '@dashotv/components';
 
-import { DownloadType } from 'components/Downloads';
-import { useDownloading } from 'hooks/downloading';
-
 export interface CoverRowProps {
   title: string;
   subtitle?: React.ReactNode;
@@ -40,6 +37,7 @@ export const CoverRow = ({
       sx={{
         position: 'relative',
         border: '1px solid #323232',
+        mb: 1,
         ':before': {
           content: '" "',
           display: 'block',
@@ -138,30 +136,4 @@ export const CoverRowMultiFile = ({ completed }: { completed: boolean }) => {
 const CoverRowCount = ({ count }: { count?: number }) => {
   if (!count || count <= 0) return null;
   return <Chip label={count} color="primary" size="small" />;
-};
-
-export const CoverRowDownload = ({ download, buttons }: { download: DownloadType; buttons?: ButtonMapButton[] }) => {
-  const { get } = useDownloading();
-  const { title, display, kind, background } = download.medium;
-  const {
-    progress,
-    // eta,
-    queue,
-    files,
-    // torrent_state: torrentState,
-  } = get(download.id);
-  const { completed, selected } = files || {};
-  return (
-    <CoverRow
-      title={title}
-      subtitle={display}
-      kind={kind}
-      image={background}
-      progress={Number(progress)}
-      count={queue}
-      files={selected}
-      completed={completed}
-      buttons={buttons}
-    />
-  );
 };

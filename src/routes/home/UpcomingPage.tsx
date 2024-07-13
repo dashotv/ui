@@ -53,8 +53,8 @@ export default function UpcomingPage() {
         <title>Home</title>
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
+      {(downloads.isFetching || upcoming.isFetching) && <LoadingIndicator />}
       <Container>
-        {(downloads.isFetching || upcoming.isFetching) && <LoadingIndicator />}
         <Grid container spacing={1}>
           {downloads.data && <DownloadList downloads={downloads.data} />}
           {upcoming.data && <UpcomingList data={upcoming.data} />}
