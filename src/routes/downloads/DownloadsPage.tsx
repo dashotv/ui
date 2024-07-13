@@ -32,7 +32,7 @@ export default function DownloadsPage() {
         <meta name="description" content="A React Boilerplate application homepage" />
       </Helmet>
       <Container>
-        <Pagination count={count} page={page} total={total} onChange={handleChange} />
+        <Pagination size="small" count={count} page={page} total={total} onChange={handleChange} />
       </Container>
       <Container>
         <Grid container spacing={1}>

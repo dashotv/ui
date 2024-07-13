@@ -10,6 +10,12 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet-async';
 import { Route } from 'react-router-dom';
 
+import AdminPage from 'routes/admin';
+import DownloadsPage from 'routes/downloads';
+import HomePage from 'routes/home';
+import MoviesPage from 'routes/movies';
+import SeriesPage from 'routes/series';
+
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
@@ -22,10 +28,6 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import { NavBar } from 'components/NavBar';
-import AdminPage from 'pages/AdminPage';
-import HomePage from 'pages/HomePage';
-import MoviesPage from 'pages/MoviesPage';
-import SeriesPage from 'pages/SeriesPage';
 import { GlobalStyle } from 'styles/global-styles';
 
 import './index.scss';
@@ -101,13 +103,14 @@ export function App() {
           <ApmRoutes>
             <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
             <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
-            <Route path="/*" element={withAuth(HomePage)} />
+            <Route path="downloads/*" element={withAuth(DownloadsPage)} />
             <Route path="admin/*" element={withAuth(AdminPage)} />
             <Route path="series/*" element={withAuth(SeriesPage)} />
             <Route path="movies/*" element={withAuth(MoviesPage)} />
             <Route path="runic/*" element={withAuth(RunicAppWrapper)} />
             <Route path="minion/*" element={withAuth(MinionAppWrapper)} />
             <Route path="rift/*" element={withAuth(RiftAppWrapper)} />
+            <Route path="/*" element={withAuth(HomePage)} />
           </ApmRoutes>
         </Box>
       </ErrorBoundary>
