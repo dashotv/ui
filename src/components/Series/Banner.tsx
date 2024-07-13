@@ -6,6 +6,7 @@ import { Series } from 'client/tower';
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
+import FolderDeleteIcon from '@mui/icons-material/FolderDelete';
 import RecommendIcon from '@mui/icons-material/Recommend';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
@@ -116,6 +117,13 @@ export const SeriesBanner = ({ id, series }: { id: string; series: Series }) => 
       icon: <DriveFileMoveIcon fontSize="small" color="warning" />,
       action: () => {
         queue('rename');
+      },
+    },
+    {
+      name: 'Remove Old',
+      icon: <FolderDeleteIcon fontSize="small" color="warning" />,
+      action: () => {
+        queue('remove_old');
       },
     },
     {
