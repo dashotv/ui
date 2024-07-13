@@ -32,7 +32,7 @@ const sources: Choice[] = [
 
 const filtersDefaults = { kind: '', source: '', active: '', favorite: '', broken: '' };
 
-export default function SeriesIndex() {
+export const SeriesIndex = () => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [total, setTotal] = useState(0);
@@ -103,7 +103,7 @@ export default function SeriesIndex() {
             </Stack>
           </Grid>
           <Grid item xs={12} md={6}>
-            {data ? <Pagination page={page} count={count} total={total} onChange={handleChange} /> : null}
+            {data ? <Pagination size="small" page={page} count={count} total={total} onChange={handleChange} /> : null}
           </Grid>
         </Grid>
       </Container>
@@ -115,4 +115,5 @@ export default function SeriesIndex() {
       </Container>
     </>
   );
-}
+};
+export default SeriesIndex;

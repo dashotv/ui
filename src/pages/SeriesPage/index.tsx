@@ -3,8 +3,7 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 
 import { Container } from '@dashotv/components';
 
-import SeriesIndex from './SeriesIndex';
-import SeriesShow from './SeriesShow';
+import { SeriesIndex, SeriesShow } from 'components/Series';
 
 export default function SeriesPage() {
   return (
