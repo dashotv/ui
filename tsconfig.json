@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,17 +15,11 @@
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
     "jsx": "react",
-    "types": [
-      "vite/client",
-      "vite-plugin-svgr/client"
-    ],
+    "types": ["vite/client", "vite-plugin-svgr/client"],
     "noImplicitAny": false,
     "baseUrl": "./src"
   },
-  "include": [
-    "./src",
-    "./src/app"
-  ],
+  "include": ["./src", "./src/app"],
   "ts-node": {
     "compilerOptions": {
       "esModuleInterop": true,

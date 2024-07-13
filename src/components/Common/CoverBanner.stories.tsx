@@ -82,7 +82,7 @@ export const Default: Story = {
   render: args => (
     <Grid container spacing={2}>
       <Grid item xs={12} md={4}>
-        <CoverBanner {...args} count={3}/>
+        <CoverBanner {...args} count={3} />
       </Grid>
       <Grid item xs={12} md={4}>
         <CoverBanner {...args} progress={33.3} />
