@@ -15,8 +15,9 @@ import Stack from '@mui/material/Stack';
 import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
 
 import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
-import { useMoviesAllQuery } from 'components/Movies';
-import { MoviesList } from 'components/Movies';
+
+import { MoviesList } from './List';
+import { useMoviesAllQuery } from './query';
 
 const pagesize = 25;
 const kinds: Choice[] = [
@@ -34,7 +35,7 @@ const sources: Choice[] = [
 ];
 const filtersDefaults = { kind: '', source: '', completed: '', downloaded: '', broken: '' };
 
-export default function MoviesIndex() {
+export const MoviesIndex = () => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [total, setTotal] = useState(0);
@@ -105,7 +106,7 @@ export default function MoviesIndex() {
             </Stack>
           </Grid>
           <Grid item xs={12} md={6}>
-            {data ? <Pagination page={page} count={count} total={total} onChange={handleChange} /> : null}
+            {data ? <Pagination size="small" page={page} count={count} total={total} onChange={handleChange} /> : null}
           </Grid>
         </Grid>
       </Container>
@@ -117,4 +118,4 @@ export default function MoviesIndex() {
       </Container>
     </>
   );
-}
+};

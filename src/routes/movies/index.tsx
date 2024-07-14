@@ -3,8 +3,7 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 
 import { Container } from '@dashotv/components';
 
-import MoviesIndex from './MoviesIndex';
-import MoviesShow from './MoviesShow';
+import { MoviesIndex, MoviesShow } from 'components/Movies';
 
 export default function MoviesPage() {
   return (

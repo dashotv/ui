@@ -2,7 +2,9 @@ import React from 'react';
 
 import { Series } from 'client/tower';
 
-import { Details, Downloads, Episodes, Paths, RoutingTabs, RoutingTabsRoute, Watches } from 'components/Tabs';
+import { RoutingTabs, RoutingTabsRoute } from '@dashotv/components';
+
+import { Details, Downloads, Episodes, Paths, Watches } from 'components/Tabs';
 
 export const SeriesTabs = ({ id, series }: { id: string; series: Series }) => {
   const { kind, seasons, currentSeason, paths } = series;
@@ -40,5 +42,5 @@ export const SeriesTabs = ({ id, series }: { id: string; series: Series }) => {
     },
   ];
 
-  return <RoutingTabs data={tabsMap} route={`/series/${id}`} />;
+  return <RoutingTabs data={tabsMap} mount="/series/:id" />;
 };

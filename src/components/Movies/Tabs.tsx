@@ -1,13 +1,15 @@
 import React from 'react';
 
-import { Movie as MovieType, Path } from 'client/tower';
+import { Movie, Path } from 'client/tower';
 
-import { Details, Paths, RoutingTabs, RoutingTabsRoute, Watches } from 'components/Tabs';
+import { RoutingTabs, RoutingTabsRoute } from '@dashotv/components';
+
+import { Details, Downloads, Paths, Watches } from 'components/Tabs';
 
 export type MovieTabsProps = {
   id: string;
   paths?: Path[];
-  movie: MovieType;
+  movie: Movie;
 };
 export const MovieTabs = ({ id, paths, movie }: MovieTabsProps) => {
   const tabsMap: RoutingTabsRoute[] = [
@@ -19,12 +21,12 @@ export const MovieTabs = ({ id, paths, movie }: MovieTabsProps) => {
     {
       label: 'Details',
       to: 'details',
-      element: <Details medium={movie} />,
+      element: movie ? <Details medium={movie} /> : <div>details</div>,
     },
     {
       label: 'Downloads',
-      to: 'downloads',
-      element: <div>downloads</div>,
+      to: `downloads`,
+      element: <Downloads medium_id={id} />,
     },
     {
       label: 'Watches',
@@ -32,5 +34,5 @@ export const MovieTabs = ({ id, paths, movie }: MovieTabsProps) => {
       element: <Watches medium_id={id} />,
     },
   ];
-  return <RoutingTabs data={tabsMap} route={`/movies/${id}`} />;
+  return <RoutingTabs data={tabsMap} mount="/movies/:id" />;
 };
