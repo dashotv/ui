@@ -1,5 +1,5 @@
-export * from './Index';
-export * from './Show';
+export * from './IndexPage';
+export * from './ShowPage';
 export * from './Banner';
 export * from './Card';
 export * from './List';

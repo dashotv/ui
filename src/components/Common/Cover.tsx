@@ -1,11 +1,10 @@
 import * as React from 'react';
 
+import { Download } from 'client/tower';
+
 import { Chip, Stack, Typography } from '@mui/material';
 
 import { ButtonMap, ButtonMapButton, Chrono } from '@dashotv/components';
-
-import { DownloadType } from 'components/Downloads';
-import { useDownloading } from 'hooks/downloading';
 
 import { CardProgress } from './CardProgress';
 import { FiCard, FiCardActions, FiCardContent, FiCardFooter, FiCardMedia } from './FiCard';
@@ -82,28 +81,19 @@ export const Cover = ({
   );
 };
 
-export const CoverDownload = ({ download, buttons }: { download: DownloadType; buttons?: ButtonMapButton[] }) => {
-  const { get } = useDownloading();
-  const { title, display, kind, source, background } = download.medium;
-  const {
-    progress,
-    // eta,
-    queue,
-    files,
-    // torrent_state: torrentState,
-  } = get(download.id);
-  const { completed, selected } = files || {};
+export const CoverDownload = ({ download, buttons }: { download: Download; buttons?: ButtonMapButton[] }) => {
+  const { title, display, queue, progress, kind, source, background, files_selected, files_completed } = download;
   return (
     <Cover
-      title={title}
+      title={title || 'unknown'}
       subtitle={display}
-      kind={kind}
+      kind={kind || 'unknown'}
       source={source}
       image={background}
       progress={Number(progress)}
       count={queue}
-      files={selected}
-      completed={completed}
+      files={files_selected}
+      completed={files_completed}
       buttons={buttons}
     />
   );

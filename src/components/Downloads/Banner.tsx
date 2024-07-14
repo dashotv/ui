@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
+import { Download, Medium } from 'client/tower';
+
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
+import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
+import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import WarningIcon from '@mui/icons-material/Warning';
 import { useTheme } from '@mui/material';
 import Chip from '@mui/material/Chip';
@@ -10,7 +18,11 @@ import Stack from '@mui/material/Stack';
 import { ButtonMapButton, Chrono } from '@dashotv/components';
 
 import { Banner } from 'components/Common';
-import { DownloadIconButton, DownloadStatus } from 'components/Downloads';
+
+import { DownloadIconButton } from './Icon';
+import { DownloadInfo, DownloadInfoValues } from './Info';
+import { useDownloadMutation } from './query';
+import { DownloadStatus } from './types';
 
 export type DownloadBannerProps = {
   id?: string;
@@ -35,35 +47,53 @@ export type DownloadBannerProps = {
 };
 export const DownloadBanner = ({
   id,
-  title,
-  extra,
-  subtitle,
-  cover,
-  background,
-  buttons,
-  status,
-  statusAction,
-  torrentState,
-  progress,
-  eta,
-  queue,
-  unwatched,
-  progressBar = true,
-  multi,
-  files,
-  total,
-  updated_at,
-}: DownloadBannerProps) => {
+  download,
+  nav,
+  changeSetting,
+}: {
+  id: string;
+  download: Download;
+  nav: (medium?: Medium) => void;
+  changeSetting: (setting: string, value: boolean | string) => void;
+}) => {
+  const [open, setOpen] = useState(false);
+  const downloadUpdate = useDownloadMutation(id);
+  const {
+    title,
+    display,
+    cover,
+    background,
+    status,
+    progress,
+    eta,
+    queue,
+    unwatched,
+    multi,
+    updated_at,
+    medium,
+    auto,
+    force,
+    tag,
+    torrent_state,
+    url,
+    files_selected,
+    files_completed,
+  } = download || {};
+
   function tertiary() {
     return (
       <Stack spacing={1} direction="row" alignItems="center">
         <Queue {...{ queue }} />
-        <Status {...{ status, action: statusAction }} />
+        <Status {...{ status, action: openInfo }} />
         <Progress {...{ progress }} />
         <Eta {...{ eta }} />
       </Stack>
     );
   }
+
+  const openInfo = () => {
+    setOpen(true);
+  };
 
   const images: () => string[] = () => {
     const updated = updated_at ? Date.parse(updated_at).valueOf() / 1000 : Date.now() / 1000;
@@ -77,21 +107,77 @@ export const DownloadBanner = ({
     return out;
   };
 
-  if (!id) {
-    return null;
-  }
+  const changeInfo = useCallback(
+    (info: DownloadInfoValues) => {
+      if (!download) {
+        return;
+      }
+      downloadUpdate.mutate({ ...download, ...info });
+    },
+    [downloadUpdate, download],
+  );
+
+  const remove = useCallback(
+    (status: string) => {
+      changeSetting('status', status);
+    },
+    [changeSetting],
+  );
+
+  const buttons: ButtonMapButton[] = [
+    {
+      Icon: ArrowCircleLeftIcon,
+      color: download === undefined ? 'warning' : 'primary',
+      click: () => nav(medium),
+      title: 'Go to Media',
+    },
+    {
+      Icon: CheckCircleIcon,
+      color: 'primary',
+      click: () => remove('done'),
+      title: 'mark complete',
+    },
+    {
+      Icon: OfflineBoltIcon,
+      color: auto ? 'secondary' : 'action',
+      click: () => changeSetting('auto', !auto),
+      title: 'toggle auto',
+    },
+    {
+      Icon: PlaylistAddCheckCircleIcon,
+      color: multi ? 'secondary' : 'action',
+      click: () => changeSetting('multi', !multi),
+      title: 'toggle multi',
+    },
+    {
+      Icon: SwapHorizontalCircleIcon,
+      color: force ? 'secondary' : 'action',
+      click: () => changeSetting('force', !force),
+      title: 'toggle force',
+    },
+    {
+      Icon: CancelIcon,
+      color: 'error',
+      click: () => remove('deleted'),
+      title: 'delete',
+    },
+  ];
   return (
-    <Banner
-      id={id}
-      images={images()}
-      title={title || 'unknown'}
-      subtitle={subtitle}
-      extra={extra}
-      tertiary={tertiary()}
-      buttons={buttons}
-      unwatched={unwatched}
-      adornments={<DownloadAdornments {...{ progressBar, progress, multi, files, total, torrentState }} />}
-    />
+    <>
+      <Banner
+        id={id}
+        images={images()}
+        title={title || 'unknown'}
+        subtitle={display}
+        tertiary={tertiary()}
+        buttons={buttons}
+        unwatched={unwatched}
+        adornments={
+          <DownloadAdornments {...{ progress, multi, files: files_completed, total: files_selected, torrent_state }} />
+        }
+      />
+      <DownloadInfo {...{ open, setOpen, status, url, tag }} changer={changeInfo} />
+    </>
   );
 };
 
@@ -121,18 +207,17 @@ const Eta = ({ eta }: { eta?: string }) => {
 };
 
 export interface DownloadAdornmentProps {
-  progressBar?: boolean;
   progress?: string | number;
   multi?: boolean;
   files?: number;
   total?: number;
   torrentState?: string;
 }
-const DownloadAdornments = ({ progressBar, progress, multi, files, total, torrentState }: DownloadAdornmentProps) => {
+const DownloadAdornments = ({ progress, multi, files, total, torrentState }: DownloadAdornmentProps) => {
   return (
     <>
       <DownloadState {...{ torrentState }} />
-      <DownloadProgressBar enabled={progressBar} {...{ progress, multi, files, total }} />
+      <DownloadProgressBar enabled={true} {...{ progress, multi, files, total }} />
     </>
   );
 };

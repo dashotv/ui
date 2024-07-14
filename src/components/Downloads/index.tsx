@@ -1,3 +1,5 @@
+export * from './IndexPage';
+export * from './ShowPage';
 export * from './Banner';
 export * from './Card';
 export * from './Icon';

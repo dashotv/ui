@@ -5,11 +5,12 @@ import Grid from '@mui/material/Grid';
 
 import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
 
-import { DownloadList, useDownloadsRecentQuery } from 'components/Downloads';
+import { DownloadList } from './List';
+import { useDownloadsRecentQuery } from './query';
 
 const pagesize = 25;
 
-export default function DownloadsPage() {
+export const DownloadsIndex = () => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [total, setTotal] = useState(0);
@@ -21,7 +22,7 @@ export default function DownloadsPage() {
   };
   useEffect(() => {
     if (!data?.total) return;
-    setCount(Math.ceil((data.total || 0) / pagesize)); // Math.ceil((data?.count || 0) / pagesize)
+    setCount(Math.ceil((data.total || 0) / pagesize));
     setTotal(data.total);
   }, [data?.total]);
 
@@ -42,4 +43,4 @@ export default function DownloadsPage() {
       </Container>
     </>
   );
-}
+};
