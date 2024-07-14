@@ -85,7 +85,7 @@ const PlexList = ({
   return (
     <Paper elevation={1}>
       {list.map((show, i) => (
-        <Row key={i} variant={playing === show.next ? 'success' : 'default'}>
+        <Row key={i} variant={show.next !== '' && playing === show.next ? 'success' : 'default'}>
           <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between" width="100%">
             <Stack direction="row" spacing={1} alignItems="center">
               <Unwatched viewed={show.viewed} total={show.total} />
@@ -93,7 +93,10 @@ const PlexList = ({
                 <Typography variant="body1" fontWeight="bolder" noWrap minWidth="35px" maxWidth="700px" color="primary">
                   {show.title}
                 </Typography>
-                <ShowDate unix={show.last_viewed_at} />
+                <Stack direction="row" spacing={1} alignItems="baseline">
+                  <ShowDateLabel label="viewed" unix={show.last_viewed_at} />
+                  <ShowDateLabel label="added" unix={show.added_at} />
+                </Stack>
               </Stack>
             </Stack>
             <Stack direction="row" spacing={1} alignItems="center" minWidth="125px" justifyContent="end">
@@ -117,8 +120,24 @@ const Unwatched = ({ viewed, total }: { viewed?: number; total?: number }) => {
   return <Chip className="viewed" color="primary" label={watched > 9 ? '+' : watched} />;
 };
 
+const ShowDateLabel = ({ label, unix }: { label: string; unix?: number }) => {
+  return (
+    <Stack direction="row" spacing={0.5} alignItems="center">
+      <Typography variant="caption" color="primary.dark">
+        {label}
+      </Typography>
+      <ShowDate unix={unix} />
+    </Stack>
+  );
+};
+
 const ShowDate = ({ unix }: { unix?: number }) => {
-  if (!unix) return null;
+  if (!unix)
+    return (
+      <Typography variant="caption" color="gray">
+        unknown
+      </Typography>
+    );
 
   const string = new Date(Number(unix) * 1000).toString();
   return (
