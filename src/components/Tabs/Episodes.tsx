@@ -8,10 +8,7 @@ import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import NextPlanIcon from '@mui/icons-material/NextPlan';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Theme, useMediaQuery } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+import { Paper, Stack, Theme, Typography, useMediaQuery } from '@mui/material';
 
 import { ButtonMap, ButtonMapButton, Chrono, LoadingIndicator, Megabytes, Resolution, Row } from '@dashotv/components';
 
@@ -120,28 +117,33 @@ const EpisodesList = ({
   changeEpisode: (id: string, field: string, value: boolean) => void;
   buttons: ButtonMapButton[];
 }) => {
-  let current = episodes[0]?.season_number !== undefined ? episodes[0].season_number - 1 : 0;
+  const map = new Map<number, Episode[]>();
+  episodes.forEach(episode => {
+    const key = episode.season_number || 0;
+    const list = map.get(key) || [];
+    list.push(episode);
+    map.set(key, list);
+  });
+
   return (
     <>
-      {episodes.map((row: Episode) => {
-        return (
-          <React.Fragment key={row.id}>
-            {current !== row.season_number
-              ? current++ !== undefined && (
-                  <Row key={row.season_number}>
-                    <Stack direction="row" spacing={1} justifyContent="space-between">
-                      <Typography variant="caption" color="gray">
-                        Season {row.season_number}
-                      </Typography>
-                      <ButtonMap buttons={buttons} size="small" />
-                    </Stack>
-                  </Row>
-                )
-              : null}
-            <EpisodeRow key={row.id} kind={kind} episode={row} changeEpisode={changeEpisode} />
-          </React.Fragment>
-        );
-      })}
+      <Row>
+        <ButtonMap buttons={buttons} size="small" />
+      </Row>
+      {[...map.entries()].map(([season, episodes]) => (
+        <React.Fragment key={season}>
+          <Row key={season}>
+            <Stack direction="row" spacing={1} justifyContent="space-between">
+              <Typography variant="subtitle2" color="gray">
+                Season {season}
+              </Typography>
+            </Stack>
+          </Row>
+          {episodes.map(episode => (
+            <EpisodeRow key={episode.id} kind={kind} episode={episode} changeEpisode={changeEpisode} />
+          ))}
+        </React.Fragment>
+      ))}
     </>
   );
 };
