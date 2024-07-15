@@ -148,11 +148,26 @@ const EpisodesList = ({
   );
 };
 
+const SeasonEpisodeAbsolute = ({
+  season,
+  episode,
+  absolute,
+}: {
+  kind: string;
+  season?: number;
+  episode?: number;
+  absolute?: number;
+}) => {
+  const padded = (value: number = 0, places: number = 2) => `${value}`.padStart(places, '0');
+  return `${padded(season, 2)}x${padded(episode, 2)}${absolute ? ` #${padded(absolute, 3)}` : ''}`;
+};
+
 function EpisodeRow({
   episode: {
     id,
     title,
     missing,
+    season_number: season,
     episode_number: number,
     absolute_number: absolute,
     release_date: release,
@@ -297,20 +312,6 @@ function EpisodeRow({
     return <Megabytes value={video.size} ord="bytes" />;
   };
 
-  const Number = () => {
-    if (!number) {
-      return null;
-    }
-    switch (kind) {
-      case 'anime':
-      case 'donghua':
-      case 'ecchi':
-        return absolute && absolute > 0 ? '#' + `${absolute}`.padStart(3, '0') : number;
-      default:
-        return number;
-    }
-  };
-
   const Title = () => {
     if (!title) {
       return 'episode';
@@ -321,15 +322,15 @@ function EpisodeRow({
   return (
     <Row key={id}>
       <Stack width="100%" minWidth="0" direction={{ xs: 'column', md: 'row' }} spacing={0} alignItems="center">
-        <Stack width="100%" minWidth="0" direction="row" spacing={1} alignItems="center">
+        <Stack width="100%" minWidth="0" direction="row" spacing={1} alignItems="baseline">
           <Typography
             noWrap
             title={`${number} #${absolute}`}
-            variant="subtitle1"
-            color={missing ? 'error' : 'textSecondary'}
-            minWidth="34px"
+            variant="caption"
+            color={missing ? 'error' : 'gray'}
+            minWidth="70px"
           >
-            <Number />
+            <SeasonEpisodeAbsolute {...{ kind, season, episode: number, absolute }} />
           </Typography>
           <Typography noWrap color="primary" fontWeight="bolder">
             <Title />
