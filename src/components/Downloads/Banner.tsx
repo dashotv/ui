@@ -64,6 +64,7 @@ export const DownloadBanner = ({
     cover,
     background,
     status,
+    thash,
     progress,
     eta,
     queue,
@@ -176,7 +177,7 @@ export const DownloadBanner = ({
           <DownloadAdornments {...{ progress, multi, files: files_completed, total: files_selected, torrent_state }} />
         }
       />
-      <DownloadInfo {...{ open, setOpen, status, url, tag }} changer={changeInfo} />
+      <DownloadInfo {...{ open, setOpen, status, url, tag, thash }} changer={changeInfo} />
     </>
   );
 };
