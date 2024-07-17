@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Truncate from 'react-truncate-inside';
 
 import { Episode } from 'client/tower';
 
@@ -312,17 +313,17 @@ function EpisodeRow({
     return <Megabytes value={video.size} ord="bytes" />;
   };
 
-  const Title = () => {
-    if (!title) {
-      return 'episode';
-    }
-    return title;
-  };
-
   return (
     <Row key={id}>
-      <Stack width="100%" minWidth="0" direction={{ xs: 'column', md: 'row' }} spacing={0} alignItems="center">
-        <Stack width="100%" minWidth="0" direction="row" spacing={1} alignItems="baseline">
+      <Stack
+        width="100%"
+        minWidth="0"
+        direction={{ xs: 'column', md: 'row' }}
+        spacing={0}
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Stack minWidth="0" direction="row" spacing={1} alignItems="baseline">
           <Typography
             noWrap
             title={`${number} #${absolute}`}
@@ -333,7 +334,7 @@ function EpisodeRow({
             <SeasonEpisodeAbsolute {...{ kind, season, episode: number, absolute }} />
           </Typography>
           <Typography noWrap color="primary" fontWeight="bolder">
-            <Title />
+            <Truncate text={title || 'episode'} />
           </Typography>
           {matches && <Res />}
         </Stack>
