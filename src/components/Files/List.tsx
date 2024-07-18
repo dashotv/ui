@@ -49,7 +49,7 @@ const FileRow = ({ file: { name, extension, type, resolution, modified_at, path,
       >
         <Stack minWidth="0" width="100%" direction="row" spacing={1} alignItems="center">
           {matches && <PathIcon {...{ extension, type, old: !exists }} />}
-          <Typography title={`${name}.${extension}`} fontWeight="bolder" noWrap color="primary.dark">
+          <Typography title={path} fontWeight="bolder" noWrap color="primary.dark">
             {name ? `${name}.${extension}` : path}
           </Typography>
           {matches && <Resolution resolution={resolution} />}
