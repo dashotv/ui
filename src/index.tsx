@@ -16,7 +16,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ClerkProvider } from '@clerk/clerk-react';
 import { dark } from '@clerk/themes';
 import { NatsProvider } from '@dashotv/react-nats-context';
-import { init as initApm } from '@elastic/apm-rum';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -43,18 +42,6 @@ if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key');
 }
 const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
-
-const apm = initApm({
-  // Set required service name (allowed characters: a-z, A-Z, 0-9, -, _, and space)
-  serviceName: 'ui-' + import.meta.env.VITE_APP_APM_ENV,
-
-  // Set custom APM Server URL (default: http://localhost:8200)
-  serverUrl: '//apm.dasho.tv',
-
-  // Set service version (required for sourcemap feature)
-  serviceVersion: '0.1.0',
-});
-apm.setInitialPageLoadName('index');
 
 const Root = () => {
   return (
