@@ -10,8 +10,10 @@ import {
   useDownloadMutation,
   useDownloadSelectionMutation,
 } from 'components/Downloads';
-import { FilesWithSelector, Nzbgeek } from 'components/Tabs';
-import { Runic } from 'components/Tabs/Runic';
+
+import { FilesWithSelector } from './FilesWithSelector';
+import { Nzbgeek } from './Nzbgeek';
+import { Runic } from './Runic';
 
 export const DownloadTabs = ({ id, download }: { id: string; download: Download }) => {
   const { isFetching, data: media } = useDownloadMediumQuery(id);

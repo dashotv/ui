@@ -4,7 +4,9 @@ import { Series } from 'client/tower';
 
 import { RoutingTabs, RoutingTabsRoute } from '@dashotv/components';
 
-import { Details, Downloads, Episodes, Paths, Watches } from 'components/Tabs';
+import { Details, Downloads, Paths, Watches } from 'components/Tabs';
+
+import { Episodes } from './Episodes';
 
 export const SeriesTabs = ({ id, series }: { id: string; series: Series }) => {
   const { kind, seasons, currentSeason, paths } = series;

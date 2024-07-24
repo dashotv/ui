@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useState } from 'react';
 
-import { DownloadSearch, Medium, Release } from 'client/tower';
+import { DownloadSearch } from 'client/tower';
 
 import { WrapErrorBoundary } from '@dashotv/components';
 
