@@ -1636,9 +1636,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dashotv/components@npm:^0.1.10":
-  version: 0.1.10
-  resolution: "@dashotv/components@npm:0.1.10::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40dashotv%2Fcomponents%2F0.1.10%2F082821034a7b511c3ba0974ac7e3a3c688010ea5"
+"@dashotv/components@npm:^0.1.12":
+  version: 0.1.12
+  resolution: "@dashotv/components@npm:0.1.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40dashotv%2Fcomponents%2F0.1.12%2Fa09707e219866e7449d43f4f74525feba6dc7db2"
   peerDependencies:
     "@emotion/react": ^11.11.4
     "@emotion/styled": ^11.11.5
@@ -1659,7 +1659,7 @@ __metadata:
     react-router-dom: ^6.22.3
     sass: ^1.72.0
     typescript: ^5.0.0
-  checksum: 10c0/4bd86947b702268bbd7a3bb1a152ad22a258704ebd85c7f2eb75383c39890a7327efba0f4f14f809fcd84b076f4dfc8d06e1def897b9efe9e6bb42452cd1532f
+  checksum: 10c0/0631e482b8d8f65c414b7b083c9f010388df33c3366665681e58cf8d28c8025e4092bee4db800d74d69a0ab6bd43bf3657ec118df07706cc4f9fcd993171ef3d
   languageName: node
   linkType: hard
 
@@ -6336,7 +6336,7 @@ __metadata:
     "@chromatic-com/storybook": "npm:^1"
     "@clerk/clerk-react": "npm:^4.30.7"
     "@clerk/themes": "npm:1.7.8"
-    "@dashotv/components": "npm:^0.1.10"
+    "@dashotv/components": "npm:^0.1.12"
     "@dashotv/react-nats-context": "npm:^1.4.4"
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
