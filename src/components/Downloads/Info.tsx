@@ -17,7 +17,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 
-import { Option, Select, Text } from 'components/Form';
+import { Option, Select, Text } from '@dashotv/components';
 
 const statuses = [
   { label: <SearchIcon fontSize="small" />, value: 'searching' },

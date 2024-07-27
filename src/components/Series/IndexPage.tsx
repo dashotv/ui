@@ -10,24 +10,23 @@ import StarsOutlinedIcon from '@mui/icons-material/StarsOutlined';
 import UndoIcon from '@mui/icons-material/Undo';
 import { Grid, IconButton, Stack } from '@mui/material';
 
-import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
+import { Container, FilterCheckbox, FilterSelect, LoadingIndicator, Option, Pagination } from '@dashotv/components';
 
-import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
 import { SeriesList, useSeriesAllQuery } from 'components/Series';
 
 const pagesize = 25;
-const kinds: Choice[] = [
-  { name: 'All', type: '' },
-  { name: 'TV', type: 'tv' },
-  { name: 'News', type: 'news' },
-  { name: 'Anime', type: 'anime' },
-  { name: 'Donghua', type: 'donghua' },
-  { name: 'Ecchi', type: 'ecchi' },
+const kinds: Option[] = [
+  { label: 'All', value: '' },
+  { label: 'TV', value: 'tv' },
+  { label: 'News', value: 'news' },
+  { label: 'Anime', value: 'anime' },
+  { label: 'Donghua', value: 'donghua' },
+  { label: 'Ecchi', value: 'ecchi' },
 ];
-const sources: Choice[] = [
-  { name: 'All', type: '' },
-  { name: 'TheTVDB', type: 'tvdb' },
-  { name: 'The Movie DB', type: 'tmdb' },
+const sources: Option[] = [
+  { label: 'All', value: '' },
+  { label: 'TheTVDB', value: 'tvdb' },
+  { label: 'The Movie DB', value: 'tmdb' },
 ];
 
 const filtersDefaults = { kind: '', source: '', active: '', favorite: '', broken: '' };

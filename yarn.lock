@@ -1636,7 +1636,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dashotv/components@npm:^0.1.12":
+"@dashotv/components@npm:0.1.12":
   version: 0.1.12
   resolution: "@dashotv/components@npm:0.1.12::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40dashotv%2Fcomponents%2F0.1.12%2Fa09707e219866e7449d43f4f74525feba6dc7db2"
   peerDependencies:
@@ -6336,7 +6336,7 @@ __metadata:
     "@chromatic-com/storybook": "npm:^1"
     "@clerk/clerk-react": "npm:^4.30.7"
     "@clerk/themes": "npm:1.7.8"
-    "@dashotv/components": "npm:^0.1.12"
+    "@dashotv/components": "npm:0.1.12"
     "@dashotv/react-nats-context": "npm:^1.4.4"
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"

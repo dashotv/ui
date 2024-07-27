@@ -23,9 +23,8 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { Chrono, Pill } from '@dashotv/components';
+import { Checkbox, Chrono, Pill, Select, Text } from '@dashotv/components';
 
-import { IconCheckbox, Select, Text } from 'components/Form';
 import { MediaCoverImage } from 'components/Media';
 import { getMovieBackgrounds, getMovieCovers, useMovieUpdateMutation } from 'components/Movies';
 import { getSeriesBackgrounds, getSeriesCovers, useSeriesUpdateMutation } from 'components/Series';
@@ -189,7 +188,7 @@ export function Details({
                         />
                       </Stack>
                       <Stack sx={{ pt: 1, pl: 2 }} direction="row" spacing={1}>
-                        <IconCheckbox
+                        <Checkbox
                           sx={{ mr: 0 }}
                           icon={<VerifiedOutlinedIcon />}
                           checkedIcon={<VerifiedIcon />}
@@ -197,7 +196,7 @@ export function Details({
                           disabled={type != 'Series'}
                           control={control}
                         />
-                        <IconCheckbox
+                        <Checkbox
                           sx={{ mr: 0 }}
                           icon={<SportsBarOutlinedIcon />}
                           checkedIcon={<SportsBarIcon />}
@@ -205,7 +204,7 @@ export function Details({
                           disabled={type != 'Series'}
                           control={control}
                         />
-                        <IconCheckbox
+                        <Checkbox
                           sx={{ mr: 0 }}
                           icon={<VideocamOutlinedIcon />}
                           checkedIcon={<VideocamIcon />}

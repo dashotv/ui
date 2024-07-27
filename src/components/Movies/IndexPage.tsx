@@ -12,26 +12,24 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 
-import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
-
-import { Choice, FilterCheckbox, FilterSelect } from 'components/Form';
+import { Container, FilterCheckbox, FilterSelect, LoadingIndicator, Option, Pagination } from '@dashotv/components';
 
 import { MoviesList } from './List';
 import { useMoviesAllQuery } from './query';
 
 const pagesize = 25;
-const kinds: Choice[] = [
-  { name: 'All', type: '' },
-  { name: 'Movies', type: 'movies' },
-  { name: 'Movies4K', type: 'movies4k' },
-  { name: 'Movies3D', type: 'movies3d' },
-  { name: 'Movies4H', type: 'movies4h' },
-  { name: 'Kids', type: 'kids' },
+const kinds: Option[] = [
+  { label: 'All', value: '' },
+  { label: 'Movies', value: 'movies' },
+  { label: 'Movies4K', value: 'movies4k' },
+  { label: 'Movies3D', value: 'movies3d' },
+  { label: 'Movies4H', value: 'movies4h' },
+  { label: 'Kids', value: 'kids' },
 ];
-const sources: Choice[] = [
-  { name: 'All', type: '' },
-  { name: 'TheTVDB', type: 'tvdb' },
-  { name: 'The Movie DB', type: 'tmdb' },
+const sources: Option[] = [
+  { label: 'All', value: '' },
+  { label: 'TheTVDB', value: 'tvdb' },
+  { label: 'The Movie DB', value: 'tmdb' },
 ];
 const filtersDefaults = { kind: '', source: '', completed: '', downloaded: '', broken: '' };
 
