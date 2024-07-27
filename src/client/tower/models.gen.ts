@@ -149,11 +149,13 @@ export interface Episode {
   skipped?: boolean;
   missing?: string;
   release_date?: string;
+  overrides?: Overrides;
   paths?: Path[];
   cover?: string;
   background?: string;
   watched?: boolean;
   watched_any?: boolean;
+  has_overrides?: boolean;
   series_title?: string;
   series_display?: string;
   series_source?: string;
@@ -303,6 +305,11 @@ export interface NzbgetPayload {
   status_detail?: string;
   status_par?: string;
   status_unpack?: string;
+}
+export interface Overrides {
+  season_number?: string;
+  episode_number?: string;
+  absolute_number?: string;
 }
 export interface Path {
   id?: string;

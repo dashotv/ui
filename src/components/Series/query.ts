@@ -124,6 +124,12 @@ export const useSeriesUpdateMutation = (id: string) => {
   });
 };
 
+export const useEpisodeMutation = (id: string) => {
+  return useMutation({
+    mutationFn: (episode: tower.Episode) => tower.EpisodesUpdate({ id, episode }),
+  });
+};
+
 export const patchEpisode = async (id: string, setting: tower.Setting) => {
   const response = await tower.EpisodesSettings({ id, setting });
   return response;
