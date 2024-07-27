@@ -15,14 +15,21 @@ import { Link, Paper, Stack, Theme, Typography, useMediaQuery } from '@mui/mater
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 
-import { IconCheckbox, Option, Select, Text } from '@dashotv/components';
-import { ButtonMap, ButtonMapButton, Chrono, LoadingIndicator, Megabytes, Resolution, Row } from '@dashotv/components';
+import {
+  ButtonMap,
+  ButtonMapButton,
+  Chrono,
+  LoadingIndicator,
+  Megabytes,
+  Resolution,
+  Row,
+  Text,
+} from '@dashotv/components';
 
 import { useDownloadCreateMutation } from 'components/Downloads';
 import {
