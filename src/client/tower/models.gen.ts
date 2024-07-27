@@ -153,9 +153,9 @@ export interface Episode {
   paths?: Path[];
   cover?: string;
   background?: string;
+  has_overrides?: boolean;
   watched?: boolean;
   watched_any?: boolean;
-  has_overrides?: boolean;
   series_title?: string;
   series_display?: string;
   series_source?: string;
@@ -246,9 +246,11 @@ export interface Medium {
   favorite?: boolean;
   unwatched?: number;
   release_date?: string;
+  overrides?: Overrides;
   paths?: Path[];
   cover?: string;
   background?: string;
+  has_overrides?: boolean;
   status?: string;
   series_id?: string;
   season_number?: number;
