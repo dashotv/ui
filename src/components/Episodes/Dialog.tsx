@@ -108,9 +108,24 @@ export const EpisodeDialog = ({
                 Overrides
               </Typography>
               <Stack direction="row" spacing={1}>
-                <Text name="season_number" label="season" control={control} />
-                <Text name="episode_number" label="episode" control={control} />
-                <Text name="absolute_number" label="absolute" control={control} />
+                <Text
+                  name="season_number"
+                  label={`season (${season})`}
+                  placeholder={overrides?.season_number || season?.toString() || ''}
+                  control={control}
+                />
+                <Text
+                  name="episode_number"
+                  label={`episode (${number})`}
+                  placeholder={overrides?.episode_number || number?.toString() || ''}
+                  control={control}
+                />
+                <Text
+                  name="absolute_number"
+                  label={`absolute (${absolute})`}
+                  placeholder={overrides?.absolute_number || absolute?.toString() || ''}
+                  control={control}
+                />
               </Stack>
             </Stack>
             <Stack direction="row" spacing={1}>
