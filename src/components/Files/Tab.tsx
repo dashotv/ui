@@ -10,11 +10,12 @@ import { useQueryFiles } from './query';
 export interface FilesTabProps {
   medium_id: string;
 }
+const limit = 30;
 export const FilesTab = ({ medium_id }: FilesTabProps) => {
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useQueryFiles(page, medium_id);
+  const { data, isLoading } = useQueryFiles(page, medium_id, limit);
   const total = data?.total || 0;
-  const pages = Math.ceil(total / 50);
+  const pages = Math.ceil(total / limit);
 
   const onChange = (e: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
