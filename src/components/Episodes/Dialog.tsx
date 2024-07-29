@@ -142,11 +142,8 @@ export const EpisodeDialog = ({
                 </Stack>
               </Stack>
             </Stack>
-            {/* <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
-              Description
-            </Typography> */}
             <Box sx={{ pt: 1, pb: 1, pr: 2 }}>
-              {description && <div dangerouslySetInnerHTML={{ __html: description }} />}
+              <Typography>{description || 'no description'}</Typography>
             </Box>
             <Stack width="100%" direction="column" spacing={1}>
               <Typography variant="subtitle2" color="primary.dark" sx={{ position: 'relative', bottom: '-4px' }}>
