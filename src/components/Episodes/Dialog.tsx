@@ -4,7 +4,11 @@ import Truncate from 'react-truncate-inside';
 
 import { Episode, Overrides } from 'client/tower';
 
+import CheckCircle from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
+import DownloadForOffline from '@mui/icons-material/DownloadForOffline';
+import NextPlan from '@mui/icons-material/NextPlan';
+import Visibility from '@mui/icons-material/Visibility';
 import { Stack, Typography, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -14,7 +18,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 
-import { Text } from '@dashotv/components';
+import { Chrono, LoadingIndicator, Text } from '@dashotv/components';
+
+import { FilesList, useQueryFiles } from 'components/Files';
 
 import { SeasonEpisodeAbsolute } from './Sea';
 import { useEpisodeMutation } from './query';
@@ -42,6 +48,10 @@ export const EpisodeDialog = ({
     missing,
     description,
     overrides,
+    skipped,
+    downloaded,
+    completed,
+    watched,
   } = episode;
   if (!id) {
     return null;
@@ -50,6 +60,7 @@ export const EpisodeDialog = ({
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const { control, handleSubmit } = useForm<Overrides>({ values: overrides });
+  const { data, isLoading } = useQueryFiles(1, id, 20);
   const update = useEpisodeMutation(id);
 
   const submit = (data: Overrides) => {
@@ -58,12 +69,14 @@ export const EpisodeDialog = ({
     handleClose();
   };
 
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
+
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth fullScreen={fullScreen} maxWidth="md">
+    <Dialog open={open} onClose={handleClose} fullWidth fullScreen={fullScreen} maxWidth="lg">
       <DialogTitle>
-        <Typography noWrap color="primary" fontWeight="bolder">
-          Edit Episode
-        </Typography>
+        <Typography>Edit Episode ({id})</Typography>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -84,29 +97,64 @@ export const EpisodeDialog = ({
               Title
             </Typography> */}
             <Stack minWidth="0" direction="column" spacing={0} alignItems="baseline">
-              <Typography component="div" noWrap color="primary" fontWeight="bolder">
-                <Truncate text={title || 'episode'} />
-              </Typography>
-              <Typography
-                noWrap
-                title={`${number} #${absolute}`}
-                variant="caption"
-                color={missing ? 'error' : 'gray'}
-                minWidth="70px"
-              >
-                <SeasonEpisodeAbsolute {...{ kind, season, episode: number, absolute }} />
-              </Typography>
+              <Stack direction="row" spacing={1} width="100%" justifyContent="space-between">
+                <Typography component="div" noWrap color="primary" fontWeight="bolder">
+                  <Truncate text={title || 'episode'} />
+                </Typography>
+                <Stack direction="row" spacing={1}>
+                  <NextPlan fontSize="small" color={skipped ? 'secondary' : 'disabled'} />
+                  <DownloadForOffline fontSize="small" color={downloaded ? 'secondary' : 'disabled'} />
+                  <CheckCircle fontSize="small" color={completed ? 'secondary' : 'disabled'} />
+                  <Visibility fontSize="small" color={watched ? 'secondary' : 'disabled'} />
+                </Stack>
+              </Stack>
+              <Stack direction="row" spacing={1} width="100%" justifyContent="space-between">
+                <Stack direction="row" spacing={1}>
+                  <Typography
+                    noWrap
+                    title={`${number} #${absolute}`}
+                    variant="caption"
+                    color={missing ? 'error' : 'gray'}
+                    minWidth="70px"
+                  >
+                    <SeasonEpisodeAbsolute {...{ kind, season, episode: number, absolute }} />
+                  </Typography>
+                </Stack>
+                <Stack direction="row" spacing={1}>
+                  <Typography noWrap variant="caption" color="primary">
+                    release
+                  </Typography>
+                  <Typography noWrap variant="caption" color="primary.dark">
+                    <Chrono stamp={release} />
+                  </Typography>
+                  <Typography noWrap variant="caption" color="primary">
+                    created
+                  </Typography>
+                  <Typography variant="caption" color="primary.dark">
+                    <Chrono fromNow stamp={created_at} />
+                  </Typography>
+                  <Typography noWrap variant="caption" color="primary">
+                    updated
+                  </Typography>
+                  <Typography variant="caption" color="primary.dark">
+                    <Chrono fromNow stamp={updated_at} />
+                  </Typography>
+                </Stack>
+              </Stack>
             </Stack>
             {/* <Typography variant="subtitle2" color="textSecondary" sx={{ position: 'relative', bottom: '-4px' }}>
               Description
             </Typography> */}
-            <Box sx={{ pt: 2, pb: 2, pr: 2 }}>
+            <Box sx={{ pt: 1, pb: 1, pr: 2 }}>
               {description && <div dangerouslySetInnerHTML={{ __html: description }} />}
             </Box>
             <Stack width="100%" direction="column" spacing={1}>
               <Typography variant="subtitle2" color="primary.dark" sx={{ position: 'relative', bottom: '-4px' }}>
-                Overrides
+                Files
               </Typography>
+              <FilesList data={data?.result} />
+            </Stack>
+            <Stack direction="row" spacing={1} sx={{ mt: 3, width: '100%', justifyContent: 'end' }}>
               <Stack direction="row" spacing={1}>
                 <Text
                   name="season_number"
@@ -127,44 +175,6 @@ export const EpisodeDialog = ({
                   control={control}
                 />
               </Stack>
-            </Stack>
-            <Stack direction="row" spacing={1}>
-              <Stack width="100%" direction="column" spacing={1}>
-                <Typography variant="subtitle2" color="primary.dark" sx={{ position: 'relative', bottom: '-4px' }}>
-                  ID
-                </Typography>
-                <Typography minHeight="24px" variant="body1" color="primary">
-                  {id}
-                </Typography>
-              </Stack>
-              <Stack width="100%" direction="column" spacing={1}>
-                <Typography variant="subtitle2" color="primary.dark" sx={{ position: 'relative', bottom: '-4px' }}>
-                  Created
-                </Typography>
-                <Typography minHeight="24px" variant="body1" color="primary">
-                  {created_at}
-                </Typography>
-              </Stack>
-
-              <Stack width="100%" direction="column" spacing={1}>
-                <Typography variant="subtitle2" color="primary.dark" sx={{ position: 'relative', bottom: '-4px' }}>
-                  Updated
-                </Typography>
-                <Typography minHeight="24px" variant="body1" color="primary">
-                  {updated_at}
-                </Typography>
-              </Stack>
-
-              <Stack width="100%" direction="column" spacing={1}>
-                <Typography variant="subtitle2" color="primary.dark" sx={{ position: 'relative', bottom: '-4px' }}>
-                  Release
-                </Typography>
-                <Typography minHeight="24px" variant="body1" color="primary">
-                  {release ? new Date(release).toDateString() : null}
-                </Typography>
-              </Stack>
-            </Stack>
-            <Stack direction="row" spacing={1} sx={{ mt: 3, width: '100%', justifyContent: 'end' }}>
               <Button variant="contained" onClick={() => handleClose()}>
                 Cancel
               </Button>
