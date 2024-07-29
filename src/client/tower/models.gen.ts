@@ -192,6 +192,8 @@ export interface File {
   checksum?: string;
   modified_at?: number;
   exists?: boolean;
+  old?: boolean;
+  rename?: boolean;
 }
 export interface Library {
   id?: string;

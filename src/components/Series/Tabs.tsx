@@ -4,6 +4,7 @@ import { Series } from 'client/tower';
 
 import { RoutingTabs, RoutingTabsRoute } from '@dashotv/components';
 
+import { FilesTab } from 'components/Files';
 import { Details, Downloads, Paths, Watches } from 'components/Tabs';
 
 import { Episodes } from './Episodes';
@@ -26,6 +27,11 @@ export const SeriesTabs = ({ id, series }: { id: string; series: Series }) => {
       label: 'Paths',
       to: `paths`,
       element: <Paths paths={paths} medium_id={id} />,
+    },
+    {
+      label: 'Files',
+      to: `files`,
+      element: <FilesTab medium_id={id} />,
     },
     {
       label: 'Details',
