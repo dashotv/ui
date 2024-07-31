@@ -23,11 +23,11 @@ export const DownloadTabs = ({ id, download }: { id: string; download: Download 
   const downloadClear = useDownloadClearMutation(id);
 
   const selectRelease = useCallback(
-    (url: string) => {
+    (url: string, tags?: string) => {
       if (!download) {
         return;
       }
-      downloadUpdate.mutate({ ...download, status: 'loading', url: url });
+      downloadUpdate.mutate({ ...download, status: 'loading', url: url, tag: tags });
     },
     [downloadUpdate, download],
   );

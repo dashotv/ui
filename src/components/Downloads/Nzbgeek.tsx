@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { NzbgeekFormMovie, NzbgeekFormTv, SearchResult } from 'client/scry/nzbgeek';
-import { DownloadSearch, Release } from 'client/tower';
+import { DownloadSearch } from 'client/tower';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OutboundRoundedIcon from '@mui/icons-material/OutboundRounded';
@@ -15,7 +15,6 @@ import {
   useNzbSearchMovieQuery,
   useNzbSearchTvQuery,
 } from 'components/Nzbgeek';
-import { useQueryString } from 'hooks/queryString';
 
 export const Nzbgeek = ({
   search,
@@ -23,7 +22,7 @@ export const Nzbgeek = ({
   selected,
 }: {
   search?: DownloadSearch;
-  selector: (url: string) => void;
+  selector: (url: string, tags?: string) => void;
   selected?: string;
 }) => {
   switch (search?.type) {
@@ -43,8 +42,6 @@ export type NzbgeekTvProps = {
   selected?: string;
 };
 export function NzbgeekTv({ search, selector, selected }: NzbgeekTvProps) {
-  const { queryString } = useQueryString();
-  // const [initial] = useState<NzbgeekFormTv | NzbgeekFormMovie | null>(null);
   const [form, setForm] = useState<NzbgeekFormTv>(() => {
     if (!search) return {};
     const { source_id, season, episode } = search;
@@ -100,8 +97,6 @@ export type NzbgeekMovieProps = {
   selected?: string;
 };
 export function NzbgeekMovie({ search, selector, selected }: NzbgeekMovieProps) {
-  const { queryString } = useQueryString();
-  // const [initial] = useState<NzbgeekFormTv | NzbgeekFormMovie | null>(null);
   const [form, setForm] = useState<NzbgeekFormMovie>(() => {
     if (!search) return {};
     const { source_id } = search;

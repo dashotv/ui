@@ -35,7 +35,7 @@ const formData = (search?: DownloadSearch): RunicForm => {
 };
 export interface RunicSearchProps {
   search?: DownloadSearch;
-  selector: (url: string) => void;
+  selector: (url: string, tags: string) => void;
   selected?: string;
 }
 export function Runic({ search, selector, selected }: RunicSearchProps) {
