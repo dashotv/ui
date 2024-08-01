@@ -15,18 +15,36 @@ import { ButtonMap, ButtonMapButton, Chrono, Megabytes, Resolution, Row } from '
 
 import { PathIcon } from 'components/Paths';
 
+import { FilesEditDialog } from './Dialog';
+import { useMutationFile } from './query';
+
 export const FilesList = ({ data }: { data?: File[] }) => {
-  return <>{data?.map((file: File) => <FileRow key={file.id} file={file} />)}</>;
+  const [editing, setEditing] = React.useState<File | null>(null);
+  const update = useMutationFile();
+  const handleClose = (data: File | null) => {
+    if (data) {
+      update.mutate(data);
+    }
+    setEditing(null);
+  };
+  return (
+    <>
+      {data?.map((file: File) => <FileRow key={file.id} file={file} setEditing={setEditing} />)}
+      {editing && <FilesEditDialog open={editing !== null} file={editing} handleClose={handleClose} />}
+    </>
+  );
 };
 
-const FileRow = ({ file: { name, extension, type, resolution, modified_at, path, size, exists } }: { file: File }) => {
+const FileRow = ({ file, setEditing }: { file: File; setEditing: (f: File) => void }) => {
+  const { name, extension, type, resolution, modified_at, path, size, exists } = file;
   const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'), { noSsr: true });
+
   const buttons: ButtonMapButton[] = [
     {
       Icon: SvgIcon,
       Component: RiEditCircleFill,
       color: 'primary',
-      click: () => console.log('edit'),
+      click: clickHandler(() => setEditing(file)),
       title: 'edit',
     },
     {

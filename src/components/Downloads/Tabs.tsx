@@ -27,6 +27,7 @@ export const DownloadTabs = ({ id, download }: { id: string; download: Download 
       if (!download) {
         return;
       }
+      console.log('selectRelease', url, tags);
       downloadUpdate.mutate({ ...download, status: 'loading', url: url, tag: tags });
     },
     [downloadUpdate, download],

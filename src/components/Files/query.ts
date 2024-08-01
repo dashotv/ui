@@ -1,6 +1,6 @@
-import { FileList, FileMissing } from 'client/tower';
+import { File, FileList, FileMissing, FileUpdate } from 'client/tower';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const useQueryFiles = (page: number, medium_id: string = '', limit: number = 50) => {
   return useQuery({
@@ -17,6 +17,18 @@ export const useQueryFilesMissing = (page: number, medium_id: string = '', limit
     queryKey: ['files', 'missing', page, medium_id],
     queryFn: async () => {
       const response = await FileMissing({ page, limit, medium_id });
+      return response;
+    },
+  });
+};
+
+export const useMutationFile = () => {
+  return useMutation({
+    mutationFn: async (subject: File) => {
+      if (!subject.id) {
+        throw new Error('id missing');
+      }
+      const response = await FileUpdate({ id: subject.id, subject });
       return response;
     },
   });

@@ -9,13 +9,17 @@ import CloseIcon from '@mui/icons-material/Close';
 import DownloadForOffline from '@mui/icons-material/DownloadForOffline';
 import NextPlan from '@mui/icons-material/NextPlan';
 import Visibility from '@mui/icons-material/Visibility';
-import { Stack, Typography, useMediaQuery } from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import IconButton from '@mui/material/IconButton';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 import { Chrono, LoadingIndicator, Text } from '@dashotv/components';
