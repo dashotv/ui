@@ -6,8 +6,7 @@ import { useInterval } from 'usehooks-ts';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { Chip, IconButton, Paper, Stack, Typography } from '@mui/material';
 
-import { Chrono, Row } from '@dashotv/components';
-import { Container } from '@dashotv/components';
+import { Chrono, Container, Row } from '@dashotv/components';
 
 import { EventPlexSessions, PlexChooser, PlexClient, PlexSession, usePlexPlayMutation } from 'components/Plex';
 import { useSub } from 'hooks/sub';

@@ -85,7 +85,7 @@ export const CombinationsList = ({ setSelected }: { setSelected: (v?: Combinatio
                 {combination.collections && combination.collections.length}
               </Typography>
               <Typography variant="subtitle2" color="gray" noWrap minWidth="0">
-                <Chrono fromNow>{combination.created_at}</Chrono>
+                <Chrono fromNow>{combination.updated_at}</Chrono>
               </Typography>
               <IconButton aria-label="refresh" color="primary" size="small" onClick={() => setSelected(combination)}>
                 <EditIcon fontSize="small" />
