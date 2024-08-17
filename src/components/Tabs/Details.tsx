@@ -183,7 +183,7 @@ export function Details({
                         <Text
                           name="search_params.author"
                           disabled={type != 'Series'}
-                          label="author"
+                          label="website"
                           control={control}
                         />
                       </Stack>
