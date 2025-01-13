@@ -8,6 +8,7 @@ ENV GITHUB_TOKEN=$GITHUB_TOKEN
 WORKDIR /app
 COPY package*.json yarn.lock .yarn .npmrc ./
 COPY .yarnrc.docker.yml .yarnrc.yml
+RUN corepack enable
 RUN yarn set version stable
 RUN yarn -v
 RUN --mount=type=cache,target=/app/node_modules yarn install
