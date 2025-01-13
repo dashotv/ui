@@ -28,10 +28,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import useTheme from '@mui/system/useTheme';
 
 import { CoverRow, MediaCard } from 'components/Common';
+import { useQueryLibraryOptions } from 'components/Libraries';
 import { MediaCover } from 'components/Media';
 import { useMovieCreateMutation } from 'components/Movies';
 import { useSeriesCreateMutation } from 'components/Series';
-import { Kinds } from 'types/constants';
 
 import { useSearchAllQuery } from './query';
 
@@ -209,10 +209,12 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
     return null;
   }
   const [option, setOption] = useState<SearchResult>(initial);
+  const { data: series } = useQueryLibraryOptions('series');
+  const { data: movies } = useQueryLibraryOptions('movies');
 
   const kinds = {
-    series: Kinds.Series,
-    movie: Kinds.Movie,
+    series: series,
+    movie: movies,
   };
 
   if (!option.kind) {

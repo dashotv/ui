@@ -25,10 +25,11 @@ import Typography from '@mui/material/Typography';
 
 import { Chrono, IconCheckbox, Pill, Select, Text } from '@dashotv/components';
 
+import { useQueryLibraryOptions } from 'components/Libraries';
 import { MediaCoverImage } from 'components/Media';
 import { getMovieBackgrounds, getMovieCovers, useMovieUpdateMutation } from 'components/Movies';
 import { getSeriesBackgrounds, getSeriesCovers, useSeriesUpdateMutation } from 'components/Series';
-import { Kinds, ReleaseSources, ReleaseTypes, Resolutions, Sources } from 'types/constants';
+import { ReleaseSources, ReleaseTypes, Resolutions, Sources } from 'types/constants';
 
 export type DetailsProps = {
   medium: Medium;
@@ -38,18 +39,19 @@ export function Details({
   medium: { type, cover, background, search_params, title, description, release_date, created_at, updated_at },
 }: DetailsProps) {
   const { id } = useParams();
-  if (!id) {
+  if (!id || !type) {
     return <></>;
   }
 
-  const { handleSubmit, control } = useForm({ values: medium });
-  const series = useSeriesUpdateMutation(id);
-  const movie = useMovieUpdateMutation(id);
   const [covers, setCovers] = React.useState<string[]>([]);
   const [backgrounds, setBackgrounds] = React.useState<string[]>([]);
   const [coverOpen, setCoverOpen] = React.useState(false);
   const [backgroundOpen, setBackgroundOpen] = React.useState(false);
   const [updated] = React.useState(Date.parse(updated_at || '').valueOf() / 1000);
+  const { handleSubmit, control } = useForm({ values: medium });
+  const series = useSeriesUpdateMutation(id);
+  const movie = useMovieUpdateMutation(id);
+  const { data: kinds, isLoading: libraryFetching } = useQueryLibraryOptions(type == 'Movie' ? 'movies' : 'series');
 
   const currentCover = () => {
     if (!medium.paths || medium.paths.length === 0) {
@@ -129,103 +131,88 @@ export function Details({
 
   return (
     <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit(submit)}>
-      <Stack sx={{ width: '100%' }} direction="column" spacing={2}>
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
-          <Paper sx={{ p: 2, width: '100%' }}>
-            <Typography noWrap variant="h6" color="primary">
-              Common
-            </Typography>
-            <Stack direction="column" spacing={1}>
-              <Text name="display" control={control} />
-              <Text name="directory" control={control} />
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <Select name="kind" options={type ? Kinds[type] : ''} control={control} />
-                <Select name="source" options={Sources} control={control} />
-                <Text name="source_id" control={control} />
-              </Stack>
-            </Stack>
-          </Paper>
-          <Paper sx={{ p: 2, width: '100%' }}>
-            <Typography noWrap variant="h6" color="primary">
-              Search
-            </Typography>
+      <Stack sx={{ width: '100%' }} direction="column" spacing={1}>
+        <Paper sx={{ p: 2, width: '100%' }}>
+          <Typography noWrap variant="h6" color="gray">
+            Common
+          </Typography>
+          <Stack direction="column" spacing={1}>
+            <Text name="display" control={control} />
+            <Text name="directory" control={control} />
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <Stack sx={{ width: '100%' }} direction="column" spacing={1}>
-                {search_params && (
-                  <>
-                    <Text name="search" control={control} />
-                    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                      <Select
-                        name="search_params.resolution"
-                        label="resolution"
-                        disabled={type != 'Series'}
-                        options={Resolutions}
-                        control={control}
-                      />
-                      <Select
-                        name="search_params.source"
-                        disabled={type != 'Series'}
-                        label="source"
-                        options={ReleaseSources}
-                        control={control}
-                      />
-                      <Select
-                        name="search_params.type"
-                        disabled={type != 'Series'}
-                        label="type"
-                        options={ReleaseTypes}
-                        control={control}
-                      />
-                    </Stack>
-                    <Stack sx={{ width: '100%' }} direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-                      <Stack direction="row" spacing={1}>
-                        <Text name="search_params.group" disabled={type != 'Series'} label="group" control={control} />
-                        <Text
-                          name="search_params.author"
-                          disabled={type != 'Series'}
-                          label="website"
-                          control={control}
-                        />
-                      </Stack>
-                      <Stack sx={{ pt: 1, pl: 2 }} direction="row" spacing={1}>
-                        <IconCheckbox
-                          sx={{ mr: 0 }}
-                          icon={<VerifiedOutlinedIcon />}
-                          checkedIcon={<VerifiedIcon />}
-                          name="search_params.verified"
-                          disabled={type != 'Series'}
-                          control={control}
-                        />
-                        <IconCheckbox
-                          sx={{ mr: 0 }}
-                          icon={<SportsBarOutlinedIcon />}
-                          checkedIcon={<SportsBarIcon />}
-                          name="search_params.uncensored"
-                          disabled={type != 'Series'}
-                          control={control}
-                        />
-                        <IconCheckbox
-                          sx={{ mr: 0 }}
-                          icon={<VideocamOutlinedIcon />}
-                          checkedIcon={<VideocamIcon />}
-                          name="search_params.bluray"
-                          disabled={type != 'Series'}
-                          control={control}
-                        />
-                      </Stack>
-                      <Button variant="contained" color="primary" type="submit">
-                        Submit
-                      </Button>
-                    </Stack>
-                  </>
-                )}
-              </Stack>
+              {kinds && !libraryFetching ? <Select name="kind" options={kinds} control={control} /> : <></>}
+              <Select name="source" options={Sources} control={control} />
+              <Text name="source_id" control={control} />
             </Stack>
-          </Paper>
-        </Stack>
+          </Stack>
+        </Paper>
+        <Paper sx={{ p: 2, width: '100%' }}>
+          <Typography noWrap variant="h6" color="gray">
+            Search
+          </Typography>
+          {search_params && (
+            <>
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+                <Text name="search" control={control} />
+                <Select
+                  name="search_params.resolution"
+                  label="resolution"
+                  disabled={type != 'Series'}
+                  options={Resolutions}
+                  control={control}
+                />
+                <Select
+                  name="search_params.type"
+                  disabled={type != 'Series'}
+                  label="type"
+                  options={ReleaseTypes}
+                  control={control}
+                />
+                <Select
+                  name="search_params.source"
+                  disabled={type != 'Series'}
+                  label="source"
+                  options={ReleaseSources}
+                  control={control}
+                />
+                <Text name="search_params.group" disabled={type != 'Series'} label="group" control={control} />
+                <Text name="search_params.author" disabled={type != 'Series'} label="website" control={control} />
+                <Stack sx={{ pt: 1, pl: 2 }} direction="row" spacing={1}>
+                  <IconCheckbox
+                    sx={{ mr: 0 }}
+                    icon={<VerifiedOutlinedIcon />}
+                    checkedIcon={<VerifiedIcon />}
+                    name="search_params.verified"
+                    disabled={type != 'Series'}
+                    control={control}
+                  />
+                  <IconCheckbox
+                    sx={{ mr: 0 }}
+                    icon={<SportsBarOutlinedIcon />}
+                    checkedIcon={<SportsBarIcon />}
+                    name="search_params.uncensored"
+                    disabled={type != 'Series'}
+                    control={control}
+                  />
+                  <IconCheckbox
+                    sx={{ mr: 0 }}
+                    icon={<VideocamOutlinedIcon />}
+                    checkedIcon={<VideocamIcon />}
+                    name="search_params.bluray"
+                    disabled={type != 'Series'}
+                    control={control}
+                  />
+                </Stack>
+                <Button variant="contained" color="primary" type="submit">
+                  Submit
+                </Button>
+              </Stack>
+            </>
+          )}
+        </Paper>
         <Paper sx={{ p: 2, width: '100%' }}>
           <Stack width="100%" direction={{ xs: 'column', sm: 'row' }} spacing={1} justifyContent="space-between">
-            <Typography noWrap variant="h6" color="primary">
+            <Typography noWrap variant="h6" color="gray">
               Source
             </Typography>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
@@ -236,9 +223,7 @@ export function Details({
           </Stack>
           <Stack width="100%" direction={{ xs: 'column', sm: 'row' }} spacing={1}>
             <Stack width="100%" direction="column" spacing={1}>
-              <Typography noWrap variant="h6">
-                {title}
-              </Typography>
+              <Typography variant="h6">{title}</Typography>
               <Typography>{description}</Typography>
             </Stack>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>

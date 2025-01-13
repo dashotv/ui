@@ -31,25 +31,25 @@ export const ReleaseSources = [
   { label: 'yify', value: 'yify' },
 ];
 
-export const Kinds = {
-  Series: [
-    { label: 'TV', value: 'tv' },
-    { label: 'Anime', value: 'anime' },
-    { label: 'Donghua', value: 'donghua' },
-    { label: 'CDrama', value: 'cdrama' },
-    { label: 'JDrama', value: 'jdrama' },
-    { label: 'KDrama', value: 'kdrama' },
-    { label: 'News', value: 'news' },
-    { label: 'Ecchi', value: 'ecchi' },
-  ],
-  Movie: [
-    { label: 'Movies', value: 'movies' },
-    { label: 'Movies 4K', value: 'movies4k' },
-    { label: 'Movies 3D', value: 'movies3d' },
-    { label: 'Movies 4H', value: 'movies4h' },
-    { label: 'Kids', value: 'kids' },
-  ],
-};
+// export const Kinds = {
+//   Series: [
+//     { label: 'TV', value: 'tv' },
+//     { label: 'Anime', value: 'anime' },
+//     { label: 'Donghua', value: 'donghua' },
+//     { label: 'CDrama', value: 'cdrama' },
+//     { label: 'JDrama', value: 'jdrama' },
+//     { label: 'KDrama', value: 'kdrama' },
+//     { label: 'News', value: 'news' },
+//     { label: 'Ecchi', value: 'ecchi' },
+//   ],
+//   Movie: [
+//     { label: 'Movies', value: 'movies' },
+//     { label: 'Movies 4K', value: 'movies4k' },
+//     { label: 'Movies 3D', value: 'movies3d' },
+//     { label: 'Movies 4H', value: 'movies4h' },
+//     { label: 'Kids', value: 'kids' },
+//   ],
+// };
 
 export const Sources = [
   { label: 'TVDB', value: 'tvdb' },

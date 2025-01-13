@@ -12,6 +12,16 @@ export const useQueryLibraries = () => {
   });
 };
 
+export const useQueryLibraryOptions = (type: string) => {
+  const { data: libraries, isLoading, isError } = useQueryLibraries();
+  const data = libraries
+    ?.filter(library => library.library_type?.name === type)
+    ?.filter(library => library.name !== undefined)
+    ?.map(library => ({ label: library.name!, value: library.name! }));
+
+  return { data, isError, isLoading };
+};
+
 export const useMutationLibrary = () => {
   const queryClient = useQueryClient();
   return useMutation({
