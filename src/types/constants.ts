@@ -34,9 +34,12 @@ export const ReleaseSources = [
 export const Kinds = {
   Series: [
     { label: 'TV', value: 'tv' },
-    { label: 'News', value: 'news' },
     { label: 'Anime', value: 'anime' },
     { label: 'Donghua', value: 'donghua' },
+    { label: 'CDrama', value: 'cdrama' },
+    { label: 'JDrama', value: 'jdrama' },
+    { label: 'KDrama', value: 'kdrama' },
+    { label: 'News', value: 'news' },
     { label: 'Ecchi', value: 'ecchi' },
   ],
   Movie: [
