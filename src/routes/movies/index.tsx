@@ -1,8 +1,7 @@
 import React from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
-import { Container } from '@dashotv/components';
-
+import { Container } from 'components/Common';
 import { MoviesIndex, MoviesShow } from 'components/Movies';
 
 export default function MoviesPage() {

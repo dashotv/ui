@@ -5,9 +5,10 @@ import { Upcoming } from 'client/tower';
 
 import Grid from '@mui/material/Grid';
 
-import { Container, LoadingIndicator } from '@dashotv/components';
+import { LoadingIndicator } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { Container } from 'components/Common';
 import { DownloadList, useDownloadsActiveQuery } from 'components/Downloads';
 import { UpcomingList, useUpcomingQuery } from 'components/Upcoming';
 import { useSub } from 'hooks/sub';

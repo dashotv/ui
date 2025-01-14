@@ -4,9 +4,9 @@ import { Helmet } from 'react-helmet-async';
 import { Grid } from '@mui/material';
 
 import { LoadingIndicator, Pagination } from '@dashotv/components';
-import { Container } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { Container } from 'components/Common';
 import { Log, MessagesList, useLogsQuery } from 'components/Messages';
 import { useSub } from 'hooks/sub';
 import { EventLog } from 'types/events';

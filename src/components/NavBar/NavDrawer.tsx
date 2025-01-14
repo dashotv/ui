@@ -22,7 +22,7 @@ export const NavDrawer = ({ pages, handleDrawerClose }: NavDrawerProps) => {
       anchor="left"
       sx={{
         display: { xs: 'none', sm: 'block' },
-        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, border: 'none' },
       }}
       open
     >

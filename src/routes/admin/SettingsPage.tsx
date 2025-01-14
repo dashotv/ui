@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Container } from '@dashotv/components';
-
+import { Container } from 'components/Common';
 import { LibrariesList } from 'components/Libraries';
 import { LibraryTemplatesList } from 'components/LibraryTemplates';
 import { LibraryTypesList } from 'components/LibraryTypes';

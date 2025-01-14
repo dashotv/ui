@@ -5,8 +5,9 @@ import { Outlet, Route, Routes, useParams } from 'react-router-dom';
 import TopicIcon from '@mui/icons-material/Topic';
 import { Breadcrumbs, Grid, Typography } from '@mui/material';
 
-import { Container, LoadingIndicator, Pagination, RoutingTabs, RoutingTabsRoute } from '@dashotv/components';
+import { LoadingIndicator, Pagination, RoutingTabs, RoutingTabsRoute } from '@dashotv/components';
 
+import { Container } from 'components/Common';
 import { DirectoriesList, useQueryDirectories } from 'components/Directories';
 import { FilesList, useQueryFiles, useQueryFilesMissing } from 'components/Files';
 import { useQueryMedium } from 'components/Media';

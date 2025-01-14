@@ -19,9 +19,10 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 
-import { Chrono, Container, LoadingIndicator, Row } from '@dashotv/components';
+import { Chrono, LoadingIndicator, Row } from '@dashotv/components';
 
 import { useCollectionsQuery } from 'components/Collections';
+import { Container } from 'components/Common';
 
 import {
   useCombinationCreateMutation,

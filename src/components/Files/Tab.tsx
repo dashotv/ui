@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 import { Grid } from '@mui/material';
 
-import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
+import { LoadingIndicator, Pagination } from '@dashotv/components';
+
+import { Container } from 'components/Common';
 
 import { FilesList } from './List';
 import { useQueryFiles } from './query';

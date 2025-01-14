@@ -7,8 +7,10 @@ import ReplayCircleFilledIcon from '@mui/icons-material/ReplayCircleFilled';
 import StarsIcon from '@mui/icons-material/Stars';
 import { Grid } from '@mui/material';
 
-import { ButtonMapButton, Container } from '@dashotv/components';
+import { ButtonMapButton } from '@dashotv/components';
 import type { Meta, StoryObj } from '@storybook/react';
+
+import { Container } from 'components/Common';
 
 import { MediaCard } from './MediaCard';
 

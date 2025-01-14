@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
-import { Container } from '@dashotv/components';
+import { Container } from 'components/Common';
 
 import FilesPage from './FilesPage';
 import MessagesPage from './MessagesPage';

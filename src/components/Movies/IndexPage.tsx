@@ -12,7 +12,9 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 
-import { Container, FilterCheckbox, FilterSelect, LoadingIndicator, Option, Pagination } from '@dashotv/components';
+import { FilterCheckbox, FilterSelect, LoadingIndicator, Option, Pagination } from '@dashotv/components';
+
+import { Container } from 'components/Common';
 
 import { MoviesList } from './List';
 import { useMoviesAllQuery } from './query';

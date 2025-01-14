@@ -2,9 +2,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 
-import { Container, LoadingIndicator } from '@dashotv/components';
+import { LoadingIndicator } from '@dashotv/components';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { Container } from 'components/Common';
 import { useSeriesQuery } from 'components/Series';
 import { useSub } from 'hooks/sub';
 import { EventSeries } from 'types/events';

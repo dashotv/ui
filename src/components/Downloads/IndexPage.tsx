@@ -3,7 +3,9 @@ import { Helmet } from 'react-helmet-async';
 
 import Grid from '@mui/material/Grid';
 
-import { Container, LoadingIndicator, Pagination } from '@dashotv/components';
+import { LoadingIndicator, Pagination } from '@dashotv/components';
+
+import { Container } from 'components/Common';
 
 import { DownloadList } from './List';
 import { useDownloadsRecentQuery } from './query';
