@@ -217,6 +217,10 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
     movie: movies,
   };
 
+  if (option.type && !kinds[option.type]) {
+    return <></>;
+  }
+
   if (!option.kind) {
     if (!option.type) {
       throw new Error('option.type is required');
@@ -261,6 +265,7 @@ export function SuperSearchConfirm({ open, confirm, option: initial }: SuperSear
           onChange={handleChange}
         >
           {option.type &&
+            kinds[option.type] &&
             kinds[option.type].map(option => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
