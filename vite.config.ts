@@ -15,6 +15,15 @@ export default ({ mode }) => {
     base: '/',
     build: {
       target: 'esnext', //browsers can handle the latest ES features
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        onwarn(warning, warn) {
+          if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
+            return;
+          }
+          warn(warning);
+        },
+      },
     },
     plugins: [
       react(),
