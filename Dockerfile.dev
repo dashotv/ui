@@ -1,8 +1,11 @@
 FROM node:latest
 
+ARG GITHUB_TOKEN
+ENV GITHUB_TOKEN $GITHUB_TOKEN
+
 WORKDIR /usr/src/app
 
-COPY . .
-
+COPY package*.json yarn.lock .yarn .npmrc ./
+COPY .yarnrc.docker.yml .yarnrc.yml
 RUN corepack enable
 RUN yarn install

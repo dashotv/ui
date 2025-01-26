@@ -86,7 +86,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "peer": "yarn dlx check-peer-dependencies",
-    "update-clients": "cp -r ../runic/ui/src/client ./src/client/runic && cp -r ../rift/ui/src/client ./src/client/rift"
+    "update-clients": "cp -r ../runic/ui/src/client ./src/client/runic && cp -r ../rift/ui/src/client ./src/client/rift",
+    "docker": "vite --host"
   },
   "eslintConfig": {
     "extends": "react-app"
