@@ -17,11 +17,11 @@ export default ({ mode }) => {
       target: 'esnext', //browsers can handle the latest ES features
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
-        onwarn(warning, warn) {
-          if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
+        onLog(level, log, handler) {
+          if (log.code === "MODULE_LEVEL_DIRECTIVE") {
             return;
           }
-          warn(warning);
+          handler(level, log);
         },
       },
     },
