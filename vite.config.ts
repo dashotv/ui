@@ -126,7 +126,7 @@ export default ({ mode }) => {
           rewrite: path => path.replace(/^\/api\/rift/, ''),
         },
         '/media-images': {
-          target: 'http://seer.dasho.net/',
+          target: 'https://www.dasho.tv/media-images',
           changeOrigin: true,
           secure: false,
           ws: true,
