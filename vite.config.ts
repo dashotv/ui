@@ -135,7 +135,7 @@ export default ({ mode }) => {
           rewrite: path => path.replace(/^\/api\/rift/, ''),
         },
         '/media-images': {
-          target: 'https://www.dasho.tv/media-images',
+          target: 'https://www.dasho.tv',
           changeOrigin: true,
           secure: false,
           ws: true,
